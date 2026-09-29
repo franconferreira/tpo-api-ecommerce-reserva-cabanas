@@ -1,0 +1,57 @@
+.catalogo-view {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.catalogo-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.catalogo-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.catalogo-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.catalogo-header p {
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.filtros-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.filtro-btn {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.filtro-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.grilla-espacios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+}

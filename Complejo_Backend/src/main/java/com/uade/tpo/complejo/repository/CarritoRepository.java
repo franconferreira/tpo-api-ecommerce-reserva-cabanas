@@ -1,0 +1,11 @@
+package com.uade.tpo.complejo.repository;
+
+import com.uade.tpo.complejo.entity.Carrito;
+import com.uade.tpo.complejo.entity.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface CarritoRepository extends JpaRepository<Carrito, Long> {
+    Optional<Carrito> findByUsuario(Usuario usuario);
+}

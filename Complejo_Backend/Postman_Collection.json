@@ -1,0 +1,649 @@
+{
+    "info": {
+        "_postman_id": "c1f7b8e5-3d1f-4b0d-b8d2-43c0a5b0e5d4",
+        "name": "Complejo Turistico TPO - Tests 11 Reglas",
+        "description": "Colecci\u00f3n oficial para verificar el cumplimiento del Backend E-Commerce",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Auth",
+            "item": [
+                {
+                    "name": "1. Register Admin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"admin01\",\n    \"nombre\": \"Jefe\",\n    \"apellido\": \"Maestro\",\n    \"email\": \"admin@test.com\",\n    \"password\": \"admin123\",\n    \"rol\": \"ROLE_ADMIN\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/auth/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "2. Register Cliente",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"cliente01\",\n    \"nombre\": \"Juan\",\n    \"apellido\": \"Perez\",\n    \"email\": \"cliente@test.com\",\n    \"password\": \"cliente123\",\n    \"rol\": \"ROLE_CLIENTE\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/auth/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "3. Login Admin (Copiar Token)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"admin@test.com\",\n    \"password\": \"admin123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/auth/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "4. Login Cliente (Copiar Token)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"cliente@test.com\",\n    \"password\": \"cliente123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/auth/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "2. Admin - Espacios",
+            "item": [
+                {
+                    "name": "5. Crear Espacio (Requiere Token Admin)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nombre\": \"Caba\u00f1a Suiza Premium\",\n    \"precioBase\": 100000.0,\n    \"tipo\": \"CABA\u00d1A\",\n    \"descripcion\": \"Hermosa caba\u00f1a de madera frente a la laguna.\",\n    \"imagenUrl\": \"https://link-a-imagen.com/foto.jpg\",\n    \"descuento\": 15.0\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/espacios",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "espacios"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "5b. Editar Espacio (Requiere Token Admin)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nombre\": \"Caba\\u00f1a Suiza Premium MODIFICADA\",\n    \"precioBase\": 120000.0,\n    \"tipo\": \"CABANA\",\n    \"descripcion\": \"Hermosa caba\\u00f1a modificada.\",\n    \"descuento\": 20.0,\n    \"imagenes\": [\n        \"https://link-a-imagen.com/foto.jpg\",\n        \"https://link-a-imagen.com/foto_2.jpg\",\n        \"https://link-a-imagen.com/foto_3.jpg\",\n        \"https://link-a-imagen.com/foto_4.jpg\",\n        \"https://link-a-imagen.com/foto_5.jpg\",\n        \"https://link-a-imagen.com/foto_6.jpg\"\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/espacios/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "espacios",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "5c. Eliminar Espacio (Requiere Token Admin)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/espacios/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "espacios",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "5d. Restaurar Espacio (Requiere Token Admin)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/espacios/1/restaurar",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "espacios",
+                                "1",
+                                "restaurar"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "3. Cat\u00e1logo (P\u00fablico)",
+            "item": [
+                {
+                    "name": "6. Ver Cat\u00e1logo",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/espacios",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "espacios"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "4. Carrito (Cliente)",
+            "item": [
+                {
+                    "name": "7. Agregar Item (Requiere Token Cliente)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{client_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"espacioId\": 1,\n    \"checkIn\": \"2026-12-01\",\n    \"checkOut\": \"2026-12-05\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/carrito/items",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "carrito",
+                                "items"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "8. Checkout (Requiere Token Cliente)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{client_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/carrito/checkout",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "carrito",
+                                "checkout"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "7b. Eliminar \u00cdtem Espec\u00edfico",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{client_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/carrito/items/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "carrito",
+                                "items",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "5. Reservas (Cliente)",
+            "item": [
+                {
+                    "name": "10. Mis Reservas",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{client_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/reservas/mis-reservas",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "reservas",
+                                "mis-reservas"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "11. Cancelar Mi Reserva",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{client_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/reservas/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "reservas",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "6. Back-Office (Admin)",
+            "item": [
+                {
+                    "name": "12. Ver Todos Los Clientes",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/usuarios",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "usuarios"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "12b. Ver Todas Las Reservas",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/reservas",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "reservas"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "13. Cancelar Reserva Ajena",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/reservas/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "reservas",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "14. Eliminar Usuario / Dar de baja",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/usuarios/2",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "usuarios",
+                                "2"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "15. Cambiar Rol de Usuario",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"rol\": \"ROLE_ADMIN\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/usuarios/2/rol",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "usuarios",
+                                "2",
+                                "rol"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "14b. Restaurar Usuario",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{admin_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/admin/usuarios/2/restaurar",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "usuarios",
+                                "2",
+                                "restaurar"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8080",
+            "type": "string"
+        },
+        {
+            "key": "admin_token",
+            "value": "COPIA_TU_TOKEN_ADMIN_AQUI",
+            "type": "string"
+        },
+        {
+            "key": "client_token",
+            "value": "COPIA_TU_TOKEN_CLIENTE_AQUI",
+            "type": "string"
+        }
+    ]
+}

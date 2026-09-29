@@ -1,0 +1,66 @@
+:root {
+  --text: #3e403d;
+  --text-h: #1a3e2c;
+  --bg: #f9f8f4;
+  --surface: #ffffff;
+  --border: #e2dfd5;
+  --accent: #c77a56;
+  --accent-hover: #b06543;
+  --primary: #1a3e2c;
+  --primary-hover: #132d20;
+
+  --sans: 'system-ui', 'Segoe UI', Roboto, sans-serif;
+  --heading: 'Georgia', serif;
+
+  font-family: var(--sans);
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--heading);
+  color: var(--text-h);
+  margin-top: 0;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.button-primary {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.button-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.button-accent {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.button-accent:hover {
+  background-color: var(--accent-hover);
+}
