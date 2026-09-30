@@ -17,5 +17,5 @@ public class EspacioResponseDTO {
     private TipoEspacio tipo;
     private String descripcion;
     private java.util.List<String> imagenes;
-    private Double descuento;
+
 }

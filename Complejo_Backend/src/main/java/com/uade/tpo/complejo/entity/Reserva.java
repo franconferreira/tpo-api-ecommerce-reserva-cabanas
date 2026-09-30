@@ -30,6 +30,10 @@ public class Reserva {
     private LocalDateTime fechaCreacion;
 
     @Column(nullable = false)
+    private Double totalSinDescuento = 0.0;
+    @Column(nullable = false)
+    private Double descuentoPackPorcentaje = 0.0;
+    @Column(nullable = false)
     private Double total = 0.0;
 
     @Enumerated(EnumType.STRING)

@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.Month;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,9 +72,18 @@ public class CarritoServiceImpl implements CarritoService {
         long dias = ChronoUnit.DAYS.between(request.getCheckIn(), request.getCheckOut());
         if (dias <= 0) throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "Fechas invalidas");
 
-        Double descuentoAplicado = espacio.getDescuento() != null ? espacio.getDescuento() : 0.0;
-        Double precioFinalPorDia = espacio.getPrecioBase() * (1 - (descuentoAplicado / 100.0));
-        Double subtotal = precioFinalPorDia * dias;
+        double subtotal = 0.0;
+        LocalDate diaActual = request.getCheckIn();
+        while (diaActual.isBefore(request.getCheckOut())) {
+            Month mesActual = diaActual.getMonth();
+            double descuentoDia = 0.0;
+            if (mesActual == Month.MAY || mesActual == Month.JUNE || mesActual == Month.AUGUST) {
+                descuentoDia = 20.0;
+            }
+            double costoDelDia = espacio.getPrecioBase() * (1 - (descuentoDia / 100.0));
+            subtotal += costoDelDia;
+            diaActual = diaActual.plusDays(1);
+        }
 
         ItemCarrito item = ItemCarrito.builder()
                 .carrito(carrito)
@@ -84,7 +95,7 @@ public class CarritoServiceImpl implements CarritoService {
                 .build();
 
         carrito.getItems().add(item);
-        carrito.setTotal(carrito.getTotal() + subtotal);
+        recalcularTotales(carrito);
 
         carritoRepository.save(carrito);
         return mapToDTO(carrito);
@@ -101,9 +112,9 @@ public class CarritoServiceImpl implements CarritoService {
             throw new RuntimeException("El item no pertenece a su carrito");
         }
 
-        carrito.setTotal(carrito.getTotal() - item.getSubtotal());
         carrito.getItems().remove(item);
         itemCarritoRepository.delete(item);
+        recalcularTotales(carrito);
         
         return mapToDTO(carritoRepository.save(carrito));
     }
@@ -133,6 +144,8 @@ public class CarritoServiceImpl implements CarritoService {
                 .fechaCreacion(LocalDateTime.now())
                 .estado(EstadoReserva.PRE_RESERVA)
                 .total(carrito.getTotal())
+                .totalSinDescuento(carrito.getTotalSinDescuento())
+                .descuentoPackPorcentaje(carrito.getDescuentoPackPorcentaje())
                 .activo(true)
                 .build();
 
@@ -152,13 +165,26 @@ public class CarritoServiceImpl implements CarritoService {
         // Vaciamos carrito
         carrito.getItems().clear();
         carrito.setTotal(0.0);
+        carrito.setTotalSinDescuento(0.0);
+        carrito.setDescuentoPackPorcentaje(0.0);
         carritoRepository.save(carrito);
+    }
+
+    private void recalcularTotales(Carrito carrito) {
+        double totalSinDescuento = carrito.getItems().stream().mapToDouble(ItemCarrito::getSubtotal).sum();
+        double descuentoPack = carrito.getItems().size() >= 2 ? 15.0 : 0.0;
+        double totalFinal = totalSinDescuento * (1 - (descuentoPack / 100.0));
+        carrito.setTotalSinDescuento(totalSinDescuento);
+        carrito.setDescuentoPackPorcentaje(descuentoPack);
+        carrito.setTotal(totalFinal);
     }
 
     private CarritoResponseDTO mapToDTO(Carrito carrito) {
         return CarritoResponseDTO.builder()
                 .id(carrito.getId())
                 .total(carrito.getTotal())
+                .totalSinDescuento(carrito.getTotalSinDescuento())
+                .descuentoPackPorcentaje(carrito.getDescuentoPackPorcentaje())
                 .items(carrito.getItems().stream().map(item -> ItemCarritoResponseDTO.builder()
                         .id(item.getId())
                         .espacio(EspacioResponseDTO.builder()
@@ -168,7 +194,7 @@ public class CarritoServiceImpl implements CarritoService {
                                 .tipo(item.getEspacio().getTipo())
                                 .descripcion(item.getEspacio().getDescripcion())
                                 .imagenes(item.getEspacio().getImagenes())
-                                .descuento(item.getEspacio().getDescuento())
+                                
                                 .build())
                         .checkIn(item.getCheckIn())
                         .checkOut(item.getCheckOut())

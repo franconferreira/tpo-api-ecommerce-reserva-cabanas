@@ -85,7 +85,7 @@ public class EspacioServiceImpl implements EspacioService {
                 .tipo(request.getTipo())
                 .descripcion(request.getDescripcion())
                 .imagenes(request.getImagenes())
-                .descuento(request.getDescuento() != null ? request.getDescuento() : 0.0)
+
                 .activo(true)
                 .build();
         return mapToDTO(espacioRepository.save(espacio));
@@ -99,7 +99,7 @@ public class EspacioServiceImpl implements EspacioService {
         espacio.setTipo(request.getTipo());
         espacio.setDescripcion(request.getDescripcion());
         espacio.setImagenes(request.getImagenes());
-        espacio.setDescuento(request.getDescuento() != null ? request.getDescuento() : 0.0);
+
         return mapToDTO(espacioRepository.save(espacio));
     }
 
@@ -125,7 +125,7 @@ public class EspacioServiceImpl implements EspacioService {
                 .tipo(espacio.getTipo())
                 .descripcion(espacio.getDescripcion())
                 .imagenes(espacio.getImagenes())
-                .descuento(espacio.getDescuento())
+
                 .build();
     }
 }

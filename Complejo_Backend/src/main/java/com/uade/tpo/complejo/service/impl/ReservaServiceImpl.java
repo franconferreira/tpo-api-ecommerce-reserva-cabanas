@@ -24,6 +24,8 @@ public class ReservaServiceImpl implements ReservaService {
                 .id(reserva.getId())
                 .fechaCreacion(reserva.getFechaCreacion())
                 .total(reserva.getTotal())
+                .totalSinDescuento(reserva.getTotalSinDescuento())
+                .descuentoPackPorcentaje(reserva.getDescuentoPackPorcentaje())
                 .estado(reserva.getEstado())
                 .detalles(reserva.getDetalles().stream().map(d -> ReservaResponseDTO.DetalleReservaDTO.builder()
                         .nombreEspacio(d.getEspacio().getNombre())

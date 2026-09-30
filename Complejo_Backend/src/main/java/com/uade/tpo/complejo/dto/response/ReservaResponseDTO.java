@@ -13,6 +13,8 @@ import java.util.List;
 public class ReservaResponseDTO {
     private Long id;
     private LocalDateTime fechaCreacion;
+    private Double totalSinDescuento;
+    private Double descuentoPackPorcentaje;
     private Double total;
     private EstadoReserva estado;
     private List<DetalleReservaDTO> detalles;

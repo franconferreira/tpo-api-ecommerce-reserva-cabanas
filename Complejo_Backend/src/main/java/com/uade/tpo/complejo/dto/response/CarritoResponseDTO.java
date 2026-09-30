@@ -13,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CarritoResponseDTO {
     private Long id;
+    private Double totalSinDescuento;
+    private Double descuentoPackPorcentaje;
     private Double total;
     private List<ItemCarritoResponseDTO> items;
 }
