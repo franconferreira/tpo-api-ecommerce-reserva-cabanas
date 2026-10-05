@@ -1,33 +1,39 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Navbar } from './components/layout/Navbar';
+import { CatalogoView } from './views/CatalogoView';
 import { LoginView } from './views/LoginView';
 import { RegisterView } from './views/RegisterView';
-import { CatalogoView } from './views/CatalogoView';
-import { DetalleEspacioView } from './views/DetalleEspacioView';
-import { CarritoView } from './views/CarritoView';
-import { MisReservasView } from './views/MisReservasView';
-import { PanelAdminView } from './views/PanelAdminView';
 
 function App() {
+  // Estado para simular la navegación (Sin React Router)
+  const [vistaActual, setVistaActual] = useState('catalogo');
+  
+  // Estado global simple (por ahora no se usa en la vista, pero demuestra la idea de carrito)
+  const [carrito, setCarrito] = useState([]);
+
+  const agregarAlCarrito = (espacio) => {
+    setCarrito([...carrito, espacio]);
+    alert(`${espacio.nombre} agregado al carrito.`);
+  };
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/catalogo" replace />} />
-        
-        {/* Rutas Públicas */}
-        <Route path="/login" element={<LoginView />} />
-        <Route path="/register" element={<RegisterView />} />
-        <Route path="/catalogo" element={<CatalogoView />} />
-        <Route path="/catalogo/:id" element={<DetalleEspacioView />} />
-
-        {/* Rutas Cliente (Idealmente protegidas) */}
-        <Route path="/carrito" element={<CarritoView />} />
-        <Route path="/mis-reservas" element={<MisReservasView />} />
-
-        {/* Rutas Admin (Idealmente protegidas por rol) */}
-        <Route path="/admin" element={<PanelAdminView />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      {/* Levantamiento de estado: le pasamos la función a la Navbar para que cambie la vista superior */}
+      <Navbar onNavegar={setVistaActual} />
+      
+      {/* Renderizado Condicional de las Vistas según el estado */}
+      {vistaActual === 'catalogo' && (
+        <CatalogoView onAgregar={agregarAlCarrito} onNavegar={setVistaActual} />
+      )}
+      
+      {vistaActual === 'login' && (
+        <LoginView onNavegar={setVistaActual} />
+      )}
+      
+      {vistaActual === 'register' && (
+        <RegisterView onNavegar={setVistaActual} />
+      )}
+    </>
   );
 }
 

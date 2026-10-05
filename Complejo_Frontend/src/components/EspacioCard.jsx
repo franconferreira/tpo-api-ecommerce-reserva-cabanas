@@ -1,14 +1,16 @@
 import React from 'react';
 import './EspacioCard.css';
 
-// Componente Funcional Chiquito (Clase 8)
-// Recibe 'props' (desestructuradas como vimos en Clase 7)
-export const EspacioCard = ({ nombre, precioBase, descripcion, imagenUrl, capacidad, descuento }) => {
+export const EspacioCard = ({ espacio, onAgregar }) => {
+  const { nombre, precioBase, descripcion, imagenes } = espacio;
+  
+  // Usamos la primera imagen del array si existe
+  const imagenUrl = imagenes && imagenes.length > 0 ? imagenes[0] : 'https://via.placeholder.com/800x600?text=Sin+Imagen';
+
   return (
     <div className="espacio-card">
       <div className="card-image-container">
         <img src={imagenUrl} alt={nombre} className="card-image" />
-        {descuento > 0 && <span className="card-badge-descuento">-{descuento}% OFF</span>}
       </div>
       
       <div className="card-content">
@@ -20,7 +22,8 @@ export const EspacioCard = ({ nombre, precioBase, descripcion, imagenUrl, capaci
             <span className="price">${precioBase}</span>
             <span className="price-night">/ night</span>
           </div>
-          <button className="button-primary">Ver Disponibilidad</button>
+          {/* Levantamiento de Estado: el hijo llama a la función del padre */}
+          <button className="button-primary" onClick={onAgregar}>Agregar al Carrito</button>
         </div>
       </div>
     </div>
