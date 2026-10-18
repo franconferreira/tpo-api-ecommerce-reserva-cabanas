@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import CheckoutItem from './CheckoutItem'
+import CheckoutTotales from './CheckoutTotales'
 import './CheckoutResumen.css'
 
 function CheckoutResumen({ carritoData, setCarritoData }) {
@@ -28,19 +29,22 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
     }
 
     fetch(`${URL}/api/carrito/checkout`, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('No se pudo procesar el checkout')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.mensaje) {
+          setCarritoData({
+            id: null,
+            totalSinDescuento: 0,
+            descuentoPackPorcentaje: 0,
+            total: 0,
+            items: []
+          })
+          setError('')
+          navigate('/mis-reservas')
+        } else {
+          console.error('Error en checkout: ', data)
+          setError('Alguno de los espacios ha expirado (10 min) o ya no se encuentra disponible.')
         }
-        setCarritoData({
-          id: null,
-          totalSinDescuento: 0,
-          descuentoPackPorcentaje: 0,
-          total: 0,
-          items: []
-        })
-        setError('')
-        navigate('/mis-reservas')
       })
       .catch((err) => {
         console.error('Error en checkout: ', err)
@@ -76,20 +80,11 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
               ))}
             </div>
 
-            <div className="checkout-totals-box">
-              <div className="ct-row">
-                <span>Subtotal (includes 20% OFF on May, Jun & Aug nights)</span>
-                <span>${totalSinDescuento}</span>
-              </div>
-              <div className="ct-row">
-                <span>Multi-Space Pack Discount (15% OFF on 2+ spaces)</span>
-                <span className="ct-discount">{descuentoPack}% OFF</span>
-              </div>
-              <div className="ct-total-row">
-                <strong>Final Total</strong>
-                <strong className="ct-final-amount">${total} USD</strong>
-              </div>
-            </div>
+            <CheckoutTotales
+              totalSinDescuento={totalSinDescuento}
+              descuentoPack={descuentoPack}
+              total={total}
+            />
 
             <div className="checkout-actions">
               <Link to="/catalogo" className="checkout-btn-secondary">

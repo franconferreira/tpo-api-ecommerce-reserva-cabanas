@@ -3,8 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1em 3em;
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-input-border);
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .admin-nav {
@@ -18,16 +18,16 @@
 }
 
 .nav-logo {
-  font-family: var(--font-serif);
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.3em;
   font-weight: 700;
-  color: var(--color-brand-green);
+  color: #153c2b;
   text-decoration: none;
 }
 
 .nav-badge {
   background-color: #e6e4dd;
-  color: var(--color-text-dark);
+  color: #2a2a2a;
   font-size: 0.65em;
   font-weight: 800;
   padding: 0.4em 0.8em;
@@ -51,7 +51,7 @@
 }
 
 .nav-link {
-  color: var(--color-text-dark);
+  color: #2a2a2a;
   font-size: 0.9em;
   font-weight: 600;
   text-decoration: none;
@@ -62,16 +62,16 @@
 
 .nav-link:hover {
   text-decoration: none;
-  color: var(--color-brand-green);
+  color: #153c2b;
 }
 
 .nav-pills .nav-link.active {
-  background-color: var(--color-brand-green);
-  color: var(--color-white);
+  background-color: #153c2b;
+  color: #ffffff;
 }
 
 .nav-link.active-text {
-  color: var(--color-brand-green);
+  color: #153c2b;
   font-weight: 800;
 }
 
@@ -88,13 +88,13 @@
 
 .nav-user-info span {
   font-size: 0.8em;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .nav-btn-cart {
   background-color: #f1f2ec;
-  color: var(--color-brand-green);
-  border: 1px solid var(--color-input-border);
+  color: #153c2b;
+  border: 1px solid #e0e0e0;
   padding: 0.55em 1.1em;
   border-radius: 1.5em;
   font-weight: 700;
@@ -104,8 +104,8 @@
 
 .nav-btn-outline {
   background: transparent;
-  color: var(--color-text-dark);
-  border: 1px solid var(--color-input-border);
+  color: #2a2a2a;
+  border: 1px solid #e0e0e0;
   padding: 0.5em 1em;
   border-radius: 1.5em;
   font-size: 0.85em;
@@ -114,8 +114,8 @@
 }
 
 .nav-btn-primary {
-  background-color: var(--color-brand-green);
-  color: var(--color-white);
+  background-color: #153c2b;
+  color: #ffffff;
   padding: 0.55em 1.2em;
   border-radius: 1.5em;
   font-size: 0.85em;

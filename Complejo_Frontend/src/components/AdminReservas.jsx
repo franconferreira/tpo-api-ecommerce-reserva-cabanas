@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AdminReservaRow from './AdminReservaRow'
+import AdminReservasTabla from './AdminReservasTabla'
 import './AdminReservas.css'
 
 function AdminReservas() {
@@ -38,19 +38,19 @@ function AdminReservas() {
     }
 
     fetch(`${URL}/api/admin/reservas/${id}`, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Error al cancelar reserva')
-        }
-        return res.json()
-      })
-      .then(() => {
-        setReservas(
-          reservas.map((r) =>
-            r.id === id ? { ...r, estado: 'CANCELADA' } : r
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.mensaje) {
+          setReservas(
+            reservas.map((r) =>
+              r.id === id ? { ...r, estado: 'CANCELADA' } : r
+            )
           )
-        )
-        setError('')
+          setError('')
+        } else {
+          console.error('Error al cancelar reserva: ', data)
+          setError('No se pudo cancelar la reserva')
+        }
       })
       .catch((err) => {
         console.error('Error al cancelar reserva: ', err)
@@ -73,37 +73,7 @@ function AdminReservas() {
 
         {error && <p className="admin-res-error">{error}</p>}
 
-        <div className="admin-res-table-container">
-          <table className="admin-res-table">
-            <thead>
-              <tr>
-                <th>BOOKING ID</th>
-                <th>GUEST</th>
-                <th>RESERVED SPACES & DATES</th>
-                <th>TOTAL</th>
-                <th>STATUS</th>
-                <th>ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reservas.length === 0 ? (
-                <tr>
-                  <td colSpan="6" className="admin-res-empty">
-                    No reservations registered yet.
-                  </td>
-                </tr>
-              ) : (
-                reservas.map((reserva) => (
-                  <AdminReservaRow
-                    reserva={reserva}
-                    onCancelar={handleCancelarReserva}
-                    key={reserva.id}
-                  />
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <AdminReservasTabla reservas={reservas} onCancelar={handleCancelarReserva} />
       </div>
     </div>
   )

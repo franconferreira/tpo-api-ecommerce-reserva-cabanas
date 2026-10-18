@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import CampoFormulario from './CampoFormulario'
 
 function AdminEspacioForm({ onEspacioCreado }) {
   const [nombre, setNombre] = useState('')
   const [precioBase, setPrecioBase] = useState('')
   const [tipo, setTipo] = useState('CABANA')
   const [descripcion, setDescripcion] = useState('')
-  const [imagenUrl, setImagenUrl] = useState('')
+  const [imagenes, setImagenes] = useState('')
   const [error, setError] = useState('')
   const URL = 'http://localhost:8080'
 
@@ -13,7 +14,7 @@ function AdminEspacioForm({ onEspacioCreado }) {
   const handlePrecioBaseChange = (e) => setPrecioBase(e.target.value)
   const handleTipoChange = (e) => setTipo(e.target.value)
   const handleDescripcionChange = (e) => setDescripcion(e.target.value)
-  const handleImagenUrlChange = (e) => setImagenUrl(e.target.value)
+  const handleImagenesChange = (e) => setImagenes(e.target.value)
 
   const handleAgregarEspacio = () => {
     if (nombre.trim() === '' || precioBase.trim() === '' || descripcion.trim() === '') {
@@ -23,8 +24,8 @@ function AdminEspacioForm({ onEspacioCreado }) {
 
     const token = localStorage.getItem('jwtToken')
     const urlImagen =
-      imagenUrl.trim() !== ''
-        ? imagenUrl
+      imagenes.trim() !== ''
+        ? imagenes
         : 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800'
 
     const datosAEnviar = {
@@ -45,20 +46,20 @@ function AdminEspacioForm({ onEspacioCreado }) {
     }
 
     fetch(`${URL}/api/admin/espacios`, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Error al crear espacio')
-        }
-        return res.json()
-      })
+      .then((res) => res.json())
       .then((data) => {
-        onEspacioCreado(data)
-        setNombre('')
-        setPrecioBase('')
-        setTipo('CABANA')
-        setDescripcion('')
-        setImagenUrl('')
-        setError('')
+        if (data && data.id) {
+          onEspacioCreado(data)
+          setNombre('')
+          setPrecioBase('')
+          setTipo('CABANA')
+          setDescripcion('')
+          setImagenes('')
+          setError('')
+        } else {
+          console.error('Error al crear espacio: ', data)
+          setError('No se pudo crear el espacio')
+        }
       })
       .catch((err) => {
         console.error('Error al crear espacio: ', err)
@@ -72,16 +73,8 @@ function AdminEspacioForm({ onEspacioCreado }) {
       {error && <p className="ad-error">{error}</p>}
 
       <form onSubmit={(e) => e.preventDefault()} className="ad-inline-form">
-        <div className="ad-field">
-          <label>Name</label>
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Sunset Ridge Cabin"
-            value={nombre}
-            onChange={handleNombreChange}
-          />
-        </div>
+        <CampoFormulario className="ad-field" label="Name" type="text" name="nombre"
+          placeholder="Sunset Ridge Cabin" value={nombre} onChange={handleNombreChange} />
 
         <div className="ad-field">
           <label>Category (Tipo)</label>
@@ -92,38 +85,12 @@ function AdminEspacioForm({ onEspacioCreado }) {
           </select>
         </div>
 
-        <div className="ad-field">
-          <label>Base Rate ($ / night)</label>
-          <input
-            type="number"
-            name="precioBase"
-            placeholder="180"
-            value={precioBase}
-            onChange={handlePrecioBaseChange}
-          />
-        </div>
-
-        <div className="ad-field">
-          <label>Description</label>
-          <input
-            type="text"
-            name="descripcion"
-            placeholder="Rustic pine cabin overlooking the lake"
-            value={descripcion}
-            onChange={handleDescripcionChange}
-          />
-        </div>
-
-        <div className="ad-field">
-          <label>Image URL</label>
-          <input
-            type="text"
-            name="imagenUrl"
-            placeholder="https://..."
-            value={imagenUrl}
-            onChange={handleImagenUrlChange}
-          />
-        </div>
+        <CampoFormulario className="ad-field" label="Base Rate ($ / night)" type="number" name="precioBase"
+          placeholder="180" value={precioBase} onChange={handlePrecioBaseChange} />
+        <CampoFormulario className="ad-field" label="Description" type="text" name="descripcion"
+          placeholder="Rustic pine cabin overlooking the lake" value={descripcion} onChange={handleDescripcionChange} />
+        <CampoFormulario className="ad-field" label="Image URL" type="text" name="imagenes"
+          placeholder="https://..." value={imagenes} onChange={handleImagenesChange} />
 
         <button type="submit" className="ad-btn-add" onClick={handleAgregarEspacio}>
           + Save Place

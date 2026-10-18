@@ -1,6 +1,6 @@
 .footer-container {
-  background-color: var(--color-white);
-  border-top: 1px solid var(--color-input-border);
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
   padding: 1.5em 3em;
   margin-top: auto;
 }
@@ -14,17 +14,17 @@
 }
 
 .footer-brand strong {
-  font-family: var(--font-serif);
-  color: var(--color-brand-green);
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #153c2b;
   font-size: 1em;
 }
 
 .footer-brand span {
   font-size: 0.85em;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .footer-copy {
   font-size: 0.8em;
-  color: var(--color-text-light);
+  color: #737373;
 }

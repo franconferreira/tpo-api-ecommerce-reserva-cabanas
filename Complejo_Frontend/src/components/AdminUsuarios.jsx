@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AdminUsuarioRow from './AdminUsuarioRow'
+import AdminUsuariosTabla from './AdminUsuariosTabla'
 import './AdminUsuarios.css'
 
 function AdminUsuarios() {
@@ -43,19 +43,19 @@ function AdminUsuarios() {
     }
 
     fetch(endpoint, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Error al actualizar estado del usuario')
-        }
-        return res.json()
-      })
-      .then(() => {
-        setUsuarios(
-          usuarios.map((u) =>
-            u.id === usuario.id ? { ...u, activo: !usuario.activo } : u
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.mensaje) {
+          setUsuarios(
+            usuarios.map((u) =>
+              u.id === usuario.id ? { ...u, activo: !usuario.activo } : u
+            )
           )
-        )
-        setError('')
+          setError('')
+        } else {
+          console.error('Error al actualizar estado de usuario: ', data)
+          setError('No se pudo cambiar el estado del usuario')
+        }
       })
       .catch((err) => {
         console.error('Error al actualizar estado de usuario: ', err)
@@ -106,29 +106,11 @@ function AdminUsuarios() {
 
         {error && <p className="admin-usr-error">{error}</p>}
 
-        <div className="admin-usr-table-container">
-          <table className="admin-usr-table">
-            <thead>
-              <tr>
-                <th>CLIENT PROFILE</th>
-                <th>EMAIL & USERNAME</th>
-                <th>ROLE</th>
-                <th>STATUS</th>
-                <th>LIFECYCLE ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usuarios.map((usuario) => (
-                <AdminUsuarioRow
-                  usuario={usuario}
-                  onCambiarRol={handleCambiarRol}
-                  onToggleEstado={handleToggleEstado}
-                  key={usuario.id}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <AdminUsuariosTabla
+          usuarios={usuarios}
+          onCambiarRol={handleCambiarRol}
+          onToggleEstado={handleToggleEstado}
+        />
       </div>
     </div>
   )

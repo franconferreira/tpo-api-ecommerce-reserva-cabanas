@@ -20,17 +20,18 @@ function App() {
   const [nombreUsuario, setNombreUsuario] = useState('')
   const [espacioSeleccionado, setEspacioSeleccionado] = useState(null)
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [carritoData, setCarritoData] = useState({
+  const carritoVacio = {
     id: null,
     totalSinDescuento: 0,
     descuentoPackPorcentaje: 0,
     total: 0,
     items: []
-  })
+  }
+  const [carritoData, setCarritoData] = useState(carritoVacio)
 
   const URL = 'http://localhost:8080'
 
-  const cargarDatosUsuario = (token) => {
+  const cargarDatosUsuario = (token, desdeLogin) => {
     const options = {
       method: 'GET',
       headers: {
@@ -46,16 +47,26 @@ function App() {
           setRolUsuario(user.rol)
           setNombreUsuario(`${user.nombre} ${user.apellido}`)
 
-          if (user.rol !== 'ROLE_ADMIN') {
+          if (user.rol === 'ROLE_ADMIN') {
+            if (desdeLogin) {
+              navigate('/admin/espacios')
+            }
+          } else {
             fetch(`${URL}/api/carrito`, options)
               .then((res) => res.json())
               .then((cart) => {
                 if (cart && cart.items) {
                   setCarritoData(cart)
                 }
+                if (desdeLogin) {
+                  navigate('/catalogo')
+                }
               })
               .catch((err) => {
                 console.error('Error al obtener carrito: ', err)
+                if (desdeLogin) {
+                  navigate('/catalogo')
+                }
               })
           }
         }
@@ -68,45 +79,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwtToken')
     if (token) {
-      cargarDatosUsuario(token)
+      cargarDatosUsuario(token, false)
     }
   }, [])
 
   const handleLoginSuccess = (token) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-
-    fetch(`${URL}/api/usuarios/me`, options)
-      .then((res) => res.json())
-      .then((user) => {
-        setIsLogged(true)
-        setRolUsuario(user.rol)
-        setNombreUsuario(`${user.nombre} ${user.apellido}`)
-
-        if (user.rol === 'ROLE_ADMIN') {
-          navigate('/admin/espacios')
-        } else {
-          fetch(`${URL}/api/carrito`, options)
-            .then((res) => res.json())
-            .then((cart) => {
-              if (cart && cart.items) {
-                setCarritoData(cart)
-              }
-              navigate('/catalogo')
-            })
-            .catch((err) => {
-              console.error('Error al cargar carrito: ', err)
-              navigate('/catalogo')
-            })
-        }
-      })
-      .catch((err) => {
-        console.error('Error al obtener perfil: ', err)
-      })
+    cargarDatosUsuario(token, true)
   }
 
   const handleLogout = () => {
@@ -115,13 +93,7 @@ function App() {
     setRolUsuario('')
     setNombreUsuario('')
     setIsCartOpen(false)
-    setCarritoData({
-      id: null,
-      totalSinDescuento: 0,
-      descuentoPackPorcentaje: 0,
-      total: 0,
-      items: []
-    })
+    setCarritoData(carritoVacio)
   }
 
   const handleAbrirDetalle = (espacio) => {
@@ -141,22 +113,10 @@ function App() {
       />
 
       <Routes>
-        <Route
-          path="/"
-          element={<CatalogoView onAbrirDetalle={handleAbrirDetalle} />}
-        />
-        <Route
-          path="/catalogo"
-          element={<CatalogoView onAbrirDetalle={handleAbrirDetalle} />}
-        />
-        <Route
-          path="/login"
-          element={<LoginView onLogin={handleLoginSuccess} />}
-        />
-        <Route
-          path="/register"
-          element={<RegisterView onLogin={handleLoginSuccess} />}
-        />
+        <Route path="/" element={<CatalogoView onAbrirDetalle={handleAbrirDetalle} />} />
+        <Route path="/catalogo" element={<CatalogoView onAbrirDetalle={handleAbrirDetalle} />} />
+        <Route path="/login" element={<LoginView onLogin={handleLoginSuccess} />} />
+        <Route path="/register" element={<RegisterView onLogin={handleLoginSuccess} />} />
         <Route
           path="/detalle"
           element={
@@ -170,29 +130,12 @@ function App() {
         />
         <Route
           path="/checkout"
-          element={
-            <CheckoutView
-              carritoData={carritoData}
-              setCarritoData={setCarritoData}
-            />
-          }
+          element={<CheckoutView carritoData={carritoData} setCarritoData={setCarritoData} />}
         />
-        <Route
-          path="/mis-reservas"
-          element={<MisReservasView />}
-        />
-        <Route
-          path="/admin/espacios"
-          element={<AdminEspaciosView />}
-        />
-        <Route
-          path="/admin/reservas"
-          element={<AdminReservasView />}
-        />
-        <Route
-          path="/admin/usuarios"
-          element={<AdminUsuariosView />}
-        />
+        <Route path="/mis-reservas" element={<MisReservasView />} />
+        <Route path="/admin/espacios" element={<AdminEspaciosView />} />
+        <Route path="/admin/reservas" element={<AdminReservasView />} />
+        <Route path="/admin/usuarios" element={<AdminUsuariosView />} />
       </Routes>
 
       <Footer />
