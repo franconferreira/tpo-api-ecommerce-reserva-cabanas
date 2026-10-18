@@ -1,10 +1,17 @@
-import React from 'react';
+import React from 'react'
+import DetalleEspacio from '../components/DetalleEspacio'
 
-export const DetalleEspacioView = () => {
-    return (
-        <div>
-            <h1>DetalleEspacioView</h1>
-            <p>Contenido pendiente (TBD)</p>
-        </div>
-    );
-};
+function DetalleEspacioView({ espacio, isLogged, setCarritoData, onAbrirCarrito }) {
+  return (
+    <>
+      <DetalleEspacio
+        espacio={espacio}
+        isLogged={isLogged}
+        setCarritoData={setCarritoData}
+        onAbrirCarrito={onAbrirCarrito}
+      />
+    </>
+  )
+}
+
+export default DetalleEspacioView

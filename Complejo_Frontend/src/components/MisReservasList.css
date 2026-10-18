@@ -1,0 +1,161 @@
+.mr-wrapper {
+  padding: 2.5em 4em;
+  background-color: var(--color-brand-cream);
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+}
+
+.mr-container {
+  width: 100%;
+  max-width: 65em;
+}
+
+.mr-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.mr-title {
+  font-size: 2.2em;
+  margin-bottom: 0.2em;
+}
+
+.mr-subtitle {
+  color: var(--color-text-light);
+  font-size: 0.95em;
+}
+
+.mr-btn-new {
+  background-color: var(--color-brand-green);
+  color: var(--color-white);
+  padding: 0.75em 1.4em;
+  border-radius: 1.5em;
+  font-size: 0.9em;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.mr-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-bottom: 1.2em;
+  border: 1px solid #f5c6cb;
+}
+
+.mr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.mr-empty-state {
+  background-color: var(--color-white);
+  padding: 3em;
+  text-align: center;
+  border-radius: 1em;
+  border: 1px solid var(--color-input-border);
+}
+
+.mr-card {
+  background-color: var(--color-white);
+  border-radius: 1em;
+  padding: 1.8em;
+  border: 1px solid var(--color-input-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.mr-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--color-input-border);
+}
+
+.mr-status-pill {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.35em 0.8em;
+  border-radius: 1em;
+  font-size: 0.8em;
+  font-weight: 700;
+  margin-right: 0.8em;
+}
+
+.mr-conf-code {
+  font-size: 1em;
+  color: var(--color-text-dark);
+}
+
+.mr-totals {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.mr-pack-badge {
+  background-color: #fde8dd;
+  color: var(--color-brand-tan);
+  padding: 0.3em 0.7em;
+  border-radius: 0.5em;
+  font-size: 0.75em;
+  font-weight: 800;
+}
+
+.mr-total-price {
+  font-size: 1.3em;
+  color: var(--color-brand-green);
+}
+
+.mr-detalles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.mr-detalle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f8f4;
+  padding: 0.9em 1.2em;
+  border-radius: 0.6em;
+}
+
+.mr-detalle-dates {
+  display: block;
+  font-size: 0.85em;
+  color: var(--color-text-light);
+  margin-top: 0.2em;
+}
+
+.mr-detalle-rate {
+  font-size: 0.9em;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.mr-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mr-cancel-btn {
+  background-color: #fdecea;
+  color: #b71c1c;
+  border: 1px solid #f5c6cb;
+  padding: 0.6em 1.2em;
+  border-radius: 0.6em;
+  font-size: 0.85em;
+  font-weight: 700;
+  cursor: pointer;
+}

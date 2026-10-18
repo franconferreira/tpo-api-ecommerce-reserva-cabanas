@@ -29,10 +29,15 @@ public class Reserva {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
+    @Builder.Default
     @Column(nullable = false)
     private Double totalSinDescuento = 0.0;
+
+    @Builder.Default
     @Column(nullable = false)
     private Double descuentoPackPorcentaje = 0.0;
+
+    @Builder.Default
     @Column(nullable = false)
     private Double total = 0.0;
 

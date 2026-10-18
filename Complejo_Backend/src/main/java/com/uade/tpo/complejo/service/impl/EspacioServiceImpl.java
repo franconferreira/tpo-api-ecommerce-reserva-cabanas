@@ -39,6 +39,11 @@ public class EspacioServiceImpl implements EspacioService {
     }
 
     @Override
+    public List<EspacioResponseDTO> obtenerTodosLosEspacios() {
+        return espacioRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public EspacioResponseDTO obtenerEspacioPorId(Long id) {
         Espacio espacio = espacioRepository.findById(id).orElseThrow();
         return mapToDTO(espacio);
@@ -85,7 +90,6 @@ public class EspacioServiceImpl implements EspacioService {
                 .tipo(request.getTipo())
                 .descripcion(request.getDescripcion())
                 .imagenes(request.getImagenes())
-
                 .activo(true)
                 .build();
         return mapToDTO(espacioRepository.save(espacio));
@@ -125,7 +129,7 @@ public class EspacioServiceImpl implements EspacioService {
                 .tipo(espacio.getTipo())
                 .descripcion(espacio.getDescripcion())
                 .imagenes(espacio.getImagenes())
-
+                .activo(espacio.getActivo())
                 .build();
     }
 }

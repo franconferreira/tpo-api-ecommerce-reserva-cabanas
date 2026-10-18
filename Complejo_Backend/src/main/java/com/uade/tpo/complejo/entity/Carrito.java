@@ -26,8 +26,12 @@ public class Carrito {
     @Builder.Default
     @Column(nullable = false)
     private Double totalSinDescuento = 0.0;
+
+    @Builder.Default
     @Column(nullable = false)
     private Double descuentoPackPorcentaje = 0.0;
+
+    @Builder.Default
     @Column(nullable = false)
     private Double total = 0.0;
 

@@ -1,77 +1,102 @@
 .espacio-card {
-  background-color: var(--surface);
-  border-radius: 12px;
+  background-color: var(--color-brand-cream);
+  border-radius: 1em;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
-  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-input-border);
 }
 
-.espacio-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-image-container {
+.ec-image-wrapper {
   position: relative;
-  height: 200px;
   width: 100%;
+  height: 15em;
 }
 
-.card-image {
+.ec-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.card-badge-descuento {
+.ec-tag-top-left {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: var(--accent);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  top: 0.75em;
+  left: 0.75em;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-text-dark);
+  padding: 0.4em 0.8em;
+  border-radius: 1.2em;
+  font-size: 0.75em;
+  font-weight: 700;
 }
 
-.card-content {
-  padding: 16px;
+.ec-content {
+  padding: 1.5em;
+  flex-grow: 1;
 }
 
-.card-title {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
-  color: var(--text-h);
+.ec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5em;
+  margin-bottom: 0.8em;
 }
 
-.card-desc {
-  font-size: 0.9rem;
-  color: var(--text);
-  margin-bottom: 16px;
-  line-height: 1.4;
+.ec-title {
+  font-family: var(--font-serif);
+  font-size: 1.35em;
+  color: var(--color-brand-green);
+  margin: 0;
+  line-height: 1.2;
 }
 
-.card-footer {
+.ec-category-tag {
+  background-color: #fde8dd;
+  color: var(--color-brand-tan);
+  padding: 0.3em 0.65em;
+  border-radius: 0.4em;
+  font-size: 0.7em;
+  font-weight: 800;
+}
+
+.ec-desc {
+  color: var(--color-text-light);
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin-bottom: 1em;
+}
+
+.ec-footer {
+  padding: 1.2em 1.5em;
+  border-top: 1px solid var(--color-input-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--color-white);
 }
 
-.price-container {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
+.ec-price-from {
+  color: var(--color-text-dark);
+  font-size: 0.9em;
+  font-weight: 600;
 }
 
-.price {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: var(--text-h);
+.ec-price-value {
+  color: var(--color-brand-green);
+  font-size: 1.35em;
+  font-weight: 800;
 }
 
-.price-night {
-  font-size: 0.85rem;
-  color: var(--text);
+.ec-price-suffix {
+  color: var(--color-text-light);
+  font-size: 0.8em;
+}
+
+.ec-action-link {
+  color: var(--color-brand-tan);
+  font-weight: 700;
+  font-size: 0.9em;
 }

@@ -1,0 +1,151 @@
+.admin-res-wrapper {
+  background-color: #f7f6f2;
+  min-height: 85vh;
+  padding: 2.5em 4em;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-res-container {
+  width: 100%;
+  max-width: 78em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.admin-res-overline {
+  color: var(--color-brand-tan);
+  font-size: 0.75em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.admin-res-title {
+  font-size: 2.2em;
+  margin: 0.2em 0;
+}
+
+.admin-res-subtitle {
+  color: var(--color-text-light);
+  font-size: 0.95em;
+}
+
+.admin-res-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  border: 1px solid #f5c6cb;
+}
+
+.admin-res-table-container {
+  background-color: #f1f2ec;
+  border-radius: 1em;
+  padding: 0.8em;
+}
+
+.admin-res-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.6em;
+  table-layout: fixed;
+}
+
+.admin-res-table th {
+  text-align: left;
+  padding: 0 1em;
+  font-size: 0.7em;
+  font-weight: 800;
+  color: var(--color-text-light);
+}
+
+.admin-res-table th:nth-child(1) { width: 12%; }
+.admin-res-table th:nth-child(2) { width: 22%; }
+.admin-res-table th:nth-child(3) { width: 30%; }
+.admin-res-table th:nth-child(4) { width: 12%; }
+.admin-res-table th:nth-child(5) { width: 12%; }
+.admin-res-table th:nth-child(6) { width: 12%; }
+
+.admin-res-table td {
+  background-color: var(--color-white);
+  padding: 1em;
+  vertical-align: middle;
+  font-size: 0.9em;
+}
+
+.admin-res-empty {
+  text-align: center;
+  padding: 2.5em;
+  color: var(--color-text-light);
+}
+
+.td-guest {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.td-guest span {
+  font-size: 0.85em;
+  color: var(--color-text-light);
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: var(--color-text-light);
+}
+
+.td-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.td-detalle-line span {
+  font-size: 0.85em;
+  color: var(--color-text-light);
+}
+
+.td-payment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.pack-tag {
+  font-size: 0.75em;
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 0.35em 0.8em;
+  border-radius: 1em;
+  font-size: 0.75em;
+  font-weight: 800;
+}
+
+.status-confirmed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-cancelled {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
+.btn-cancel-admin {
+  background-color: #fdecea;
+  color: #b71c1c;
+  border: 1px solid #f5c6cb;
+  padding: 0.5em 0.8em;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+  font-weight: 700;
+  cursor: pointer;
+}

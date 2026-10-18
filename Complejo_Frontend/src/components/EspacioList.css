@@ -1,0 +1,41 @@
+.catalogo-wrapper {
+  padding: 2em 4em;
+  background-color: var(--color-brand-cream);
+  min-height: 85vh;
+}
+
+.catalogo-hero-mapa {
+  width: 100%;
+  background-color: var(--color-brand-green);
+  color: var(--color-white);
+  border-radius: 1.2em;
+  padding: 3em;
+  margin-bottom: 2.5em;
+}
+
+.catalogo-overline {
+  color: var(--color-brand-tan);
+  font-size: 0.8em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.catalogo-title {
+  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-size: 2.4em;
+  margin-bottom: 0.4em;
+}
+
+.catalogo-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.95em;
+}
+
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(22em, 1fr));
+  gap: 2em;
+}

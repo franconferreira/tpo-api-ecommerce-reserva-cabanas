@@ -12,6 +12,8 @@ import java.util.List;
 @Builder
 public class ReservaResponseDTO {
     private Long id;
+    private String nombreUsuario;
+    private String emailUsuario;
     private LocalDateTime fechaCreacion;
     private Double totalSinDescuento;
     private Double descuentoPackPorcentaje;

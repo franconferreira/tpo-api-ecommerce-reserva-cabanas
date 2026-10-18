@@ -5,9 +5,9 @@ import com.uade.tpo.complejo.dto.response.EspacioResponseDTO;
 import com.uade.tpo.complejo.service.EspacioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,6 +16,11 @@ import java.util.Map;
 public class AdminEspacioController {
 
     private final EspacioService espacioService;
+
+    @GetMapping
+    public ResponseEntity<List<EspacioResponseDTO>> obtenerTodosLosEspacios() {
+        return ResponseEntity.ok(espacioService.obtenerTodosLosEspacios());
+    }
 
     @PostMapping
     public ResponseEntity<EspacioResponseDTO> crearEspacio(@RequestBody EspacioRequestDTO request) {

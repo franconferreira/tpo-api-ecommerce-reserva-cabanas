@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface EspacioService {
     List<EspacioResponseDTO> obtenerEspaciosActivos(TipoEspacio categoria);
+    List<EspacioResponseDTO> obtenerTodosLosEspacios();
     EspacioResponseDTO obtenerEspacioPorId(Long id);
     List<LocalDate> obtenerFechasOcupadas(Long id);
     EspacioResponseDTO crearEspacio(EspacioRequestDTO request);

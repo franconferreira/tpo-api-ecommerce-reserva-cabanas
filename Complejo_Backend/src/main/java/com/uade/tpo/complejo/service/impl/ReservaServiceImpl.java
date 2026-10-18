@@ -20,8 +20,15 @@ public class ReservaServiceImpl implements ReservaService {
     private final UsuarioRepository usuarioRepository;
 
     private ReservaResponseDTO mapToDTO(Reserva reserva) {
+        String nombreCompleto = reserva.getUsuario() != null
+                ? reserva.getUsuario().getNombre() + " " + reserva.getUsuario().getApellido()
+                : "";
+        String email = reserva.getUsuario() != null ? reserva.getUsuario().getEmail() : "";
+
         return ReservaResponseDTO.builder()
                 .id(reserva.getId())
+                .nombreUsuario(nombreCompleto)
+                .emailUsuario(email)
                 .fechaCreacion(reserva.getFechaCreacion())
                 .total(reserva.getTotal())
                 .totalSinDescuento(reserva.getTotalSinDescuento())

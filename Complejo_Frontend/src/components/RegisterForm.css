@@ -1,0 +1,152 @@
+.register-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.register-left-panel {
+  flex: 1;
+  background-color: var(--color-brand-green);
+  color: var(--color-white);
+  padding: 3em 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.register-brand {
+  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-size: 1.4em;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.register-left-hero {
+  max-width: 28em;
+}
+
+.register-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 0.4em 0.9em;
+  border-radius: 1.5em;
+  font-size: 0.75em;
+  font-weight: 700;
+  margin-bottom: 1.2em;
+}
+
+.register-left-hero h1 {
+  color: var(--color-white);
+  font-size: 2.5em;
+  line-height: 1.15;
+  margin-bottom: 0.5em;
+}
+
+.register-left-hero p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.register-left-footer {
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.register-right-panel {
+  flex: 1;
+  background-color: var(--color-brand-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5em;
+}
+
+.register-form-box {
+  width: 100%;
+  max-width: 28em;
+  background-color: var(--color-white);
+  padding: 2.2em;
+  border-radius: 1em;
+  border: 1px solid var(--color-input-border);
+}
+
+.register-overline {
+  color: var(--color-brand-tan);
+  font-size: 0.75em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.register-header-titles h2 {
+  font-size: 1.8em;
+  margin: 0.2em 0;
+}
+
+.register-header-titles p {
+  color: var(--color-text-light);
+  font-size: 0.9em;
+  margin-bottom: 1.3em;
+}
+
+.register-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  border: 1px solid #f5c6cb;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.register-row {
+  display: flex;
+  gap: 1em;
+}
+
+.register-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.register-field label {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.register-field input {
+  padding: 0.75em 0.9em;
+  border-radius: 0.5em;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  font-size: 0.95em;
+}
+
+.register-btn-submit {
+  background-color: var(--color-brand-green);
+  color: var(--color-white);
+  border: none;
+  padding: 0.9em 1.2em;
+  border-radius: 0.6em;
+  font-size: 0.95em;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5em;
+}
+
+.register-footer-links {
+  margin-top: 1.3em;
+  text-align: center;
+  font-size: 0.9em;
+}

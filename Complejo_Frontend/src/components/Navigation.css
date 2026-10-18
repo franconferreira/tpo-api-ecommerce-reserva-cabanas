@@ -1,0 +1,128 @@
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 3em;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-input-border);
+}
+
+.admin-nav {
+  background-color: #fbfaf7;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--color-brand-green);
+  text-decoration: none;
+}
+
+.nav-badge {
+  background-color: #e6e4dd;
+  color: var(--color-text-dark);
+  font-size: 0.65em;
+  font-weight: 800;
+  padding: 0.4em 0.8em;
+  border-radius: 1em;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 1.5em;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-pills {
+  background-color: #ecebe4;
+  padding: 0.3em;
+  border-radius: 2em;
+  gap: 0.4em;
+}
+
+.nav-link {
+  color: var(--color-text-dark);
+  font-size: 0.9em;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.5em 1.1em;
+  border-radius: 1.5em;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  text-decoration: none;
+  color: var(--color-brand-green);
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--color-brand-green);
+  color: var(--color-white);
+}
+
+.nav-link.active-text {
+  color: var(--color-brand-green);
+  font-weight: 800;
+}
+
+.nav-actions {
+  gap: 1em;
+}
+
+.nav-user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 0.85em;
+}
+
+.nav-user-info span {
+  font-size: 0.8em;
+  color: var(--color-text-light);
+}
+
+.nav-btn-cart {
+  background-color: #f1f2ec;
+  color: var(--color-brand-green);
+  border: 1px solid var(--color-input-border);
+  padding: 0.55em 1.1em;
+  border-radius: 1.5em;
+  font-weight: 700;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.nav-btn-outline {
+  background: transparent;
+  color: var(--color-text-dark);
+  border: 1px solid var(--color-input-border);
+  padding: 0.5em 1em;
+  border-radius: 1.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-btn-primary {
+  background-color: var(--color-brand-green);
+  color: var(--color-white);
+  padding: 0.55em 1.2em;
+  border-radius: 1.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-btn-primary:hover {
+  text-decoration: none;
+}

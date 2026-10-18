@@ -1,31 +1,48 @@
-import React from 'react';
-import './EspacioCard.css';
+import React from 'react'
+import './EspacioCard.css'
 
-export const EspacioCard = ({ espacio, onAgregar }) => {
-  const { nombre, precioBase, descripcion, imagenes } = espacio;
-  
-  // Usamos la primera imagen del array si existe
-  const imagenUrl = imagenes && imagenes.length > 0 ? imagenes[0] : 'https://via.placeholder.com/800x600?text=Sin+Imagen';
+function EspacioCard({ id, nombre, descripcion, precioBase, tipo, imagenes, onVerDetalle }) {
+  const imagenPrincipal = imagenes && imagenes.length > 0 ? imagenes[0] : ''
+
+  const handleClick = () => {
+    onVerDetalle({
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      precioBase: precioBase,
+      tipo: tipo,
+      imagenes: imagenes
+    })
+  }
 
   return (
-    <div className="espacio-card">
-      <div className="card-image-container">
-        <img src={imagenUrl} alt={nombre} className="card-image" />
-      </div>
-      
-      <div className="card-content">
-        <h3 className="card-title">{nombre}</h3>
-        <p className="card-desc">{descripcion}</p>
-        
-        <div className="card-footer">
-          <div className="price-container">
-            <span className="price">${precioBase}</span>
-            <span className="price-night">/ night</span>
-          </div>
-          {/* Levantamiento de Estado: el hijo llama a la función del padre */}
-          <button className="button-primary" onClick={onAgregar}>Agregar al Carrito</button>
+    <div className="espacio-card" onClick={handleClick}>
+      <div className="ec-image-wrapper">
+        <img src={imagenPrincipal} alt={nombre} className="ec-image" />
+        <div className="ec-tag-top-left">
+          <span>🌲 Whispering Pines</span>
         </div>
       </div>
+
+      <div className="ec-content">
+        <div className="ec-header">
+          <h3 className="ec-title">{nombre}</h3>
+          <span className="ec-category-tag">{tipo}</span>
+        </div>
+
+        <p className="ec-desc">{descripcion}</p>
+      </div>
+
+      <div className="ec-footer">
+        <div className="ec-price-block">
+          <span className="ec-price-from">From </span>
+          <span className="ec-price-value">${precioBase}</span>
+          <span className="ec-price-suffix"> / night</span>
+        </div>
+        <span className="ec-action-link">Explore Space ➔</span>
+      </div>
     </div>
-  );
-};
+  )
+}
+
+export default EspacioCard

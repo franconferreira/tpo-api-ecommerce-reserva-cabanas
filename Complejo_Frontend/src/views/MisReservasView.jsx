@@ -1,10 +1,12 @@
-import React from 'react';
+import React from 'react'
+import MisReservasList from '../components/MisReservasList'
 
-export const MisReservasView = () => {
-    return (
-        <div>
-            <h1>MisReservasView</h1>
-            <p>Contenido pendiente (TBD)</p>
-        </div>
-    );
-};
+function MisReservasView() {
+  return (
+    <>
+      <MisReservasList />
+    </>
+  )
+}
+
+export default MisReservasView
