@@ -1,4 +1,5 @@
 import React from 'react'
+import AdminPrecioForm from './AdminPrecioForm'
 
 function AdminEspacioRow({ espacio, onModificarPrecio, onToggleEstado }) {
   return (
@@ -22,17 +23,7 @@ function AdminEspacioRow({ espacio, onModificarPrecio, onToggleEstado }) {
         <span className="ad-type-badge">{espacio.tipo}</span>
       </td>
       <td>
-        <div className="ad-td-rate">
-          <span>$</span>
-          <input
-            type="number"
-            name="precioBase"
-            className="ad-inline-input"
-            value={espacio.precioBase}
-            onChange={(e) => onModificarPrecio(espacio, e.target.value)}
-          />
-          <small>/ night</small>
-        </div>
+        <AdminPrecioForm espacio={espacio} onModificarPrecio={onModificarPrecio} />
       </td>
       <td>
         <button

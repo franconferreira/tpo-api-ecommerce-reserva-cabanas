@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import FechaOcupadaItem from './FechaOcupadaItem'
+import FechasOcupadasLista from './FechasOcupadasLista'
 import ReservaWidgetForm from './ReservaWidgetForm'
 import './DetalleEspacio.css'
 
@@ -61,14 +61,7 @@ function DetalleEspacio({ espacio, isLogged, setCarritoData, onAbrirCarrito }) {
             </div>
 
             {fechasOcupadas.length > 0 && (
-              <div className="di-ocupadas-box">
-                <strong>📅 Currently Unavailable Dates:</strong>
-                <div className="di-ocupadas-list">
-                  {fechasOcupadas.map((fecha, index) => (
-                    <FechaOcupadaItem fecha={fecha} key={index} />
-                  ))}
-                </div>
-              </div>
+              <FechasOcupadasLista fechas={fechasOcupadas} />
             )}
           </div>
 

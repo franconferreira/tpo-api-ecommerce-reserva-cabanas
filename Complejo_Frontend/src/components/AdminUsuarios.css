@@ -21,7 +21,7 @@
 }
 
 .admin-usr-overline {
-  color: var(--color-brand-tan);
+  color: #cc7440;
   font-size: 0.75em;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -33,7 +33,7 @@
 }
 
 .admin-usr-subtitle {
-  color: var(--color-text-light);
+  color: #737373;
   font-size: 0.95em;
 }
 
@@ -74,7 +74,7 @@
   padding: 0 1.2em;
   font-size: 0.7em;
   font-weight: 800;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .admin-usr-table th:nth-child(1) { width: 25%; }
@@ -84,7 +84,7 @@
 .admin-usr-table th:nth-child(5) { width: 18%; }
 
 .admin-usr-table td {
-  background-color: var(--color-white);
+  background-color: #ffffff;
   padding: 1em 1.2em;
   vertical-align: middle;
 }
@@ -92,17 +92,17 @@
 .td-profile strong {
   display: block;
   font-size: 0.95em;
-  color: var(--color-text-dark);
+  color: #2a2a2a;
 }
 
 .strikethrough {
   text-decoration: line-through;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .usr-id {
   font-size: 0.8em;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .td-contact {
@@ -118,14 +118,14 @@
 
 .usr-username {
   font-size: 0.8em;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .usr-role-select {
   padding: 0.45em 0.7em;
   border-radius: 0.5em;
-  border: 1px solid var(--color-input-border);
-  background-color: var(--color-input-bg);
+  border: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
   font-size: 0.8em;
   font-weight: 700;
 }
@@ -145,7 +145,7 @@
 
 .status-deact {
   background-color: #eeeeee;
-  color: var(--color-text-light);
+  color: #737373;
 }
 
 .btn-toggle-lifecycle {
@@ -160,11 +160,11 @@
 
 .btn-deactivate {
   background-color: #f5f5f5;
-  color: var(--color-text-dark);
-  border: 1px solid var(--color-input-border);
+  color: #2a2a2a;
+  border: 1px solid #e0e0e0;
 }
 
 .btn-restore {
-  background-color: var(--color-brand-green);
-  color: var(--color-white);
+  background-color: #153c2b;
+  color: #ffffff;
 }

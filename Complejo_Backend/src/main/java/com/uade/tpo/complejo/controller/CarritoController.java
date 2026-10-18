@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/carrito")
 @RequiredArgsConstructor
@@ -30,8 +32,8 @@ public class CarritoController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<Void> checkout() {
+    public ResponseEntity<Map<String, String>> checkout() {
         carritoService.checkout();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Map.of("mensaje", "Checkout realizado con exito"));
     }
 }

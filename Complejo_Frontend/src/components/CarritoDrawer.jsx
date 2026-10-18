@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import CarritoItem from './CarritoItem'
+import CarritoHeader from './CarritoHeader'
+import CarritoFooter from './CarritoFooter'
 import './CarritoDrawer.css'
 
 function CarritoDrawer({ carritoData, setCarritoData, isOpen, onClose }) {
@@ -48,18 +50,7 @@ function CarritoDrawer({ carritoData, setCarritoData, isOpen, onClose }) {
   return (
     <div className="carrito-backdrop">
       <div className="carrito-panel">
-        <div className="carrito-header">
-          <div className="ch-title-block">
-            <span className="ch-icon">🛍️</span>
-            <div>
-              <h2 className="ch-title">Your Sanctuary Cart</h2>
-              <span className="ch-subtitle">{items.length} spaces selected</span>
-            </div>
-          </div>
-          <button type="button" className="ch-close-btn" onClick={onClose}>
-            ✕
-          </button>
-        </div>
+        <CarritoHeader cantidad={items.length} onClose={onClose} />
 
         <div className="carrito-body">
           {items.length === 0 ? (
@@ -79,26 +70,13 @@ function CarritoDrawer({ carritoData, setCarritoData, isOpen, onClose }) {
           )}
         </div>
 
-        <div className="carrito-footer">
-          <div className="cf-row">
-            <span>Subtotal (incl. seasonal 20% if applicable)</span>
-            <span>${totalSinDescuento}</span>
-          </div>
-          <div className="cf-row">
-            <span>Multi-Space Pack Discount (2+ spaces)</span>
-            <span className="cf-discount">{descuentoPack}% OFF</span>
-          </div>
-          <div className="cf-total-row">
-            <span>Total</span>
-            <span className="cf-total-price">${total}</span>
-          </div>
-
-          {items.length > 0 && (
-            <button type="button" className="cf-checkout-btn" onClick={handleIrACheckout}>
-              Proceed to Checkout ➔
-            </button>
-          )}
-        </div>
+        <CarritoFooter
+          totalSinDescuento={totalSinDescuento}
+          descuentoPack={descuentoPack}
+          total={total}
+          mostrarCheckout={items.length > 0}
+          onIrACheckout={handleIrACheckout}
+        />
       </div>
     </div>
   )

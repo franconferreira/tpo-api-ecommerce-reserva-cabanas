@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AdminEspacioForm from './AdminEspacioForm'
-import AdminEspacioRow from './AdminEspacioRow'
+import AdminEspaciosTabla from './AdminEspaciosTabla'
 import './AdminEspacios.css'
 
 function AdminEspacios() {
@@ -108,28 +108,11 @@ function AdminEspacios() {
 
         <AdminEspacioForm onEspacioCreado={handleEspacioCreado} />
 
-        <div className="ad-table-container">
-          <table className="ad-table">
-            <thead>
-              <tr>
-                <th>ACCOMMODATION & PLOT</th>
-                <th>CATEGORY</th>
-                <th>RATE ($ / NIGHT)</th>
-                <th>STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {espacios.map((espacio) => (
-                <AdminEspacioRow
-                  espacio={espacio}
-                  onModificarPrecio={handleModificarPrecio}
-                  onToggleEstado={handleToggleEstado}
-                  key={espacio.id}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <AdminEspaciosTabla
+          espacios={espacios}
+          onModificarPrecio={handleModificarPrecio}
+          onToggleEstado={handleToggleEstado}
+        />
       </div>
     </div>
   )

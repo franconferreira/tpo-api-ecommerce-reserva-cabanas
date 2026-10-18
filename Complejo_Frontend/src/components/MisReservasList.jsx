@@ -39,17 +39,17 @@ function MisReservasList() {
     }
 
     fetch(`${URL}/api/reservas/${id}`, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Error al cancelar reserva')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.mensaje) {
+          const nuevasReservas = [...reservas]
+          nuevasReservas.splice(indice, 1)
+          setReservas(nuevasReservas)
+          setError('')
+        } else {
+          console.error('Error al cancelar: ', data)
+          setError('No se pudo cancelar la reserva')
         }
-        return res.json()
-      })
-      .then(() => {
-        const nuevasReservas = [...reservas]
-        nuevasReservas.splice(indice, 1)
-        setReservas(nuevasReservas)
-        setError('')
       })
       .catch((err) => {
         console.error('Error al cancelar: ', err)

@@ -1,6 +1,6 @@
 .detalle-wrapper {
   padding: 2.5em 4em;
-  background-color: var(--color-brand-cream);
+  background-color: #f4f3ef;
   min-height: 85vh;
   display: flex;
   justify-content: center;
@@ -9,10 +9,10 @@
 .detalle-card {
   width: 100%;
   max-width: 75em;
-  background-color: var(--color-white);
+  background-color: #ffffff;
   border-radius: 1.2em;
   padding: 2.5em;
-  border: 1px solid var(--color-input-border);
+  border: 1px solid #e0e0e0;
 }
 
 .detalle-header {
@@ -20,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1.5em;
-  border-bottom: 1px solid var(--color-input-border);
+  border-bottom: 1px solid #e0e0e0;
   margin-bottom: 2em;
 }
 
@@ -37,7 +37,7 @@
 
 .dh-tag {
   background-color: #fde8dd;
-  color: var(--color-brand-tan);
+  color: #cc7440;
   padding: 0.35em 0.8em;
   border-radius: 0.5em;
   font-size: 0.75em;
@@ -46,8 +46,8 @@
 
 .dh-close-btn {
   background-color: #f1f2ec;
-  color: var(--color-text-dark);
-  border: 1px solid var(--color-input-border);
+  color: #2a2a2a;
+  border: 1px solid #e0e0e0;
   padding: 0.6em 1.2em;
   border-radius: 1.5em;
   font-weight: 600;
@@ -79,14 +79,14 @@
 }
 
 .di-parrafo {
-  color: var(--color-text-light);
+  color: #737373;
   line-height: 1.6;
   font-size: 0.95em;
 }
 
 .di-ocupadas-box {
   background-color: #f9f8f4;
-  border: 1px solid var(--color-input-border);
+  border: 1px solid #e0e0e0;
   padding: 1.2em;
   border-radius: 0.8em;
 }
@@ -112,10 +112,10 @@
 }
 
 .widget-reserva {
-  background-color: var(--color-brand-cream);
+  background-color: #f4f3ef;
   padding: 2em;
   border-radius: 1em;
-  border: 1px solid var(--color-input-border);
+  border: 1px solid #e0e0e0;
 }
 
 .wr-header {
@@ -128,11 +128,11 @@
 .wr-price-big {
   font-size: 1.8em;
   font-weight: 800;
-  color: var(--color-brand-green);
+  color: #153c2b;
 }
 
 .wr-price-suffix {
-  color: var(--color-text-light);
+  color: #737373;
   font-size: 0.9em;
 }
 
@@ -172,19 +172,19 @@
 .wr-date-box label {
   font-size: 0.75em;
   font-weight: 800;
-  color: var(--color-text-dark);
+  color: #2a2a2a;
 }
 
 .wr-date-box input {
   padding: 0.7em;
   border-radius: 0.5em;
-  border: 1px solid var(--color-input-border);
-  background-color: var(--color-white);
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
   font-size: 0.9em;
 }
 
 .wr-summary {
-  background-color: var(--color-white);
+  background-color: #ffffff;
   padding: 1.2em;
   border-radius: 0.8em;
   margin-bottom: 1.5em;
@@ -195,14 +195,14 @@
 
 .wr-info-note {
   font-size: 0.85em;
-  color: var(--color-text-dark);
+  color: #2a2a2a;
   line-height: 1.4;
 }
 
 .wr-submit-btn {
   width: 100%;
-  background-color: var(--color-brand-green);
-  color: var(--color-white);
+  background-color: #153c2b;
+  color: #ffffff;
   border: none;
   padding: 1em;
   border-radius: 0.6em;
@@ -219,8 +219,8 @@
 .detalle-back-btn {
   display: inline-block;
   margin-top: 1em;
-  background-color: var(--color-brand-green);
-  color: var(--color-white);
+  background-color: #153c2b;
+  color: #ffffff;
   padding: 0.7em 1.4em;
   border-radius: 1.5em;
 }

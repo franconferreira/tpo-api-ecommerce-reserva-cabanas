@@ -1,6 +1,6 @@
 .mr-wrapper {
   padding: 2.5em 4em;
-  background-color: var(--color-brand-cream);
+  background-color: #f4f3ef;
   min-height: 85vh;
   display: flex;
   justify-content: center;
@@ -24,13 +24,13 @@
 }
 
 .mr-subtitle {
-  color: var(--color-text-light);
+  color: #737373;
   font-size: 0.95em;
 }
 
 .mr-btn-new {
-  background-color: var(--color-brand-green);
-  color: var(--color-white);
+  background-color: #153c2b;
+  color: #ffffff;
   padding: 0.75em 1.4em;
   border-radius: 1.5em;
   font-size: 0.9em;
@@ -56,18 +56,18 @@
 }
 
 .mr-empty-state {
-  background-color: var(--color-white);
+  background-color: #ffffff;
   padding: 3em;
   text-align: center;
   border-radius: 1em;
-  border: 1px solid var(--color-input-border);
+  border: 1px solid #e0e0e0;
 }
 
 .mr-card {
-  background-color: var(--color-white);
+  background-color: #ffffff;
   border-radius: 1em;
   padding: 1.8em;
-  border: 1px solid var(--color-input-border);
+  border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
   gap: 1.2em;
@@ -78,7 +78,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1em;
-  border-bottom: 1px solid var(--color-input-border);
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .mr-status-pill {
@@ -93,7 +93,7 @@
 
 .mr-conf-code {
   font-size: 1em;
-  color: var(--color-text-dark);
+  color: #2a2a2a;
 }
 
 .mr-totals {
@@ -104,7 +104,7 @@
 
 .mr-pack-badge {
   background-color: #fde8dd;
-  color: var(--color-brand-tan);
+  color: #cc7440;
   padding: 0.3em 0.7em;
   border-radius: 0.5em;
   font-size: 0.75em;
@@ -113,7 +113,7 @@
 
 .mr-total-price {
   font-size: 1.3em;
-  color: var(--color-brand-green);
+  color: #153c2b;
 }
 
 .mr-detalles-list {
@@ -134,14 +134,14 @@
 .mr-detalle-dates {
   display: block;
   font-size: 0.85em;
-  color: var(--color-text-light);
+  color: #737373;
   margin-top: 0.2em;
 }
 
 .mr-detalle-rate {
   font-size: 0.9em;
   font-weight: 700;
-  color: var(--color-text-dark);
+  color: #2a2a2a;
 }
 
 .mr-card-footer {

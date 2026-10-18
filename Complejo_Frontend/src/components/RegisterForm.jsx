@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthBanner from './AuthBanner'
+import AuthFormTitulos from './AuthFormTitulos'
+import CampoFormulario from './CampoFormulario'
 import './RegisterForm.css'
 
 function RegisterForm({ onLogin }) {
@@ -48,19 +50,15 @@ function RegisterForm({ onLogin }) {
     }
 
     fetch(URL, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Error al registrar usuario')
-        }
-        return res.json()
-      })
+      .then((res) => res.json())
       .then((data) => {
         if (data && data.token) {
           localStorage.setItem('jwtToken', data.token)
           setError('')
           onLogin(data.token)
         } else {
-          setError('No se pudo completar el registro')
+          console.error('Error al registrar: ', data)
+          setError('El usuario o email ya se encuentra registrado')
         }
       })
       .catch((err) => {
@@ -86,71 +84,31 @@ function RegisterForm({ onLogin }) {
 
       <div className="register-right-panel">
         <div className="register-form-box">
-          <div className="register-header-titles">
-            <span className="register-overline">NEW GUEST REGISTRATION</span>
-            <h2>Create Your Account</h2>
-            <p>Complete your details to reserve stays across the sanctuary.</p>
-          </div>
+          <AuthFormTitulos
+            titlesClass="register-header-titles"
+            overlineClass="register-overline"
+            overline="NEW GUEST REGISTRATION"
+            title="Create Your Account"
+            description="Complete your details to reserve stays across the sanctuary."
+          />
 
           {error && <p className="register-error">{error}</p>}
 
           <form onSubmit={(e) => e.preventDefault()} className="register-form">
-            <div className="register-field">
-              <label>Username</label>
-              <input
-                type="text"
-                name="username"
-                placeholder="eleanor_v"
-                value={username}
-                onChange={handleUsernameChange}
-              />
-            </div>
+            <CampoFormulario className="register-field" label="Username" type="text" name="username"
+              placeholder="eleanor_v" value={username} onChange={handleUsernameChange} />
 
             <div className="register-row">
-              <div className="register-field">
-                <label>First Name (Nombre)</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  placeholder="Eleanor"
-                  value={nombre}
-                  onChange={handleNombreChange}
-                />
-              </div>
-
-              <div className="register-field">
-                <label>Last Name (Apellido)</label>
-                <input
-                  type="text"
-                  name="apellido"
-                  placeholder="Vance"
-                  value={apellido}
-                  onChange={handleApellidoChange}
-                />
-              </div>
+              <CampoFormulario className="register-field" label="First Name (Nombre)" type="text" name="nombre"
+                placeholder="Eleanor" value={nombre} onChange={handleNombreChange} />
+              <CampoFormulario className="register-field" label="Last Name (Apellido)" type="text" name="apellido"
+                placeholder="Vance" value={apellido} onChange={handleApellidoChange} />
             </div>
 
-            <div className="register-field">
-              <label>Email Address</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="eleanor.vance@haven.com"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-
-            <div className="register-field">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-            </div>
+            <CampoFormulario className="register-field" label="Email Address" type="email" name="email"
+              placeholder="eleanor.vance@haven.com" value={email} onChange={handleEmailChange} />
+            <CampoFormulario className="register-field" label="Password" type="password" name="password"
+              placeholder="••••••••" value={password} onChange={handlePasswordChange} />
 
             <button type="submit" className="register-btn-submit" onClick={handleClick}>
               Create Account ➔

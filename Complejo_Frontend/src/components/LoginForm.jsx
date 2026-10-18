@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthBanner from './AuthBanner'
+import AuthFormTitulos from './AuthFormTitulos'
+import CampoFormulario from './CampoFormulario'
 import './LoginForm.css'
 
 function LoginForm({ onLogin }) {
@@ -32,19 +34,15 @@ function LoginForm({ onLogin }) {
     }
 
     fetch(URL, options)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Credenciales incorrectas')
-        }
-        return res.json()
-      })
+      .then((res) => res.json())
       .then((data) => {
         if (data && data.token) {
           localStorage.setItem('jwtToken', data.token)
           setError('')
           onLogin(data.token)
         } else {
-          setError('No se pudo iniciar sesion')
+          console.error('Error al iniciar sesion: ', data)
+          setError('Email o contraseña incorrectos')
         }
       })
       .catch((err) => {
@@ -70,36 +68,21 @@ function LoginForm({ onLogin }) {
 
       <div className="login-right-panel">
         <div className="login-form-box">
-          <div className="login-header-titles">
-            <span className="login-overline">WELCOME BACK</span>
-            <h2>Guest Sign In</h2>
-            <p>Enter your credentials to access your sanctuary account.</p>
-          </div>
+          <AuthFormTitulos
+            titlesClass="login-header-titles"
+            overlineClass="login-overline"
+            overline="WELCOME BACK"
+            title="Guest Sign In"
+            description="Enter your credentials to access your sanctuary account."
+          />
 
           {error && <p className="login-error">{error}</p>}
 
           <form onSubmit={(e) => e.preventDefault()} className="login-form">
-            <div className="login-field">
-              <label>Email Address</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="name@example.com"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-
-            <div className="login-field">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-            </div>
+            <CampoFormulario className="login-field" label="Email Address" type="email" name="email"
+              placeholder="name@example.com" value={email} onChange={handleEmailChange} />
+            <CampoFormulario className="login-field" label="Password" type="password" name="password"
+              placeholder="••••••••" value={password} onChange={handlePasswordChange} />
 
             <button type="submit" className="login-btn-submit" onClick={handleClick}>
               Sign In to Account ➔
