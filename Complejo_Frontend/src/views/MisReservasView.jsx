@@ -1,10 +1,14 @@
 import React from 'react'
 import MisReservasList from '../components/MisReservasList'
 
-function MisReservasView() {
+function MisReservasView({ idioma, ocultasIds, setOcultasIds }) {
   return (
     <>
-      <MisReservasList />
+      <MisReservasList
+        idioma={idioma}
+        ocultasIds={ocultasIds}
+        setOcultasIds={setOcultasIds}
+      />
     </>
   )
 }

@@ -1,8 +1,10 @@
 import React from 'react'
 import AdminReservaDetalleLine from './AdminReservaDetalleLine'
+import AdminCancelarForm from './AdminCancelarForm'
 
-function AdminReservaRow({ reserva, onCancelar }) {
+function AdminReservaRow({ idioma, reserva, onCancelar }) {
   const isCancelled = reserva.estado === 'CANCELADA'
+  const es = idioma === 'es'
 
   return (
     <tr className={isCancelled ? 'row-cancelled' : ''}>
@@ -12,7 +14,7 @@ function AdminReservaRow({ reserva, onCancelar }) {
       <td>
         <div className="td-guest">
           <strong className={isCancelled ? 'strikethrough' : ''}>
-            {reserva.nombreUsuario || 'Guest'}
+            {reserva.nombreUsuario || (es ? 'Huésped' : 'Guest')}
           </strong>
           <span>{reserva.emailUsuario}</span>
         </div>
@@ -20,8 +22,8 @@ function AdminReservaRow({ reserva, onCancelar }) {
       <td>
         <div className="td-detalles">
           {reserva.detalles &&
-            reserva.detalles.map((det, idx) => (
-              <AdminReservaDetalleLine detalle={det} key={idx} />
+            reserva.detalles.map((det) => (
+              <AdminReservaDetalleLine idioma={idioma} detalle={det} key={`${det.nombreEspacio}-${det.checkIn}`} />
             ))}
         </div>
       </td>
@@ -47,14 +49,18 @@ function AdminReservaRow({ reserva, onCancelar }) {
         </span>
       </td>
       <td>
-        {!isCancelled && (
-          <button
-            type="button"
-            className="btn-cancel-admin"
-            onClick={() => onCancelar(reserva.id)}
-          >
-            ⊗ Cancel Reservation
-          </button>
+        {!isCancelled ? (
+          <AdminCancelarForm
+            idioma={idioma}
+            reservaId={reserva.id}
+            onCancelar={onCancelar}
+          />
+        ) : (
+          reserva.mensajeCancelacion && (
+            <span className="admin-cancel-reason">
+              {reserva.mensajeCancelacion}
+            </span>
+          )
         )}
       </td>
     </tr>

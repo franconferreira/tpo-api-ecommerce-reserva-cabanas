@@ -34,6 +34,7 @@ public class ReservaServiceImpl implements ReservaService {
                 .totalSinDescuento(reserva.getTotalSinDescuento())
                 .descuentoPackPorcentaje(reserva.getDescuentoPackPorcentaje())
                 .estado(reserva.getEstado())
+                .mensajeCancelacion(reserva.getMensajeCancelacion())
                 .detalles(reserva.getDetalles().stream().map(d -> ReservaResponseDTO.DetalleReservaDTO.builder()
                         .nombreEspacio(d.getEspacio().getNombre())
                         .checkIn(d.getCheckIn())
@@ -67,10 +68,13 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public void cancelarReservaAdmin(Long id) {
+    public void cancelarReservaAdmin(Long id, String mensajeCancelacion) {
         Reserva reserva = reservaRepository.findById(id).orElseThrow();
         reserva.setEstado(EstadoReserva.CANCELADA);
-        reserva.setActivo(false);
+        String motivo = (mensajeCancelacion != null && !mensajeCancelacion.trim().isEmpty())
+                ? mensajeCancelacion.trim()
+                : "Cancelada por la administracion del complejo.";
+        reserva.setMensajeCancelacion(motivo);
         reservaRepository.save(reserva);
     }
 }

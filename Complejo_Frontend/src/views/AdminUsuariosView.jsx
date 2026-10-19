@@ -1,10 +1,10 @@
 import React from 'react'
 import AdminUsuarios from '../components/AdminUsuarios'
 
-function AdminUsuariosView() {
+function AdminUsuariosView({ idioma }) {
   return (
     <>
-      <AdminUsuarios />
+      <AdminUsuarios idioma={idioma} />
     </>
   )
 }

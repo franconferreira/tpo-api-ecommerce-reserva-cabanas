@@ -1,10 +1,10 @@
 import React from 'react'
 import AdminEspacios from '../components/AdminEspacios'
 
-function AdminEspaciosView() {
+function AdminEspaciosView({ idioma }) {
   return (
     <>
-      <AdminEspacios />
+      <AdminEspacios idioma={idioma} />
     </>
   )
 }

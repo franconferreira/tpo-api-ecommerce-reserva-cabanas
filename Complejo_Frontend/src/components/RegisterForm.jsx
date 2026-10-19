@@ -5,7 +5,7 @@ import AuthFormTitulos from './AuthFormTitulos'
 import CampoFormulario from './CampoFormulario'
 import './RegisterForm.css'
 
-function RegisterForm({ onLogin }) {
+function RegisterForm({ idioma, setIdioma, onLogin }) {
   const [username, setUsername] = useState('')
   const [nombre, setNombre] = useState('')
   const [apellido, setApellido] = useState('')
@@ -13,12 +13,14 @@ function RegisterForm({ onLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const URL = 'http://localhost:8080/api/auth/register'
+  const es = idioma === 'es'
 
   const handleUsernameChange = (e) => setUsername(e.target.value)
   const handleNombreChange = (e) => setNombre(e.target.value)
   const handleApellidoChange = (e) => setApellido(e.target.value)
   const handleEmailChange = (e) => setEmail(e.target.value)
   const handlePasswordChange = (e) => setPassword(e.target.value)
+  const handleToggleIdioma = () => setIdioma(idioma === 'es' ? 'en' : 'es')
 
   const handleClick = () => {
     if (
@@ -28,7 +30,7 @@ function RegisterForm({ onLogin }) {
       email.trim() === '' ||
       password.trim() === ''
     ) {
-      setError('Todos los campos son obligatorios')
+      setError(es ? 'Todos los campos son obligatorios' : 'All fields are required')
       return
     }
 
@@ -58,12 +60,20 @@ function RegisterForm({ onLogin }) {
           onLogin(data.token)
         } else {
           console.error('Error al registrar: ', data)
-          setError('El usuario o email ya se encuentra registrado')
+          setError(
+            es
+              ? 'El usuario o email ya se encuentra registrado'
+              : 'Username or email is already registered'
+          )
         }
       })
       .catch((err) => {
         console.error('Error al registrar: ', err)
-        setError('El usuario o email ya se encuentra registrado')
+        setError(
+          es
+            ? 'El usuario o email ya se encuentra registrado'
+            : 'Username or email is already registered'
+        )
       })
   }
 
@@ -76,48 +86,98 @@ function RegisterForm({ onLogin }) {
         heroClass="register-left-hero"
         badgeClass="register-badge"
         footerClass="register-left-footer"
-        badge="🏕️ JOIN THE SANCTUARY"
-        title="Begin your woodland tradition."
-        description="Create your guest profile to reserve cabins, event barns, and lakeside activities with member benefits."
+        badge={es ? '🏕️ ÚNETE AL COMPLEJO' : '🏕️ JOIN THE SANCTUARY'}
+        title={es ? 'Comienza tu tradición en el bosque.' : 'Begin your woodland tradition.'}
+        description={
+          es
+            ? 'Crea tu perfil de huésped para reservar cabañas, salones de eventos y actividades en la laguna.'
+            : 'Create your guest profile to reserve cabins, event barns, and lakeside activities with member benefits.'
+        }
         footerText="🌲 Whispering Pines Sanctuary & Retreats"
       />
 
       <div className="register-right-panel">
         <div className="register-form-box">
+          <div className="register-lang-bar">
+            <button type="button" className="nav-btn-lang" onClick={handleToggleIdioma}>
+              {es ? '🌐 ES | EN' : '🌐 EN | ES'}
+            </button>
+          </div>
+
           <AuthFormTitulos
             titlesClass="register-header-titles"
             overlineClass="register-overline"
-            overline="NEW GUEST REGISTRATION"
-            title="Create Your Account"
-            description="Complete your details to reserve stays across the sanctuary."
+            overline={es ? 'REGISTRO DE NUEVO HUÉSPED' : 'NEW GUEST REGISTRATION'}
+            title={es ? 'Crear Cuenta' : 'Create Your Account'}
+            description={
+              es
+                ? 'Completa tus datos para reservar estadías en el complejo.'
+                : 'Complete your details to reserve stays across the sanctuary.'
+            }
           />
 
           {error && <p className="register-error">{error}</p>}
 
           <form onSubmit={(e) => e.preventDefault()} className="register-form">
-            <CampoFormulario className="register-field" label="Username" type="text" name="username"
-              placeholder="eleanor_v" value={username} onChange={handleUsernameChange} />
+            <CampoFormulario
+              className="register-field"
+              label={es ? 'Usuario' : 'Username'}
+              type="text"
+              name="username"
+              placeholder="eleanor_v"
+              value={username}
+              onChange={handleUsernameChange}
+            />
 
             <div className="register-row">
-              <CampoFormulario className="register-field" label="First Name (Nombre)" type="text" name="nombre"
-                placeholder="Eleanor" value={nombre} onChange={handleNombreChange} />
-              <CampoFormulario className="register-field" label="Last Name (Apellido)" type="text" name="apellido"
-                placeholder="Vance" value={apellido} onChange={handleApellidoChange} />
+              <CampoFormulario
+                className="register-field"
+                label={es ? 'Nombre' : 'First Name'}
+                type="text"
+                name="nombre"
+                placeholder="Eleanor"
+                value={nombre}
+                onChange={handleNombreChange}
+              />
+              <CampoFormulario
+                className="register-field"
+                label={es ? 'Apellido' : 'Last Name'}
+                type="text"
+                name="apellido"
+                placeholder="Vance"
+                value={apellido}
+                onChange={handleApellidoChange}
+              />
             </div>
 
-            <CampoFormulario className="register-field" label="Email Address" type="email" name="email"
-              placeholder="eleanor.vance@haven.com" value={email} onChange={handleEmailChange} />
-            <CampoFormulario className="register-field" label="Password" type="password" name="password"
-              placeholder="••••••••" value={password} onChange={handlePasswordChange} />
+            <CampoFormulario
+              className="register-field"
+              label={es ? 'Correo Electrónico' : 'Email Address'}
+              type="email"
+              name="email"
+              placeholder="eleanor.vance@haven.com"
+              value={email}
+              onChange={handleEmailChange}
+            />
+            <CampoFormulario
+              className="register-field"
+              label={es ? 'Contraseña' : 'Password'}
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={handlePasswordChange}
+            />
 
             <button type="submit" className="register-btn-submit" onClick={handleClick}>
-              Create Account ➔
+              {es ? 'Crear Cuenta ➔' : 'Create Account ➔'}
             </button>
           </form>
 
           <div className="register-footer-links">
             <p>
-              Already have an account? <Link to="/login">Sign in</Link>
+              {es ? '¿Ya tienes una cuenta? ' : 'Already have an account? '}
+              <Link to="/login">{es ? 'Iniciar sesión' : 'Sign in'}</Link>
             </p>
           </div>
         </div>

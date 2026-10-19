@@ -38,7 +38,7 @@ public class AdminEspacioController {
         return ResponseEntity.ok(Map.of("mensaje", "Espacio eliminado con exito"));
     }
 
-    @PatchMapping("/{id}/restaurar")
+    @RequestMapping(value = "/{id}/restaurar", method = {RequestMethod.PATCH, RequestMethod.PUT})
     public ResponseEntity<Map<String, String>> restaurarEspacio(@PathVariable Long id) {
         espacioService.restaurarEspacio(id);
         return ResponseEntity.ok(Map.of("mensaje", "Espacio restaurado con exito"));

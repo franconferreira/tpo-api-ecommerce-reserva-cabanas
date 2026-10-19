@@ -4,7 +4,18 @@ import NavAdmin from './NavAdmin'
 import NavCliente from './NavCliente'
 import './Navigation.css'
 
-function Navigation({ isLogged, rolUsuario, nombreUsuario, onLogout, onAbrirCarrito, cantidadCarrito }) {
+function Navigation({
+  idioma,
+  setIdioma,
+  isLogged,
+  rolUsuario,
+  nombreUsuario,
+  onLogout,
+  onAbrirCarrito,
+  cantidadCarrito,
+  onAbrirBuzon,
+  cantidadBuzon
+}) {
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -17,9 +28,15 @@ function Navigation({ isLogged, rolUsuario, nombreUsuario, onLogout, onAbrirCarr
     navigate('/login')
   }
 
+  const handleToggleIdioma = () => {
+    setIdioma(idioma === 'es' ? 'en' : 'es')
+  }
+
   if (rolUsuario === 'ROLE_ADMIN') {
     return (
       <NavAdmin
+        idioma={idioma}
+        onToggleIdioma={handleToggleIdioma}
         pathname={location.pathname}
         nombreUsuario={nombreUsuario}
         onSignOut={handleSignOut}
@@ -29,11 +46,15 @@ function Navigation({ isLogged, rolUsuario, nombreUsuario, onLogout, onAbrirCarr
 
   return (
     <NavCliente
+      idioma={idioma}
+      onToggleIdioma={handleToggleIdioma}
       pathname={location.pathname}
       isLogged={isLogged}
       nombreUsuario={nombreUsuario}
       cantidadCarrito={cantidadCarrito}
       onAbrirCarrito={onAbrirCarrito}
+      cantidadBuzon={cantidadBuzon}
+      onAbrirBuzon={onAbrirBuzon}
       onSignOut={handleSignOut}
     />
   )

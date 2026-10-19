@@ -44,8 +44,18 @@ public class AdminGeneralController {
     }
 
     @DeleteMapping("/reservas/{id}")
-    public ResponseEntity<Map<String, String>> cancelarReservaAdmin(@PathVariable Long id) {
-        reservaService.cancelarReservaAdmin(id);
+    public ResponseEntity<Map<String, String>> cancelarReservaAdmin(
+            @PathVariable Long id,
+            @RequestParam(required = false) String mensajeCancelacion,
+            @RequestBody(required = false) Map<String, String> body) {
+        String motivo = mensajeCancelacion;
+        if ((motivo == null || motivo.trim().isEmpty()) && body != null) {
+            motivo = body.get("mensajeCancelacion");
+            if (motivo == null || motivo.trim().isEmpty()) {
+                motivo = body.get("motivoCancelacion");
+            }
+        }
+        reservaService.cancelarReservaAdmin(id, motivo);
         return ResponseEntity.ok(Map.of("mensaje", "Reserva cancelada con exito"));
     }
 

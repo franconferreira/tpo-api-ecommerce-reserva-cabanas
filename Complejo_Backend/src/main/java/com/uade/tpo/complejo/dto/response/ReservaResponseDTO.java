@@ -19,6 +19,7 @@ public class ReservaResponseDTO {
     private Double descuentoPackPorcentaje;
     private Double total;
     private EstadoReserva estado;
+    private String mensajeCancelacion;
     private List<DetalleReservaDTO> detalles;
 
     @Data

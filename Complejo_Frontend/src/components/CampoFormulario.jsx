@@ -1,6 +1,6 @@
 import React from 'react'
 
-function CampoFormulario({ className, label, type, name, placeholder, value, onChange }) {
+function CampoFormulario({ className, label, type, name, placeholder, value, min, onChange }) {
   return (
     <div className={className}>
       <label>{label}</label>
@@ -9,6 +9,7 @@ function CampoFormulario({ className, label, type, name, placeholder, value, onC
         name={name}
         placeholder={placeholder}
         value={value}
+        min={min}
         onChange={onChange}
       />
     </div>

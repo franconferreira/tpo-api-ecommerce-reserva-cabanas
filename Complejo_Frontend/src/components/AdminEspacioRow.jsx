@@ -1,21 +1,29 @@
 import React from 'react'
 import AdminPrecioForm from './AdminPrecioForm'
 
-function AdminEspacioRow({ espacio, onModificarPrecio, onToggleEstado }) {
+function AdminEspacioRow({ idioma, espacio, onModificarPrecio, onToggleEstado }) {
+  const es = idioma === 'es'
+  const imagenPorDefecto = 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800'
+  const imagenPrincipal =
+    espacio.imagenes && espacio.imagenes.length > 0 && espacio.imagenes[0] && espacio.imagenes[0].trim() !== ''
+      ? espacio.imagenes[0]
+      : imagenPorDefecto
+
   return (
     <tr>
       <td>
         <div className="ad-td-acc">
-          {espacio.imagenes && espacio.imagenes.length > 0 && (
-            <img
-              src={espacio.imagenes[0]}
-              alt={espacio.nombre}
-              className="ad-td-img"
-            />
-          )}
+          <img
+            src={imagenPrincipal}
+            alt={espacio.nombre}
+            className="ad-td-img"
+          />
           <div>
             <strong>{espacio.nombre}</strong>
-            <span>Plot #{espacio.id} — {espacio.descripcion}</span>
+            <span>
+              {es ? `Lote #${espacio.id} — ` : `Plot #${espacio.id} — `}
+              {espacio.descripcion}
+            </span>
           </div>
         </div>
       </td>
@@ -23,7 +31,11 @@ function AdminEspacioRow({ espacio, onModificarPrecio, onToggleEstado }) {
         <span className="ad-type-badge">{espacio.tipo}</span>
       </td>
       <td>
-        <AdminPrecioForm espacio={espacio} onModificarPrecio={onModificarPrecio} />
+        <AdminPrecioForm
+          idioma={idioma}
+          espacio={espacio}
+          onModificarPrecio={onModificarPrecio}
+        />
       </td>
       <td>
         <button
@@ -32,7 +44,13 @@ function AdminEspacioRow({ espacio, onModificarPrecio, onToggleEstado }) {
           onClick={() => onToggleEstado(espacio)}
         >
           <span className="dot"></span>
-          {espacio.activo ? 'Active' : 'Under Maintenance'}
+          {espacio.activo
+            ? es
+              ? 'Activo'
+              : 'Active'
+            : es
+              ? 'En Mantenimiento'
+              : 'Under Maintenance'}
         </button>
       </td>
     </tr>

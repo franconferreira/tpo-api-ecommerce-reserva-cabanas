@@ -1,14 +1,30 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import BuzonButton from './BuzonButton'
 
-function NavCliente({ pathname, isLogged, nombreUsuario, cantidadCarrito, onAbrirCarrito, onSignOut }) {
+function NavCliente({
+  idioma,
+  onToggleIdioma,
+  pathname,
+  isLogged,
+  nombreUsuario,
+  cantidadCarrito,
+  onAbrirCarrito,
+  cantidadBuzon,
+  onAbrirBuzon,
+  onSignOut
+}) {
+  const es = idioma === 'es'
+
   return (
     <nav className="nav-container">
-      <div className="nav-brand">
-        <Link to="/catalogo" className="nav-logo">
-          🌲 Whispering Pines
-        </Link>
-      </div>
+      <ul className="nav-list nav-brand">
+        <li>
+          <Link to="/catalogo" className="nav-logo">
+            🌲 Whispering Pines
+          </Link>
+        </li>
+      </ul>
 
       <ul className="nav-list">
         <li>
@@ -16,7 +32,7 @@ function NavCliente({ pathname, isLogged, nombreUsuario, cantidadCarrito, onAbri
             to="/catalogo"
             className={pathname === '/catalogo' || pathname === '/' ? 'nav-link active-text' : 'nav-link'}
           >
-            Explore Spaces
+            {es ? 'Explorar Espacios' : 'Explore Spaces'}
           </Link>
         </li>
         {isLogged && (
@@ -25,28 +41,42 @@ function NavCliente({ pathname, isLogged, nombreUsuario, cantidadCarrito, onAbri
               to="/mis-reservas"
               className={pathname === '/mis-reservas' ? 'nav-link active-text' : 'nav-link'}
             >
-              My Reservations
+              {es ? 'Mis Reservas' : 'My Reservations'}
             </Link>
           </li>
         )}
       </ul>
 
       <ul className="nav-list nav-actions">
+        <li>
+          <button type="button" className="nav-btn-lang" onClick={onToggleIdioma}>
+            {es ? '🌐 ES | EN' : '🌐 EN | ES'}
+          </button>
+        </li>
         {isLogged && (
-          <li>
-            <button type="button" className="nav-btn-cart" onClick={onAbrirCarrito}>
-              🛍️ Cart ({cantidadCarrito})
-            </button>
-          </li>
+          <>
+            <li>
+              <BuzonButton
+                idioma={idioma}
+                cantidad={cantidadBuzon}
+                onAbrirBuzon={onAbrirBuzon}
+              />
+            </li>
+            <li>
+              <button type="button" className="nav-btn-cart" onClick={onAbrirCarrito}>
+                🛍️ {es ? 'Carrito' : 'Cart'} ({cantidadCarrito})
+              </button>
+            </li>
+          </>
         )}
         {isLogged ? (
           <>
             <li className="nav-user-info">
-              <strong>{nombreUsuario || 'Guest'}</strong>
+              <strong>{nombreUsuario || (es ? 'Huésped' : 'Guest')}</strong>
             </li>
             <li>
               <button type="button" className="nav-btn-outline" onClick={onSignOut}>
-                Sign Out
+                {es ? 'Cerrar Sesión' : 'Sign Out'}
               </button>
             </li>
           </>
@@ -54,12 +84,12 @@ function NavCliente({ pathname, isLogged, nombreUsuario, cantidadCarrito, onAbri
           <>
             <li>
               <Link to="/login" className="nav-link">
-                Sign In
+                {es ? 'Iniciar Sesión' : 'Sign In'}
               </Link>
             </li>
             <li>
               <Link to="/register" className="nav-btn-primary">
-                Register
+                {es ? 'Registrarse' : 'Register'}
               </Link>
             </li>
           </>

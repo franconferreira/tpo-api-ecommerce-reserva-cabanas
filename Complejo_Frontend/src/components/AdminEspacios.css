@@ -54,6 +54,16 @@
   border: 1px solid #f5c6cb;
 }
 
+.ad-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 700;
+  border: 1px solid #c8e6c9;
+}
+
 .ad-inline-form {
   display: flex;
   flex-wrap: wrap;

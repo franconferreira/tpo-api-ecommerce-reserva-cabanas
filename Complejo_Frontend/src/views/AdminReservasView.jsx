@@ -1,10 +1,10 @@
 import React from 'react'
 import AdminReservas from '../components/AdminReservas'
 
-function AdminReservasView() {
+function AdminReservasView({ idioma }) {
   return (
     <>
-      <AdminReservas />
+      <AdminReservas idioma={idioma} />
     </>
   )
 }

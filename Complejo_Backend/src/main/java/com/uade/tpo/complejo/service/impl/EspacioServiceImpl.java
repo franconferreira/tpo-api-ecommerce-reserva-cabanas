@@ -13,6 +13,7 @@ import com.uade.tpo.complejo.repository.ReservaRepository;
 import com.uade.tpo.complejo.service.EspacioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -83,31 +84,44 @@ public class EspacioServiceImpl implements EspacioService {
     }
 
     @Override
+    @Transactional
     public EspacioResponseDTO crearEspacio(EspacioRequestDTO request) {
         Espacio espacio = Espacio.builder()
                 .nombre(request.getNombre())
                 .precioBase(request.getPrecioBase())
                 .tipo(request.getTipo())
                 .descripcion(request.getDescripcion())
-                .imagenes(request.getImagenes())
+                .imagenes(request.getImagenes() != null ? new ArrayList<>(request.getImagenes()) : new ArrayList<>())
                 .activo(true)
                 .build();
         return mapToDTO(espacioRepository.save(espacio));
     }
 
     @Override
+    @Transactional
     public EspacioResponseDTO modificarEspacio(Long id, EspacioRequestDTO request) {
         Espacio espacio = espacioRepository.findById(id).orElseThrow();
-        espacio.setNombre(request.getNombre());
-        espacio.setPrecioBase(request.getPrecioBase());
-        espacio.setTipo(request.getTipo());
-        espacio.setDescripcion(request.getDescripcion());
-        espacio.setImagenes(request.getImagenes());
+        if (request.getNombre() != null) {
+            espacio.setNombre(request.getNombre());
+        }
+        if (request.getPrecioBase() != null) {
+            espacio.setPrecioBase(request.getPrecioBase());
+        }
+        if (request.getTipo() != null) {
+            espacio.setTipo(request.getTipo());
+        }
+        if (request.getDescripcion() != null) {
+            espacio.setDescripcion(request.getDescripcion());
+        }
+        if (request.getImagenes() != null) {
+            espacio.setImagenes(new ArrayList<>(request.getImagenes()));
+        }
 
         return mapToDTO(espacioRepository.save(espacio));
     }
 
     @Override
+    @Transactional
     public void eliminarEspacio(Long id) {
         Espacio espacio = espacioRepository.findById(id).orElseThrow();
         espacio.setActivo(false);
@@ -115,6 +129,7 @@ public class EspacioServiceImpl implements EspacioService {
     }
 
     @Override
+    @Transactional
     public void restaurarEspacio(Long id) {
         Espacio espacio = espacioRepository.findById(id).orElseThrow();
         espacio.setActivo(true);

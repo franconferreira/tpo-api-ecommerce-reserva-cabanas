@@ -1,19 +1,29 @@
 import React, { useState } from 'react'
 
-function AdminPrecioForm({ espacio, onModificarPrecio }) {
+function AdminPrecioForm({ idioma, espacio, onModificarPrecio }) {
   const [precioBase, setPrecioBase] = useState(`${espacio.precioBase}`)
+  const [guardado, setGuardado] = useState(false)
+  const es = idioma === 'es'
 
-  const handlePrecioBaseChange = (e) => setPrecioBase(e.target.value)
+  const handlePrecioBaseChange = (e) => {
+    setPrecioBase(e.target.value)
+    setGuardado(false)
+  }
 
   const handleGuardar = () => {
     if (precioBase.trim() === '') {
       return
     }
-    onModificarPrecio(espacio, precioBase)
+    const valorNumerico = Number(precioBase)
+    if (!valorNumerico || valorNumerico <= 0) {
+      return
+    }
+    onModificarPrecio(espacio, valorNumerico)
+    setGuardado(true)
   }
 
   return (
-    <div className="ad-td-rate">
+    <form onSubmit={(e) => e.preventDefault()} className="ad-td-rate">
       <span>$</span>
       <input
         type="number"
@@ -22,11 +32,11 @@ function AdminPrecioForm({ espacio, onModificarPrecio }) {
         value={precioBase}
         onChange={handlePrecioBaseChange}
       />
-      <small>/ night</small>
-      <button type="button" className="ad-btn-save" onClick={handleGuardar}>
-        Save
+      <small>{es ? '/ noche' : '/ night'}</small>
+      <button type="submit" className="ad-btn-save" onClick={handleGuardar}>
+        {guardado ? '✓' : es ? 'Guardar' : 'Save'}
       </button>
-    </div>
+    </form>
   )
 }
 

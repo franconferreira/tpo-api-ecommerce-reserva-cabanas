@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import AdminUsuariosTabla from './AdminUsuariosTabla'
 import './AdminUsuarios.css'
 
-function AdminUsuarios() {
+function AdminUsuarios({ idioma }) {
   const [usuarios, setUsuarios] = useState([])
   const [error, setError] = useState('')
   const URL = 'http://localhost:8080'
+  const es = idioma === 'es'
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken')
@@ -54,12 +55,20 @@ function AdminUsuarios() {
           setError('')
         } else {
           console.error('Error al actualizar estado de usuario: ', data)
-          setError('No se pudo cambiar el estado del usuario')
+          setError(
+            es
+              ? 'No se pudo cambiar el estado del usuario'
+              : 'Could not change user account status'
+          )
         }
       })
       .catch((err) => {
         console.error('Error al actualizar estado de usuario: ', err)
-        setError('No se pudo cambiar el estado del usuario')
+        setError(
+          es
+            ? 'No se pudo cambiar el estado del usuario'
+            : 'Could not change user account status'
+        )
       })
   }
 
@@ -91,10 +100,16 @@ function AdminUsuarios() {
       <div className="admin-usr-container">
         <div className="admin-usr-header">
           <div>
-            <span className="admin-usr-overline">🛡️ MEMBER STEWARDSHIP</span>
-            <h1 className="admin-usr-title">Client Accounts</h1>
+            <span className="admin-usr-overline">
+              {es ? '🛡️ GESTIÓN DE MIEMBROS' : '🛡️ MEMBER STEWARDSHIP'}
+            </span>
+            <h1 className="admin-usr-title">
+              {es ? 'Cuentas de Clientes' : 'Client Accounts'}
+            </h1>
             <p className="admin-usr-subtitle">
-              Directory of registered sanctuary guests. Manage roles and toggle account activation status.
+              {es
+                ? 'Directorio de huéspedes registrados en el complejo. Administra roles y estado de activación.'
+                : 'Directory of registered sanctuary guests. Manage roles and toggle account activation status.'}
             </p>
           </div>
           <div className="admin-usr-header-der">
@@ -107,6 +122,7 @@ function AdminUsuarios() {
         {error && <p className="admin-usr-error">{error}</p>}
 
         <AdminUsuariosTabla
+          idioma={idioma}
           usuarios={usuarios}
           onCambiarRol={handleCambiarRol}
           onToggleEstado={handleToggleEstado}

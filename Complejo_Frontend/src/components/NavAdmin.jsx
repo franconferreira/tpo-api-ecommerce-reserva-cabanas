@@ -1,13 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function NavAdmin({ pathname, nombreUsuario, onSignOut }) {
+function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }) {
+  const es = idioma === 'es'
+
   return (
     <nav className="nav-container admin-nav">
-      <div className="nav-brand">
-        <span className="nav-logo">Whispering Pines</span>
-        <span className="nav-badge">STAFF CONSOLE</span>
-      </div>
+      <ul className="nav-list nav-brand">
+        <li>
+          <span className="nav-logo">Whispering Pines</span>
+        </li>
+        <li>
+          <span className="nav-badge">{es ? 'CONSOLA STAFF' : 'STAFF CONSOLE'}</span>
+        </li>
+      </ul>
 
       <ul className="nav-list nav-pills">
         <li>
@@ -15,7 +21,7 @@ function NavAdmin({ pathname, nombreUsuario, onSignOut }) {
             to="/admin/espacios"
             className={pathname === '/admin/espacios' ? 'nav-link active' : 'nav-link'}
           >
-            Accommodations
+            {es ? 'Espacios' : 'Accommodations'}
           </Link>
         </li>
         <li>
@@ -23,7 +29,7 @@ function NavAdmin({ pathname, nombreUsuario, onSignOut }) {
             to="/admin/reservas"
             className={pathname === '/admin/reservas' ? 'nav-link active' : 'nav-link'}
           >
-            Guest Reservations
+            {es ? 'Reservas' : 'Guest Reservations'}
           </Link>
         </li>
         <li>
@@ -31,19 +37,24 @@ function NavAdmin({ pathname, nombreUsuario, onSignOut }) {
             to="/admin/usuarios"
             className={pathname === '/admin/usuarios' ? 'nav-link active' : 'nav-link'}
           >
-            Client Accounts
+            {es ? 'Usuarios' : 'Client Accounts'}
           </Link>
         </li>
       </ul>
 
       <ul className="nav-list nav-actions">
+        <li>
+          <button type="button" className="nav-btn-lang" onClick={onToggleIdioma}>
+            {es ? '🌐 ES | EN' : '🌐 EN | ES'}
+          </button>
+        </li>
         <li className="nav-user-info">
           <strong>{nombreUsuario || 'Admin'}</strong>
-          <span>Super Admin</span>
+          <span>{es ? 'Administrador' : 'Super Admin'}</span>
         </li>
         <li>
           <button type="button" className="nav-btn-outline" onClick={onSignOut}>
-            Sign Out
+            {es ? 'Cerrar Sesión' : 'Sign Out'}
           </button>
         </li>
       </ul>

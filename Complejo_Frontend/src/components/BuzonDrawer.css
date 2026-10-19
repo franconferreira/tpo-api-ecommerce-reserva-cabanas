@@ -1,0 +1,171 @@
+.buzon-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.buzon-panel {
+  width: 100%;
+  max-width: 28em;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buzon-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4em 1.6em;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f9f8f4;
+}
+
+.bh-title-block {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.bh-icon {
+  font-size: 1.5em;
+}
+
+.bh-title {
+  font-size: 1.25em;
+  margin: 0;
+}
+
+.bh-subtitle {
+  font-size: 0.8em;
+  color: #737373;
+}
+
+.bh-close-btn {
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.buzon-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.4em 1.6em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+}
+
+.buzon-empty {
+  text-align: center;
+  padding: 3em 1em;
+  color: #737373;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.buzon-empty p {
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
+.buzon-empty span {
+  font-size: 0.85em;
+}
+
+.buzon-item {
+  background-color: #fff9f2;
+  border: 1px solid #ffe0b2;
+  border-radius: 0.8em;
+  padding: 1.1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.bi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bi-badge {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.25em 0.65em;
+  border-radius: 0.8em;
+  font-size: 0.72em;
+  font-weight: 800;
+}
+
+.bi-code {
+  font-size: 0.9em;
+  color: #2a2a2a;
+}
+
+.bi-spaces {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  font-size: 0.85em;
+  color: #2a2a2a;
+}
+
+.bi-message-box {
+  background-color: #ffffff;
+  border: 1px solid #f0e6d6;
+  border-radius: 0.5em;
+  padding: 0.75em 0.9em;
+  font-size: 0.85em;
+  color: #5c3a1e;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.bi-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bi-dismiss-btn {
+  background-color: #153c2b;
+  color: #ffffff;
+  border: none;
+  padding: 0.45em 0.95em;
+  border-radius: 0.5em;
+  font-size: 0.78em;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.buzon-footer {
+  padding: 1.2em 1.6em;
+  border-top: 1px solid #e0e0e0;
+  background-color: #f9f8f4;
+}
+
+.bf-close-btn {
+  width: 100%;
+  background-color: #153c2b;
+  color: #ffffff;
+  border: none;
+  padding: 0.8em;
+  border-radius: 0.6em;
+  font-size: 0.9em;
+  font-weight: 700;
+  cursor: pointer;
+}

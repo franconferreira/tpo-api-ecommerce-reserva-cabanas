@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import CampoFormulario from './CampoFormulario'
 
-function AdminEspacioForm({ onEspacioCreado }) {
+function AdminEspacioForm({ idioma, onEspacioCreado }) {
   const [nombre, setNombre] = useState('')
   const [precioBase, setPrecioBase] = useState('')
   const [tipo, setTipo] = useState('CABANA')
@@ -9,6 +9,7 @@ function AdminEspacioForm({ onEspacioCreado }) {
   const [imagenes, setImagenes] = useState('')
   const [error, setError] = useState('')
   const URL = 'http://localhost:8080'
+  const es = idioma === 'es'
 
   const handleNombreChange = (e) => setNombre(e.target.value)
   const handlePrecioBaseChange = (e) => setPrecioBase(e.target.value)
@@ -18,7 +19,11 @@ function AdminEspacioForm({ onEspacioCreado }) {
 
   const handleAgregarEspacio = () => {
     if (nombre.trim() === '' || precioBase.trim() === '' || descripcion.trim() === '') {
-      setError('Nombre, precio base y descripcion son obligatorios')
+      setError(
+        es
+          ? 'Nombre, precio base y descripción son obligatorios'
+          : 'Name, base rate, and description are required'
+      )
       return
     }
 
@@ -58,26 +63,33 @@ function AdminEspacioForm({ onEspacioCreado }) {
           setError('')
         } else {
           console.error('Error al crear espacio: ', data)
-          setError('No se pudo crear el espacio')
+          setError(es ? 'No se pudo crear el espacio' : 'Could not create space')
         }
       })
       .catch((err) => {
         console.error('Error al crear espacio: ', err)
-        setError('No se pudo crear el espacio')
+        setError(es ? 'No se pudo crear el espacio' : 'Could not create space')
       })
   }
 
   return (
     <div className="ad-form-card">
-      <h2 className="ad-form-title">Add New Place</h2>
+      <h2 className="ad-form-title">{es ? 'Agregar Nuevo Espacio' : 'Add New Place'}</h2>
       {error && <p className="ad-error">{error}</p>}
 
       <form onSubmit={(e) => e.preventDefault()} className="ad-inline-form">
-        <CampoFormulario className="ad-field" label="Name" type="text" name="nombre"
-          placeholder="Sunset Ridge Cabin" value={nombre} onChange={handleNombreChange} />
+        <CampoFormulario
+          className="ad-field"
+          label={es ? 'Nombre' : 'Name'}
+          type="text"
+          name="nombre"
+          placeholder="Cabaña del Ocaso / Sunset Ridge Cabin"
+          value={nombre}
+          onChange={handleNombreChange}
+        />
 
         <div className="ad-field">
-          <label>Category (Tipo)</label>
+          <label>{es ? 'Categoría (Tipo)' : 'Category (Tipo)'}</label>
           <select name="tipo" value={tipo} onChange={handleTipoChange}>
             <option value="CABANA">CABANA</option>
             <option value="GALPON_FIESTAS">GALPON_FIESTAS</option>
@@ -85,15 +97,36 @@ function AdminEspacioForm({ onEspacioCreado }) {
           </select>
         </div>
 
-        <CampoFormulario className="ad-field" label="Base Rate ($ / night)" type="number" name="precioBase"
-          placeholder="180" value={precioBase} onChange={handlePrecioBaseChange} />
-        <CampoFormulario className="ad-field" label="Description" type="text" name="descripcion"
-          placeholder="Rustic pine cabin overlooking the lake" value={descripcion} onChange={handleDescripcionChange} />
-        <CampoFormulario className="ad-field" label="Image URL" type="text" name="imagenes"
-          placeholder="https://..." value={imagenes} onChange={handleImagenesChange} />
+        <CampoFormulario
+          className="ad-field"
+          label={es ? 'Tarifa Base ($ / noche)' : 'Base Rate ($ / night)'}
+          type="number"
+          name="precioBase"
+          placeholder="180"
+          value={precioBase}
+          onChange={handlePrecioBaseChange}
+        />
+        <CampoFormulario
+          className="ad-field"
+          label={es ? 'Descripción' : 'Description'}
+          type="text"
+          name="descripcion"
+          placeholder="Cabaña rústica frente al lago. / Rustic pine cabin overlooking the lake."
+          value={descripcion}
+          onChange={handleDescripcionChange}
+        />
+        <CampoFormulario
+          className="ad-field"
+          label={es ? 'URL de Imagen' : 'Image URL'}
+          type="text"
+          name="imagenes"
+          placeholder="https://..."
+          value={imagenes}
+          onChange={handleImagenesChange}
+        />
 
         <button type="submit" className="ad-btn-add" onClick={handleAgregarEspacio}>
-          + Save Place
+          {es ? '+ Guardar Espacio' : '+ Save Place'}
         </button>
       </form>
     </div>

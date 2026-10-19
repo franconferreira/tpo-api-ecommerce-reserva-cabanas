@@ -59,6 +59,19 @@ public class CarritoServiceImpl implements CarritoService {
             throw new RuntimeException("Espacio inactivo");
         }
 
+        if (request.getCheckIn() == null || request.getCheckOut() == null) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "Fechas invalidas");
+        }
+
+        if (request.getCheckIn().isBefore(LocalDate.now())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "No se pueden reservar fechas pasadas");
+        }
+
+        long dias = ChronoUnit.DAYS.between(request.getCheckIn(), request.getCheckOut());
+        if (dias <= 0) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "La fecha de check-out debe ser posterior al check-in");
+        }
+
         // Validate stock logic (Anti-overbooking) temporally just checking existing reservas
         boolean ocupadoPorReserva = reservaRepository.isEspacioOcupado(espacio.getId(), request.getCheckIn(), request.getCheckOut());
         boolean ocupadoPorCarrito = itemCarritoRepository.existsByEspacioIdAndCheckInLessThanAndCheckOutGreaterThanAndFechaExpiracionAfter(
@@ -68,9 +81,6 @@ public class CarritoServiceImpl implements CarritoService {
         if (ocupadoPorReserva || ocupadoPorCarrito) {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "El espacio no esta disponible en las fechas seleccionadas");
         }
-
-        long dias = ChronoUnit.DAYS.between(request.getCheckIn(), request.getCheckOut());
-        if (dias <= 0) throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "Fechas invalidas");
 
         double subtotal = 0.0;
         LocalDate diaActual = request.getCheckIn();

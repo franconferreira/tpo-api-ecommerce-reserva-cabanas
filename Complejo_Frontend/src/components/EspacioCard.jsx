@@ -1,8 +1,13 @@
 import React from 'react'
 import './EspacioCard.css'
 
-function EspacioCard({ id, nombre, descripcion, precioBase, tipo, imagenes, onVerDetalle }) {
-  const imagenPrincipal = imagenes && imagenes.length > 0 ? imagenes[0] : ''
+function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagenes, onVerDetalle }) {
+  const es = idioma === 'es'
+  const imagenPorDefecto = 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800'
+  const imagenPrincipal =
+    imagenes && imagenes.length > 0 && imagenes[0] && imagenes[0].trim() !== ''
+      ? imagenes[0]
+      : imagenPorDefecto
 
   const handleClick = () => {
     onVerDetalle({
@@ -18,7 +23,11 @@ function EspacioCard({ id, nombre, descripcion, precioBase, tipo, imagenes, onVe
   return (
     <div className="espacio-card" onClick={handleClick}>
       <div className="ec-image-wrapper">
-        <img src={imagenPrincipal} alt={nombre} className="ec-image" />
+        <img
+          src={imagenPrincipal}
+          alt={nombre}
+          className="ec-image"
+        />
         <div className="ec-tag-top-left">
           <span>🌲 Whispering Pines</span>
         </div>
@@ -27,7 +36,6 @@ function EspacioCard({ id, nombre, descripcion, precioBase, tipo, imagenes, onVe
       <div className="ec-content">
         <div className="ec-header">
           <h3 className="ec-title">{nombre}</h3>
-          <span className="ec-category-tag">{tipo}</span>
         </div>
 
         <p className="ec-desc">{descripcion}</p>
@@ -35,11 +43,13 @@ function EspacioCard({ id, nombre, descripcion, precioBase, tipo, imagenes, onVe
 
       <div className="ec-footer">
         <div className="ec-price-block">
-          <span className="ec-price-from">From </span>
+          <span className="ec-price-from">{es ? 'Desde ' : 'From '}</span>
           <span className="ec-price-value">${precioBase}</span>
-          <span className="ec-price-suffix"> / night</span>
+          <span className="ec-price-suffix">{es ? ' / noche' : ' / night'}</span>
         </div>
-        <span className="ec-action-link">Explore Space ➔</span>
+        <span className="ec-action-link">
+          {es ? 'Ver Espacio ➔' : 'Explore Space ➔'}
+        </span>
       </div>
     </div>
   )

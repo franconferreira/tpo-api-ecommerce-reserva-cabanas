@@ -1,10 +1,10 @@
 import React from 'react'
 import LoginForm from '../components/LoginForm'
 
-function LoginView({ onLogin }) {
+function LoginView({ idioma, setIdioma, onLogin }) {
   return (
     <>
-      <LoginForm onLogin={onLogin} />
+      <LoginForm idioma={idioma} setIdioma={setIdioma} onLogin={onLogin} />
     </>
   )
 }

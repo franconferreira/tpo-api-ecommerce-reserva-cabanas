@@ -5,9 +5,10 @@ import CarritoHeader from './CarritoHeader'
 import CarritoFooter from './CarritoFooter'
 import './CarritoDrawer.css'
 
-function CarritoDrawer({ carritoData, setCarritoData, isOpen, onClose }) {
+function CarritoDrawer({ idioma, carritoData, setCarritoData, isOpen, onClose }) {
   const navigate = useNavigate()
   const URL = 'http://localhost:8080'
+  const es = idioma === 'es'
 
   if (!isOpen) {
     return null
@@ -50,17 +51,22 @@ function CarritoDrawer({ carritoData, setCarritoData, isOpen, onClose }) {
   return (
     <div className="carrito-backdrop">
       <div className="carrito-panel">
-        <CarritoHeader cantidad={items.length} onClose={onClose} />
+        <CarritoHeader idioma={idioma} cantidad={items.length} onClose={onClose} />
 
         <div className="carrito-body">
           {items.length === 0 ? (
             <div className="carrito-empty">
-              <p>Your cart is empty.</p>
-              <span>Explore our spaces to reserve your stay.</span>
+              <p>{es ? 'Tu carrito está vacío.' : 'Your cart is empty.'}</p>
+              <span>
+                {es
+                  ? 'Explora nuestros espacios para reservar tu estadía.'
+                  : 'Explore our spaces to reserve your stay.'}
+              </span>
             </div>
           ) : (
             items.map((item, index) => (
               <CarritoItem
+                idioma={idioma}
                 item={item}
                 index={index}
                 onEliminar={handleEliminar}
@@ -71,6 +77,7 @@ function CarritoDrawer({ carritoData, setCarritoData, isOpen, onClose }) {
         </div>
 
         <CarritoFooter
+          idioma={idioma}
           totalSinDescuento={totalSinDescuento}
           descuentoPack={descuentoPack}
           total={total}

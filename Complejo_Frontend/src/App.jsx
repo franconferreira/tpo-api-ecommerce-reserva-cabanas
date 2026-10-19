@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import CarritoDrawer from './components/CarritoDrawer'
+import BuzonDrawer from './components/BuzonDrawer'
 import LoginView from './views/LoginView'
 import RegisterView from './views/RegisterView'
 import CatalogoView from './views/CatalogoView'
@@ -15,11 +16,16 @@ import AdminUsuariosView from './views/AdminUsuariosView'
 
 function App() {
   const navigate = useNavigate()
+  const [idioma, setIdioma] = useState('es')
   const [isLogged, setIsLogged] = useState(false)
   const [rolUsuario, setRolUsuario] = useState('')
   const [nombreUsuario, setNombreUsuario] = useState('')
   const [espacioSeleccionado, setEspacioSeleccionado] = useState(null)
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isBuzonOpen, setIsBuzonOpen] = useState(false)
+  const [mensajesBuzon, setMensajesBuzon] = useState([])
+  const [leidasIds, setLeidasIds] = useState([])
+  const [ocultasIds, setOcultasIds] = useState([])
   const carritoVacio = {
     id: null,
     totalSinDescuento: 0,
@@ -28,10 +34,68 @@ function App() {
     items: []
   }
   const [carritoData, setCarritoData] = useState(carritoVacio)
-
   const URL = 'http://localhost:8080'
 
-  const cargarDatosUsuario = (token, desdeLogin) => {
+  const extraerCanceladas = (reservas) => {
+    let canceladas = []
+    reservas.map((r) => {
+      if (r.estado === 'CANCELADA' && r.mensajeCancelacion) {
+        canceladas = [...canceladas, r]
+      }
+    })
+    return canceladas
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken')
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+
+      fetch(`${URL}/api/usuarios/me`, options)
+        .then((res) => res.json())
+        .then((user) => {
+          if (user && user.email) {
+            setIsLogged(true)
+            setRolUsuario(user.rol)
+            setNombreUsuario(`${user.nombre} ${user.apellido}`)
+
+            if (user.rol !== 'ROLE_ADMIN') {
+              fetch(`${URL}/api/carrito`, options)
+                .then((res) => res.json())
+                .then((cart) => {
+                  if (cart && cart.items) {
+                    setCarritoData(cart)
+                  }
+                })
+                .catch((err) => {
+                  console.error('Error al obtener carrito: ', err)
+                })
+
+              fetch(`${URL}/api/reservas/mis-reservas`, options)
+                .then((res) => res.json())
+                .then((reservas) => {
+                  if (reservas) {
+                    setMensajesBuzon(extraerCanceladas(reservas))
+                  }
+                })
+                .catch((err) => {
+                  console.error('Error al obtener buzón: ', err)
+                })
+            }
+          }
+        })
+        .catch((err) => {
+          console.error('Error al verificar sesion: ', err)
+        })
+    }
+  }, [])
+
+  const handleLoginSuccess = (token) => {
     const options = {
       method: 'GET',
       headers: {
@@ -48,25 +112,30 @@ function App() {
           setNombreUsuario(`${user.nombre} ${user.apellido}`)
 
           if (user.rol === 'ROLE_ADMIN') {
-            if (desdeLogin) {
-              navigate('/admin/espacios')
-            }
+            navigate('/admin/espacios')
           } else {
+            fetch(`${URL}/api/reservas/mis-reservas`, options)
+              .then((res) => res.json())
+              .then((reservas) => {
+                if (reservas) {
+                  setMensajesBuzon(extraerCanceladas(reservas))
+                }
+              })
+              .catch((err) => {
+                console.error('Error al obtener buzón: ', err)
+              })
+
             fetch(`${URL}/api/carrito`, options)
               .then((res) => res.json())
               .then((cart) => {
                 if (cart && cart.items) {
                   setCarritoData(cart)
                 }
-                if (desdeLogin) {
-                  navigate('/catalogo')
-                }
+                navigate('/catalogo')
               })
               .catch((err) => {
                 console.error('Error al obtener carrito: ', err)
-                if (desdeLogin) {
-                  navigate('/catalogo')
-                }
+                navigate('/catalogo')
               })
           }
         }
@@ -76,23 +145,14 @@ function App() {
       })
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
-    if (token) {
-      cargarDatosUsuario(token, false)
-    }
-  }, [])
-
-  const handleLoginSuccess = (token) => {
-    cargarDatosUsuario(token, true)
-  }
-
   const handleLogout = () => {
     localStorage.setItem('jwtToken', '')
     setIsLogged(false)
     setRolUsuario('')
     setNombreUsuario('')
     setIsCartOpen(false)
+    setIsBuzonOpen(false)
+    setMensajesBuzon([])
     setCarritoData(carritoVacio)
   }
 
@@ -101,26 +161,44 @@ function App() {
     navigate('/detalle')
   }
 
+  let mensajesNoLeidos = []
+  mensajesBuzon.map((m) => {
+    let yaLeido = false
+    leidasIds.map((idLeido) => {
+      if (idLeido === m.id) {
+        yaLeido = true
+      }
+    })
+    if (!yaLeido) {
+      mensajesNoLeidos = [...mensajesNoLeidos, m]
+    }
+  })
+
   return (
     <>
       <Navigation
+        idioma={idioma}
+        setIdioma={setIdioma}
         isLogged={isLogged}
         rolUsuario={rolUsuario}
         nombreUsuario={nombreUsuario}
         onLogout={handleLogout}
         onAbrirCarrito={() => setIsCartOpen(true)}
         cantidadCarrito={carritoData.items ? carritoData.items.length : 0}
+        onAbrirBuzon={() => setIsBuzonOpen(true)}
+        cantidadBuzon={mensajesNoLeidos.length}
       />
 
       <Routes>
-        <Route path="/" element={<CatalogoView onAbrirDetalle={handleAbrirDetalle} />} />
-        <Route path="/catalogo" element={<CatalogoView onAbrirDetalle={handleAbrirDetalle} />} />
-        <Route path="/login" element={<LoginView onLogin={handleLoginSuccess} />} />
-        <Route path="/register" element={<RegisterView onLogin={handleLoginSuccess} />} />
+        <Route path="/" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
+        <Route path="/catalogo" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
+        <Route path="/login" element={<LoginView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
+        <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
         <Route
           path="/detalle"
           element={
             <DetalleEspacioView
+              idioma={idioma}
               espacio={espacioSeleccionado}
               isLogged={isLogged}
               setCarritoData={setCarritoData}
@@ -130,23 +208,44 @@ function App() {
         />
         <Route
           path="/checkout"
-          element={<CheckoutView carritoData={carritoData} setCarritoData={setCarritoData} />}
+          element={<CheckoutView idioma={idioma} carritoData={carritoData} setCarritoData={setCarritoData} />}
         />
-        <Route path="/mis-reservas" element={<MisReservasView />} />
-        <Route path="/admin/espacios" element={<AdminEspaciosView />} />
-        <Route path="/admin/reservas" element={<AdminReservasView />} />
-        <Route path="/admin/usuarios" element={<AdminUsuariosView />} />
+        <Route
+          path="/mis-reservas"
+          element={
+            <MisReservasView
+              idioma={idioma}
+              ocultasIds={ocultasIds}
+              setOcultasIds={setOcultasIds}
+            />
+          }
+        />
+        <Route path="/admin/espacios" element={<AdminEspaciosView idioma={idioma} />} />
+        <Route path="/admin/reservas" element={<AdminReservasView idioma={idioma} />} />
+        <Route path="/admin/usuarios" element={<AdminUsuariosView idioma={idioma} />} />
       </Routes>
 
-      <Footer />
+      <Footer idioma={idioma} />
 
       {rolUsuario !== 'ROLE_ADMIN' && (
-        <CarritoDrawer
-          carritoData={carritoData}
-          setCarritoData={setCarritoData}
-          isOpen={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-        />
+        <>
+          <CarritoDrawer
+            idioma={idioma}
+            carritoData={carritoData}
+            setCarritoData={setCarritoData}
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+          />
+          <BuzonDrawer
+            idioma={idioma}
+            mensajesBuzon={mensajesNoLeidos}
+            setMensajesBuzon={setMensajesBuzon}
+            leidasIds={leidasIds}
+            setLeidasIds={setLeidasIds}
+            isOpen={isBuzonOpen}
+            onClose={() => setIsBuzonOpen(false)}
+          />
+        </>
       )}
     </>
   )

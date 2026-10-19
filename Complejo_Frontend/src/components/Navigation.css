@@ -126,3 +126,33 @@
 .nav-btn-primary:hover {
   text-decoration: none;
 }
+
+.nav-btn-lang {
+  background-color: #f4f3ef;
+  color: #153c2b;
+  border: 1px solid #153c2b;
+  padding: 0.45em 0.9em;
+  border-radius: 1.5em;
+  font-size: 0.8em;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.nav-btn-buzon {
+  background-color: #f1f2ec;
+  color: #153c2b;
+  border: 1px solid #e0e0e0;
+  padding: 0.55em 1.1em;
+  border-radius: 1.5em;
+  font-weight: 700;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.nav-btn-buzon.has-unread {
+  background-color: #fde8dd;
+  color: #8d3b00;
+  border: 1px solid #cc7440;
+}
+
+

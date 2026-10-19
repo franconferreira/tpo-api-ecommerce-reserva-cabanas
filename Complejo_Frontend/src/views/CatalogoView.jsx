@@ -1,10 +1,10 @@
 import React from 'react'
 import EspacioList from '../components/EspacioList'
 
-function CatalogoView({ onAbrirDetalle }) {
+function CatalogoView({ idioma, onAbrirDetalle }) {
   return (
     <>
-      <EspacioList onAbrirDetalle={onAbrirDetalle} />
+      <EspacioList idioma={idioma} onAbrirDetalle={onAbrirDetalle} />
     </>
   )
 }

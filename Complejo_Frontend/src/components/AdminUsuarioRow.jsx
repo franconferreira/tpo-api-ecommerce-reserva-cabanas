@@ -1,7 +1,8 @@
 import React from 'react'
 
-function AdminUsuarioRow({ usuario, onCambiarRol, onToggleEstado }) {
+function AdminUsuarioRow({ idioma, usuario, onCambiarRol, onToggleEstado }) {
   const isDeactivated = !usuario.activo
+  const es = idioma === 'es'
 
   return (
     <tr>
@@ -43,7 +44,13 @@ function AdminUsuarioRow({ usuario, onCambiarRol, onToggleEstado }) {
               : 'status-pill status-act'
           }
         >
-          {isDeactivated ? 'Deactivated' : 'Active'}
+          {isDeactivated
+            ? es
+              ? 'Desactivado'
+              : 'Deactivated'
+            : es
+              ? 'Activo'
+              : 'Active'}
         </span>
       </td>
 
@@ -57,7 +64,13 @@ function AdminUsuarioRow({ usuario, onCambiarRol, onToggleEstado }) {
           }
           onClick={() => onToggleEstado(usuario)}
         >
-          {isDeactivated ? '↺ Restore Account' : '🔒 Deactivate Account'}
+          {isDeactivated
+            ? es
+              ? '↺ Restaurar Cuenta'
+              : '↺ Restore Account'
+            : es
+              ? '🔒 Desactivar Cuenta'
+              : '🔒 Deactivate Account'}
         </button>
       </td>
     </tr>

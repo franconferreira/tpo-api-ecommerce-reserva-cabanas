@@ -1,14 +1,16 @@
 import React from 'react'
 
-function CarritoItem({ item, index, onEliminar }) {
+function CarritoItem({ idioma, item, index, onEliminar }) {
+  const es = idioma === 'es'
+
   return (
     <div className="carrito-item">
       <div className="ci-header">
         <div className="ci-info">
           <div className="ci-texts">
-            <h3>{item.espacio ? item.espacio.nombre : 'Space'}</h3>
+            <h3>{item.espacio ? item.espacio.nombre : es ? 'Espacio' : 'Space'}</h3>
             <p className="ci-dates">
-              📅 {item.checkIn} to {item.checkOut}
+              📅 {item.checkIn} {es ? 'al' : 'to'} {item.checkOut}
             </p>
             <span className="ci-type-tag">
               {item.espacio ? item.espacio.tipo : ''}
@@ -26,7 +28,7 @@ function CarritoItem({ item, index, onEliminar }) {
 
       <div className="ci-footer">
         <span className="ci-calc">
-          Base: ${item.espacio ? item.espacio.precioBase : 0} / night
+          {es ? 'Base:' : 'Base:'} ${item.espacio ? item.espacio.precioBase : 0} {es ? '/ noche' : '/ night'}
         </span>
         <span className="ci-price">${item.subtotal}</span>
       </div>

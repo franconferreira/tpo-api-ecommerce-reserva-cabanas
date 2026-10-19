@@ -72,6 +72,12 @@
   border: 1px solid #e0e0e0;
 }
 
+.register-lang-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
 .register-overline {
   color: #cc7440;
   font-size: 0.75em;

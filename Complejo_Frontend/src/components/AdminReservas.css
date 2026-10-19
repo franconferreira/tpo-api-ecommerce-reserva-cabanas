@@ -62,12 +62,12 @@
   color: #737373;
 }
 
-.admin-res-table th:nth-child(1) { width: 12%; }
-.admin-res-table th:nth-child(2) { width: 22%; }
-.admin-res-table th:nth-child(3) { width: 30%; }
-.admin-res-table th:nth-child(4) { width: 12%; }
+.admin-res-table th:nth-child(1) { width: 10%; }
+.admin-res-table th:nth-child(2) { width: 18%; }
+.admin-res-table th:nth-child(3) { width: 26%; }
+.admin-res-table th:nth-child(4) { width: 10%; }
 .admin-res-table th:nth-child(5) { width: 12%; }
-.admin-res-table th:nth-child(6) { width: 12%; }
+.admin-res-table th:nth-child(6) { width: 24%; }
 
 .admin-res-table td {
   background-color: #ffffff;
@@ -139,6 +139,26 @@
   color: #b71c1c;
 }
 
+.admin-cancel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.admin-cancel-input {
+  padding: 0.45em 0.6em;
+  border: 1px solid #d5d4ce;
+  border-radius: 0.4em;
+  font-size: 0.8em;
+  width: 100%;
+}
+
+.admin-cancel-reason {
+  font-size: 0.8em;
+  color: #8d3b00;
+  font-style: italic;
+}
+
 .btn-cancel-admin {
   background-color: #fdecea;
   color: #b71c1c;
@@ -149,3 +169,4 @@
   font-weight: 700;
   cursor: pointer;
 }
+

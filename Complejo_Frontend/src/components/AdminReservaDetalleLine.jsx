@@ -1,10 +1,15 @@
 import React from 'react'
 
-function AdminReservaDetalleLine({ detalle }) {
+function AdminReservaDetalleLine({ idioma, detalle }) {
+  const es = idioma === 'es'
+
   return (
     <div className="td-detalle-line">
       <strong>{detalle.nombreEspacio}</strong>
-      <span> ({detalle.checkIn} to {detalle.checkOut})</span>
+      <span>
+        {' '}
+        ({detalle.checkIn} {es ? 'al' : 'to'} {detalle.checkOut})
+      </span>
     </div>
   )
 }

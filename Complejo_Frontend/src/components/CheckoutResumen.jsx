@@ -4,10 +4,11 @@ import CheckoutItem from './CheckoutItem'
 import CheckoutTotales from './CheckoutTotales'
 import './CheckoutResumen.css'
 
-function CheckoutResumen({ carritoData, setCarritoData }) {
+function CheckoutResumen({ idioma, carritoData, setCarritoData }) {
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const URL = 'http://localhost:8080'
+  const es = idioma === 'es'
 
   const items = carritoData && carritoData.items ? carritoData.items : []
   const totalSinDescuento = carritoData && carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
@@ -16,7 +17,7 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
 
   const handleConfirmarCheckout = () => {
     if (items.length === 0) {
-      setError('Tu carrito esta vacio')
+      setError(es ? 'Tu carrito está vacío' : 'Your cart is empty')
       return
     }
 
@@ -43,12 +44,34 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
           navigate('/mis-reservas')
         } else {
           console.error('Error en checkout: ', data)
-          setError('Alguno de los espacios ha expirado (10 min) o ya no se encuentra disponible.')
+          setCarritoData({
+            id: null,
+            totalSinDescuento: 0,
+            descuentoPackPorcentaje: 0,
+            total: 0,
+            items: []
+          })
+          setError(
+            es
+              ? 'Alguno de los espacios ha expirado (10 min) o ya no se encuentra disponible.'
+              : 'One of the spaces in your cart has expired (10 min) or is no longer available.'
+          )
         }
       })
       .catch((err) => {
         console.error('Error en checkout: ', err)
-        setError('Alguno de los espacios ha expirado (10 min) o ya no se encuentra disponible.')
+        setCarritoData({
+          id: null,
+          totalSinDescuento: 0,
+          descuentoPackPorcentaje: 0,
+          total: 0,
+          items: []
+        })
+        setError(
+          es
+            ? 'Alguno de los espacios ha expirado (10 min) o ya no se encuentra disponible.'
+            : 'One of the spaces in your cart has expired (10 min) or is no longer available.'
+        )
       })
   }
 
@@ -56,10 +79,16 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
     <div className="checkout-wrapper">
       <div className="checkout-box">
         <div className="checkout-header">
-          <span className="checkout-overline">RESERVATION SUMMARY</span>
-          <h1 className="checkout-title">Confirm Your Sanctuary Stay</h1>
+          <span className="checkout-overline">
+            {es ? 'RESUMEN DE RESERVA' : 'RESERVATION SUMMARY'}
+          </span>
+          <h1 className="checkout-title">
+            {es ? 'Confirmar tu Estadía en el Complejo' : 'Confirm Your Sanctuary Stay'}
+          </h1>
           <p className="checkout-subtitle">
-            Review your selected spaces and automatic seasonal or multi-pack discounts before confirming.
+            {es
+              ? 'Revisa los espacios seleccionados y tus descuentos automáticos por temporada o pack antes de confirmar.'
+              : 'Review your selected spaces and automatic seasonal or multi-pack discounts before confirming.'}
           </p>
         </div>
 
@@ -67,9 +96,9 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
 
         {items.length === 0 ? (
           <div className="checkout-empty">
-            <p>You have no spaces in your cart.</p>
+            <p>{es ? 'No tienes espacios en tu carrito.' : 'You have no spaces in your cart.'}</p>
             <Link to="/catalogo" className="checkout-link-back">
-              ← Explore Spaces
+              {es ? '← Explorar Espacios' : '← Explore Spaces'}
             </Link>
           </div>
         ) : (
@@ -81,6 +110,7 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
             </div>
 
             <CheckoutTotales
+              idioma={idioma}
               totalSinDescuento={totalSinDescuento}
               descuentoPack={descuentoPack}
               total={total}
@@ -88,14 +118,14 @@ function CheckoutResumen({ carritoData, setCarritoData }) {
 
             <div className="checkout-actions">
               <Link to="/catalogo" className="checkout-btn-secondary">
-                ← Continue Exploring
+                {es ? '← Seguir Explorando' : '← Continue Exploring'}
               </Link>
               <button
                 type="button"
                 className="checkout-btn-confirm"
                 onClick={handleConfirmarCheckout}
               >
-                Confirm Reservation ➔
+                {es ? 'Confirmar Reserva ➔' : 'Confirm Reservation ➔'}
               </button>
             </div>
           </>

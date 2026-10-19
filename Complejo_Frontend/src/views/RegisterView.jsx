@@ -1,10 +1,10 @@
 import React from 'react'
 import RegisterForm from '../components/RegisterForm'
 
-function RegisterView({ onLogin }) {
+function RegisterView({ idioma, setIdioma, onLogin }) {
   return (
     <>
-      <RegisterForm onLogin={onLogin} />
+      <RegisterForm idioma={idioma} setIdioma={setIdioma} onLogin={onLogin} />
     </>
   )
 }
