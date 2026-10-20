@@ -65,6 +65,11 @@
   gap: 1em;
 }
 
+.auth-row .auth-field {
+  flex: 1;
+  min-width: 0;
+}
+
 .auth-field {
   display: flex;
   flex-direction: column;
@@ -78,6 +83,7 @@
 }
 
 .auth-field input {
+  width: 100%;
   padding: 0.8em 1em;
   border-radius: 0.5em;
   border: 1px solid #e0e0e0;
@@ -140,10 +146,12 @@
 
 .auth-compacto .auth-field {
   flex: 1;
+  min-width: 0;
   gap: 0.35em;
 }
 
 .auth-compacto .auth-field input {
+  width: 100%;
   padding: 0.75em 0.9em;
 }
 

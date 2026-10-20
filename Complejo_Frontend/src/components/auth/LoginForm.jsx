@@ -45,6 +45,11 @@ function LoginForm({ idioma, setIdioma, onLogin }) {
       })
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    handleClick()
+  }
+
   return (
     <div className="auth-panel-form">
       <div className="auth-form-box">
@@ -58,7 +63,7 @@ function LoginForm({ idioma, setIdioma, onLogin }) {
 
         {error && <p className="auth-error">{error}</p>}
 
-        <form onSubmit={(e) => e.preventDefault()} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form">
           <CampoFormulario
             className="auth-field"
             label={t.email}
@@ -78,7 +83,7 @@ function LoginForm({ idioma, setIdioma, onLogin }) {
             onChange={handlePasswordChange}
           />
 
-          <button type="submit" className="auth-btn-submit" onClick={handleClick}>
+          <button type="submit" className="auth-btn-submit">
             {t.boton}
           </button>
         </form>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'
 import LoginView from './views/LoginView'
 import RegisterView from './views/RegisterView'
@@ -15,8 +15,9 @@ import { CARRITO_VACIO } from './utils/constantes'
 
 function App() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [idioma, setIdioma] = useState('es')
-  const [token, setToken] = useState(localStorage.getItem('jwtToken'))
+  const [token, setToken] = useState('')
   const [isLogged, setIsLogged] = useState(false)
   const [rolUsuario, setRolUsuario] = useState('')
   const [nombreUsuario, setNombreUsuario] = useState('')
@@ -31,7 +32,54 @@ function App() {
   const [ocultasIds, setOcultasIds] = useState([])
   const [carritoData, setCarritoData] = useState(CARRITO_VACIO)
 
-  // Se ejecuta al montar la app y cada vez que cambia el token (login / logout)
+  // Al levantar la app, aseguramos arrancar sin usuario logueado previo
+  useEffect(() => {
+    localStorage.removeItem('jwtToken')
+    localStorage.removeItem('rolUsuario')
+  }, [])
+
+  // Redirección de rutas según rol y autenticación usando useNavigate y useLocation (visto en Clase 10)
+  useEffect(() => {
+    if (rolUsuario === 'ROLE_ADMIN') {
+      // El administrador no debe ver el catálogo ni pantallas de cliente/auth
+      if (
+        location.pathname === '/' ||
+        location.pathname === '/catalogo' ||
+        location.pathname === '/login' ||
+        location.pathname === '/register' ||
+        location.pathname === '/detalle' ||
+        location.pathname === '/checkout' ||
+        location.pathname === '/mis-reservas'
+      ) {
+        navigate('/admin/espacios')
+      }
+    } else if (isLogged) {
+      // Usuario normal logueado
+      if (location.pathname === '/login' || location.pathname === '/register') {
+        navigate('/catalogo')
+      } else if (
+        location.pathname === '/admin/espacios' ||
+        location.pathname === '/admin/reservas' ||
+        location.pathname === '/admin/usuarios'
+      ) {
+        navigate('/catalogo')
+      }
+    } else {
+      // Usuario no logueado (visitante)
+      // Si intenta acceder a rutas privadas (admin, checkout o mis-reservas), enviarlo al login
+      if (
+        location.pathname === '/admin/espacios' ||
+        location.pathname === '/admin/reservas' ||
+        location.pathname === '/admin/usuarios' ||
+        location.pathname === '/checkout' ||
+        location.pathname === '/mis-reservas'
+      ) {
+        navigate('/login')
+      }
+    }
+  }, [isLogged, rolUsuario, location.pathname, navigate])
+
+  // Se ejecuta al cambiar el token (login / logout)
   useEffect(() => {
     if (token) {
       apiFetch('/api/usuarios/me')
@@ -40,6 +88,7 @@ function App() {
           if (user && user.email) {
             setIsLogged(true)
             setRolUsuario(user.rol)
+            localStorage.setItem('rolUsuario', user.rol)
             setNombreUsuario(`${user.nombre} ${user.apellido}`)
 
             if (user.rol !== 'ROLE_ADMIN') {
@@ -77,11 +126,16 @@ function App() {
 
   const handleLoginSuccess = (data) => {
     setToken(data.token)
+    setRolUsuario(data.rol || '')
+    setIsLogged(true)
+    localStorage.setItem('jwtToken', data.token)
+    localStorage.setItem('rolUsuario', data.rol || '')
     navigate(data.rol === 'ROLE_ADMIN' ? '/admin/espacios' : '/catalogo')
   }
 
   const handleLogout = () => {
-    localStorage.setItem('jwtToken', '')
+    localStorage.removeItem('jwtToken')
+    localStorage.removeItem('rolUsuario')
     setToken('')
     setIsLogged(false)
     setRolUsuario('')
@@ -90,6 +144,7 @@ function App() {
     setIsBuzonOpen(false)
     setMensajesBuzon([])
     setCarritoData(CARRITO_VACIO)
+    navigate('/login')
   }
 
   const handleDescartarNotificacion = (id) => {
