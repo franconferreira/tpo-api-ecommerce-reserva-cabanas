@@ -1,25 +1,18 @@
 import React from 'react'
-import CheckoutResumen from '../components/CheckoutResumen'
-import '../components/CheckoutResumen.css'
+import CheckoutResumen from '../components/carrito/CheckoutResumen'
+import textos from '../i18n/textos'
+import './CheckoutView.css'
 
 function CheckoutView({ idioma, carritoData, setCarritoData }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].checkout
 
   return (
     <div className="checkout-wrapper">
       <div className="checkout-box">
         <div className="checkout-header">
-          <span className="checkout-overline">
-            {es ? 'RESUMEN DE RESERVA' : 'RESERVATION SUMMARY'}
-          </span>
-          <h1 className="checkout-title">
-            {es ? 'Confirmar tu Estadía en el Complejo' : 'Confirm Your Sanctuary Stay'}
-          </h1>
-          <p className="checkout-subtitle">
-            {es
-              ? 'Revisa los espacios seleccionados y tus descuentos automáticos por temporada o pack antes de confirmar.'
-              : 'Review your selected spaces and automatic seasonal or multi-pack discounts before confirming.'}
-          </p>
+          <span className="checkout-overline">{t.overline}</span>
+          <h1 className="checkout-title">{t.titulo}</h1>
+          <p className="checkout-subtitle">{t.subtitulo}</p>
         </div>
 
         <CheckoutResumen

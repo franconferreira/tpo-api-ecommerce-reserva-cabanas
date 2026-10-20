@@ -1,0 +1,53 @@
+.auth-banner {
+  flex: 1;
+  background-color: #153c2b;
+  color: #ffffff;
+  padding: 3em 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.auth-brand {
+  color: #ffffff;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4em;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-banner-hero {
+  max-width: 28em;
+}
+
+.auth-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 0.4em 0.9em;
+  border-radius: 1.5em;
+  font-size: 0.75em;
+  font-weight: 700;
+  margin-bottom: 1.2em;
+}
+
+.auth-banner-hero h1 {
+  color: #ffffff;
+  font-size: 2.6em;
+  line-height: 1.15;
+  margin-bottom: 0.5em;
+}
+
+.auth-compacto .auth-banner-hero h1 {
+  font-size: 2.5em;
+}
+
+.auth-banner-hero p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.auth-banner-footer {
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.7);
+}

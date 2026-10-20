@@ -1,26 +1,18 @@
 import React from 'react'
-import AuthBanner from '../components/AuthBanner'
-import RegisterForm from '../components/RegisterForm'
+import AuthBanner from '../components/auth/AuthBanner'
+import RegisterForm from '../components/auth/RegisterForm'
+import textos from '../i18n/textos'
+import './AuthView.css'
 
 function RegisterView({ idioma, setIdioma, onLogin }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].registro
 
   return (
-    <div className="register-container">
+    <div className="auth-container auth-compacto">
       <AuthBanner
-        panelClass="register-left-panel"
-        headerClass="register-left-header"
-        brandClass="register-brand"
-        heroClass="register-left-hero"
-        badgeClass="register-badge"
-        footerClass="register-left-footer"
-        badge={es ? '🏕️ ÚNETE AL COMPLEJO' : '🏕️ JOIN THE SANCTUARY'}
-        title={es ? 'Comienza tu tradición en el bosque.' : 'Begin your woodland tradition.'}
-        description={
-          es
-            ? 'Crea tu perfil de huésped para reservar cabañas, salones de eventos y actividades en la laguna.'
-            : 'Create your guest profile to reserve cabins, event barns, and lakeside activities with member benefits.'
-        }
+        badge={t.bannerBadge}
+        title={t.bannerTitulo}
+        description={t.bannerDescripcion}
         footerText="🌲 Whispering Pines Sanctuary & Retreats"
       />
 

@@ -1,0 +1,54 @@
+.ad-form-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 1em;
+  padding: 1.5em;
+}
+
+.ad-form-title {
+  font-size: 1.25em;
+  margin-bottom: 1em;
+}
+
+.ad-inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-items: flex-end;
+}
+
+.ad-field {
+  flex: 1;
+  min-width: 10em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.ad-field label {
+  font-size: 0.75em;
+  font-weight: 800;
+  color: #2a2a2a;
+}
+
+.ad-field input,
+.ad-field select {
+  padding: 0.65em 0.8em;
+  border-radius: 0.5em;
+  border: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+  font-size: 0.85em;
+}
+
+.ad-btn-add {
+  min-width: 11.9em;
+  text-align: center;
+  background-color: #153c2b;
+  color: #ffffff;
+  border: none;
+  padding: 0.75em 1.4em;
+  border-radius: 0.6em;
+  font-weight: 700;
+  font-size: 0.85em;
+  cursor: pointer;
+}

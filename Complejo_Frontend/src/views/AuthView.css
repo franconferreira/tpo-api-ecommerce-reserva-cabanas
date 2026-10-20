@@ -1,0 +1,6 @@
+/* Pantalla dividida de login y registro: banner a la izquierda, formulario a la derecha */
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}

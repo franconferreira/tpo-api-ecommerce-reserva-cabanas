@@ -1,0 +1,152 @@
+/* Estilos compartidos por LoginForm y RegisterForm.
+   .auth-compacto (en el contenedor de la vista de registro) achica espaciados porque ese formulario tiene más campos. */
+
+.auth-panel-form {
+  flex: 1;
+  background-color: #f4f3ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3em;
+}
+
+.auth-form-box {
+  width: 100%;
+  max-width: 26em;
+  background-color: #ffffff;
+  padding: 2.5em;
+  border-radius: 1em;
+  border: 1px solid #e0e0e0;
+}
+
+.auth-lang-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+.auth-overline {
+  color: #cc7440;
+  font-size: 0.75em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.auth-header-titles h2 {
+  font-size: 1.9em;
+  margin: 0.2em 0;
+}
+
+.auth-header-titles p {
+  color: #737373;
+  font-size: 0.9em;
+  margin-bottom: 1.5em;
+}
+
+.auth-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-bottom: 1.2em;
+  border: 1px solid #f5c6cb;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.auth-row {
+  display: flex;
+  gap: 1em;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.auth-field label {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
+.auth-field input {
+  padding: 0.8em 1em;
+  border-radius: 0.5em;
+  border: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+  font-size: 0.95em;
+}
+
+.auth-btn-submit {
+  background-color: #153c2b;
+  color: #ffffff;
+  border: none;
+  padding: 0.9em 1.2em;
+  border-radius: 0.6em;
+  font-size: 0.95em;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5em;
+}
+
+.auth-footer-links {
+  margin-top: 1.5em;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.auth-back-home {
+  margin-top: 0.6em;
+  font-size: 0.85em;
+}
+
+/* Variante compacta (registro) */
+.auth-compacto .auth-panel-form {
+  padding: 2.5em;
+}
+
+.auth-compacto .auth-form-box {
+  max-width: 28em;
+  padding: 2.2em;
+}
+
+.auth-compacto .auth-header-titles {
+  min-height: 6.7em;
+}
+
+.auth-compacto .auth-header-titles h2 {
+  font-size: 1.8em;
+}
+
+.auth-compacto .auth-header-titles p {
+  margin-bottom: 1.3em;
+}
+
+.auth-compacto .auth-error {
+  margin-bottom: 1em;
+}
+
+.auth-compacto .auth-form {
+  gap: 1em;
+}
+
+.auth-compacto .auth-field {
+  flex: 1;
+  gap: 0.35em;
+}
+
+.auth-compacto .auth-field input {
+  padding: 0.75em 0.9em;
+}
+
+.auth-compacto .auth-footer-links {
+  margin-top: 1.3em;
+}

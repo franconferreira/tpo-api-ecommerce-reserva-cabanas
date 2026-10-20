@@ -1,25 +1,18 @@
 import React from 'react'
-import EspacioList from '../components/EspacioList'
-import '../components/EspacioList.css'
+import EspacioList from '../components/catalogo/EspacioList'
+import textos from '../i18n/textos'
+import './CatalogoView.css'
 
 function CatalogoView({ idioma, onAbrirDetalle }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].catalogo
 
   return (
     <div className="catalogo-wrapper">
       <div className="catalogo-hero-mapa">
         <div className="catalogo-hero-overlay">
-          <span className="catalogo-overline">
-            {es ? 'COMPLEJO WHISPERING PINES' : 'WHISPERING PINES SANCTUARY'}
-          </span>
-          <h1 className="catalogo-title">
-            {es ? 'Cabañas del Bosque y Espacios de Eventos' : 'Woodland Dwellings & Gathering Spaces'}
-          </h1>
-          <p className="catalogo-subtitle">
-            {es
-              ? '20% OFF automático en noches de temporada baja (Mayo, Junio y Agosto) + 15% OFF en Pack Multi-Espacio (2 o más espacios).'
-              : '20% OFF automatic discount on low-season nights (May, June & August) + 15% OFF Multi-Space Pack (2+ spaces).'}
-          </p>
+          <span className="catalogo-overline">{t.overline}</span>
+          <h1 className="catalogo-title">{t.titulo}</h1>
+          <p className="catalogo-subtitle">{t.subtitulo}</p>
         </div>
       </div>
 

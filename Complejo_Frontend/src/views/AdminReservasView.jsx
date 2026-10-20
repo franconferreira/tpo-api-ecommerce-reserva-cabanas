@@ -1,29 +1,16 @@
 import React from 'react'
-import AdminReservas from '../components/AdminReservas'
-import '../components/AdminReservas.css'
+import PageHeader from '../components/layout/PageHeader'
+import AdminReservas from '../components/admin/reservas/AdminReservas'
+import textos from '../i18n/textos'
+import './AdminView.css'
 
 function AdminReservasView({ idioma }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].adminReservas
 
   return (
-    <div className="admin-res-wrapper">
-      <div className="admin-res-container">
-        <div className="admin-res-header">
-          <div>
-            <span className="admin-res-overline">
-              {es ? 'REGISTRO Y OPERACIONES DE RESERVAS' : 'BOOKING LEDGER & OPERATIONS'}
-            </span>
-            <h1 className="admin-res-title">
-              {es ? 'Reservas de Huéspedes' : 'All Guest Reservations'}
-            </h1>
-            <p className="admin-res-subtitle">
-              {es
-                ? 'Supervisa las reservas activas, fechas de ingreso y cancelaciones administrativas con aviso al cliente.'
-                : 'Monitor active bookings, check-in schedules, and administrative cancellations across the sanctuary.'}
-            </p>
-          </div>
-        </div>
-
+    <div className="admin-pagina">
+      <div className="admin-contenedor">
+        <PageHeader overline={t.overline} titulo={t.titulo} subtitulo={t.subtitulo} />
         <AdminReservas idioma={idioma} />
       </div>
     </div>

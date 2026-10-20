@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import Navigation from './components/Navigation'
-import Footer from './components/Footer'
-import CarritoDrawer from './components/CarritoDrawer'
-import BuzonDrawer from './components/BuzonDrawer'
+import MainLayout from './components/layout/MainLayout'
 import LoginView from './views/LoginView'
 import RegisterView from './views/RegisterView'
 import CatalogoView from './views/CatalogoView'
@@ -13,6 +10,8 @@ import MisReservasView from './views/MisReservasView'
 import AdminEspaciosView from './views/AdminEspaciosView'
 import AdminReservasView from './views/AdminReservasView'
 import AdminUsuariosView from './views/AdminUsuariosView'
+import { apiFetch } from './utils/api'
+import { CARRITO_VACIO } from './utils/constantes'
 
 function App() {
   const navigate = useNavigate()
@@ -30,27 +29,12 @@ function App() {
     return guardadas ? JSON.parse(guardadas) : []
   })
   const [ocultasIds, setOcultasIds] = useState([])
-  const carritoVacio = {
-    id: null,
-    totalSinDescuento: 0,
-    descuentoPackPorcentaje: 0,
-    total: 0,
-    items: []
-  }
-  const [carritoData, setCarritoData] = useState(carritoVacio)
+  const [carritoData, setCarritoData] = useState(CARRITO_VACIO)
 
   // Se ejecuta al montar la app y cada vez que cambia el token (login / logout)
   useEffect(() => {
     if (token) {
-      const URL = 'http://localhost:8080'
-      const options = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-
-      fetch(`${URL}/api/usuarios/me`, options)
+      apiFetch('/api/usuarios/me')
         .then((res) => res.json())
         .then((user) => {
           if (user && user.email) {
@@ -59,7 +43,7 @@ function App() {
             setNombreUsuario(`${user.nombre} ${user.apellido}`)
 
             if (user.rol !== 'ROLE_ADMIN') {
-              fetch(`${URL}/api/carrito`, options)
+              apiFetch('/api/carrito')
                 .then((res) => res.json())
                 .then((cart) => {
                   if (cart && cart.items) {
@@ -70,7 +54,7 @@ function App() {
                   console.error('Error al obtener carrito: ', err)
                 })
 
-              fetch(`${URL}/api/reservas/mis-reservas`, options)
+              apiFetch('/api/reservas/mis-reservas')
                 .then((res) => res.json())
                 .then((reservas) => {
                   if (reservas) {
@@ -105,7 +89,7 @@ function App() {
     setIsCartOpen(false)
     setIsBuzonOpen(false)
     setMensajesBuzon([])
-    setCarritoData(carritoVacio)
+    setCarritoData(CARRITO_VACIO)
   }
 
   const handleDescartarNotificacion = (id) => {
@@ -122,25 +106,32 @@ function App() {
   const mensajesNoLeidos = mensajesBuzon.filter((m) => !leidasIds.includes(m.id))
 
   return (
-    <>
-      <Navigation
-        idioma={idioma}
-        setIdioma={setIdioma}
-        isLogged={isLogged}
-        rolUsuario={rolUsuario}
-        nombreUsuario={nombreUsuario}
-        onLogout={handleLogout}
-        onAbrirCarrito={() => setIsCartOpen(true)}
-        cantidadCarrito={carritoData.items ? carritoData.items.length : 0}
-        onAbrirBuzon={() => setIsBuzonOpen(true)}
-        cantidadBuzon={mensajesNoLeidos.length}
-      />
+    <Routes>
+      <Route path="/login" element={<LoginView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
+      <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
 
-      <Routes>
+      <Route
+        element={
+          <MainLayout
+            idioma={idioma}
+            setIdioma={setIdioma}
+            isLogged={isLogged}
+            rolUsuario={rolUsuario}
+            nombreUsuario={nombreUsuario}
+            onLogout={handleLogout}
+            carritoData={carritoData}
+            setCarritoData={setCarritoData}
+            isCartOpen={isCartOpen}
+            setIsCartOpen={setIsCartOpen}
+            mensajesNoLeidos={mensajesNoLeidos}
+            onDescartarNotificacion={handleDescartarNotificacion}
+            isBuzonOpen={isBuzonOpen}
+            setIsBuzonOpen={setIsBuzonOpen}
+          />
+        }
+      >
         <Route path="/" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
         <Route path="/catalogo" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
-        <Route path="/login" element={<LoginView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
-        <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
         <Route
           path="/detalle"
           element={
@@ -164,29 +155,8 @@ function App() {
         <Route path="/admin/espacios" element={<AdminEspaciosView idioma={idioma} />} />
         <Route path="/admin/reservas" element={<AdminReservasView idioma={idioma} />} />
         <Route path="/admin/usuarios" element={<AdminUsuariosView idioma={idioma} />} />
-      </Routes>
-
-      <Footer idioma={idioma} />
-
-      {rolUsuario !== 'ROLE_ADMIN' && (
-        <>
-          <CarritoDrawer
-            idioma={idioma}
-            carritoData={carritoData}
-            setCarritoData={setCarritoData}
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-          />
-          <BuzonDrawer
-            idioma={idioma}
-            mensajes={mensajesNoLeidos}
-            onDescartar={handleDescartarNotificacion}
-            isOpen={isBuzonOpen}
-            onClose={() => setIsBuzonOpen(false)}
-          />
-        </>
-      )}
-    </>
+      </Route>
+    </Routes>
   )
 }
 

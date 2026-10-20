@@ -1,29 +1,16 @@
 import React from 'react'
-import AdminEspacios from '../components/AdminEspacios'
-import '../components/AdminEspacios.css'
+import PageHeader from '../components/layout/PageHeader'
+import AdminEspacios from '../components/admin/espacios/AdminEspacios'
+import textos from '../i18n/textos'
+import './AdminView.css'
 
 function AdminEspaciosView({ idioma }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].adminEspacios
 
   return (
-    <div className="admin-dashboard-wrapper">
-      <div className="admin-dashboard-container">
-        <div className="ad-header">
-          <div className="ad-header-izq">
-            <span className="ad-overline">
-              {es ? 'CATÁLOGO E INSTALACIONES DEL COMPLEJO' : 'PROPERTY ROSTER & FACILITIES'}
-            </span>
-            <h1 className="ad-title">
-              {es ? 'Espacios y Alojamientos' : 'Places & Accommodations'}
-            </h1>
-            <p className="ad-subtitle">
-              {es
-                ? 'Administra cabañas, salones de eventos e instalaciones recreativas en el predio de Whispering Pines.'
-                : 'Manage cabins, event barns, and recreational facilities across Whispering Pines resort plots.'}
-            </p>
-          </div>
-        </div>
-
+    <div className="admin-pagina">
+      <div className="admin-contenedor">
+        <PageHeader overline={t.overline} titulo={t.titulo} subtitulo={t.subtitulo} />
         <AdminEspacios idioma={idioma} />
       </div>
     </div>

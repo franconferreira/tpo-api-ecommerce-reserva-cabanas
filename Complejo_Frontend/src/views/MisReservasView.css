@@ -1,0 +1,29 @@
+.mr-wrapper {
+  padding: 2.5em 4em;
+  background-color: #f4f3ef;
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+}
+
+.mr-container {
+  width: 100%;
+  max-width: 65em;
+}
+
+.mr-btn-new {
+  min-width: 12.8em;
+  text-align: center;
+  background-color: #153c2b;
+  color: #ffffff;
+  padding: 0.75em 1.4em;
+  border-radius: 1.5em;
+  font-size: 0.9em;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.mr-container .page-header {
+  align-items: center;
+  margin-bottom: 2em;
+}

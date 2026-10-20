@@ -1,254 +1,144 @@
-# Reglas de Cátedra (API - UADE) — Instrucciones Estrictas para Claude
+# CLAUDE.md — Guía de trabajo del proyecto
 
-> **MODO DE OPERACIÓN**: Actúa como un desarrollador senior y alumno de la materia **Aplicaciones Interactivas (API - UADE)** que domina las herramientas, conceptos y restricciones enseñadas en las **Clases 7, 8, 9 y 10** aplicadas a un **Trabajo Práctico Integrador Real** (superando los ejercicios didácticos simplificados de pizarrón).
->
-> **REGLA SUPREMA E INQUEBRANTABLE**:
-> **ESTÁ TERMINANTEMENTE PROHIBIDO UTILIZAR LIBRERÍAS, HOOKS O SINTAXIS QUE NO SE HAYAN VISTO EN CLASE (COMO REDUX, CONTEXT API, ASYNC/AWAIT, AXIOS O TAILWIND).**
-> La profesora evalúa inspeccionando desde las **DevTools del navegador (Network, Console, Elements)** y toma defensa oral preguntando la justificación técnica de cada archivo. Debes cumplir estrictamente cada pauta de este documento.
+Guía para implementar, analizar y revisar código en este repositorio. Se basa en los fundamentos de las clases 8, 9 y 10 (DOM, React, hooks, routing y fetch), aplicados con criterio profesional: **los principios se respetan; los ejemplos de clase son demostraciones, no plantillas obligatorias.**
 
 ---
 
-## 0. Temario Completo Cerrado (Clases 7, 8, 9 y 10)
+## 1. Contexto del proyecto
 
-Todo el código de la aplicación debe resolverse con los temas dictados en la materia:
-- **Clase 7 (JavaScript base)**: Tipos primitivos, `let` y `const` (prohibido `var`), scope de bloque, Arrow Functions en constantes (`const fn = () => {}`), igualdad estricta (`===`), template strings (`` `${var}` ``), destructuring, spread/rest (`...`), manipulación inmutable con `.map()`, `console.table()`.
-- **Clase 8 (DOM, CSS, Vite y Arquitectura)**: Vite + React + JavaScript (`.jsx`) + ESLint, manipulación del Virtual DOM, CSS en `.css` con selectores de clase y medidas en **`em`** (`1px` solo para bordes finos), estructura de carpetas (`public/`, `src/assets/`, `src/views/`, `src/components/`), fragments (`<> ... </>`).
-- **Clase 9 (Estado, Props y Formularios Controlados)**: Flujo de datos unidireccional (datos bajan por `props`, eventos suben por callbacks), hook `useState()`, formularios controlados (`<form onSubmit={(e) => e.preventDefault()}>`, inputs con `name` coincidente con el backend y `onChange`), validaciones en estado (prohibido `alert()`), actualización inmutable con `[...lista]` y `.splice()`.
-- **Clase 10 (SPA, Ruteo, `useEffect`, Promesas `fetch` y JWT)**: SPA con `react-router-dom` (`<BrowserRouter>`, `<Routes>`, `<Route>`, `<Link>`, `useNavigate()`, `useLocation()`), ciclo de vida con `useEffect(() => { ... }, [deps])`, promesas con `fetch(URL, options).then((res) => res.json()).then((data) => { ... }).catch((err) => { ... })`, token JWT en `localStorage` enviado en headers como `Authorization: \`Bearer \${token}\``.
-
----
-
-## 1. Tabla Estricta: PERMITIDO vs. PROHIBIDO
-
-| Categoría | ✅ PERMITIDO (Visto en Clases 7 a 10) | ❌ TERMINANTEMENTE PROHIBIDO |
-| :--- | :--- | :--- |
-| **Lenguaje y Proyecto** | Vite + React con **JavaScript (`.jsx`)** + ESLint. | TypeScript (`.tsx`), Next.js, Remix, PropTypes. |
-| **Hooks de React** | **Únicamente `useState` y `useEffect`** (más `useNavigate` y `useLocation` de `react-router-dom`). | `useContext`, `useReducer`, `useRef`, `useMemo`, `useCallback`, `useId`, o **Custom Hooks** (`useFetch`, `useAuth`, etc.). |
-| **Manejo de Estado** | Estado local en componentes contenedores (`useState`) pasado por `props`; `localStorage` para `jwtToken` y preferencias locales (`notificacionesLeidas`). | Context API (`createContext` / `AuthProvider` / `CartContext`), Redux, Zustand, eventos globales (`window.dispatchEvent`). |
-| **Ruteo (`react-router-dom`)** | `<BrowserRouter>`, `<Routes>`, `<Route path='...' element={<.../>} />`, `<Link to='...'>`, `useNavigate()`, `useLocation()`. | `createBrowserRouter`, `RouterProvider`, `<NavLink>`, `<Outlet>`, `<Navigate>`, `useParams`, loaders/actions. |
-| **Peticiones HTTP / Asincronía** | `fetch(URL, options)` encadenado con **`.then((res) => res.json()).then((data) => ...).catch((error) => ...)`**. | **`async` / `await` con `try` / `catch`**, `axios`, React Query, SWR, AbortController, o carpetas `services/` / `api/` externas. |
-| **JavaScript Nativo** | Métodos estándar con naturalidad: `.trim()`, `.map()`, `.splice()`, `.includes()`, `Number()`, `parseFloat()`, `.split()`, `.toUpperCase()`, `.toLowerCase()`, Spread/Rest (`...`), Destructuring, `JSON.stringify()`. | Librerías utilitarias externas (Lodash), Regex ilegibles o algoritmos rebuscados para tareas estándar. |
-| **Formularios y Errores UI** | `<form onSubmit={(e) => e.preventDefault()}>`, inputs con `useState('')` + `onChange={handleChange}`, errores en `useState('')` renderizados en `{error && <p>{error}</p>}`. | **`alert()`, `confirm()`, `prompt()`**, Toasts flotantes con timers, modales con animaciones complejas, React Hook Form, Formik. |
-| **Estilos y UI** | CSS puro (`.css`) con selectores de clase (`.clase`) y medidas relativas **`em`** (`1px` solo para bordes finos). | Tailwind, Bootstrap, Material UI, Styled Components, CSS Modules (`.module.css`), estilos inline complejos `style={{ ... }}`. |
+- **Monorepo** con dos aplicaciones:
+  - `Complejo_Backend/`: API REST en Spring Boot + MySQL, autenticación JWT, expuesta en `http://localhost:8080`.
+  - `Complejo_Frontend/`: SPA en **Vite + React con JavaScript (`.jsx`)**, `react-router-dom` y **ESLint**.
+- Dominio: complejo turístico (catálogo de espacios, detalle con disponibilidad, carrito, checkout, reservas del cliente, buzón de cancelaciones y paneles de administración). Interfaz bilingüe ES/EN.
+- Es un trabajo práctico universitario que el equipo defiende oralmente: **cada decisión tiene que poder explicarse**. Ante dos soluciones correctas, preferí la más simple de explicar.
+- Comandos del frontend (desde `Complejo_Frontend/`): `npm run dev`, `npm run lint`, `npm run build`.
 
 ---
 
-## 2. Arquitectura Real en 3 Niveles (Sin Vistas Vacías ni Pasamanos)
+## 2. Cómo trabajar antes de cambiar código
 
-La regla de cátedra *"las vistas no tienen funcionalidad, todo debe estar en componentes"* define una jerarquía limpia de **máximo 3 niveles**:
-
-```text
-[ NIVEL 1: VISTA / LAYOUT DE PANTALLA ] (src/views/)
-  - Es la Maqueta de la pantalla asociada a una ruta del Router.
-  - NO es un wrapper vacío de 5 líneas que llama a un solo componente.
-  - Define la disposición visual (ej. pantalla dividida en 2 columnas, o encabezado + grilla, o info + calendario + widget).
-  - Orquesta y posiciona a los componentes hermanos de esa ruta.
-  - NO contiene lógica de negocio pesada, ni cálculos de cotización, ni peticiones fetch directas.
-
-[ NIVEL 2: COMPONENTE CONTENEDOR / LÓGICA ] (src/components/)
-  - Responsabilidad única sobre un recurso o sección funcional (ej. lista de espacios, formulario de alta, widget de reserva).
-  - Dueño del estado (useState), de los efectos (useEffect con fetch) y de los handlers de eventos.
-  - Realiza el .map() de la colección directamente hacia los componentes de Nivel 3.
-  - Al realizar POST, PUT o DELETE, actualiza también el estado local en memoria para no hacer llamadas GET innecesarias al backend.
-
-[ NIVEL 3: COMPONENTE PRESENTACIONAL / ÍTEM ] (src/components/)
-  - Unidad visual mínima: una tarjeta (Card), una fila de tabla (Row), un ítem de lista o un banner.
-  - CERO useState y CERO useEffect.
-  - Solo recibe props desestructuradas por parámetro y devuelve JSX limpio (~15 a 35 líneas).
-```
-
-### Prohibición Estricta de Cadenas de 4 y 5 Niveles (Componentes Pasamanos):
-- Está **prohibido** crear componentes intermedios de envoltorio como `AdminEspaciosTabla`, `AdminReservasTabla` o `AdminUsuariosTabla`.
-- El componente contenedor de Nivel 2 debe contener la etiqueta `<table>` y hacer el `.map()` directamente a la fila presentacional `<tr>` (Nivel 3).
+1. **Entender el problema real** y qué se pidió. No ampliar el alcance por iniciativa propia.
+2. **Leer el código existente** de la zona afectada y seguir sus convenciones (nombres, estructura, estilo de componentes, idioma de los textos).
+3. **Elegir la solución más simple que resuelva el problema.** Una abstracción nueva (componente, helper, módulo) se justifica cuando elimina duplicación real o separa responsabilidades distintas, no "por si acaso".
+4. **No refactorizar lo que no se pidió.** Si se detecta un problema ajeno a la tarea, se informa; no se corrige de paso.
+5. **No reestructurar una arquitectura que funciona** solo para que se parezca a un ejemplo de clase.
+6. **Preguntar** cuando una decisión importante depende de un requisito ambiguo (cambios de contrato con el backend, cambios visibles en la UI, nuevas dependencias).
+7. **Verificar** al terminar: `npm run lint` sin errores ni warnings, `npm run build` exitoso y, si el cambio es visible, probarlo en el navegador (Console sin errores, Network sin peticiones de más).
 
 ---
 
-## 3. Principio de Responsabilidad Única vs. Conteo Ciego de Líneas
+## 3. Principios fundamentales
 
-- La modularidad se rige por la **Responsabilidad Única**:
-  - Un componente no debe mezclar el layout de la pantalla completa con la lógica del formulario o tabla.
-  - Si un componente contenedor maneja operaciones CRUD completas (`GET`, `PUT`, `DELETE`) con promesas nativas `fetch().then().then().catch()` y actualización inmutable en memoria con `.map()`, **sus líneas son legítimas y necesarias** (~80 a 140 líneas). No se debe forzar una fragmentación artificial por obsesión numérica.
-- **Un único componente por archivo `.jsx`**: Prohibido declarar múltiples componentes dentro de un mismo archivo. Todo componente debe tener su propio archivo con `export default NombreComponente` al final.
+Se respetan siempre salvo una justificación técnica explícita, porque protegen la corrección del programa.
 
----
+### 3.1 Flujo de datos unidireccional
+- **Los datos bajan por props; los eventos suben por funciones** que el padre le pasa al hijo.
+- **El estado vive en el componente que lo necesita.** Si varios componentes lo comparten, sube al **ancestro común más cercano** (no más arriba). Solo ese componente lo modifica; los hijos piden cambios llamando a sus callbacks.
+- Al pasar un handler con argumentos: `onClick={() => onEliminar(id)}`, nunca `onClick={onEliminar(id)}` (se ejecutaría al renderizar).
 
-## 4. Cómo Resolver Situaciones Comunes SIN Hacer Nada "De Más"
+### 3.2 El estado es inmutable
+- Nunca mutar el estado ni los objetos/arrays que contiene. Siempre se crea un valor nuevo y se pasa al `set`.
+- Técnicas válidas: spread (`[...lista, nuevo]`, `{ ...obj, campo }`), `.map()` para editar un elemento, `.filter()` o copia + `.splice()` para quitar uno. Se elige la más clara para el caso.
 
-1. **¿Cómo compartir estado entre vistas (usuario, carrito) sin `useContext`?**
-   - El estado compartido (`useState`) se declara en el componente raíz (`App.jsx`) y desciende por `props` a través de las rutas (`<Route path='/ruta' element={<MiVista datos={datos} setDatos={setDatos} />} />`). El token JWT se guarda en `localStorage.setItem('jwtToken', data.token)` y se recupera con `localStorage.getItem('jwtToken')`.
-2. **¿Dónde colocar los `fetch()` para evitar llamadas al pedo y bucles infinitos?**
-   - **`GET` inicial**: En `useEffect(() => { fetch(...) }, [])` con array de dependencias vacío `[]` (se ejecuta una única vez en el montaje).
-   - **`POST`, `PUT`, `PATCH`, `DELETE`**: Se disparan dentro del handler del evento (`handleClick`, `handleSubmit`, etc.) y, en el segundo `.then((data) => { ... })`, se actualiza el estado local en memoria con spread (`[...items, data]`) o con `.map()` para que la pantalla refleje el cambio al instante sin volver a llamar a la API.
-   - **PROHIBIDO**: Nunca colocar un `setEstado` adentro de un `useEffect` que tenga a ese mismo estado en su array de dependencias (produce un bucle infinito en la pestaña Network).
-3. **¿Cómo manejar errores y validaciones sin `alert()`?**
-   - Validar con `if (campo.trim() === '')`. Guardar el mensaje en `setError('...')` y mostrarlo condicionalmente en JSX con `{error && <p className="error">{error}</p>}`. Prohibido usar `alert()`, `confirm()` o librerías de Toast.
+### 3.3 Listas con `key` estable
+- Todo `.map()` que renderiza elementos lleva `key`.
+- Usar un **id único** (el de la base de datos). El índice como `key` solo es aceptable en listas estáticas que nunca se reordenan, filtran ni eliminan elementos.
 
----
+### 3.4 Efectos (`useEffect`) usados para lo que son
+- `useEffect` sirve para **sincronizar el componente con algo externo**: traer datos al montar, actualizar `document.title`, suscripciones, timers.
+- **Array de dependencias correcto**: todo valor del componente que se use dentro del efecto va en el array (la regla `react-hooks/exhaustive-deps` de ESLint lo verifica). `[]` significa "solo al montar" y únicamente es correcto si el efecto no depende de props ni estado.
+- Si el efecto crea algo que persiste (listener, intervalo, suscripción), **devuelve una función de limpieza**.
+- **Nunca** hacer `setX(...)` dentro de un efecto que depende de `x` sin una condición de corte: genera un bucle infinito de renders y de peticiones.
+- En desarrollo, `StrictMode` monta los componentes dos veces y los GET aparecen duplicados en Network. Es esperado; no se "arregla" quitando `StrictMode`.
 
-## 5. Plantillas de Arquitectura y Código Real
+### 3.5 Peticiones al backend
+- **GET de carga inicial** → en un `useEffect` al montar (o cuando cambia el recurso del que depende, por ejemplo un id).
+- **POST, PUT, PATCH, DELETE** → dentro del **handler del evento** que las dispara (submit, click), nunca en un efecto.
+- **Después de una mutación exitosa, actualizar el estado local** con la respuesta del backend en lugar de volver a pedir toda la lista. Así se evitan peticiones innecesarias.
+- **Manejar siempre el error** (`.catch()`) y dar feedback al usuario cuando corresponda; un `console.error` solo no alcanza para acciones del usuario.
+- **`fetch` no rechaza la promesa ante respuestas 4xx/5xx.** Antes de tratar la respuesta como éxito hay que verificarlo (con `res.ok` o validando que los datos tengan la forma esperada). Una respuesta de error nunca debe terminar guardada en el estado como si fuera un dato válido.
+- Requests con cuerpo: `headers` con `'Content-Type': 'application/json'` y `body: JSON.stringify(datos)`. Los nombres de las propiedades enviadas coinciden con el DTO del backend.
+- Requests autenticadas: header `Authorization: \`Bearer ${token}\``.
 
-### A. Maqueta de Pantalla Dividida en la Vista (Ej. `LoginView.jsx`)
-La Vista actúa como layout real y compone a los dos componentes hermanos:
-```jsx
-// src/views/LoginView.jsx
-import React from 'react'
-import AuthBanner from '../components/AuthBanner'
-import LoginForm from '../components/LoginForm'
+### 3.6 Feedback al usuario sin `alert()`
+- No usar `alert`, `confirm` ni `prompt`: bloquean la interfaz, no se pueden estilizar y rompen la experiencia.
+- Patrón: estado `const [error, setError] = useState('')`, validación (por ejemplo `campo.trim() === ''`) y render condicional `{error && <p className="...">{error}</p>}`. Limpiar el error cuando la acción sale bien.
 
-function LoginView({ idioma, onLogin }) {
-  return (
-    <div className="auth-page-wrapper">
-      <AuthBanner idioma={idioma} />
-      <LoginForm idioma={idioma} onLogin={onLogin} />
-    </div>
-  )
-}
+### 3.7 React maneja el DOM
+- No manipular el DOM directamente (`getElementById`, `createElement`, `appendChild`, `addEventListener`) dentro de la app: React lo actualiza a partir del estado. Lo que cambia en pantalla tiene que salir del estado.
+- Excepción razonable: efectos sobre partes del documento que React no controla (por ejemplo `document.title` dentro de un `useEffect`).
 
-export default LoginView
-```
-
-### B. Componente Formulario Puro (Ej. `LoginForm.jsx`)
-No se preocupa por el layout de la pantalla, solo por sus inputs, validaciones y su fetch:
-```jsx
-// src/components/LoginForm.jsx
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-
-function LoginForm({ idioma, onLogin }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const URL = 'http://localhost:8080'
-
-  const handleSubmit = () => {
-    if (email.trim() === '' || password.trim() === '') {
-      setError('Por favor complete todos los campos')
-      return
-    }
-
-    const datosAEnviar = { email, password }
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(datosAEnviar)
-    }
-
-    fetch(`${URL}/api/auth/login`, options)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.token) {
-          localStorage.setItem('jwtToken', data.token)
-          setError('')
-          onLogin(data)
-        } else {
-          setError(data.mensaje || 'Credenciales invalidas')
-        }
-      })
-      .catch((err) => {
-        console.error(err)
-        setError('Error al conectar con el servidor')
-      })
-  }
-
-  return (
-    <div className="login-form-container">
-      <h2>Iniciar Sesión</h2>
-      {error && <p className="form-error">{error}</p>}
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Correo electrónico"
-        />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
-        />
-        <button type="button" onClick={handleSubmit}>Ingresar</button>
-      </form>
-      <p>¿No tienes cuenta? <Link to="/register">Regístrate</Link></p>
-    </div>
-  )
-}
-
-export default LoginForm
-```
-
-### C. Contenedor con Tabla y Fila Directa (Aplanado a 3 Niveles)
-Sin componentes pasamanos intermedios:
-```jsx
-// src/components/AdminEspacios.jsx (Nivel 2: Contenedor de Lógica)
-import React, { useState, useEffect } from 'react'
-import AdminEspacioForm from './AdminEspacioForm'
-import AdminEspacioRow from './AdminEspacioRow'
-
-function AdminEspacios({ idioma }) {
-  const [espacios, setEspacios] = useState([])
-  const [error, setError] = useState('')
-  const URL = 'http://localhost:8080'
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
-    const options = {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` }
-    }
-    fetch(`${URL}/api/admin/espacios`, options)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) setEspacios(data)
-      })
-      .catch((err) => console.error(err))
-  }, [])
-
-  const handleEspacioCreado = (nuevo) => {
-    setEspacios([...espacios, nuevo])
-  }
-
-  return (
-    <div className="admin-container">
-      <AdminEspacioForm onEspacioCreado={handleEspacioCreado} />
-      {error && <p className="error">{error}</p>}
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {espacios.map((espacio) => (
-            <AdminEspacioRow
-              key={espacio.id}
-              espacio={espacio}
-            />
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-export default AdminEspacios
-```
+### 3.8 Fuente de verdad en el backend
+- Los datos de negocio (espacios, reservas, carrito, usuarios) viven en el backend. El frontend tiene copias en estado.
+- `localStorage` se usa solo para el **token JWT** (`jwtToken`) y para **preferencias locales del usuario** que no son datos de negocio (por ejemplo, notificaciones ya leídas). No se usa como base de datos.
+- No duplicar en el frontend cálculos de negocio que hace el backend (precios, descuentos, totales del carrito): mostrar lo que devuelve la API.
 
 ---
 
-## 6. Checklist Obligatorio antes de Entregar Código al Usuario
+## 4. Buenas prácticas recomendadas
 
-Antes de responder o guardar código, verifica punto por punto:
-- [ ] ¿Usé **únicamente** `useState` y `useEffect` (más `useNavigate`/`useLocation` para rutas)?
-- [ ] ¿Todas las peticiones usan `fetch().then().then().catch()` **sin** `async/await` ni `axios`?
-- [ ] ¿Las vistas (`src/views/`) funcionan como maquetas de pantalla componiendo componentes hermanos y **no como wrappers vacíos de una línea**?
-- [ ] ¿Eliminé componentes pasamanos redundantes (`AdminEspaciosTabla`, etc.) logrando una jerarquía limpia de 3 niveles?
-- [ ] ¿Cada `.map()` en JSX tiene su prop `key` única y estable?
-- [ ] ¿Al hacer POST, PUT o DELETE actualicé también el estado local con spread o `.map()` para no hacer llamadas GET innecesarias al backend?
-- [ ] ¿Los estilos están en CSS puro con medidas relativas en `em` (`1px` solo en bordes)?
-- [ ] ¿`npm run lint` da **0 errores y 0 warnings** y `npm run build` compila con éxito?
+Se siguen por defecto; se pueden adaptar con una razón concreta.
+
+### 4.1 Vistas y componentes
+- **Vista (`src/views/`)**: una por ruta. Compone y ubica los bloques de la pantalla (layout, encabezado, columnas). No hace `fetch` ni contiene lógica de negocio; sí puede tener lógica mínima de presentación (render condicional, navegar ante un click).
+- **Componente con lógica**: dueño de un recurso o bloque funcional (estado, efecto de carga, handlers de mutación). Hace el `.map()` de su colección.
+- **Componente de presentación**: recibe props y devuelve JSX (tarjeta, fila, ítem). Sin estado propio salvo estado puramente visual.
+- **Cuándo la vista llama directo a varios componentes**: cuando son independientes (cada uno maneja sus propios datos). **Cuándo hace falta un componente intermedio**: cuando varios bloques comparten y modifican el mismo estado (por ejemplo, un formulario de alta y la tabla que muestra lo creado).
+- **El tamaño es consecuencia, no objetivo**: se divide un componente cuando tiene más de una razón para cambiar o cuando un bloque se reutiliza. No se divide solo por cantidad de líneas.
+- **Evitar componentes pasamanos** que solo reciben props para pasarlas a otro componente sin aportar estructura ni lógica, y evitar cadenas de componentes más profundas de lo necesario.
+- Un componente por archivo, nombre en **PascalCase** igual al del archivo, `export default` al final. Mantener la forma de declarar componentes y handlers que ya usa el proyecto.
+- Un componente devuelve un solo elemento raíz; usar fragmentos `<>...</>` cuando no hace falta un contenedor real.
+
+### 4.2 Formularios
+- **Controlados**: cada input tiene `value` (del estado) y `onChange`. Sin `value`, el formulario no se puede resetear desde el estado.
+- `<form onSubmit={...}>` con `e.preventDefault()`; preferir manejar el envío en `onSubmit` (también funciona con Enter) antes que en el `onClick` del botón.
+- El atributo `name` de cada input coincide con la propiedad que se envía al backend: hace trazable el mapeo formulario → DTO.
+- Validar en el frontend lo obvio (campos vacíos, rangos, fechas) para dar feedback rápido; el backend sigue siendo el que valida en serio.
+
+### 4.3 Navegación (react-router-dom)
+- `<BrowserRouter>` envuelve a la app en `main.jsx`; las rutas se declaran con `<Routes>` y `<Route path element>` en `App.jsx`.
+- Las pantallas internas son rutas hijas de `MainLayout` (barra, `<Outlet />`, footer y paneles). Login y registro quedan fuera de ese layout, por eso no muestran barra ni footer.
+- **`<Link>`** para navegación que el usuario elige (menús, enlaces). **`useNavigate()`** para redirigir desde código tras un evento (login exitoso, envío de un formulario).
+- **`useLocation()`** para leer la ruta actual (por ejemplo, marcar el link activo u ocultar la barra en pantallas de autenticación).
+- Barra de navegación semántica: `<nav>` → `<ul>` → `<li>` → `<Link>`.
+
+### 4.4 Estilos
+- CSS en archivos `.css`. Estilar con **clases** (reutilizables y de especificidad baja); reservar los **IDs** para identificar elementos únicos, no para estilar.
+- **Medidas relativas** (`em`, `rem`, `%`, `vh`/`vw`) para tamaños, espaciados y tipografías; `px` es razonable en bordes finos y detalles que no deben escalar. Lo que hace a una interfaz adaptable es el layout (flex, grid), no solo la unidad.
+- Si el texto de un elemento cambia de largo (por ejemplo, al cambiar de idioma), darle un ancho mínimo para que el layout no se mueva.
+
+### 4.5 Estructura de carpetas
+- `public/`: archivos estáticos servidos tal cual (favicon/logo).
+- `src/assets/`: imágenes fijas que se importan desde el código.
+- `src/views/`: vistas (una por ruta) y el CSS del layout de cada pantalla (`CatalogoView.css`, `AdminView.css`, …).
+- `src/components/`: componentes agrupados por funcionalidad:
+  - `layout/`: lo común a todas las pantallas internas (`MainLayout`, `Navigation`, `Footer`, `PageHeader`).
+  - `ui/`: piezas reutilizables sin dominio (`CampoFormulario`).
+  - `auth/`, `catalogo/`, `detalle/`, `carrito/`, `reservas/`, `admin/{espacios,reservas,usuarios}/`: componentes de cada funcionalidad.
+- `src/utils/`: lógica que no es de interfaz y se reutiliza: `api.js` (URL base y armado de la petición con el token), `fechas.js` (funciones puras de fechas), `constantes.js`.
+- `src/i18n/textos.js`: todos los textos de la interfaz en español e inglés. Un texto nuevo se agrega en los dos idiomas.
+- Cada componente importa su propio CSS. Las piezas chicas que solo existen dentro de un componente (una fila, un ítem) pueden compartir el CSS de ese componente.
+- `index.html`: solo metadatos del documento (título, favicon). React monta todo en `<div id="root">`; no se agrega marcado ni lógica ahí.
+
+---
+
+## 5. Decisiones contextuales
+
+Dependen del tamaño y la necesidad real; se deciden caso por caso.
+
+- **Dónde vive el estado compartido entre vistas** (sesión, carrito, idioma): en `App.jsx`, el ancestro común, bajando por props. Si el pasaje de props se vuelve inmanejable, plantearlo antes de introducir otra solución.
+- **Constantes y helpers compartidos** (URL base de la API, cálculos de fechas, imagen por defecto): extraerlos a un módulo común cuando la misma lógica se repite en varios archivos. Con uno o dos usos, una constante local es suficiente.
+- **Organización por carpetas de funcionalidad** (`admin/`, `carrito/`, etc.): conveniente si `components/` sigue creciendo; no reorganizar sin que se pida, porque mueve muchos archivos.
+- **Recargar desde el backend en vez de actualizar el estado local**: aceptable cuando reconstruir el estado en el frontend obligaría a duplicar lógica de negocio del backend.
+- **Nuevas dependencias** (librerías de estado, de peticiones, de UI o de formularios): no se agregan sin consultarlo. El proyecto usa `useState`, `useEffect`, `fetch` y `react-router-dom`, y el equipo tiene que poder explicar todo lo que se usa.
+
+---
+
+## 6. Ejemplos de referencia (no obligatorios)
+
+Los ejemplos de clase muestran conceptos y se usan como referencia de estilo, no como estructura a copiar:
+
+- **Todo List (`Form` + `Todo`)**: estado en el padre, `deleteTodo` pasado por props, validación con estado de error.
+- **`PostList` + `PostCard`**: GET al montar, guardado en estado, `.map()` hacia un componente tarjeta con `key={post.id}`.
+- **`Products` con POST y token**: armado de `options`, `JSON.stringify`, header `Authorization` y actualización del estado local con `[...products, data]`. Junta formulario, lista y marcado en un solo componente para simplificar la demostración; en el proyecto se separa cuando las responsabilidades crecen.
+- **Ejemplos de DOM API (`createElement`, `addEventListener`)**: explican qué hace React por debajo; no se usan dentro de la app.

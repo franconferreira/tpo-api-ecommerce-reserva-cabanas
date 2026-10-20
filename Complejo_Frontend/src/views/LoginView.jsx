@@ -1,26 +1,18 @@
 import React from 'react'
-import AuthBanner from '../components/AuthBanner'
-import LoginForm from '../components/LoginForm'
+import AuthBanner from '../components/auth/AuthBanner'
+import LoginForm from '../components/auth/LoginForm'
+import textos from '../i18n/textos'
+import './AuthView.css'
 
 function LoginView({ idioma, setIdioma, onLogin }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].login
 
   return (
-    <div className="login-container">
+    <div className="auth-container">
       <AuthBanner
-        panelClass="login-left-panel"
-        headerClass="login-left-header"
-        brandClass="login-brand"
-        heroClass="login-left-hero"
-        badgeClass="login-badge"
-        footerClass="login-left-footer"
-        badge={es ? '✨ SANTUARIO PRIVADO EN EL BOSQUE' : '✨ PRIVATE WOODLAND SANCTUARY'}
-        title={es ? 'Regresa a la calma de los pinos.' : 'Return to the quiet of the pines.'}
-        description={
-          es
-            ? 'Gestiona tus reservas de cabañas, explora senderos junto al lago y prepara tu próxima estadía.'
-            : 'Manage your cabin reservations, explore lakeside trails, and prepare for your upcoming retreat.'
-        }
+        badge={t.bannerBadge}
+        title={t.bannerTitulo}
+        description={t.bannerDescripcion}
         footerText="📍 Blue Ridge Mountains, NC"
       />
 

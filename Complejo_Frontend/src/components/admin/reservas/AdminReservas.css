@@ -1,0 +1,138 @@
+.admin-res-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  border: 1px solid #f5c6cb;
+}
+
+.admin-res-table-container {
+  background-color: #f1f2ec;
+  border-radius: 1em;
+  padding: 0.8em;
+}
+
+.admin-res-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.6em;
+  table-layout: fixed;
+}
+
+.admin-res-table th {
+  text-align: left;
+  padding: 0 1em;
+  font-size: 0.7em;
+  font-weight: 800;
+  color: #737373;
+}
+
+.admin-res-table th:nth-child(1) { width: 10%; }
+.admin-res-table th:nth-child(2) { width: 18%; }
+.admin-res-table th:nth-child(3) { width: 26%; }
+.admin-res-table th:nth-child(4) { width: 10%; }
+.admin-res-table th:nth-child(5) { width: 12%; }
+.admin-res-table th:nth-child(6) { width: 24%; }
+
+.admin-res-table td {
+  background-color: #ffffff;
+  padding: 1em;
+  vertical-align: middle;
+  font-size: 0.9em;
+}
+
+.admin-res-empty {
+  text-align: center;
+  padding: 2.5em;
+  color: #737373;
+}
+
+.td-guest {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.td-guest span {
+  font-size: 0.85em;
+  color: #737373;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: #737373;
+}
+
+.td-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.td-detalle-line span {
+  font-size: 0.85em;
+  color: #737373;
+}
+
+.td-payment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.pack-tag {
+  font-size: 0.75em;
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 0.35em 0.8em;
+  border-radius: 1em;
+  font-size: 0.75em;
+  font-weight: 800;
+}
+
+.status-confirmed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-cancelled {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
+.admin-cancel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.admin-cancel-input {
+  padding: 0.45em 0.6em;
+  border: 1px solid #d5d4ce;
+  border-radius: 0.4em;
+  font-size: 0.8em;
+  width: 100%;
+}
+
+.admin-cancel-reason {
+  font-size: 0.8em;
+  color: #8d3b00;
+  font-style: italic;
+}
+
+.btn-cancel-admin {
+  background-color: #fdecea;
+  color: #b71c1c;
+  border: 1px solid #f5c6cb;
+  padding: 0.5em 0.8em;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+  font-weight: 700;
+  cursor: pointer;
+}

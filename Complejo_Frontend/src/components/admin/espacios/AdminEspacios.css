@@ -1,0 +1,156 @@
+.ad-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  border: 1px solid #f5c6cb;
+}
+
+.ad-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 700;
+  border: 1px solid #c8e6c9;
+}
+
+.ad-table-container {
+  background-color: #f1f2ec;
+  border-radius: 1em;
+  padding: 0.8em;
+}
+
+.ad-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.6em;
+  table-layout: fixed;
+}
+
+.ad-table th {
+  text-align: left;
+  padding: 0 1.2em;
+  font-size: 0.7em;
+  font-weight: 800;
+  color: #737373;
+}
+
+.ad-table th:nth-child(1) { width: 42%; }
+.ad-table th:nth-child(2) { width: 18%; }
+.ad-table th:nth-child(3) { width: 20%; }
+.ad-table th:nth-child(4) { width: 20%; }
+
+.ad-table td {
+  background-color: #ffffff;
+  padding: 1em 1.2em;
+  vertical-align: middle;
+}
+
+.ad-td-acc {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.ad-td-img {
+  width: 3.2em;
+  height: 3.2em;
+  border-radius: 0.5em;
+  object-fit: cover;
+}
+
+.ad-td-acc strong {
+  display: block;
+  font-size: 0.95em;
+  color: #2a2a2a;
+}
+
+.ad-td-acc span {
+  font-size: 0.8em;
+  color: #737373;
+}
+
+.ad-type-badge {
+  background-color: #fde8dd;
+  color: #cc7440;
+  padding: 0.3em 0.65em;
+  border-radius: 0.4em;
+  font-size: 0.75em;
+  font-weight: 800;
+}
+
+.ad-td-rate {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  font-weight: 800;
+  color: #153c2b;
+}
+
+.ad-td-rate small {
+  min-width: 3.6em;
+}
+
+.ad-inline-input {
+  width: 4.5em;
+  padding: 0.3em 0.4em;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.4em;
+  font-weight: 800;
+  font-size: 0.95em;
+  color: #153c2b;
+}
+
+.ad-btn-save {
+  min-width: 5.5em;
+  text-align: center;
+  background-color: #153c2b;
+  color: #ffffff;
+  border: none;
+  padding: 0.3em 0.7em;
+  border-radius: 0.4em;
+  font-weight: 700;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.ad-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.45em 0.9em;
+  border-radius: 1.2em;
+  border: none;
+  font-size: 0.8em;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ad-status-pill .dot {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+}
+
+.ad-status-pill.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.ad-status-pill.active .dot {
+  background-color: #2e7d32;
+}
+
+.ad-status-pill.maintenance {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
+.ad-status-pill.maintenance .dot {
+  background-color: #b71c1c;
+}

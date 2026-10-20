@@ -1,29 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import MisReservasList from '../components/MisReservasList'
-import '../components/MisReservasList.css'
+import PageHeader from '../components/layout/PageHeader'
+import MisReservasList from '../components/reservas/MisReservasList'
+import textos from '../i18n/textos'
+import './MisReservasView.css'
 
 function MisReservasView({ idioma, ocultasIds, setOcultasIds }) {
-  const es = idioma === 'es'
+  const t = textos[idioma].misReservas
 
   return (
     <div className="mr-wrapper">
       <div className="mr-container">
-        <div className="mr-header-row">
-          <div>
-            <h1 className="mr-title">
-              {es ? 'Mis Reservas en el Complejo' : 'My Sanctuary Reservations'}
-            </h1>
-            <p className="mr-subtitle">
-              {es
-                ? 'Revisa y gestiona tus estadías reservadas en el bosque.'
-                : 'Review and manage your active woodland retreats.'}
-            </p>
-          </div>
+        <PageHeader titulo={t.titulo} subtitulo={t.subtitulo}>
           <Link to="/catalogo" className="mr-btn-new">
-            {es ? '+ Nueva Reserva' : '+ Plan New Getaway'}
+            {t.nueva}
           </Link>
-        </div>
+        </PageHeader>
 
         <MisReservasList
           idioma={idioma}

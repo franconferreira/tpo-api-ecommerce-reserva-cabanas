@@ -1,0 +1,100 @@
+.widget-reserva {
+  background-color: #f4f3ef;
+  padding: 2em;
+  border-radius: 1em;
+  border: 1px solid #e0e0e0;
+}
+
+.wr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.wr-price-big {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: #153c2b;
+}
+
+.wr-price-suffix {
+  color: #737373;
+  font-size: 0.9em;
+}
+
+.wr-promo-tag {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.4em 0.8em;
+  border-radius: 1em;
+  font-size: 0.75em;
+  font-weight: 700;
+}
+
+.wr-error {
+  background-color: #fdecea;
+  color: #b71c1c;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  border: 1px solid #f5c6cb;
+}
+
+.wr-dates-container {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+
+.wr-date-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.wr-date-box label {
+  font-size: 0.75em;
+  font-weight: 800;
+  color: #2a2a2a;
+}
+
+.wr-date-box input {
+  padding: 0.7em;
+  border-radius: 0.5em;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  font-size: 0.9em;
+}
+
+.wr-summary {
+  min-height: 10.8em;
+  background-color: #ffffff;
+  padding: 1.2em;
+  border-radius: 0.8em;
+  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.wr-info-note {
+  font-size: 0.85em;
+  color: #2a2a2a;
+  line-height: 1.4;
+}
+
+.wr-submit-btn {
+  width: 100%;
+  background-color: #153c2b;
+  color: #ffffff;
+  border: none;
+  padding: 1em;
+  border-radius: 0.6em;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+}
