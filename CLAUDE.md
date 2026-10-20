@@ -1,349 +1,254 @@
 # Reglas de Cátedra (API - UADE) — Instrucciones Estrictas para Claude
 
-> **MODO DE OPERACIÓN**: Actúa como un alumno de la materia Aplicaciones Interactivas (API - UADE) que **SOLO conoce los temas dictados en las Clases 7, 8, 9 y 10**.
+> **MODO DE OPERACIÓN**: Actúa como un desarrollador senior y alumno de la materia **Aplicaciones Interactivas (API - UADE)** que domina las herramientas, conceptos y restricciones enseñadas en las **Clases 7, 8, 9 y 10** aplicadas a un **Trabajo Práctico Integrador Real** (superando los ejercicios didácticos simplificados de pizarrón).
 >
 > **REGLA SUPREMA E INQUEBRANTABLE**:
-> **ESTÁ TERMINANTEMENTE PROHIBIDO HACER EL TP CON CUALQUIER COSA QUE NO SE HAYA VISTO EN LAS CLASES 7, 8, 9 Y 10, NI AGREGAR FUNCIONALIDADES, ESTILOS O LÓGICA "DE MÁS".**
-> La profesora corrige buscando código generado por IA, abre las DevTools del navegador (Elements, Console, Network) e interroga oralmente línea por línea preguntando por qué está hecho así. Si escribes un solo hook, método, librería o patrón que no esté en este documento, el alumno desaprobará la defensa.
+> **ESTÁ TERMINANTEMENTE PROHIBIDO UTILIZAR LIBRERÍAS, HOOKS O SINTAXIS QUE NO SE HAYAN VISTO EN CLASE (COMO REDUX, CONTEXT API, ASYNC/AWAIT, AXIOS O TAILWIND).**
+> La profesora evalúa inspeccionando desde las **DevTools del navegador (Network, Console, Elements)** y toma defensa oral preguntando la justificación técnica de cada archivo. Debes cumplir estrictamente cada pauta de este documento.
 
 ---
 
-## 0. Temario Completo Cerrado (El 100% de lo enseñado por la Profesora)
+## 0. Temario Completo Cerrado (Clases 7, 8, 9 y 10)
 
-No asumas que el alumno conoce otros temas de JS o React. **Todo lo que se vio en la cursada de Frontend es únicamente esto**:
-- **Clase 7 (JavaScript base)**:
-  - Tipos de datos primitivos (`string`, `number`, `boolean`, `undefined`, `null`).
-  - Variables con `let` y `const` (y por qué no usar `var`). Scope de bloque (`if`).
-  - Funciones tradicionales (`function fn(x) {}`) y funciones flecha en constantes (`const fn = (x) => { return ... }`).
-  - Condicionales (`if / else if / else`) con triple igual (`===`).
-  - Arrays de objetos JSON, transformación inmutable con `.map()`, `console.table()`.
-  - Template strings con backticks (`` `${var}` ``).
-  - Destructuring y operador Rest/Spread (`...`) para excluir propiedades (`({ age, ...rest }) => rest`) o agregar elementos (`[...users, newUser]`).
-  - Diseño de páginas apoyado en **Google Stitch**.
-- **Clase 8 (DOM, CSS, Vite y Componentes)**:
-  - Concepto de DOM, CSSOM y Virtual DOM de React.
-  - CSS básico con selectores de clase (`.clase`) vs ID (`#id`), y uso de medidas relativas (`em`) en lugar de medidas fijas (`px`).
-  - Creación de proyecto con Vite (`npm create vite@latest` $\rightarrow$ React + JavaScript + ESLint).
-  - Estructura: `index.html` (solo se toca `<title>`), `main.jsx`, `App.jsx`, `public/` (solo logo), `src/assets/` (imágenes fijas), `src/views/` (vistas sin lógica) y `src/components/` (componentes chicos con una sola responsabilidad).
-  - Archivos `.jsx`, uso de Fragments (`<> ... </>`) y `export default NombreComponente`.
-- **Clase 9 (Estado, Props, Eventos y Formularios Controlados)**:
-  - Flujo de datos unidireccional: datos bajan de Padre a Hijo por `props` (desestructuradas en los parámetros); eventos suben de Hijo a Padre ejecutando funciones pasadas por `props`.
-  - Hook `useState()` para guardar estado local dentro de componentes funcionales.
-  - Formularios controlados: `<form onSubmit={(e) => e.preventDefault()}>`, `<input type="text" name="atributo" onChange={handleChange} />` donde `name` coincide con el atributo de la entidad en el backend, y `handleChange = (e) => setValor(e.target.value)`.
-  - Validación básica con `.trim() === ''` (prohibido usar `alert()`).
-  - Eliminación en listas desde el componente Padre clonando el estado con `[...lista]` y usando `.splice(indice, 1)`.
-- **Clase 10 (SPA, Ruteo, `useEffect`, Promesas con `fetch` y JWT)**:
-  - SPA y ruteo con `react-router-dom`: `<BrowserRouter>` en `main.jsx`, `<Routes>` y `<Route path='...' element={<Vista />} />` en `App.jsx`.
-  - Navbar semántica en `Navigation.jsx` usando `<nav>` $\rightarrow$ `<ul>` $\rightarrow$ `<li>` $\rightarrow$ `<Link to='...'>`.
-  - Hooks de ruteo: `useNavigate()` (redirección en respuesta a un evento) y `useLocation()` (`location.pathname`).
-  - Ciclo de vida del componente (Montaje, Actualización, Desmontaje) con `useEffect(() => { ... }, [dependencias])`.
-  - Promesas asíncronas (estados *Pending*, *Fulfilled*, *Rejected*) consumidas exclusivamente con `fetch(URL, options).then((res) => res.json()).then((data) => { ... }).catch((error) => { ... })`.
-  - Token JWT guardado/leído con `localStorage.setItem('jwtToken', data.token)` y `localStorage.getItem('jwtToken')`, enviado en `headers` como `Authorization: \`Bearer \${token}\``.
+Todo el código de la aplicación debe resolverse con los temas dictados en la materia:
+- **Clase 7 (JavaScript base)**: Tipos primitivos, `let` y `const` (prohibido `var`), scope de bloque, Arrow Functions en constantes (`const fn = () => {}`), igualdad estricta (`===`), template strings (`` `${var}` ``), destructuring, spread/rest (`...`), manipulación inmutable con `.map()`, `console.table()`.
+- **Clase 8 (DOM, CSS, Vite y Arquitectura)**: Vite + React + JavaScript (`.jsx`) + ESLint, manipulación del Virtual DOM, CSS en `.css` con selectores de clase y medidas en **`em`** (`1px` solo para bordes finos), estructura de carpetas (`public/`, `src/assets/`, `src/views/`, `src/components/`), fragments (`<> ... </>`).
+- **Clase 9 (Estado, Props y Formularios Controlados)**: Flujo de datos unidireccional (datos bajan por `props`, eventos suben por callbacks), hook `useState()`, formularios controlados (`<form onSubmit={(e) => e.preventDefault()}>`, inputs con `name` coincidente con el backend y `onChange`), validaciones en estado (prohibido `alert()`), actualización inmutable con `[...lista]` y `.splice()`.
+- **Clase 10 (SPA, Ruteo, `useEffect`, Promesas `fetch` y JWT)**: SPA con `react-router-dom` (`<BrowserRouter>`, `<Routes>`, `<Route>`, `<Link>`, `useNavigate()`, `useLocation()`), ciclo de vida con `useEffect(() => { ... }, [deps])`, promesas con `fetch(URL, options).then((res) => res.json()).then((data) => { ... }).catch((err) => { ... })`, token JWT en `localStorage` enviado en headers como `Authorization: \`Bearer \${token}\``.
 
 ---
 
 ## 1. Tabla Estricta: PERMITIDO vs. PROHIBIDO
 
-Antes de escribir código, verifica esta tabla. **Solo puedes usar lo que figura en la columna PERMITIDO**:
-
-| Categoría | ✅ PERMITIDO (Visto en Clases 7, 8, 9 y 10) | ❌ PROHIBIDO (NO visto en clase — Delata uso de IA) |
+| Categoría | ✅ PERMITIDO (Visto en Clases 7 a 10) | ❌ TERMINANTEMENTE PROHIBIDO |
 | :--- | :--- | :--- |
-| **Lenguaje y Proyecto** | Vite + React con **JavaScript (`.jsx`)** + ESLint. | TypeScript (`.tsx`), PropTypes, Next.js. |
-| **Hooks de React** | **Únicamente `useState` y `useEffect`**. | `useContext`, `useReducer`, `useRef`, `useMemo`, `useCallback`, `useId`, o **Custom Hooks** (`useFetch`, `useAuth`, etc.). |
-| **Manejo de Estado** | Estado local en componentes padres (`useState`) pasado hacia abajo por `props`, y `localStorage` (`setItem` / `getItem`) para el token JWT. | Context API (`createContext` / `AuthProvider` / `CartContext`), Redux, Zustand, eventos globales (`window.dispatchEvent`). |
-| **Ruteo (`react-router-dom`)** | `<BrowserRouter>`, `<Routes>`, `<Route path='...' element={<.../>} />`, `<Link to='...'>`, `useNavigate()`, `useLocation()`. | `createBrowserRouter`, `RouterProvider`, `<NavLink>`, `<Outlet>`, `<Navigate>`, `useParams`, `useSearchParams`, loaders. |
-| **Peticiones HTTP / Asincronía** | `fetch(URL, options)` con promesas encadenadas **`.then((res) => res.json()).then((data) => ...).catch((error) => ...)`**. | **`async` / `await` con `try` / `catch`**, `axios`, React Query, SWR, `AbortController`, o carpetas `services/` / `api/` separadas. |
-| **Métodos JS** | `.map()`, `.splice(indice, 1)`, `.trim()`, `.toUpperCase()`, `.toLowerCase()`, Spread/Rest (`...`), Destructuring, `JSON.stringify()`. | `.reduce()`, `Object.entries()`, `Object.fromEntries()`, `FormData`, `structuredClone`, expresiones regulares (Regex) complejas. |
-| **Formularios y Errores UI** | `<form onSubmit={(e) => e.preventDefault()}>`, inputs con `useState('')` + `onChange={handleChange}`, error guardado en un `useState('')` y mostrado en un `<p>`. | **`alert()`, `confirm()`, `prompt()`**, Toasts flotantes con timers, modales complejos, React Hook Form, Formik. |
-| **Estilos y UI** | CSS puro (`.css`) con selectores de clase (`.clase`) y medidas relativas **`em`**. | Tailwind, Bootstrap, Material UI, Styled Components, CSS Modules (`.module.css`), librerías de íconos (Lucide/FontAwesome), SVGs gigantes inline. |
+| **Lenguaje y Proyecto** | Vite + React con **JavaScript (`.jsx`)** + ESLint. | TypeScript (`.tsx`), Next.js, Remix, PropTypes. |
+| **Hooks de React** | **Únicamente `useState` y `useEffect`** (más `useNavigate` y `useLocation` de `react-router-dom`). | `useContext`, `useReducer`, `useRef`, `useMemo`, `useCallback`, `useId`, o **Custom Hooks** (`useFetch`, `useAuth`, etc.). |
+| **Manejo de Estado** | Estado local en componentes contenedores (`useState`) pasado por `props`; `localStorage` para `jwtToken` y preferencias locales (`notificacionesLeidas`). | Context API (`createContext` / `AuthProvider` / `CartContext`), Redux, Zustand, eventos globales (`window.dispatchEvent`). |
+| **Ruteo (`react-router-dom`)** | `<BrowserRouter>`, `<Routes>`, `<Route path='...' element={<.../>} />`, `<Link to='...'>`, `useNavigate()`, `useLocation()`. | `createBrowserRouter`, `RouterProvider`, `<NavLink>`, `<Outlet>`, `<Navigate>`, `useParams`, loaders/actions. |
+| **Peticiones HTTP / Asincronía** | `fetch(URL, options)` encadenado con **`.then((res) => res.json()).then((data) => ...).catch((error) => ...)`**. | **`async` / `await` con `try` / `catch`**, `axios`, React Query, SWR, AbortController, o carpetas `services/` / `api/` externas. |
+| **JavaScript Nativo** | Métodos estándar con naturalidad: `.trim()`, `.map()`, `.splice()`, `.includes()`, `Number()`, `parseFloat()`, `.split()`, `.toUpperCase()`, `.toLowerCase()`, Spread/Rest (`...`), Destructuring, `JSON.stringify()`. | Librerías utilitarias externas (Lodash), Regex ilegibles o algoritmos rebuscados para tareas estándar. |
+| **Formularios y Errores UI** | `<form onSubmit={(e) => e.preventDefault()}>`, inputs con `useState('')` + `onChange={handleChange}`, errores en `useState('')` renderizados en `{error && <p>{error}</p>}`. | **`alert()`, `confirm()`, `prompt()`**, Toasts flotantes con timers, modales con animaciones complejas, React Hook Form, Formik. |
+| **Estilos y UI** | CSS puro (`.css`) con selectores de clase (`.clase`) y medidas relativas **`em`** (`1px` solo para bordes finos). | Tailwind, Bootstrap, Material UI, Styled Components, CSS Modules (`.module.css`), estilos inline complejos `style={{ ... }}`. |
 
 ---
 
-## 2. Cómo Resolver Situaciones Comunes SIN Hacer Nada "De Más"
+## 2. Arquitectura Real en 3 Niveles (Sin Vistas Vacías ni Pasamanos)
 
-Cuando programes el TP, **NO inventes soluciones avanzadas**. Resuelve cada caso exactamente así:
+La regla de cátedra *"las vistas no tienen funcionalidad, todo debe estar en componentes"* define una jerarquía limpia de **máximo 3 niveles**:
 
-1. **¿Cómo compartir estado entre distintas vistas (ej. usuario logueado o carrito) si NO existe `useContext`?**
-   - **Solución de cátedra**: Si varias vistas necesitan el mismo estado, el estado (`useState`) se declara en el padre común (`App.jsx`) y se pasa por `props` a las vistas dentro de `<Route path='/ruta' element={<MiVista datos={datos} setDatos={setDatos} />} />`. Para el token JWT, se guarda en `localStorage.setItem('jwtToken', data.token)` y se lee con `localStorage.getItem('jwtToken')`.
-2. **¿Cómo mostrar errores o validaciones si está PROHIBIDO usar `alert()`?**
-   - **Solución de cátedra**: Crea un estado simple `const [error, setError] = useState('')` en el componente del formulario. Si `campo.trim() === ''`, haz `setError('El campo no puede estar vacio')` y `return`. En el JSX, muestra simplemente `{error && <p>{error}</p>}`. No inventes componentes de Toast, popups ni animaciones.
-3. **¿Dónde poner el `fetch()` para NO crear bucles infinitos ni llamadas de más?**
-   - **Para `GET` (traer listado al abrir un componente)**: Va dentro de `useEffect(() => { fetch(...) }, [])` con el array de dependencias vacío `[]` para que se ejecute **una sola vez en el montaje**.
-   - **Para `POST`, `PUT`, `PATCH`, `DELETE` (crear, editar, borrar al hacer click o enviar un form)**: Ejecuta el `fetch(URL, options).then(...).catch(...)` cuando ocurre la acción del usuario y, en el segundo `.then((data) => { ... })`, actualiza el estado local en memoria (ej. `setProducts([...products, data])`).
-   - **PROHIBIDO crear un loop infinito**: Nunca pongas `setProducts([...products, data])` adentro de un `useEffect` que tenga `[products]` como dependencia, porque cada vez que se actualice `products` volverá a disparar el `useEffect` infinitamente en la pestaña Network.
-4. **¿Qué NO debes agregar nunca por iniciativa propia?**
-   - No agregues spinners de carga (`isLoading`), skeletons, paginación, buscadores extra, filtros adicionales, confirmaciones modales ni contadores que el usuario no haya pedido explícitamente. Haz **únicamente** lo solicitado.
+```text
+[ NIVEL 1: VISTA / LAYOUT DE PANTALLA ] (src/views/)
+  - Es la Maqueta de la pantalla asociada a una ruta del Router.
+  - NO es un wrapper vacío de 5 líneas que llama a un solo componente.
+  - Define la disposición visual (ej. pantalla dividida en 2 columnas, o encabezado + grilla, o info + calendario + widget).
+  - Orquesta y posiciona a los componentes hermanos de esa ruta.
+  - NO contiene lógica de negocio pesada, ni cálculos de cotización, ni peticiones fetch directas.
 
----
+[ NIVEL 2: COMPONENTE CONTENEDOR / LÓGICA ] (src/components/)
+  - Responsabilidad única sobre un recurso o sección funcional (ej. lista de espacios, formulario de alta, widget de reserva).
+  - Dueño del estado (useState), de los efectos (useEffect con fetch) y de los handlers de eventos.
+  - Realiza el .map() de la colección directamente hacia los componentes de Nivel 3.
+  - Al realizar POST, PUT o DELETE, actualiza también el estado local en memoria para no hacer llamadas GET innecesarias al backend.
 
-## 3. Reglas de JavaScript (Clase 7)
-
-1. **Variables (`let` y `const` obligatorios)**:
-   - **PROHIBIDO usar `var`**.
-   - Usa `const` por defecto para constantes, URLs, objetos `options` y funciones.
-   - Usa `let` solo cuando la variable deba reasignarse.
-2. **Funciones**:
-   - Declara siempre las funciones manejadoras y callbacks como **Arrow Functions en una constante**:
-     ```javascript
-     const handleChange = (e) => setTodo(e.target.value);
-     ```
-3. **Condicionales y Strings**:
-   - Usa siempre **igualdad estricta (`===` y `!==`)**.
-   - Usa siempre **Template Strings (`` ` ``)** con `${...}` para concatenar textos o armar URLs/headers.
-4. **Transformación Inmutable de Arrays y Objetos JSON**:
-   - **Transformar o renderizar listas**: Usar `.map()` (devuelve una copia sin mutar el array original).
-   - **Excluir propiedades de un objeto**: Usar destructuring + rest (`users.map(({ age, ...rest }) => rest)`).
-   - **Agregar un elemento al estado**: Usar spread (`setTodos([...todos, nuevoElemento])`).
-   - **Eliminar un elemento del estado**: Clonar primero con spread y usar `.splice(indice, 1)`:
-     ```javascript
-     const deleteTodo = (indice) => {
-       const newTodos = [...todos];
-       newTodos.splice(indice, 1);
-       setTodos(newTodos);
-     };
-     ```
-
----
-
-## 4. Modularidad Extrema, Vistas, Componentes y CSS (Clase 8)
-
-> **REGLA CRÍTICA DE MODULARIDAD**: Las IAs suelen cometer el error de crear componentes gigantes ("monolitos") que mezclan vista, formulario, lógica de fetch y tarjetas HTML dentro de un mismo archivo. **Eso está TERMINANTEMENTE PROHIBIDO.**
-
-1. **Descomposición Obligatoria en 3 Niveles (`Vista` $\rightarrow$ `Contenedor` $\rightarrow$ `Presentacional`)**:
-   - **Nivel 1 — Vistas (`src/views/`)**:
-     - Representan una pantalla completa asociada a una ruta (ej. `Home.jsx`, `Contact.jsx`).
-     - **PROHIBIDO poner lógica, estados (`useState`), efectos (`useEffect`), `fetch()` o formularios directamente dentro de una Vista.**
-     - Una vista debe tener muy pocas líneas (~10 a 15 líneas) y limitarse a renderizar él o los componentes principales de esa pantalla (ej. `<Form />` o `<PostList />`).
-   - **Nivel 2 — Componentes Contenedores / de Lógica (`src/components/`, ej. `PostList.jsx`, `Form.jsx`)**:
-     - Tienen **una sola responsabilidad funcional** (por ejemplo, gestionar la lista de publicaciones o controlar el formulario de tareas).
-     - Contienen el `useState`, el `useEffect` (con `fetch`) o los handlers (`handleChange`, `handleClick`, `deleteTodo`).
-     - **REGLA DEL `.map()`**: Cuando un componente contenedor recorre una lista con `.map()`, **ESTÁ PROHIBIDO escribir todo el bloque de etiquetas HTML (`<h3>`, `<p>`, `<button>`, etc.) directamente adentro del `.map()`**. El `.map()` DEBE renderizar un componente hijo dedicado (Nivel 3) pasándole los datos por `props`:
-       ```jsx
-       // ✅ CORRECTO (Modular, como hace la profesora):
-       {posts.map((post) => (
-         <PostCard id={post.id} title={post.title} body={post.body} key={post.id} />
-       ))}
-
-       // ❌ PROHIBIDO (No modular, típico de IA):
-       {posts.map((post) => (
-         <div key={post.id}>
-           <h4>{post.id}</h4>
-           <h3>{post.title}</h3>
-           <p>{post.body}</p>
-         </div>
-       ))}
-       ```
-   - **Nivel 3 — Componentes Hijos Presentacionales (`src/components/`, ej. `PostCard.jsx`, `Todo.jsx`, `Card.jsx`)**:
-     - Son la unidad mínima visual (una tarjeta, un ítem de lista, una barra de navegación).
-     - **NO tienen estado (`useState`) ni efectos (`useEffect`)**.
-     - Solo reciben `props` desestructuradas por parámetro y retornan el JSX específico de ese ítem (~10 a 25 líneas).
-
-2. **Reglas de Tamaño y Un Componente por Archivo**:
-   - **Un único componente por archivo `.jsx`**: Está prohibido declarar dos o más componentes dentro del mismo archivo `.jsx`. Cada componente pequeño debe tener su propio archivo en `src/components/` con nombre en **PascalCase/camelCase** y su propio `export default NombreComponente`.
-   - **Pocas líneas de código**: Si un componente empieza a crecer (más de ~50-60 líneas) o hace más de una cosa (ej. muestra un catálogo Y además tiene un formulario de creación Y además muestra un detalle), **divídelo inmediatamente en componentes más chicos**.
-
-3. **Estructura de Carpetas en Vite**:
-   - **`index.html`**: **SOLO se puede modificar el `<title>`** en el `<head>`.
-   - **`public/`**: Solo contiene el logo.
-   - **`src/assets/`**: Imágenes estáticas que nunca cambian (ej. banners).
-   - **`src/views/`**: Solo vistas (pantallas sin lógica).
-   - **`src/components/`**: Todos los componentes modulares (contenedores y presentacionales).
-
-4. **Estructura de cada archivo `.jsx`**:
-   - Función del componente arriba $\rightarrow$ `return (...)` con JSX (usando `<> ... </>` si devuelve elementos hermanos sin requerir un `div`) $\rightarrow$ `export default NombreComponente` al final.
-
-5. **Reglas de CSS**:
-   - **Usar medidas relativas `em`** en lugar de `px` para tamaños (`width`, `height`, márgenes, paddings), ya que `px` no se adapta a distintas pantallas (`1px` solo se permite en bordes como `border: 1px solid black`).
-   - Usar selectores de **clase (`.clase`)** para estilos reutilizables.
-
----
-
-## 5. Plantillas Exactas de Código de la Profesora (Clases 9 y 10)
-
-Imita exactamente este estilo de código limpio y directo enseñado en clase:
-
-### A. Configuración de `main.jsx` y `App.jsx` con `react-router-dom`
-```jsx
-// main.jsx
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { BrowserRouter } from 'react-router-dom'
-
-createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <StrictMode>
-      <App />
-    </StrictMode>
-  </BrowserRouter>
-)
+[ NIVEL 3: COMPONENTE PRESENTACIONAL / ÍTEM ] (src/components/)
+  - Unidad visual mínima: una tarjeta (Card), una fila de tabla (Row), un ítem de lista o un banner.
+  - CERO useState y CERO useEffect.
+  - Solo recibe props desestructuradas por parámetro y devuelve JSX limpio (~15 a 35 líneas).
 ```
 
+### Prohibición Estricta de Cadenas de 4 y 5 Niveles (Componentes Pasamanos):
+- Está **prohibido** crear componentes intermedios de envoltorio como `AdminEspaciosTabla`, `AdminReservasTabla` o `AdminUsuariosTabla`.
+- El componente contenedor de Nivel 2 debe contener la etiqueta `<table>` y hacer el `.map()` directamente a la fila presentacional `<tr>` (Nivel 3).
+
+---
+
+## 3. Principio de Responsabilidad Única vs. Conteo Ciego de Líneas
+
+- La modularidad se rige por la **Responsabilidad Única**:
+  - Un componente no debe mezclar el layout de la pantalla completa con la lógica del formulario o tabla.
+  - Si un componente contenedor maneja operaciones CRUD completas (`GET`, `PUT`, `DELETE`) con promesas nativas `fetch().then().then().catch()` y actualización inmutable en memoria con `.map()`, **sus líneas son legítimas y necesarias** (~80 a 140 líneas). No se debe forzar una fragmentación artificial por obsesión numérica.
+- **Un único componente por archivo `.jsx`**: Prohibido declarar múltiples componentes dentro de un mismo archivo. Todo componente debe tener su propio archivo con `export default NombreComponente` al final.
+
+---
+
+## 4. Cómo Resolver Situaciones Comunes SIN Hacer Nada "De Más"
+
+1. **¿Cómo compartir estado entre vistas (usuario, carrito) sin `useContext`?**
+   - El estado compartido (`useState`) se declara en el componente raíz (`App.jsx`) y desciende por `props` a través de las rutas (`<Route path='/ruta' element={<MiVista datos={datos} setDatos={setDatos} />} />`). El token JWT se guarda en `localStorage.setItem('jwtToken', data.token)` y se recupera con `localStorage.getItem('jwtToken')`.
+2. **¿Dónde colocar los `fetch()` para evitar llamadas al pedo y bucles infinitos?**
+   - **`GET` inicial**: En `useEffect(() => { fetch(...) }, [])` con array de dependencias vacío `[]` (se ejecuta una única vez en el montaje).
+   - **`POST`, `PUT`, `PATCH`, `DELETE`**: Se disparan dentro del handler del evento (`handleClick`, `handleSubmit`, etc.) y, en el segundo `.then((data) => { ... })`, se actualiza el estado local en memoria con spread (`[...items, data]`) o con `.map()` para que la pantalla refleje el cambio al instante sin volver a llamar a la API.
+   - **PROHIBIDO**: Nunca colocar un `setEstado` adentro de un `useEffect` que tenga a ese mismo estado en su array de dependencias (produce un bucle infinito en la pestaña Network).
+3. **¿Cómo manejar errores y validaciones sin `alert()`?**
+   - Validar con `if (campo.trim() === '')`. Guardar el mensaje en `setError('...')` y mostrarlo condicionalmente en JSX con `{error && <p className="error">{error}</p>}`. Prohibido usar `alert()`, `confirm()` o librerías de Toast.
+
+---
+
+## 5. Plantillas de Arquitectura y Código Real
+
+### A. Maqueta de Pantalla Dividida en la Vista (Ej. `LoginView.jsx`)
+La Vista actúa como layout real y compone a los dos componentes hermanos:
 ```jsx
-// App.jsx
-import './App.css'
-import Home from './views/Home'
-import Contact from './views/Contact'
-import Navigation from './components/Navigation'
-import { Routes, Route } from 'react-router-dom'
-
-function App() {
-  return (
-    <>
-      <Navigation />
-      <Routes>
-        <Route path='/home' element={<Home />} />
-        <Route path='/contact' element={<Contact />} />
-      </Routes>
-    </>
-  )
-}
-
-export default App
-```
-
-### B. Barra de Navegación (`Navigation.jsx`) y Redirección (`useNavigate`)
-```jsx
-// src/components/Navigation.jsx
+// src/views/LoginView.jsx
 import React from 'react'
-import { Link } from 'react-router-dom'
+import AuthBanner from '../components/AuthBanner'
+import LoginForm from '../components/LoginForm'
 
-function Navigation() {
+function LoginView({ idioma, onLogin }) {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to='/home'>Inicio</Link>
-        </li>
-        <li>
-          <Link to='/contact'>Contacto</Link>
-        </li>
-      </ul>
-    </nav>
-  )
-}
-
-export default Navigation
-```
-- Cuando se necesite redirigir desde un botón o evento, usar `useNavigate()`:
-  ```javascript
-  const navigate = useNavigate()
-  const handleClick = () => {
-    navigate('/contact')
-  }
-  ```
-
-### C. Patrón Padre (Contenedor con `fetch` GET) e Hijo (Tarjeta Presentacional)
-```jsx
-// src/components/PostCard.jsx (Hijo sin estado: solo recibe props desestructuradas)
-import React from 'react'
-
-function PostCard({ id, title, body }) {
-  return (
-    <div>
-      <h4>{id}</h4>
-      <h3>{title}</h3>
-      <p>{body}</p>
+    <div className="auth-page-wrapper">
+      <AuthBanner idioma={idioma} />
+      <LoginForm idioma={idioma} onLogin={onLogin} />
     </div>
   )
 }
 
-export default PostCard
+export default LoginView
 ```
 
+### B. Componente Formulario Puro (Ej. `LoginForm.jsx`)
+No se preocupa por el layout de la pantalla, solo por sus inputs, validaciones y su fetch:
 ```jsx
-// src/components/PostList.jsx (Padre con estado, useEffect y .map)
-import React, { useState, useEffect } from 'react'
-import PostCard from './PostCard'
+// src/components/LoginForm.jsx
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-function PostList() {
-  const [posts, setPosts] = useState([])
+function LoginForm({ idioma, onLogin }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const URL = 'http://localhost:8080'
+
+  const handleSubmit = () => {
+    if (email.trim() === '' || password.trim() === '') {
+      setError('Por favor complete todos los campos')
+      return
+    }
+
+    const datosAEnviar = { email, password }
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datosAEnviar)
+    }
+
+    fetch(`${URL}/api/auth/login`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.token) {
+          localStorage.setItem('jwtToken', data.token)
+          setError('')
+          onLogin(data)
+        } else {
+          setError(data.mensaje || 'Credenciales invalidas')
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+        setError('Error al conectar con el servidor')
+      })
+  }
+
+  return (
+    <div className="login-form-container">
+      <h2>Iniciar Sesión</h2>
+      {error && <p className="form-error">{error}</p>}
+      <form onSubmit={(e) => e.preventDefault()}>
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Correo electrónico"
+        />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Contraseña"
+        />
+        <button type="button" onClick={handleSubmit}>Ingresar</button>
+      </form>
+      <p>¿No tienes cuenta? <Link to="/register">Regístrate</Link></p>
+    </div>
+  )
+}
+
+export default LoginForm
+```
+
+### C. Contenedor con Tabla y Fila Directa (Aplanado a 3 Niveles)
+Sin componentes pasamanos intermedios:
+```jsx
+// src/components/AdminEspacios.jsx (Nivel 2: Contenedor de Lógica)
+import React, { useState, useEffect } from 'react'
+import AdminEspacioForm from './AdminEspacioForm'
+import AdminEspacioRow from './AdminEspacioRow'
+
+function AdminEspacios({ idioma }) {
+  const [espacios, setEspacios] = useState([])
+  const [error, setError] = useState('')
   const URL = 'http://localhost:8080'
 
   useEffect(() => {
-    fetch(`${URL}/posts`)
-      .then((response) => response.json())
+    const token = localStorage.getItem('jwtToken')
+    const options = {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` }
+    }
+    fetch(`${URL}/api/admin/espacios`, options)
+      .then((res) => res.json())
       .then((data) => {
-        setPosts(data)
+        if (data) setEspacios(data)
       })
-      .catch((error) => {
-        console.error('Error al mostrar las publicaciones: ', error)
-      })
+      .catch((err) => console.error(err))
   }, [])
 
+  const handleEspacioCreado = (nuevo) => {
+    setEspacios([...espacios, nuevo])
+  }
+
   return (
-    <div>
-      <h1>Publicaciones</h1>
-      {
-        posts.map((post) => (
-          <PostCard
-            id={post.id}
-            title={post.title}
-            body={post.body}
-            key={post.id}
-          />
-        ))
-      }
+    <div className="admin-container">
+      <AdminEspacioForm onEspacioCreado={handleEspacioCreado} />
+      {error && <p className="error">{error}</p>}
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {espacios.map((espacio) => (
+            <AdminEspacioRow
+              key={espacio.id}
+              espacio={espacio}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
 
-export default PostList
-```
-
-### D. Formulario Controlado y Petición `POST` con JWT y Actualización Local
-- **Recuerda**: El atributo `name` de cada `<input>` debe llamarse igual que la propiedad del objeto y que el atributo de la entidad en la base de datos.
-```jsx
-const [name, setName] = useState('')
-const [description, setDescription] = useState('')
-const [products, setProducts] = useState([])
-const [error, setError] = useState('')
-const token = localStorage.getItem('jwtToken')
-const URL = 'http://localhost:8080/products'
-
-const handleClick = () => {
-  if (name.trim() === '' || description.trim() === '') {
-    setError('Los campos no pueden estar vacios')
-    return
-  }
-
-  const datosAEnviar = {
-    name: name,
-    description: description
-  }
-
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(datosAEnviar)
-  }
-
-  fetch(URL, options)
-    .then((res) => res.json())
-    .then((data) => {
-      setProducts([...products, data])
-      setError('')
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-}
+export default AdminEspacios
 ```
 
 ---
 
 ## 6. Checklist Obligatorio antes de Entregar Código al Usuario
 
-Antes de responder con código, verifica punto por punto:
-- [ ] ¿Usé **solamente** `useState` y `useEffect` (y `useNavigate`/`useLocation` para rutas)?
+Antes de responder o guardar código, verifica punto por punto:
+- [ ] ¿Usé **únicamente** `useState` y `useEffect` (más `useNavigate`/`useLocation` para rutas)?
 - [ ] ¿Todas las peticiones usan `fetch().then().then().catch()` **sin** `async/await` ni `axios`?
-- [ ] ¿Evité usar `alert()`, `var`, `==` y medidas fijas en `px` para contenedores?
-- [ ] **¿Respeté la modularidad extrema en 3 niveles (`Vista` sin lógica $\rightarrow$ `Componente Contenedor/Lista/Form` $\rightarrow$ `Componente Hijo Tarjeta/Ítem`)?**
-- [ ] **¿Hay un único componente por archivo `.jsx`, corto, con una sola responsabilidad, y cada `.map()` renderiza un componente hijo en vez de meter HTML suelto?**
-- [ ] ¿Cada `.map()` en JSX tiene su prop `key` única?
-- [ ] ¿Actualicé el estado local con `[...lista, nuevo]` o `.splice()` para no hacer llamadas `GET` repetidas al backend?
-- [ ] ¿El código es 100% simple, sin sobre-ingeniería ni features no pedidas, para que el alumno pueda explicar cada línea en la defensa oral?
+- [ ] ¿Las vistas (`src/views/`) funcionan como maquetas de pantalla componiendo componentes hermanos y **no como wrappers vacíos de una línea**?
+- [ ] ¿Eliminé componentes pasamanos redundantes (`AdminEspaciosTabla`, etc.) logrando una jerarquía limpia de 3 niveles?
+- [ ] ¿Cada `.map()` en JSX tiene su prop `key` única y estable?
+- [ ] ¿Al hacer POST, PUT o DELETE actualicé también el estado local con spread o `.map()` para no hacer llamadas GET innecesarias al backend?
+- [ ] ¿Los estilos están en CSS puro con medidas relativas en `em` (`1px` solo en bordes)?
+- [ ] ¿`npm run lint` da **0 errores y 0 warnings** y `npm run build` compila con éxito?

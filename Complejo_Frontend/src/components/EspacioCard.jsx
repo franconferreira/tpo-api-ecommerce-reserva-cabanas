@@ -28,9 +28,6 @@ function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagen
           alt={nombre}
           className="ec-image"
         />
-        <div className="ec-tag-top-left">
-          <span>🌲 Whispering Pines</span>
-        </div>
       </div>
 
       <div className="ec-content">
