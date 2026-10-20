@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AdminReservasTabla from './AdminReservasTabla'
-import './AdminReservas.css'
+import AdminReservaRow from './AdminReservaRow'
 
 function AdminReservas({ idioma }) {
   const [reservas, setReservas] = useState([])
@@ -29,7 +28,22 @@ function AdminReservas({ idioma }) {
       })
   }, [])
 
-  const handleCancelarReserva = (id, mensajeCancelacion) => {
+  // Guarda en memoria el motivo que el admin va escribiendo en la fila
+  const handleCambiarMotivo = (id, texto) => {
+    setReservas(
+      reservas.map((r) => (r.id === id ? { ...r, mensajeCancelacion: texto } : r))
+    )
+  }
+
+  const handleCancelarReserva = (reserva) => {
+    const motivoEscrito = reserva.mensajeCancelacion ? reserva.mensajeCancelacion.trim() : ''
+    const mensajeCancelacion =
+      motivoEscrito !== ''
+        ? motivoEscrito
+        : es
+          ? 'Cancelada por administración del complejo.'
+          : 'Cancelled by sanctuary administration.'
+
     const token = localStorage.getItem('jwtToken')
     const datosAEnviar = {
       mensajeCancelacion: mensajeCancelacion
@@ -43,13 +57,13 @@ function AdminReservas({ idioma }) {
       body: JSON.stringify(datosAEnviar)
     }
 
-    fetch(`${URL}/api/admin/reservas/${id}`, options)
+    fetch(`${URL}/api/admin/reservas/${reserva.id}`, options)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.mensaje) {
           setReservas(
             reservas.map((r) =>
-              r.id === id
+              r.id === reserva.id
                 ? { ...r, estado: 'CANCELADA', mensajeCancelacion: mensajeCancelacion }
                 : r
             )
@@ -67,33 +81,43 @@ function AdminReservas({ idioma }) {
   }
 
   return (
-    <div className="admin-res-wrapper">
-      <div className="admin-res-container">
-        <div className="admin-res-header">
-          <div>
-            <span className="admin-res-overline">
-              {es ? 'REGISTRO Y OPERACIONES DE RESERVAS' : 'BOOKING LEDGER & OPERATIONS'}
-            </span>
-            <h1 className="admin-res-title">
-              {es ? 'Reservas de Huéspedes' : 'All Guest Reservations'}
-            </h1>
-            <p className="admin-res-subtitle">
-              {es
-                ? 'Supervisa las reservas activas, fechas de ingreso y cancelaciones administrativas con aviso al cliente.'
-                : 'Monitor active bookings, check-in schedules, and administrative cancellations across the sanctuary.'}
-            </p>
-          </div>
-        </div>
+    <>
+      {error && <p className="admin-res-error">{error}</p>}
 
-        {error && <p className="admin-res-error">{error}</p>}
-
-        <AdminReservasTabla
-          idioma={idioma}
-          reservas={reservas}
-          onCancelar={handleCancelarReserva}
-        />
+      <div className="admin-res-table-container">
+        <table className="admin-res-table">
+          <thead>
+            <tr>
+              <th>{es ? 'ID RESERVA' : 'BOOKING ID'}</th>
+              <th>{es ? 'HUÉSPED' : 'GUEST'}</th>
+              <th>{es ? 'ESPACIOS Y FECHAS' : 'RESERVED SPACES & DATES'}</th>
+              <th>TOTAL</th>
+              <th>{es ? 'ESTADO' : 'STATUS'}</th>
+              <th>{es ? 'ACCIONES / MOTIVO' : 'ACTIONS / REASON'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reservas.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="admin-res-empty">
+                  {es ? 'No hay reservas registradas aún.' : 'No reservations registered yet.'}
+                </td>
+              </tr>
+            ) : (
+              reservas.map((reserva) => (
+                <AdminReservaRow
+                  idioma={idioma}
+                  reserva={reserva}
+                  onCambiarMotivo={handleCambiarMotivo}
+                  onCancelar={handleCancelarReserva}
+                  key={reserva.id}
+                />
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </>
   )
 }
 

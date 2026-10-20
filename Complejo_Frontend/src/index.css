@@ -1,4 +1,9 @@
 /* RESETEOS GLOBALES */
+/* La barra de scroll vertical queda siempre reservada: el contenido no se corre al cambiar de pantalla */
+html {
+  overflow-y: scroll;
+}
+
 * {
   margin: 0;
   padding: 0;

@@ -1,11 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CalendarioDia from './CalendarioDia'
 import './CalendarioDisponibilidad.css'
 
-function CalendarioDisponibilidad({ idioma, fechasOcupadas }) {
+function CalendarioDisponibilidad({ idioma, espacioId }) {
   const [offsetMes, setOffsetMes] = useState(0)
+  const [fechasOcupadas, setFechasOcupadas] = useState([])
+  const URL = 'http://localhost:8080'
   const es = idioma === 'es'
-  const listaOcupadas = fechasOcupadas ? fechasOcupadas : []
+
+  useEffect(() => {
+    fetch(`${URL}/api/espacios/${espacioId}/fechas-ocupadas`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setFechasOcupadas(data)
+        }
+      })
+      .catch((err) => {
+        console.error('Error al cargar fechas ocupadas: ', err)
+      })
+  }, [espacioId])
 
   const ahora = new Date()
   const anioHoy = ahora.getFullYear()
@@ -51,17 +65,10 @@ function CalendarioDisponibilidad({ idioma, fechasOcupadas }) {
     const diaStr = d < 10 ? `0${d}` : `${d}`
     const fechaIso = `${anioVista}-${mesVistaStr}-${diaStr}`
 
-    let estaOcupada = false
-    listaOcupadas.map((f) => {
-      if (f === fechaIso) {
-        estaOcupada = true
-      }
-    })
-
     let estado = 'disponible'
     if (fechaIso < hoyIso) {
       estado = 'pasado'
-    } else if (estaOcupada) {
+    } else if (fechasOcupadas.includes(fechaIso)) {
       estado = 'ocupado'
     }
 

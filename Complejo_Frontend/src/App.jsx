@@ -17,6 +17,7 @@ import AdminUsuariosView from './views/AdminUsuariosView'
 function App() {
   const navigate = useNavigate()
   const [idioma, setIdioma] = useState('es')
+  const [token, setToken] = useState(localStorage.getItem('jwtToken'))
   const [isLogged, setIsLogged] = useState(false)
   const [rolUsuario, setRolUsuario] = useState('')
   const [nombreUsuario, setNombreUsuario] = useState('')
@@ -24,7 +25,10 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isBuzonOpen, setIsBuzonOpen] = useState(false)
   const [mensajesBuzon, setMensajesBuzon] = useState([])
-  const [leidasIds, setLeidasIds] = useState([])
+  const [leidasIds, setLeidasIds] = useState(() => {
+    const guardadas = localStorage.getItem('notificacionesLeidas')
+    return guardadas ? JSON.parse(guardadas) : []
+  })
   const [ocultasIds, setOcultasIds] = useState([])
   const carritoVacio = {
     id: null,
@@ -34,21 +38,11 @@ function App() {
     items: []
   }
   const [carritoData, setCarritoData] = useState(carritoVacio)
-  const URL = 'http://localhost:8080'
 
-  const extraerCanceladas = (reservas) => {
-    let canceladas = []
-    reservas.map((r) => {
-      if (r.estado === 'CANCELADA' && r.mensajeCancelacion) {
-        canceladas = [...canceladas, r]
-      }
-    })
-    return canceladas
-  }
-
+  // Se ejecuta al montar la app y cada vez que cambia el token (login / logout)
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
     if (token) {
+      const URL = 'http://localhost:8080'
       const options = {
         method: 'GET',
         headers: {
@@ -80,7 +74,9 @@ function App() {
                 .then((res) => res.json())
                 .then((reservas) => {
                   if (reservas) {
-                    setMensajesBuzon(extraerCanceladas(reservas))
+                    setMensajesBuzon(
+                      reservas.filter((r) => r.estado === 'CANCELADA' && r.mensajeCancelacion)
+                    )
                   }
                 })
                 .catch((err) => {
@@ -93,60 +89,16 @@ function App() {
           console.error('Error al verificar sesion: ', err)
         })
     }
-  }, [])
+  }, [token])
 
-  const handleLoginSuccess = (token) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-
-    fetch(`${URL}/api/usuarios/me`, options)
-      .then((res) => res.json())
-      .then((user) => {
-        if (user && user.email) {
-          setIsLogged(true)
-          setRolUsuario(user.rol)
-          setNombreUsuario(`${user.nombre} ${user.apellido}`)
-
-          if (user.rol === 'ROLE_ADMIN') {
-            navigate('/admin/espacios')
-          } else {
-            fetch(`${URL}/api/reservas/mis-reservas`, options)
-              .then((res) => res.json())
-              .then((reservas) => {
-                if (reservas) {
-                  setMensajesBuzon(extraerCanceladas(reservas))
-                }
-              })
-              .catch((err) => {
-                console.error('Error al obtener buzón: ', err)
-              })
-
-            fetch(`${URL}/api/carrito`, options)
-              .then((res) => res.json())
-              .then((cart) => {
-                if (cart && cart.items) {
-                  setCarritoData(cart)
-                }
-                navigate('/catalogo')
-              })
-              .catch((err) => {
-                console.error('Error al obtener carrito: ', err)
-                navigate('/catalogo')
-              })
-          }
-        }
-      })
-      .catch((err) => {
-        console.error('Error al verificar sesion: ', err)
-      })
+  const handleLoginSuccess = (data) => {
+    setToken(data.token)
+    navigate(data.rol === 'ROLE_ADMIN' ? '/admin/espacios' : '/catalogo')
   }
 
   const handleLogout = () => {
     localStorage.setItem('jwtToken', '')
+    setToken('')
     setIsLogged(false)
     setRolUsuario('')
     setNombreUsuario('')
@@ -156,23 +108,18 @@ function App() {
     setCarritoData(carritoVacio)
   }
 
+  const handleDescartarNotificacion = (id) => {
+    const nuevasLeidas = [...leidasIds, id]
+    setLeidasIds(nuevasLeidas)
+    localStorage.setItem('notificacionesLeidas', JSON.stringify(nuevasLeidas))
+  }
+
   const handleAbrirDetalle = (espacio) => {
     setEspacioSeleccionado(espacio)
     navigate('/detalle')
   }
 
-  let mensajesNoLeidos = []
-  mensajesBuzon.map((m) => {
-    let yaLeido = false
-    leidasIds.map((idLeido) => {
-      if (idLeido === m.id) {
-        yaLeido = true
-      }
-    })
-    if (!yaLeido) {
-      mensajesNoLeidos = [...mensajesNoLeidos, m]
-    }
-  })
+  const mensajesNoLeidos = mensajesBuzon.filter((m) => !leidasIds.includes(m.id))
 
   return (
     <>
@@ -212,13 +159,7 @@ function App() {
         />
         <Route
           path="/mis-reservas"
-          element={
-            <MisReservasView
-              idioma={idioma}
-              ocultasIds={ocultasIds}
-              setOcultasIds={setOcultasIds}
-            />
-          }
+          element={<MisReservasView idioma={idioma} ocultasIds={ocultasIds} setOcultasIds={setOcultasIds} />}
         />
         <Route path="/admin/espacios" element={<AdminEspaciosView idioma={idioma} />} />
         <Route path="/admin/reservas" element={<AdminReservasView idioma={idioma} />} />
@@ -238,10 +179,8 @@ function App() {
           />
           <BuzonDrawer
             idioma={idioma}
-            mensajesBuzon={mensajesNoLeidos}
-            setMensajesBuzon={setMensajesBuzon}
-            leidasIds={leidasIds}
-            setLeidasIds={setLeidasIds}
+            mensajes={mensajesNoLeidos}
+            onDescartar={handleDescartarNotificacion}
             isOpen={isBuzonOpen}
             onClose={() => setIsBuzonOpen(false)}
           />

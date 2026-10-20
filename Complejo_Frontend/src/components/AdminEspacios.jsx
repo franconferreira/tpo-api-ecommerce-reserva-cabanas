@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import AdminEspacioForm from './AdminEspacioForm'
-import AdminEspaciosTabla from './AdminEspaciosTabla'
-import './AdminEspacios.css'
+import AdminEspacioRow from './AdminEspacioRow'
 
 function AdminEspacios({ idioma }) {
   const [espacios, setEspacios] = useState([])
   const [error, setError] = useState('')
   const [mensajeExito, setMensajeExito] = useState('')
+  const [guardadoId, setGuardadoId] = useState(null)
   const URL = 'http://localhost:8080'
   const es = idioma === 'es'
 
@@ -35,10 +35,23 @@ function AdminEspacios({ idioma }) {
     setEspacios([...espacios, nuevoEspacio])
   }
 
-  const handleModificarPrecio = (espacio, nuevoValor) => {
-    const token = localStorage.getItem('jwtToken')
-    const nuevoPrecio = Number(nuevoValor)
+  // Solo cambia el valor en memoria mientras el admin escribe (sin llamar a la API)
+  const handleCambiarPrecio = (id, nuevoValor) => {
+    setEspacios(
+      espacios.map((item) => (item.id === id ? { ...item, precioBase: nuevoValor } : item))
+    )
+    setGuardadoId(null)
+  }
 
+  // Un único PUT cuando el admin confirma con el botón Guardar
+  const handleGuardarPrecio = (espacio) => {
+    const nuevoPrecio = Number(espacio.precioBase)
+    if (!nuevoPrecio || nuevoPrecio <= 0) {
+      setError(es ? 'Ingresa un precio mayor a 0' : 'Enter a rate greater than 0')
+      return
+    }
+
+    const token = localStorage.getItem('jwtToken')
     const datosAEnviar = {
       nombre: espacio.nombre,
       precioBase: nuevoPrecio,
@@ -63,6 +76,7 @@ function AdminEspacios({ idioma }) {
           setEspacios(
             espacios.map((item) => (item.id === espacio.id ? data : item))
           )
+          setGuardadoId(data.id)
           setError('')
           setMensajeExito(
             es
@@ -140,37 +154,38 @@ function AdminEspacios({ idioma }) {
   }
 
   return (
-    <div className="admin-dashboard-wrapper">
-      <div className="admin-dashboard-container">
-        <div className="ad-header">
-          <div className="ad-header-izq">
-            <span className="ad-overline">
-              {es ? 'CATÁLOGO E INSTALACIONES DEL COMPLEJO' : 'PROPERTY ROSTER & FACILITIES'}
-            </span>
-            <h1 className="ad-title">
-              {es ? 'Espacios y Alojamientos' : 'Places & Accommodations'}
-            </h1>
-            <p className="ad-subtitle">
-              {es
-                ? 'Administra cabañas, salones de eventos e instalaciones recreativas en el predio de Whispering Pines.'
-                : 'Manage cabins, event barns, and recreational facilities across Whispering Pines resort plots.'}
-            </p>
-          </div>
-        </div>
+    <>
+      <AdminEspacioForm idioma={idioma} onEspacioCreado={handleEspacioCreado} />
 
-        <AdminEspacioForm idioma={idioma} onEspacioCreado={handleEspacioCreado} />
+      {error && <p className="ad-error">{error}</p>}
+      {mensajeExito && <p className="ad-success">{mensajeExito}</p>}
 
-        {error && <p className="ad-error">{error}</p>}
-        {mensajeExito && <p className="ad-success">{mensajeExito}</p>}
-
-        <AdminEspaciosTabla
-          idioma={idioma}
-          espacios={espacios}
-          onModificarPrecio={handleModificarPrecio}
-          onToggleEstado={handleToggleEstado}
-        />
+      <div className="ad-table-container">
+        <table className="ad-table">
+          <thead>
+            <tr>
+              <th>{es ? 'ESPACIO Y LOTE' : 'ACCOMMODATION & PLOT'}</th>
+              <th>{es ? 'CATEGORÍA' : 'CATEGORY'}</th>
+              <th>{es ? 'TARIFA ($ / NOCHE)' : 'RATE ($ / NIGHT)'}</th>
+              <th>{es ? 'ESTADO' : 'STATUS'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {espacios.map((espacio) => (
+              <AdminEspacioRow
+                idioma={idioma}
+                espacio={espacio}
+                guardado={guardadoId === espacio.id}
+                onCambiarPrecio={handleCambiarPrecio}
+                onGuardarPrecio={handleGuardarPrecio}
+                onToggleEstado={handleToggleEstado}
+                key={espacio.id}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </>
   )
 }
 

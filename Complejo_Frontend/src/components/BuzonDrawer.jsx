@@ -2,23 +2,11 @@ import React from 'react'
 import BuzonItem from './BuzonItem'
 import './BuzonDrawer.css'
 
-function BuzonDrawer({ idioma, mensajesBuzon, setMensajesBuzon, leidasIds, setLeidasIds, isOpen, onClose }) {
+function BuzonDrawer({ idioma, mensajes, onDescartar, isOpen, onClose }) {
   const es = idioma === 'es'
 
   if (!isOpen) {
     return null
-  }
-
-  const mensajes = mensajesBuzon ? mensajesBuzon : []
-
-  const handleDescartar = (indice) => {
-    const reservaDescartada = mensajes[indice]
-    if (reservaDescartada && reservaDescartada.id) {
-      setLeidasIds([...leidasIds, reservaDescartada.id])
-    }
-    const nuevosMensajes = [...mensajes]
-    nuevosMensajes.splice(indice, 1)
-    setMensajesBuzon(nuevosMensajes)
   }
 
   return (
@@ -58,12 +46,11 @@ function BuzonDrawer({ idioma, mensajesBuzon, setMensajesBuzon, leidasIds, setLe
               </span>
             </div>
           ) : (
-            mensajes.map((reserva, index) => (
+            mensajes.map((reserva) => (
               <BuzonItem
                 idioma={idioma}
                 reserva={reserva}
-                index={index}
-                onDescartar={handleDescartar}
+                onDescartar={onDescartar}
                 key={reserva.id}
               />
             ))

@@ -95,6 +95,8 @@
 }
 
 .ad-btn-add {
+  min-width: 11.9em;
+  text-align: center;
   background-color: #153c2b;
   color: #ffffff;
   border: none;
@@ -178,6 +180,10 @@
   color: #153c2b;
 }
 
+.ad-td-rate small {
+  min-width: 3.6em;
+}
+
 .ad-inline-input {
   width: 4.5em;
   padding: 0.3em 0.4em;
@@ -189,6 +195,8 @@
 }
 
 .ad-btn-save {
+  min-width: 5.5em;
+  text-align: center;
   background-color: #153c2b;
   color: #ffffff;
   border: none;

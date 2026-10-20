@@ -1,5 +1,4 @@
 import React from 'react'
-import ReservaDetalleItem from './ReservaDetalleItem'
 
 function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
   const es = idioma === 'es'
@@ -42,7 +41,17 @@ function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
       <div className="mr-detalles-list">
         {reserva.detalles &&
           reserva.detalles.map((detalle) => (
-            <ReservaDetalleItem idioma={idioma} detalle={detalle} key={`${detalle.nombreEspacio}-${detalle.checkIn}`} />
+            <div className="mr-detalle-item" key={`${detalle.nombreEspacio}-${detalle.checkIn}`}>
+              <div>
+                <strong>🏠 {detalle.nombreEspacio}</strong>
+                <span className="mr-detalle-dates">
+                  📅 {detalle.checkIn} {es ? 'al' : 'to'} {detalle.checkOut}
+                </span>
+              </div>
+              <span className="mr-detalle-rate">
+                ${detalle.subtotal} {es ? '/ noche' : '/ night'}
+              </span>
+            </div>
           ))}
       </div>
 

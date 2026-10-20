@@ -29,6 +29,8 @@
 }
 
 .mr-btn-new {
+  min-width: 12.8em;
+  text-align: center;
   background-color: #153c2b;
   color: #ffffff;
   padding: 0.75em 1.4em;
@@ -150,6 +152,8 @@
 }
 
 .mr-cancel-btn {
+  min-width: 13.4em;
+  text-align: center;
   background-color: #fdecea;
   color: #b71c1c;
   border: 1px solid #f5c6cb;
@@ -178,6 +182,8 @@
 }
 
 .mr-dismiss-btn {
+  min-width: 13.4em;
+  text-align: center;
   background-color: #f1f2ec;
   color: #555555;
   border: 1px solid #d5d4ce;

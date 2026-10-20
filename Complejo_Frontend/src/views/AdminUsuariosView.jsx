@@ -1,11 +1,14 @@
 import React from 'react'
 import AdminUsuarios from '../components/AdminUsuarios'
+import '../components/AdminUsuarios.css'
 
 function AdminUsuariosView({ idioma }) {
   return (
-    <>
-      <AdminUsuarios idioma={idioma} />
-    </>
+    <div className="admin-usr-wrapper">
+      <div className="admin-usr-container">
+        <AdminUsuarios idioma={idioma} />
+      </div>
+    </div>
   )
 }
 

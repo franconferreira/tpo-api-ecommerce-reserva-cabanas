@@ -32,6 +32,88 @@ public class DataInitializer implements CommandLineRunner {
     private final ReservaRepository reservaRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // Galeria E1: exterior, living, dormitorio, baño, parrilla del deck y laguna
+    private static final List<String> GALERIA_E1 = List.of(
+            "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E2: exterior, fachada de troncos, living, dormitorio, baño, cocina y bosque
+    private static final List<String> GALERIA_E2 = List.of(
+            "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E3: salón, mesas, celebración, parrilla, catering y ambientación
+    private static final List<String> GALERIA_E3 = List.of(
+            "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E4: laguna, kayaks, atardecer, embarcadero, entorno y noche de campamento
+    private static final List<String> GALERIA_E4 = List.of(
+            "https://images.unsplash.com/photo-1439853949127-fa647821eba0?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1478827387698-1527781a4887?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E5: exterior, living, dormitorio, baño, deck y bosque de robles
+    private static final List<String> GALERIA_E5 = List.of(
+            "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1604709177225-055f99402ea3?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E6: exterior, living, dormitorio, baño, mirador, fogonero y arroyo
+    private static final List<String> GALERIA_E6 = List.of(
+            "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1475483768296-6163e08872a1?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E7: galpón, jardín, celebración, mesa, asador y entorno campestre
+    private static final List<String> GALERIA_E7 = List.of(
+            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&q=80&w=800"
+    );
+
+    // Galeria E8: domos, refugio, fogón, acampe, bosque y laguna
+    private static final List<String> GALERIA_E8 = List.of(
+            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1487730116645-74489c95b41b?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&q=80&w=800"
+    );
+
     private static final String URL_SALON_EVENTOS = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800";
 
     @Override
@@ -88,34 +170,27 @@ public class DataInitializer implements CommandLineRunner {
 
         String nombreE1 = "Cabaña del Cedro / Cedar Hollow Cabin";
         String descE1 = "Cabaña independiente de pino y roble rústico frente a la laguna, con deck y parrilla propia. / Standalone rustic pine and oak cabin facing the lagoon, featuring a private deck and grill.";
-        String imgE1 = "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800";
 
         String nombreE2 = "Refugio de Troncos Los Pinos / Whispering Pines Timber Lodge";
         String descE2 = "Cabaña de troncos amplia ideal para grupos familiares rodeada de bosque nativo. / Spacious timber lodge ideal for family groups surrounded by native forest.";
-        String imgE2 = "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=800";
 
         String nombreE3 = "Salón Rústico para Eventos / Rustic Event Venue";
         String descE3 = "Galpón rústico para eventos con parrillas integradas y guirnaldas de iluminación cálida. / Rustic event barn with built-in grills and strings of warm-toned lights.";
 
         String nombreE4 = "Embarcadero Laguna Plateada / Silver Lake Boathouse";
         String descE4 = "Espejo de agua natural con embarcadero, kayaks y espacio para actividades náuticas. / Natural body of water with a boathouse, kayaks, and space for water activities.";
-        String imgE4 = "https://images.unsplash.com/photo-1439853949127-fa647821eba0?auto=format&fit=crop&q=80&w=800";
 
         String nombreE5 = "Cabaña El Roble / The Oak Sanctuary Cabin";
         String descE5 = "Cabaña acogedora para parejas rodeada de robles antiguos con chimenea a leña y jacuzzi exterior. / Cozy couples cabin surrounded by ancient oaks featuring a wood-burning fireplace and outdoor hot tub.";
-        String imgE5 = "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&q=80&w=800";
 
         String nombreE6 = "Refugio del Arroyo / Creekside Mountain Chalet";
         String descE6 = "Chalet de montaña de dos plantas junto al arroyo cristalino, con mirador panorámico y fogonero privado. / Two-story mountain chalet by the crystal creek, with a panoramic deck and private fire pit.";
-        String imgE6 = "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800";
 
         String nombreE7 = "Galpón Campestre Las Acacias / Las Acacias Country Barn";
         String descE7 = "Quincho y salón campestre con horno de barro, asador criollo y amplio jardín para celebraciones al aire libre. / Country quincho and event hall with clay oven, traditional grill, and spacious garden for outdoor celebrations.";
-        String imgE7 = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80&w=800";
 
         String nombreE8 = "Sector Domos & Fogón / Geodesic Domes & Fire Pit Lounge";
         String descE8 = "Sector recreativo junto al agua con domos geodésicos, fogón comunitario y alquiler de tablas de stand-up paddle. / Waterside recreational lounge featuring geodesic domes, a communal fire pit, and stand-up paddleboard rentals.";
-        String imgE8 = "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&q=80&w=800";
 
         if (espacioRepository.count() == 0) {
             Espacio e1 = Espacio.builder()
@@ -123,7 +198,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE1)
                     .precioBase(220.0)
-                    .imagenes(List.of(imgE1))
+                    .imagenes(new ArrayList<>(GALERIA_E1))
                     .activo(true)
                     .build();
 
@@ -132,7 +207,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE2)
                     .precioBase(180.0)
-                    .imagenes(List.of(imgE2))
+                    .imagenes(new ArrayList<>(GALERIA_E2))
                     .activo(true)
                     .build();
 
@@ -141,7 +216,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.GALPON_FIESTAS)
                     .descripcion(descE3)
                     .precioBase(450.0)
-                    .imagenes(List.of(URL_SALON_EVENTOS))
+                    .imagenes(new ArrayList<>(GALERIA_E3))
                     .activo(true)
                     .build();
 
@@ -150,7 +225,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.LAGUNA_RECREATIVA)
                     .descripcion(descE4)
                     .precioBase(80.0)
-                    .imagenes(List.of(imgE4))
+                    .imagenes(new ArrayList<>(GALERIA_E4))
                     .activo(true)
                     .build();
 
@@ -159,7 +234,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE5)
                     .precioBase(150.0)
-                    .imagenes(List.of(imgE5))
+                    .imagenes(new ArrayList<>(GALERIA_E5))
                     .activo(true)
                     .build();
 
@@ -168,7 +243,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE6)
                     .precioBase(260.0)
-                    .imagenes(List.of(imgE6))
+                    .imagenes(new ArrayList<>(GALERIA_E6))
                     .activo(true)
                     .build();
 
@@ -177,7 +252,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.GALPON_FIESTAS)
                     .descripcion(descE7)
                     .precioBase(380.0)
-                    .imagenes(List.of(imgE7))
+                    .imagenes(new ArrayList<>(GALERIA_E7))
                     .activo(true)
                     .build();
 
@@ -186,7 +261,7 @@ public class DataInitializer implements CommandLineRunner {
                     .tipo(TipoEspacio.LAGUNA_RECREATIVA)
                     .descripcion(descE8)
                     .precioBase(110.0)
-                    .imagenes(List.of(imgE8))
+                    .imagenes(new ArrayList<>(GALERIA_E8))
                     .activo(true)
                     .build();
 
@@ -235,6 +310,12 @@ public class DataInitializer implements CommandLineRunner {
                     modificado = true;
                 }
 
+                List<String> galeria = galeriaPorNombre(esp.getNombre());
+                if (galeria != null && (esp.getImagenes() == null || esp.getImagenes().size() < galeria.size())) {
+                    esp.setImagenes(new ArrayList<>(galeria));
+                    modificado = true;
+                }
+
                 if (modificado) {
                     espacioRepository.save(esp);
                 }
@@ -248,7 +329,7 @@ public class DataInitializer implements CommandLineRunner {
                         .tipo(TipoEspacio.CABANA)
                         .descripcion(descE5)
                         .precioBase(150.0)
-                        .imagenes(new ArrayList<>(List.of(imgE5)))
+                        .imagenes(new ArrayList<>(GALERIA_E5))
                         .activo(true)
                         .build());
             }
@@ -260,7 +341,7 @@ public class DataInitializer implements CommandLineRunner {
                         .tipo(TipoEspacio.CABANA)
                         .descripcion(descE6)
                         .precioBase(260.0)
-                        .imagenes(new ArrayList<>(List.of(imgE6)))
+                        .imagenes(new ArrayList<>(GALERIA_E6))
                         .activo(true)
                         .build());
             }
@@ -272,7 +353,7 @@ public class DataInitializer implements CommandLineRunner {
                         .tipo(TipoEspacio.GALPON_FIESTAS)
                         .descripcion(descE7)
                         .precioBase(380.0)
-                        .imagenes(new ArrayList<>(List.of(imgE7)))
+                        .imagenes(new ArrayList<>(GALERIA_E7))
                         .activo(true)
                         .build());
             }
@@ -284,7 +365,7 @@ public class DataInitializer implements CommandLineRunner {
                         .tipo(TipoEspacio.LAGUNA_RECREATIVA)
                         .descripcion(descE8)
                         .precioBase(110.0)
-                        .imagenes(new ArrayList<>(List.of(imgE8)))
+                        .imagenes(new ArrayList<>(GALERIA_E8))
                         .activo(true)
                         .build());
             }
@@ -389,5 +470,36 @@ public class DataInitializer implements CommandLineRunner {
                 }
             }
         }
+    }
+
+    private List<String> galeriaPorNombre(String nombre) {
+        if (nombre == null) {
+            return null;
+        }
+        if (nombre.contains("Cedar Hollow Cabin")) {
+            return GALERIA_E1;
+        }
+        if (nombre.contains("Whispering Pines Timber Lodge")) {
+            return GALERIA_E2;
+        }
+        if (nombre.contains("Salón Rústico para Eventos")) {
+            return GALERIA_E3;
+        }
+        if (nombre.contains("Silver Lake Boathouse")) {
+            return GALERIA_E4;
+        }
+        if (nombre.contains("Cabaña El Roble")) {
+            return GALERIA_E5;
+        }
+        if (nombre.contains("Refugio del Arroyo")) {
+            return GALERIA_E6;
+        }
+        if (nombre.contains("Galpón Campestre Las Acacias")) {
+            return GALERIA_E7;
+        }
+        if (nombre.contains("Sector Domos & Fogón")) {
+            return GALERIA_E8;
+        }
+        return null;
     }
 }

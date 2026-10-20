@@ -78,6 +78,10 @@
   margin-bottom: 1em;
 }
 
+.register-header-titles {
+  min-height: 6.7em;
+}
+
 .register-overline {
   color: #cc7440;
   font-size: 0.75em;

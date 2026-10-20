@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import CampoFormulario from './CampoFormulario'
 
 function AdminEspacioForm({ idioma, onEspacioCreado }) {
   const [nombre, setNombre] = useState('')
@@ -78,15 +77,16 @@ function AdminEspacioForm({ idioma, onEspacioCreado }) {
       {error && <p className="ad-error">{error}</p>}
 
       <form onSubmit={(e) => e.preventDefault()} className="ad-inline-form">
-        <CampoFormulario
-          className="ad-field"
-          label={es ? 'Nombre' : 'Name'}
-          type="text"
-          name="nombre"
-          placeholder="Cabaña del Ocaso / Sunset Ridge Cabin"
-          value={nombre}
-          onChange={handleNombreChange}
-        />
+        <div className="ad-field">
+          <label>{es ? 'Nombre' : 'Name'}</label>
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Cabaña del Ocaso / Sunset Ridge Cabin"
+            value={nombre}
+            onChange={handleNombreChange}
+          />
+        </div>
 
         <div className="ad-field">
           <label>{es ? 'Categoría (Tipo)' : 'Category (Tipo)'}</label>
@@ -97,33 +97,36 @@ function AdminEspacioForm({ idioma, onEspacioCreado }) {
           </select>
         </div>
 
-        <CampoFormulario
-          className="ad-field"
-          label={es ? 'Tarifa Base ($ / noche)' : 'Base Rate ($ / night)'}
-          type="number"
-          name="precioBase"
-          placeholder="180"
-          value={precioBase}
-          onChange={handlePrecioBaseChange}
-        />
-        <CampoFormulario
-          className="ad-field"
-          label={es ? 'Descripción' : 'Description'}
-          type="text"
-          name="descripcion"
-          placeholder="Cabaña rústica frente al lago. / Rustic pine cabin overlooking the lake."
-          value={descripcion}
-          onChange={handleDescripcionChange}
-        />
-        <CampoFormulario
-          className="ad-field"
-          label={es ? 'URL de Imagen' : 'Image URL'}
-          type="text"
-          name="imagenes"
-          placeholder="https://..."
-          value={imagenes}
-          onChange={handleImagenesChange}
-        />
+        <div className="ad-field">
+          <label>{es ? 'Tarifa Base ($ / noche)' : 'Base Rate ($ / night)'}</label>
+          <input
+            type="number"
+            name="precioBase"
+            placeholder="180"
+            value={precioBase}
+            onChange={handlePrecioBaseChange}
+          />
+        </div>
+        <div className="ad-field">
+          <label>{es ? 'Descripción' : 'Description'}</label>
+          <input
+            type="text"
+            name="descripcion"
+            placeholder="Cabaña rústica frente al lago. / Rustic pine cabin overlooking the lake."
+            value={descripcion}
+            onChange={handleDescripcionChange}
+          />
+        </div>
+        <div className="ad-field">
+          <label>{es ? 'URL de Imagen' : 'Image URL'}</label>
+          <input
+            type="text"
+            name="imagenes"
+            placeholder="https://..."
+            value={imagenes}
+            onChange={handleImagenesChange}
+          />
+        </div>
 
         <button type="submit" className="ad-btn-add" onClick={handleAgregarEspacio}>
           {es ? '+ Guardar Espacio' : '+ Save Place'}

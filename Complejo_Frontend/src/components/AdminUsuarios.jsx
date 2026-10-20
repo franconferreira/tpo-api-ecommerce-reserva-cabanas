@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AdminUsuariosTabla from './AdminUsuariosTabla'
-import './AdminUsuarios.css'
+import AdminUsuarioRow from './AdminUsuarioRow'
 
 function AdminUsuarios({ idioma }) {
   const [usuarios, setUsuarios] = useState([])
@@ -96,39 +95,55 @@ function AdminUsuarios({ idioma }) {
   }
 
   return (
-    <div className="admin-usr-wrapper">
-      <div className="admin-usr-container">
-        <div className="admin-usr-header">
-          <div>
-            <span className="admin-usr-overline">
-              {es ? '🛡️ GESTIÓN DE MIEMBROS' : '🛡️ MEMBER STEWARDSHIP'}
-            </span>
-            <h1 className="admin-usr-title">
-              {es ? 'Cuentas de Clientes' : 'Client Accounts'}
-            </h1>
-            <p className="admin-usr-subtitle">
-              {es
-                ? 'Directorio de huéspedes registrados en el complejo. Administra roles y estado de activación.'
-                : 'Directory of registered sanctuary guests. Manage roles and toggle account activation status.'}
-            </p>
-          </div>
-          <div className="admin-usr-header-der">
-            <div className="kpi-pill">
-              <strong>TOTAL</strong> {usuarios.length}
-            </div>
+    <>
+      <div className="admin-usr-header">
+        <div>
+          <span className="admin-usr-overline">
+            {es ? '🛡️ GESTIÓN DE MIEMBROS' : '🛡️ MEMBER STEWARDSHIP'}
+          </span>
+          <h1 className="admin-usr-title">
+            {es ? 'Cuentas de Clientes' : 'Client Accounts'}
+          </h1>
+          <p className="admin-usr-subtitle">
+            {es
+              ? 'Directorio de huéspedes registrados en el complejo. Administra roles y estado de activación.'
+              : 'Directory of registered sanctuary guests. Manage roles and toggle account activation status.'}
+          </p>
+        </div>
+        <div className="admin-usr-header-der">
+          <div className="kpi-pill">
+            <strong>TOTAL</strong> {usuarios.length}
           </div>
         </div>
-
-        {error && <p className="admin-usr-error">{error}</p>}
-
-        <AdminUsuariosTabla
-          idioma={idioma}
-          usuarios={usuarios}
-          onCambiarRol={handleCambiarRol}
-          onToggleEstado={handleToggleEstado}
-        />
       </div>
-    </div>
+
+      {error && <p className="admin-usr-error">{error}</p>}
+
+      <div className="admin-usr-table-container">
+        <table className="admin-usr-table">
+          <thead>
+            <tr>
+              <th>{es ? 'PERFIL DEL CLIENTE' : 'CLIENT PROFILE'}</th>
+              <th>{es ? 'EMAIL Y USUARIO' : 'EMAIL & USERNAME'}</th>
+              <th>{es ? 'ROL' : 'ROLE'}</th>
+              <th>{es ? 'ESTADO' : 'STATUS'}</th>
+              <th>{es ? 'ACCIONES DE CUENTA' : 'LIFECYCLE ACTIONS'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usuarios.map((usuario) => (
+              <AdminUsuarioRow
+                idioma={idioma}
+                usuario={usuario}
+                onCambiarRol={handleCambiarRol}
+                onToggleEstado={handleToggleEstado}
+                key={usuario.id}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
 

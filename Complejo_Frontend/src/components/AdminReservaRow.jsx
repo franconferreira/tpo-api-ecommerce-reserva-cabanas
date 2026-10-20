@@ -1,8 +1,6 @@
 import React from 'react'
-import AdminReservaDetalleLine from './AdminReservaDetalleLine'
-import AdminCancelarForm from './AdminCancelarForm'
 
-function AdminReservaRow({ idioma, reserva, onCancelar }) {
+function AdminReservaRow({ idioma, reserva, onCambiarMotivo, onCancelar }) {
   const isCancelled = reserva.estado === 'CANCELADA'
   const es = idioma === 'es'
 
@@ -23,7 +21,10 @@ function AdminReservaRow({ idioma, reserva, onCancelar }) {
         <div className="td-detalles">
           {reserva.detalles &&
             reserva.detalles.map((det) => (
-              <AdminReservaDetalleLine idioma={idioma} detalle={det} key={`${det.nombreEspacio}-${det.checkIn}`} />
+              <div className="td-detalle-line" key={`${det.nombreEspacio}-${det.checkIn}`}>
+                <strong>{det.nombreEspacio}</strong>
+                <span> ({det.checkIn} {es ? 'al' : 'to'} {det.checkOut})</span>
+              </div>
             ))}
         </div>
       </td>
@@ -50,11 +51,19 @@ function AdminReservaRow({ idioma, reserva, onCancelar }) {
       </td>
       <td>
         {!isCancelled ? (
-          <AdminCancelarForm
-            idioma={idioma}
-            reservaId={reserva.id}
-            onCancelar={onCancelar}
-          />
+          <form onSubmit={(e) => e.preventDefault()} className="admin-cancel-form">
+            <input
+              type="text"
+              name="mensajeCancelacion"
+              className="admin-cancel-input"
+              placeholder={es ? 'Motivo de cancelación...' : 'Cancellation reason...'}
+              value={reserva.mensajeCancelacion || ''}
+              onChange={(e) => onCambiarMotivo(reserva.id, e.target.value)}
+            />
+            <button type="submit" className="btn-cancel-admin" onClick={() => onCancelar(reserva)}>
+              {es ? '⊗ Cancelar' : '⊗ Cancel'}
+            </button>
+          </form>
         ) : (
           reserva.mensajeCancelacion && (
             <span className="admin-cancel-reason">

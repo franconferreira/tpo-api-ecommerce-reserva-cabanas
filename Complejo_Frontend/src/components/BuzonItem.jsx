@@ -1,7 +1,6 @@
 import React from 'react'
-import AdminReservaDetalleLine from './AdminReservaDetalleLine'
 
-function BuzonItem({ idioma, reserva, index, onDescartar }) {
+function BuzonItem({ idioma, reserva, onDescartar }) {
   const es = idioma === 'es'
 
   return (
@@ -18,7 +17,10 @@ function BuzonItem({ idioma, reserva, index, onDescartar }) {
       <div className="bi-spaces">
         {reserva.detalles &&
           reserva.detalles.map((det) => (
-            <AdminReservaDetalleLine idioma={idioma} detalle={det} key={`${det.nombreEspacio}-${det.checkIn}`} />
+            <div className="td-detalle-line" key={`${det.nombreEspacio}-${det.checkIn}`}>
+              <strong>{det.nombreEspacio}</strong>
+              <span> ({det.checkIn} {es ? 'al' : 'to'} {det.checkOut})</span>
+            </div>
           ))}
       </div>
 
@@ -33,7 +35,7 @@ function BuzonItem({ idioma, reserva, index, onDescartar }) {
         <button
           type="button"
           className="bi-dismiss-btn"
-          onClick={() => onDescartar(index)}
+          onClick={() => onDescartar(reserva.id)}
         >
           {es ? '✓ Marcar como leído' : '✓ Mark as read'}
         </button>

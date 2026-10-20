@@ -1,7 +1,6 @@
 import React from 'react'
-import AdminPrecioForm from './AdminPrecioForm'
 
-function AdminEspacioRow({ idioma, espacio, onModificarPrecio, onToggleEstado }) {
+function AdminEspacioRow({ idioma, espacio, guardado, onCambiarPrecio, onGuardarPrecio, onToggleEstado }) {
   const es = idioma === 'es'
   const imagenPorDefecto = 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800'
   const imagenPrincipal =
@@ -31,11 +30,20 @@ function AdminEspacioRow({ idioma, espacio, onModificarPrecio, onToggleEstado })
         <span className="ad-type-badge">{espacio.tipo}</span>
       </td>
       <td>
-        <AdminPrecioForm
-          idioma={idioma}
-          espacio={espacio}
-          onModificarPrecio={onModificarPrecio}
-        />
+        <form onSubmit={(e) => e.preventDefault()} className="ad-td-rate">
+          <span>$</span>
+          <input
+            type="number"
+            name="precioBase"
+            className="ad-inline-input"
+            value={espacio.precioBase}
+            onChange={(e) => onCambiarPrecio(espacio.id, e.target.value)}
+          />
+          <small>{es ? '/ noche' : '/ night'}</small>
+          <button type="submit" className="ad-btn-save" onClick={() => onGuardarPrecio(espacio)}>
+            {guardado ? '✓' : es ? 'Guardar' : 'Save'}
+          </button>
+        </form>
       </td>
       <td>
         <button

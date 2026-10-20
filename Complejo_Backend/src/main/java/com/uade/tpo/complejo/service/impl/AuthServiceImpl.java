@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
         carritoRepository.save(carrito);
 
         var jwtToken = jwtService.generateToken(user);
-        return AuthResponse.builder().token(jwtToken).build();
+        return AuthResponse.builder().token(jwtToken).rol(user.getRol()).build();
     }
 
     @Override
@@ -56,6 +56,6 @@ public class AuthServiceImpl implements AuthService {
         var user = usuarioRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return AuthResponse.builder().token(jwtToken).build();
+        return AuthResponse.builder().token(jwtToken).rol(user.getRol()).build();
     }
 }

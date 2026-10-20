@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import BuzonButton from './BuzonButton'
 
 function NavCliente({
   idioma,
@@ -56,11 +55,13 @@ function NavCliente({
         {isLogged && (
           <>
             <li>
-              <BuzonButton
-                idioma={idioma}
-                cantidad={cantidadBuzon}
-                onAbrirBuzon={onAbrirBuzon}
-              />
+              <button
+                type="button"
+                className={cantidadBuzon > 0 ? 'nav-btn-buzon has-unread' : 'nav-btn-buzon'}
+                onClick={onAbrirBuzon}
+              >
+                📬 {es ? 'Buzón' : 'Inbox'} ({cantidadBuzon})
+              </button>
             </li>
             <li>
               <button type="button" className="nav-btn-cart" onClick={onAbrirCarrito}>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import ReservaCard from './ReservaCard'
-import './MisReservasList.css'
 
 function MisReservasList({ idioma, ocultasIds, setOcultasIds }) {
   const [reservas, setReservas] = useState([])
@@ -30,18 +28,7 @@ function MisReservasList({ idioma, ocultasIds, setOcultasIds }) {
       })
   }, [])
 
-  let reservasVisibles = []
-  reservas.map((r) => {
-    let estaOculta = false
-    ocultasIds.map((idOculta) => {
-      if (idOculta === r.id) {
-        estaOculta = true
-      }
-    })
-    if (!estaOculta) {
-      reservasVisibles = [...reservasVisibles, r]
-    }
-  })
+  const reservasVisibles = reservas.filter((r) => !ocultasIds.includes(r.id))
 
   const handleOcultarReserva = (id, indice) => {
     setOcultasIds([...ocultasIds, id])
@@ -79,53 +66,35 @@ function MisReservasList({ idioma, ocultasIds, setOcultasIds }) {
   }
 
   return (
-    <div className="mr-wrapper">
-      <div className="mr-container">
-        <div className="mr-header-row">
-          <div>
-            <h1 className="mr-title">
-              {es ? 'Mis Reservas en el Complejo' : 'My Sanctuary Reservations'}
-            </h1>
-            <p className="mr-subtitle">
+    <>
+      {error && <p className="mr-error">{error}</p>}
+
+      <div className="mr-list">
+        {reservasVisibles.length === 0 ? (
+          <div className="mr-empty-state">
+            <h3>
+              {es ? 'No se encontraron reservas activas.' : 'No active reservations found.'}
+            </h3>
+            <p>
               {es
-                ? 'Revisa y gestiona tus estadías reservadas en el bosque.'
-                : 'Review and manage your active woodland retreats.'}
+                ? 'Explora nuestro catálogo para reservar tu próxima estadía en Whispering Pines.'
+                : 'Explore our catalog to book your next stay at Whispering Pines.'}
             </p>
           </div>
-          <Link to="/catalogo" className="mr-btn-new">
-            {es ? '+ Nueva Reserva' : '+ Plan New Getaway'}
-          </Link>
-        </div>
-
-        {error && <p className="mr-error">{error}</p>}
-
-        <div className="mr-list">
-          {reservasVisibles.length === 0 ? (
-            <div className="mr-empty-state">
-              <h3>
-                {es ? 'No se encontraron reservas activas.' : 'No active reservations found.'}
-              </h3>
-              <p>
-                {es
-                  ? 'Explora nuestro catálogo para reservar tu próxima estadía en Whispering Pines.'
-                  : 'Explore our catalog to book your next stay at Whispering Pines.'}
-              </p>
-            </div>
-          ) : (
-            reservasVisibles.map((reserva, index) => (
-              <ReservaCard
-                idioma={idioma}
-                reserva={reserva}
-                index={index}
-                onCancelar={handleCancelar}
-                onOcultarReserva={handleOcultarReserva}
-                key={reserva.id}
-              />
-            ))
-          )}
-        </div>
+        ) : (
+          reservasVisibles.map((reserva, index) => (
+            <ReservaCard
+              idioma={idioma}
+              reserva={reserva}
+              index={index}
+              onCancelar={handleCancelar}
+              onOcultarReserva={handleOcultarReserva}
+              key={reserva.id}
+            />
+          ))
+        )}
       </div>
-    </div>
+    </>
   )
 }
 

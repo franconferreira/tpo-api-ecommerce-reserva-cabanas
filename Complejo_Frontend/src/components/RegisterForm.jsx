@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import AuthBanner from './AuthBanner'
 import AuthFormTitulos from './AuthFormTitulos'
 import CampoFormulario from './CampoFormulario'
 import './RegisterForm.css'
@@ -57,7 +56,7 @@ function RegisterForm({ idioma, setIdioma, onLogin }) {
         if (data && data.token) {
           localStorage.setItem('jwtToken', data.token)
           setError('')
-          onLogin(data.token)
+          onLogin(data)
         } else {
           console.error('Error al registrar: ', data)
           setError(
@@ -78,108 +77,89 @@ function RegisterForm({ idioma, setIdioma, onLogin }) {
   }
 
   return (
-    <div className="register-container">
-      <AuthBanner
-        panelClass="register-left-panel"
-        headerClass="register-left-header"
-        brandClass="register-brand"
-        heroClass="register-left-hero"
-        badgeClass="register-badge"
-        footerClass="register-left-footer"
-        badge={es ? '🏕️ ÚNETE AL COMPLEJO' : '🏕️ JOIN THE SANCTUARY'}
-        title={es ? 'Comienza tu tradición en el bosque.' : 'Begin your woodland tradition.'}
-        description={
-          es
-            ? 'Crea tu perfil de huésped para reservar cabañas, salones de eventos y actividades en la laguna.'
-            : 'Create your guest profile to reserve cabins, event barns, and lakeside activities with member benefits.'
-        }
-        footerText="🌲 Whispering Pines Sanctuary & Retreats"
-      />
+    <div className="register-right-panel">
+      <div className="register-form-box">
+        <div className="register-lang-bar">
+          <button type="button" className="nav-btn-lang" onClick={handleToggleIdioma}>
+            {es ? '🌐 ES | EN' : '🌐 EN | ES'}
+          </button>
+        </div>
 
-      <div className="register-right-panel">
-        <div className="register-form-box">
-          <div className="register-lang-bar">
-            <button type="button" className="nav-btn-lang" onClick={handleToggleIdioma}>
-              {es ? '🌐 ES | EN' : '🌐 EN | ES'}
-            </button>
-          </div>
+        <AuthFormTitulos
+          titlesClass="register-header-titles"
+          overlineClass="register-overline"
+          overline={es ? 'REGISTRO DE NUEVO HUÉSPED' : 'NEW GUEST REGISTRATION'}
+          title={es ? 'Crear Cuenta' : 'Create Your Account'}
+          description={
+            es
+              ? 'Completa tus datos para reservar estadías en el complejo.'
+              : 'Complete your details to reserve stays across the sanctuary.'
+          }
+        />
 
-          <AuthFormTitulos
-            titlesClass="register-header-titles"
-            overlineClass="register-overline"
-            overline={es ? 'REGISTRO DE NUEVO HUÉSPED' : 'NEW GUEST REGISTRATION'}
-            title={es ? 'Crear Cuenta' : 'Create Your Account'}
-            description={
-              es
-                ? 'Completa tus datos para reservar estadías en el complejo.'
-                : 'Complete your details to reserve stays across the sanctuary.'
-            }
+        {error && <p className="register-error">{error}</p>}
+
+        <form onSubmit={(e) => e.preventDefault()} className="register-form">
+          <CampoFormulario
+            className="register-field"
+            label={es ? 'Usuario' : 'Username'}
+            type="text"
+            name="username"
+            placeholder="eleanor_v"
+            value={username}
+            onChange={handleUsernameChange}
           />
 
-          {error && <p className="register-error">{error}</p>}
-
-          <form onSubmit={(e) => e.preventDefault()} className="register-form">
+          <div className="register-row">
             <CampoFormulario
               className="register-field"
-              label={es ? 'Usuario' : 'Username'}
+              label={es ? 'Nombre' : 'First Name'}
               type="text"
-              name="username"
-              placeholder="eleanor_v"
-              value={username}
-              onChange={handleUsernameChange}
-            />
-
-            <div className="register-row">
-              <CampoFormulario
-                className="register-field"
-                label={es ? 'Nombre' : 'First Name'}
-                type="text"
-                name="nombre"
-                placeholder="Eleanor"
-                value={nombre}
-                onChange={handleNombreChange}
-              />
-              <CampoFormulario
-                className="register-field"
-                label={es ? 'Apellido' : 'Last Name'}
-                type="text"
-                name="apellido"
-                placeholder="Vance"
-                value={apellido}
-                onChange={handleApellidoChange}
-              />
-            </div>
-
-            <CampoFormulario
-              className="register-field"
-              label={es ? 'Correo Electrónico' : 'Email Address'}
-              type="email"
-              name="email"
-              placeholder="eleanor.vance@haven.com"
-              value={email}
-              onChange={handleEmailChange}
+              name="nombre"
+              placeholder="Eleanor"
+              value={nombre}
+              onChange={handleNombreChange}
             />
             <CampoFormulario
               className="register-field"
-              label={es ? 'Contraseña' : 'Password'}
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={handlePasswordChange}
+              label={es ? 'Apellido' : 'Last Name'}
+              type="text"
+              name="apellido"
+              placeholder="Vance"
+              value={apellido}
+              onChange={handleApellidoChange}
             />
-
-            <button type="submit" className="register-btn-submit" onClick={handleClick}>
-              {es ? 'Crear Cuenta ➔' : 'Create Account ➔'}
-            </button>
-          </form>
-
-          <div className="register-footer-links">
-            <p>
-              {es ? '¿Ya tienes una cuenta? ' : 'Already have an account? '}
-              <Link to="/login">{es ? 'Iniciar sesión' : 'Sign in'}</Link>
-            </p>
           </div>
+
+          <CampoFormulario
+            className="register-field"
+            label={es ? 'Correo Electrónico' : 'Email Address'}
+            type="email"
+            name="email"
+            placeholder="eleanor.vance@haven.com"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <CampoFormulario
+            className="register-field"
+            label={es ? 'Contraseña' : 'Password'}
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+
+          <button type="submit" className="register-btn-submit" onClick={handleClick}>
+            {es ? 'Crear Cuenta ➔' : 'Create Account ➔'}
+          </button>
+        </form>
+
+        <div className="register-footer-links">
+          <p>
+            {es ? '¿Ya tienes una cuenta? ' : 'Already have an account? '}
+            <Link to="/login">{es ? 'Iniciar sesión' : 'Sign in'}</Link>
+          </p>
         </div>
       </div>
     </div>
