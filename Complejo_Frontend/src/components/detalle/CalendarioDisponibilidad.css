@@ -83,7 +83,8 @@
   justify-content: center;
   font-size: 0.85em;
   font-weight: 700;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
+  box-sizing: border-box;
 }
 
 .cal-dia-vacio {
@@ -94,13 +95,25 @@
 .dia-disponible {
   background-color: #e8f5e9;
   color: #1b5e20;
-  border: 1px solid #c8e6c9;
+  border: 2px solid #c8e6c9;
+  cursor: pointer;
+}
+
+.dia-disponible:hover {
+  border-color: #2e7d32;
+}
+
+.dia-seleccionado {
+  background-color: #c8e6c9;
+  color: #0d3b14;
+  border: 2px solid #153c2b;
+  font-weight: 800;
 }
 
 .dia-ocupado {
   background-color: #fdecea;
   color: #b71c1c;
-  border: 1px solid #f5c6cb;
+  border: 2px solid #f5c6cb;
   text-decoration: line-through;
   opacity: 0.9;
 }
@@ -108,7 +121,7 @@
 .dia-pasado {
   background-color: #ecebe6;
   color: #9e9e9e;
-  border: 1px solid #dfded8;
+  border: 2px solid #dfded8;
   text-decoration: line-through;
   opacity: 0.65;
 }

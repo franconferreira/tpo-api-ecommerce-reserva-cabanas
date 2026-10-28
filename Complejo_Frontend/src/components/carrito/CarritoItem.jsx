@@ -29,9 +29,9 @@ function CarritoItem({ idioma, item, index, onEliminar }) {
 
       <div className="ci-footer">
         <span className="ci-calc">
-          {textos[idioma].carrito.base} ${item.espacio ? item.espacio.precioBase : 0} {t.porNoche}
+          {textos[idioma].carrito.base} USD ${item.espacio ? item.espacio.precioBase : 0} {t.porNoche}
         </span>
-        <span className="ci-price">${item.subtotal}</span>
+        <span className="ci-price">USD ${item.subtotal}</span>
       </div>
     </div>
   )

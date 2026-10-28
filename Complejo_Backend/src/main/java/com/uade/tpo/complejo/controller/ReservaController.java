@@ -1,6 +1,5 @@
 package com.uade.tpo.complejo.controller;
 
-import com.uade.tpo.complejo.entity.Reserva;
 import com.uade.tpo.complejo.service.ReservaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 import java.util.Map;
 
 @RestController
@@ -29,5 +27,12 @@ public class ReservaController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         reservaService.cancelarReserva(id, email);
         return ResponseEntity.ok(Map.of("mensaje", "Reserva cancelada con exito"));
+    }
+
+    @PatchMapping("/{id}/leer-notificacion")
+    public ResponseEntity<Map<String, String>> marcarNotificacionLeida(@PathVariable Long id) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        reservaService.marcarNotificacionLeida(id, email);
+        return ResponseEntity.ok(Map.of("mensaje", "Notificacion marcada como leida"));
     }
 }

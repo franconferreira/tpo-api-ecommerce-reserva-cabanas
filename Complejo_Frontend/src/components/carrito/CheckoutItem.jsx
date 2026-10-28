@@ -9,7 +9,7 @@ function CheckoutItem({ item }) {
           📅 Check-in: {item.checkIn} | Check-out: {item.checkOut}
         </span>
       </div>
-      <div className="checkout-item-price">${item.subtotal}</div>
+      <div className="checkout-item-price">USD ${item.subtotal}</div>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import CheckoutResumen from '../components/carrito/CheckoutResumen'
 import textos from '../i18n/textos'
 import './CheckoutView.css'
 
-function CheckoutView({ idioma, carritoData, setCarritoData }) {
+function CheckoutView({ idioma, carritoData, setCarritoData, onCuentaDesactivada }) {
   const t = textos[idioma].checkout
 
   return (
@@ -19,6 +19,7 @@ function CheckoutView({ idioma, carritoData, setCarritoData }) {
           idioma={idioma}
           carritoData={carritoData}
           setCarritoData={setCarritoData}
+          onCuentaDesactivada={onCuentaDesactivada}
         />
       </div>
     </div>

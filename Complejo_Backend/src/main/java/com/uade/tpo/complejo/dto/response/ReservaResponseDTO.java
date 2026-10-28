@@ -20,6 +20,7 @@ public class ReservaResponseDTO {
     private Double total;
     private EstadoReserva estado;
     private String mensajeCancelacion;
+    private Boolean notificacionLeida;
     private List<DetalleReservaDTO> detalles;
 
     @Data

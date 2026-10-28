@@ -8,7 +8,7 @@ function CarritoFooter({ idioma, totalSinDescuento, descuentoPack, total, mostra
     <div className="carrito-footer">
       <div className="cf-row">
         <span>{t.subtotal}</span>
-        <span>${totalSinDescuento}</span>
+        <span>USD ${totalSinDescuento}</span>
       </div>
       <div className="cf-row">
         <span>{t.descuento}</span>
@@ -16,7 +16,7 @@ function CarritoFooter({ idioma, totalSinDescuento, descuentoPack, total, mostra
       </div>
       <div className="cf-total-row">
         <span>Total</span>
-        <span className="cf-total-price">${total}</span>
+        <span className="cf-total-price">USD ${total}</span>
       </div>
 
       {mostrarCheckout && (

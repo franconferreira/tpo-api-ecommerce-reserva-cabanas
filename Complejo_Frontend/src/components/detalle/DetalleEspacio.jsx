@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import FotoMiniatura from './FotoMiniatura'
+import ReservaWidgetInfo from './ReservaWidgetInfo'
 import textos from '../../i18n/textos'
 import { IMAGEN_POR_DEFECTO } from '../../utils/constantes'
 import './DetalleEspacio.css'
@@ -7,6 +8,7 @@ import './DetalleEspacio.css'
 function DetalleEspacio({ idioma, espacio }) {
   const [fotoSeleccionada, setFotoSeleccionada] = useState(0)
   const t = textos[idioma].detalle
+  const tWidget = textos[idioma].widget
 
   const fotosValidas = espacio.imagenes
     ? espacio.imagenes.filter((img) => img && img.trim() !== '')
@@ -41,6 +43,13 @@ function DetalleEspacio({ idioma, espacio }) {
       <div className="di-textos">
         <h2 className="di-subtitulo">{t.sobre}</h2>
         <p className="di-parrafo">{espacio.descripcion}</p>
+      </div>
+
+      <div className="di-promos">
+        <div>
+          <span className="wr-promo-tag">{tWidget.promo}</span>
+        </div>
+        <ReservaWidgetInfo idioma={idioma} />
       </div>
     </>
   )

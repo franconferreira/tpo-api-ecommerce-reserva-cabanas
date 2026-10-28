@@ -197,7 +197,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE1)
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE1)
-                    .precioBase(220.0)
+                    .precioBase(120.0)
                     .imagenes(new ArrayList<>(GALERIA_E1))
                     .activo(true)
                     .build();
@@ -206,7 +206,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE2)
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE2)
-                    .precioBase(180.0)
+                    .precioBase(140.0)
                     .imagenes(new ArrayList<>(GALERIA_E2))
                     .activo(true)
                     .build();
@@ -215,7 +215,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE3)
                     .tipo(TipoEspacio.GALPON_FIESTAS)
                     .descripcion(descE3)
-                    .precioBase(450.0)
+                    .precioBase(250.0)
                     .imagenes(new ArrayList<>(GALERIA_E3))
                     .activo(true)
                     .build();
@@ -224,7 +224,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE4)
                     .tipo(TipoEspacio.LAGUNA_RECREATIVA)
                     .descripcion(descE4)
-                    .precioBase(80.0)
+                    .precioBase(55.0)
                     .imagenes(new ArrayList<>(GALERIA_E4))
                     .activo(true)
                     .build();
@@ -233,7 +233,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE5)
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE5)
-                    .precioBase(150.0)
+                    .precioBase(95.0)
                     .imagenes(new ArrayList<>(GALERIA_E5))
                     .activo(true)
                     .build();
@@ -242,7 +242,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE6)
                     .tipo(TipoEspacio.CABANA)
                     .descripcion(descE6)
-                    .precioBase(260.0)
+                    .precioBase(165.0)
                     .imagenes(new ArrayList<>(GALERIA_E6))
                     .activo(true)
                     .build();
@@ -251,7 +251,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE7)
                     .tipo(TipoEspacio.GALPON_FIESTAS)
                     .descripcion(descE7)
-                    .precioBase(380.0)
+                    .precioBase(210.0)
                     .imagenes(new ArrayList<>(GALERIA_E7))
                     .activo(true)
                     .build();
@@ -260,7 +260,7 @@ public class DataInitializer implements CommandLineRunner {
                     .nombre(nombreE8)
                     .tipo(TipoEspacio.LAGUNA_RECREATIVA)
                     .descripcion(descE8)
-                    .precioBase(110.0)
+                    .precioBase(75.0)
                     .imagenes(new ArrayList<>(GALERIA_E8))
                     .activo(true)
                     .build();
@@ -302,6 +302,12 @@ public class DataInitializer implements CommandLineRunner {
                     }
                 }
 
+                Double precioUsdEsperado = precioPorNombre(esp.getNombre());
+                if (precioUsdEsperado != null && !precioUsdEsperado.equals(esp.getPrecioBase())) {
+                    esp.setPrecioBase(precioUsdEsperado);
+                    modificado = true;
+                }
+
                 boolean tieneUrlRota = esp.getImagenes() != null && esp.getImagenes().stream()
                         .anyMatch(img -> img.contains("1505916349660-8d91a99c31a4"));
                 boolean sinImagenes = esp.getImagenes() == null || esp.getImagenes().isEmpty();
@@ -328,7 +334,7 @@ public class DataInitializer implements CommandLineRunner {
                         .nombre(nombreE5)
                         .tipo(TipoEspacio.CABANA)
                         .descripcion(descE5)
-                        .precioBase(150.0)
+                        .precioBase(95.0)
                         .imagenes(new ArrayList<>(GALERIA_E5))
                         .activo(true)
                         .build());
@@ -340,7 +346,7 @@ public class DataInitializer implements CommandLineRunner {
                         .nombre(nombreE6)
                         .tipo(TipoEspacio.CABANA)
                         .descripcion(descE6)
-                        .precioBase(260.0)
+                        .precioBase(165.0)
                         .imagenes(new ArrayList<>(GALERIA_E6))
                         .activo(true)
                         .build());
@@ -352,7 +358,7 @@ public class DataInitializer implements CommandLineRunner {
                         .nombre(nombreE7)
                         .tipo(TipoEspacio.GALPON_FIESTAS)
                         .descripcion(descE7)
-                        .precioBase(380.0)
+                        .precioBase(210.0)
                         .imagenes(new ArrayList<>(GALERIA_E7))
                         .activo(true)
                         .build());
@@ -364,7 +370,7 @@ public class DataInitializer implements CommandLineRunner {
                         .nombre(nombreE8)
                         .tipo(TipoEspacio.LAGUNA_RECREATIVA)
                         .descripcion(descE8)
-                        .precioBase(110.0)
+                        .precioBase(75.0)
                         .imagenes(new ArrayList<>(GALERIA_E8))
                         .activo(true)
                         .build());
@@ -389,9 +395,9 @@ public class DataInitializer implements CommandLineRunner {
                 Reserva rActiva = Reserva.builder()
                         .usuario(cliente)
                         .fechaCreacion(LocalDateTime.now().minusDays(2))
-                        .totalSinDescuento(820.0)
+                        .totalSinDescuento(470.0)
                         .descuentoPackPorcentaje(15.0)
-                        .total(697.0)
+                        .total(399.5)
                         .estado(EstadoReserva.CONFIRMADA)
                         .activo(true)
                         .detalles(new ArrayList<>())
@@ -416,15 +422,31 @@ public class DataInitializer implements CommandLineRunner {
                 rActiva.getDetalles().add(d1);
                 rActiva.getDetalles().add(d2);
                 reservaRepository.save(rActiva);
+            } else {
+                for (Reserva r : reservasCliente) {
+                    if (r.getEstado() == EstadoReserva.CONFIRMADA && (Double.valueOf(820.0).equals(r.getTotalSinDescuento()) || (r.getTotalSinDescuento() != null && r.getTotalSinDescuento() > 5000.0))) {
+                        r.setTotalSinDescuento(470.0);
+                        r.setDescuentoPackPorcentaje(15.0);
+                        r.setTotal(399.5);
+                        if (r.getDetalles() != null) {
+                            for (DetalleReserva det : r.getDetalles()) {
+                                if (det.getEspacio() != null && det.getEspacio().getPrecioBase() != null) {
+                                    det.setPrecioUnitarioHistorico(det.getEspacio().getPrecioBase());
+                                }
+                            }
+                        }
+                        reservaRepository.save(r);
+                    }
+                }
             }
 
             if (!tieneCanceladaConMotivo) {
                 Reserva rCancelada = Reserva.builder()
                         .usuario(cliente)
                         .fechaCreacion(LocalDateTime.now().minusDays(4))
-                        .totalSinDescuento(900.0)
+                        .totalSinDescuento(500.0)
                         .descuentoPackPorcentaje(0.0)
-                        .total(900.0)
+                        .total(500.0)
                         .estado(EstadoReserva.CANCELADA)
                         .mensajeCancelacion("Cancelada por tareas de mantenimiento y poda en el sector norte / Cancelled due to scheduled maintenance and tree pruning in the north sector")
                         .activo(true)
@@ -441,6 +463,22 @@ public class DataInitializer implements CommandLineRunner {
 
                 rCancelada.getDetalles().add(dCancelada);
                 reservaRepository.save(rCancelada);
+            } else {
+                for (Reserva r : reservasCliente) {
+                    if (r.getEstado() == EstadoReserva.CANCELADA && (Double.valueOf(900.0).equals(r.getTotalSinDescuento()) || (r.getTotalSinDescuento() != null && r.getTotalSinDescuento() > 5000.0))) {
+                        r.setTotalSinDescuento(500.0);
+                        r.setDescuentoPackPorcentaje(0.0);
+                        r.setTotal(500.0);
+                        if (r.getDetalles() != null) {
+                            for (DetalleReserva det : r.getDetalles()) {
+                                if (det.getEspacio() != null && det.getEspacio().getPrecioBase() != null) {
+                                    det.setPrecioUnitarioHistorico(det.getEspacio().getPrecioBase());
+                                }
+                            }
+                        }
+                        reservaRepository.save(r);
+                    }
+                }
             }
 
             if (juan != null) {
@@ -449,9 +487,9 @@ public class DataInitializer implements CommandLineRunner {
                     Reserva rJuan = Reserva.builder()
                             .usuario(juan)
                             .fechaCreacion(LocalDateTime.now().minusDays(1))
-                            .totalSinDescuento(540.0)
+                            .totalSinDescuento(420.0)
                             .descuentoPackPorcentaje(0.0)
-                            .total(540.0)
+                            .total(420.0)
                             .estado(EstadoReserva.CONFIRMADA)
                             .activo(true)
                             .detalles(new ArrayList<>())
@@ -467,9 +505,56 @@ public class DataInitializer implements CommandLineRunner {
 
                     rJuan.getDetalles().add(dJuan);
                     reservaRepository.save(rJuan);
+                } else {
+                    for (Reserva r : reservasJuan) {
+                        if (Double.valueOf(540.0).equals(r.getTotalSinDescuento()) || (r.getTotalSinDescuento() != null && r.getTotalSinDescuento() > 5000.0)) {
+                            r.setTotalSinDescuento(420.0);
+                            r.setDescuentoPackPorcentaje(0.0);
+                            r.setTotal(420.0);
+                            if (r.getDetalles() != null) {
+                                for (DetalleReserva det : r.getDetalles()) {
+                                    if (det.getEspacio() != null && det.getEspacio().getPrecioBase() != null) {
+                                        det.setPrecioUnitarioHistorico(det.getEspacio().getPrecioBase());
+                                    }
+                                }
+                            }
+                            reservaRepository.save(r);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private Double precioPorNombre(String nombre) {
+        if (nombre == null) {
+            return null;
+        }
+        if (nombre.contains("Cedar Hollow Cabin")) {
+            return 120.0;
+        }
+        if (nombre.contains("Whispering Pines Timber Lodge")) {
+            return 140.0;
+        }
+        if (nombre.contains("Salón Rústico para Eventos")) {
+            return 250.0;
+        }
+        if (nombre.contains("Silver Lake Boathouse")) {
+            return 55.0;
+        }
+        if (nombre.contains("Cabaña El Roble")) {
+            return 95.0;
+        }
+        if (nombre.contains("Refugio del Arroyo")) {
+            return 165.0;
+        }
+        if (nombre.contains("Galpón Campestre Las Acacias")) {
+            return 210.0;
+        }
+        if (nombre.contains("Sector Domos & Fogón")) {
+            return 75.0;
+        }
+        return null;
     }
 
     private List<String> galeriaPorNombre(String nombre) {

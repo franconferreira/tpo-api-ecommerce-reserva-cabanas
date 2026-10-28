@@ -1,12 +1,18 @@
 import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import DetalleEspacio from '../components/detalle/DetalleEspacio'
-import CalendarioDisponibilidad from '../components/detalle/CalendarioDisponibilidad'
 import ReservaWidgetForm from '../components/detalle/ReservaWidgetForm'
 import textos from '../i18n/textos'
 import './DetalleEspacioView.css'
 
-function DetalleEspacioView({ idioma, espacio, isLogged, setCarritoData, onAbrirCarrito }) {
+function DetalleEspacioView({
+  idioma,
+  espacio,
+  isLogged,
+  setCarritoData,
+  onAbrirCarrito,
+  onCuentaDesactivada
+}) {
   const navigate = useNavigate()
   const t = textos[idioma].detalle
 
@@ -37,7 +43,6 @@ function DetalleEspacioView({ idioma, espacio, isLogged, setCarritoData, onAbrir
         <div className="detalle-body">
           <div className="detalle-panel-izq">
             <DetalleEspacio idioma={idioma} espacio={espacio} />
-            <CalendarioDisponibilidad idioma={idioma} espacioId={espacio.id} />
           </div>
 
           <div className="detalle-panel-der">
@@ -47,6 +52,7 @@ function DetalleEspacioView({ idioma, espacio, isLogged, setCarritoData, onAbrir
               isLogged={isLogged}
               setCarritoData={setCarritoData}
               onAbrirCarrito={onAbrirCarrito}
+              onCuentaDesactivada={onCuentaDesactivada}
             />
           </div>
         </div>

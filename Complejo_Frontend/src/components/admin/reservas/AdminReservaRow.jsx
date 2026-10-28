@@ -32,7 +32,7 @@ function AdminReservaRow({ idioma, reserva, onCambiarMotivo, onCancelar }) {
       </td>
       <td>
         <div className="td-payment">
-          <strong>${reserva.total}</strong>
+          <strong>USD ${reserva.total}</strong>
           {reserva.descuentoPackPorcentaje > 0 && (
             <span className="pack-tag">
               Pack {reserva.descuentoPackPorcentaje}% OFF

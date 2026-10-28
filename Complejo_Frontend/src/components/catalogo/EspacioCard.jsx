@@ -38,7 +38,7 @@ function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagen
       <div className="ec-footer">
         <div className="ec-price-block">
           <span className="ec-price-from">{t.desde}</span>
-          <span className="ec-price-value">${precioBase}</span>
+          <span className="ec-price-value">USD ${precioBase}</span>
           <span className="ec-price-suffix">{textos[idioma].comun.porNocheSufijo}</span>
         </div>
         <span className="ec-action-link">{t.verEspacio}</span>

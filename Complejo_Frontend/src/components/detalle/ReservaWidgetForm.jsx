@@ -1,22 +1,33 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CampoFormulario from '../ui/CampoFormulario'
-import ReservaWidgetInfo from './ReservaWidgetInfo'
+import CalendarioDisponibilidad from './CalendarioDisponibilidad'
 import textos from '../../i18n/textos'
 import { apiFetch } from '../../utils/api'
-import { hoyIso } from '../../utils/fechas'
+import {
+  diaSiguienteIso,
+  sonFechasConsecutivas,
+  calcularPrecioSeleccionado
+} from '../../utils/fechas'
 import './ReservaWidgetForm.css'
 
-function ReservaWidgetForm({ idioma, espacio, isLogged, setCarritoData, onAbrirCarrito }) {
+function ReservaWidgetForm({
+  idioma,
+  espacio,
+  isLogged,
+  setCarritoData,
+  onAbrirCarrito,
+  onCuentaDesactivada
+}) {
   const navigate = useNavigate()
-  const [checkIn, setCheckIn] = useState('')
-  const [checkOut, setCheckOut] = useState('')
+  const [fechasSeleccionadas, setFechasSeleccionadas] = useState([])
   const [error, setError] = useState('')
   const t = textos[idioma].widget
-  const hoy = hoyIso()
 
-  const handleCheckInChange = (e) => setCheckIn(e.target.value)
-  const handleCheckOutChange = (e) => setCheckOut(e.target.value)
+  const precioMostrado = calcularPrecioSeleccionado(espacio.precioBase, fechasSeleccionadas)
+  const sufijoPrecio =
+    fechasSeleccionadas.length === 0
+      ? textos[idioma].comun.porNocheSufijo
+      : t.nochesSeleccionadas(fechasSeleccionadas.length)
 
   const handleClick = () => {
     if (!isLogged) {
@@ -24,20 +35,21 @@ function ReservaWidgetForm({ idioma, espacio, isLogged, setCarritoData, onAbrirC
       return
     }
 
-    if (checkIn.trim() === '' || checkOut.trim() === '') {
+    if (fechasSeleccionadas.length === 0) {
       setError(t.errorFechas)
       return
     }
 
-    if (checkIn < hoy) {
-      setError(t.errorPasado)
+    const fechasOrdenadas = [...fechasSeleccionadas].sort()
+
+    if (!sonFechasConsecutivas(fechasOrdenadas)) {
+      setError(t.errorConsecutivas)
       return
     }
 
-    if (checkOut <= checkIn) {
-      setError(t.errorOrden)
-      return
-    }
+    const checkIn = fechasOrdenadas[0]
+    const ultimaNoche = fechasOrdenadas[fechasOrdenadas.length - 1]
+    const checkOut = diaSiguienteIso(ultimaNoche)
 
     const datosAEnviar = {
       espacioId: espacio.id,
@@ -48,6 +60,10 @@ function ReservaWidgetForm({ idioma, espacio, isLogged, setCarritoData, onAbrirC
     apiFetch('/api/carrito/items', { method: 'POST', body: datosAEnviar })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.items) {
           setCarritoData(data)
           setError('')
@@ -66,40 +82,23 @@ function ReservaWidgetForm({ idioma, espacio, isLogged, setCarritoData, onAbrirC
 
   return (
     <div className="widget-reserva">
+      <CalendarioDisponibilidad
+        idioma={idioma}
+        espacioId={espacio.id}
+        fechasSeleccionadas={fechasSeleccionadas}
+        setFechasSeleccionadas={setFechasSeleccionadas}
+      />
+
       <div className="wr-header">
         <div className="wr-price-block">
-          <span className="wr-price-big">${espacio.precioBase}</span>
-          <span className="wr-price-suffix">{textos[idioma].comun.porNocheSufijo}</span>
+          <span className="wr-price-big">USD ${precioMostrado}</span>
+          <span className="wr-price-suffix">{sufijoPrecio}</span>
         </div>
-        <span className="wr-promo-tag">{t.promo}</span>
       </div>
 
       {error && <p className="wr-error">{error}</p>}
 
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="wr-dates-container">
-          <CampoFormulario
-            className="wr-date-box"
-            label="CHECK-IN"
-            type="date"
-            name="checkIn"
-            min={hoy}
-            value={checkIn}
-            onChange={handleCheckInChange}
-          />
-          <CampoFormulario
-            className="wr-date-box"
-            label="CHECK-OUT"
-            type="date"
-            name="checkOut"
-            min={checkIn !== '' ? checkIn : hoy}
-            value={checkOut}
-            onChange={handleCheckOutChange}
-          />
-        </div>
-
-        <ReservaWidgetInfo idioma={idioma} />
-
         <button type="submit" className="wr-submit-btn" onClick={handleClick}>
           {t.boton}
         </button>

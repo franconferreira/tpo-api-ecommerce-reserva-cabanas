@@ -4,7 +4,7 @@ import textos from '../../i18n/textos'
 import { apiFetch } from '../../utils/api'
 import './MisReservasList.css'
 
-function MisReservasList({ idioma, ocultasIds, setOcultasIds }) {
+function MisReservasList({ idioma, ocultasIds, setOcultasIds, onCuentaDesactivada }) {
   const [reservas, setReservas] = useState([])
   const [error, setError] = useState('')
   const t = textos[idioma].misReservas
@@ -13,7 +13,7 @@ function MisReservasList({ idioma, ocultasIds, setOcultasIds }) {
     apiFetch('/api/reservas/mis-reservas')
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
+        if (data && !data.error) {
           setReservas(data)
         }
       })
@@ -35,6 +35,10 @@ function MisReservasList({ idioma, ocultasIds, setOcultasIds }) {
     apiFetch(`/api/reservas/${id}`, { method: 'DELETE' })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.mensaje) {
           const nuevasReservas = [...reservasVisibles]
           nuevasReservas.splice(indice, 1)

@@ -4,7 +4,7 @@ import textos from '../../../i18n/textos'
 import { apiFetch } from '../../../utils/api'
 import './AdminReservas.css'
 
-function AdminReservas({ idioma }) {
+function AdminReservas({ idioma, onCuentaDesactivada }) {
   const [reservas, setReservas] = useState([])
   const [error, setError] = useState('')
   const t = textos[idioma].adminReservas
@@ -13,7 +13,7 @@ function AdminReservas({ idioma }) {
     apiFetch('/api/admin/reservas')
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
+        if (data && !data.error) {
           setReservas(data)
         }
       })
@@ -39,6 +39,10 @@ function AdminReservas({ idioma }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.mensaje) {
           setReservas(
             reservas.map((r) =>

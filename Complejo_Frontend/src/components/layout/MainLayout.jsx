@@ -14,6 +14,7 @@ function MainLayout({
   rolUsuario,
   nombreUsuario,
   onLogout,
+  onCuentaDesactivada,
   carritoData,
   setCarritoData,
   isCartOpen,
@@ -50,6 +51,7 @@ function MainLayout({
             setCarritoData={setCarritoData}
             isOpen={isCartOpen}
             onClose={() => setIsCartOpen(false)}
+            onCuentaDesactivada={onCuentaDesactivada}
           />
           <BuzonDrawer
             idioma={idioma}

@@ -19,7 +19,7 @@ function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
           {reserva.descuentoPackPorcentaje > 0 && (
             <span className="mr-pack-badge">{t.pack(reserva.descuentoPackPorcentaje)}</span>
           )}
-          <strong className="mr-total-price">${reserva.total} USD</strong>
+          <strong className="mr-total-price">USD ${reserva.total}</strong>
         </div>
       </div>
 
@@ -41,7 +41,7 @@ function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
                 </span>
               </div>
               <span className="mr-detalle-rate">
-                ${detalle.subtotal} {comun.porNoche}
+                USD ${detalle.subtotal} {comun.porNoche}
               </span>
             </div>
           ))}

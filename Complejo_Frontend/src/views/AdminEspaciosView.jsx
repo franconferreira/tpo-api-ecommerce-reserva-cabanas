@@ -4,14 +4,14 @@ import AdminEspacios from '../components/admin/espacios/AdminEspacios'
 import textos from '../i18n/textos'
 import './AdminView.css'
 
-function AdminEspaciosView({ idioma }) {
+function AdminEspaciosView({ idioma, onCuentaDesactivada }) {
   const t = textos[idioma].adminEspacios
 
   return (
     <div className="admin-pagina">
       <div className="admin-contenedor">
         <PageHeader overline={t.overline} titulo={t.titulo} subtitulo={t.subtitulo} />
-        <AdminEspacios idioma={idioma} />
+        <AdminEspacios idioma={idioma} onCuentaDesactivada={onCuentaDesactivada} />
       </div>
     </div>
   )

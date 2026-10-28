@@ -8,7 +8,7 @@ function CheckoutTotales({ idioma, totalSinDescuento, descuentoPack, total }) {
     <div className="checkout-totals-box">
       <div className="ct-row">
         <span>{t.subtotal}</span>
-        <span>${totalSinDescuento}</span>
+        <span>USD ${totalSinDescuento}</span>
       </div>
       <div className="ct-row">
         <span>{t.descuento}</span>
@@ -16,7 +16,7 @@ function CheckoutTotales({ idioma, totalSinDescuento, descuentoPack, total }) {
       </div>
       <div className="ct-total-row">
         <strong>{t.totalFinal}</strong>
-        <strong className="ct-final-amount">${total} USD</strong>
+        <strong className="ct-final-amount">USD ${total}</strong>
       </div>
     </div>
   )

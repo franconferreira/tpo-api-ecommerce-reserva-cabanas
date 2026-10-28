@@ -52,6 +52,9 @@ public class Reserva {
     @Column(length = 500)
     private String mensajeCancelacion;
 
+    @Builder.Default
+    private Boolean notificacionLeida = false;
+
     @JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

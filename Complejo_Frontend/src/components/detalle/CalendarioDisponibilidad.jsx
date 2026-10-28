@@ -5,7 +5,12 @@ import { apiFetch } from '../../utils/api'
 import { armarCeldasMes } from '../../utils/fechas'
 import './CalendarioDisponibilidad.css'
 
-function CalendarioDisponibilidad({ idioma, espacioId }) {
+function CalendarioDisponibilidad({
+  idioma,
+  espacioId,
+  fechasSeleccionadas,
+  setFechasSeleccionadas
+}) {
   const [offsetMes, setOffsetMes] = useState(0)
   const [fechasOcupadas, setFechasOcupadas] = useState([])
   const t = textos[idioma].calendario
@@ -39,6 +44,14 @@ function CalendarioDisponibilidad({ idioma, espacioId }) {
   const handleMesSiguiente = () => {
     if (offsetMes < 11) {
       setOffsetMes(offsetMes + 1)
+    }
+  }
+
+  const handleSeleccionarDia = (fechaIso) => {
+    if (fechasSeleccionadas.includes(fechaIso)) {
+      setFechasSeleccionadas(fechasSeleccionadas.filter((f) => f !== fechaIso))
+    } else {
+      setFechasSeleccionadas([...fechasSeleccionadas, fechaIso])
     }
   }
 
@@ -77,7 +90,13 @@ function CalendarioDisponibilidad({ idioma, espacioId }) {
 
       <div className="cal-grid">
         {celdas.map((celda) => (
-          <CalendarioDia celda={celda} idioma={idioma} key={celda.key} />
+          <CalendarioDia
+            celda={celda}
+            idioma={idioma}
+            seleccionado={!celda.vacio && fechasSeleccionadas.includes(celda.fechaIso)}
+            onSeleccionar={handleSeleccionarDia}
+            key={celda.key}
+          />
         ))}
       </div>
 

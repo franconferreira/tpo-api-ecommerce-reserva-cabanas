@@ -7,7 +7,7 @@ import { apiFetch } from '../../utils/api'
 import { CARRITO_VACIO } from '../../utils/constantes'
 import './CheckoutResumen.css'
 
-function CheckoutResumen({ idioma, carritoData, setCarritoData }) {
+function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactivada }) {
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const t = textos[idioma].checkout
@@ -26,6 +26,10 @@ function CheckoutResumen({ idioma, carritoData, setCarritoData }) {
     apiFetch('/api/carrito/checkout', { method: 'POST' })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.mensaje) {
           setCarritoData(CARRITO_VACIO)
           setError('')

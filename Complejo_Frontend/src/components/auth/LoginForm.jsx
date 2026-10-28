@@ -6,17 +6,33 @@ import textos from '../../i18n/textos'
 import { apiFetch } from '../../utils/api'
 import './AuthForm.css'
 
-function LoginForm({ idioma, setIdioma, onLogin }) {
+function LoginForm({ idioma, setIdioma, onLogin, cuentaDesactivada, onLimpiarAviso }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const t = textos[idioma].login
 
-  const handleEmailChange = (e) => setEmail(e.target.value)
-  const handlePasswordChange = (e) => setPassword(e.target.value)
+  const handleEmailChange = (e) => {
+    if (cuentaDesactivada && onLimpiarAviso) {
+      onLimpiarAviso()
+    }
+    setEmail(e.target.value)
+  }
+
+  const handlePasswordChange = (e) => {
+    if (cuentaDesactivada && onLimpiarAviso) {
+      onLimpiarAviso()
+    }
+    setPassword(e.target.value)
+  }
+
   const handleToggleIdioma = () => setIdioma(idioma === 'es' ? 'en' : 'es')
 
   const handleClick = () => {
+    if (cuentaDesactivada && onLimpiarAviso) {
+      onLimpiarAviso()
+    }
+
     if (email.trim() === '' || password.trim() === '') {
       setError(t.errorVacios)
       return
@@ -34,6 +50,8 @@ function LoginForm({ idioma, setIdioma, onLogin }) {
           localStorage.setItem('jwtToken', data.token)
           setError('')
           onLogin(data)
+        } else if (data && data.error === 'CUENTA_DESACTIVADA') {
+          setError(t.errorCuentaDesactivada)
         } else {
           console.error('Error al iniciar sesion: ', data)
           setError(t.errorCredenciales)
@@ -50,6 +68,8 @@ function LoginForm({ idioma, setIdioma, onLogin }) {
     handleClick()
   }
 
+  const mensajeError = error || (cuentaDesactivada ? t.errorCuentaDesactivada : '')
+
   return (
     <div className="auth-panel-form">
       <div className="auth-form-box">
@@ -61,7 +81,7 @@ function LoginForm({ idioma, setIdioma, onLogin }) {
 
         <AuthFormTitulos overline={t.overline} title={t.titulo} description={t.descripcion} />
 
-        {error && <p className="auth-error">{error}</p>}
+        {mensajeError && <p className="auth-error">{mensajeError}</p>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <CampoFormulario

@@ -5,7 +5,7 @@ import textos from '../../../i18n/textos'
 import { apiFetch } from '../../../utils/api'
 import './AdminUsuarios.css'
 
-function AdminUsuarios({ idioma }) {
+function AdminUsuarios({ idioma, onCuentaDesactivada }) {
   const [usuarios, setUsuarios] = useState([])
   const [error, setError] = useState('')
   const t = textos[idioma].adminUsuarios
@@ -14,7 +14,7 @@ function AdminUsuarios({ idioma }) {
     apiFetch('/api/admin/usuarios')
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
+        if (data && !data.error) {
           setUsuarios(data)
         }
       })
@@ -32,6 +32,10 @@ function AdminUsuarios({ idioma }) {
     apiFetch(ruta, { method: metodo })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.mensaje) {
           setUsuarios(
             usuarios.map((u) =>
@@ -50,10 +54,16 @@ function AdminUsuarios({ idioma }) {
       })
   }
 
-  const handleCambiarRol = (usuario, nuevoRol) => {
+  const handleToggleRol = (usuario) => {
+    const nuevoRol = usuario.rol === 'ROLE_ADMIN' ? 'ROLE_CLIENTE' : 'ROLE_ADMIN'
+
     apiFetch(`/api/admin/usuarios/${usuario.id}/rol`, { method: 'PUT', body: { rol: nuevoRol } })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         // El backend devuelve el usuario actualizado; si no llega, el cambio falló
         if (data && data.id) {
           setUsuarios(
@@ -97,7 +107,7 @@ function AdminUsuarios({ idioma }) {
               <AdminUsuarioRow
                 idioma={idioma}
                 usuario={usuario}
-                onCambiarRol={handleCambiarRol}
+                onToggleRol={handleToggleRol}
                 onToggleEstado={handleToggleEstado}
                 key={usuario.id}
               />

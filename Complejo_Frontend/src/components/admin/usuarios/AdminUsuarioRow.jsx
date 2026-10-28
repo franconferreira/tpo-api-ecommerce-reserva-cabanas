@@ -1,9 +1,10 @@
 import React from 'react'
 import textos from '../../../i18n/textos'
 
-function AdminUsuarioRow({ idioma, usuario, onCambiarRol, onToggleEstado }) {
+function AdminUsuarioRow({ idioma, usuario, onToggleRol, onToggleEstado }) {
   const t = textos[idioma].adminUsuarios
   const isDeactivated = !usuario.activo
+  const isAdmin = usuario.rol === 'ROLE_ADMIN'
 
   return (
     <tr>
@@ -26,15 +27,13 @@ function AdminUsuarioRow({ idioma, usuario, onCambiarRol, onToggleEstado }) {
       </td>
 
       <td>
-        <select
-          name="rol"
-          className="usr-role-select"
-          value={usuario.rol}
-          onChange={(e) => onCambiarRol(usuario, e.target.value)}
+        <button
+          type="button"
+          className={isAdmin ? 'btn-toggle-role role-admin' : 'btn-toggle-role role-cliente'}
+          onClick={() => onToggleRol(usuario)}
         >
-          <option value="ROLE_CLIENTE">ROLE_CLIENTE</option>
-          <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-        </select>
+          {isAdmin ? t.rolAdmin : t.rolCliente}
+        </button>
       </td>
 
       <td>

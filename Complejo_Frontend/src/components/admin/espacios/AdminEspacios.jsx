@@ -5,7 +5,7 @@ import textos from '../../../i18n/textos'
 import { apiFetch } from '../../../utils/api'
 import './AdminEspacios.css'
 
-function AdminEspacios({ idioma }) {
+function AdminEspacios({ idioma, onCuentaDesactivada }) {
   const [espacios, setEspacios] = useState([])
   const [error, setError] = useState('')
   const [mensajeExito, setMensajeExito] = useState('')
@@ -16,7 +16,7 @@ function AdminEspacios({ idioma }) {
     apiFetch('/api/admin/espacios')
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
+        if (data && !data.error) {
           setEspacios(data)
         }
       })
@@ -56,6 +56,10 @@ function AdminEspacios({ idioma }) {
     apiFetch(`/api/admin/espacios/${espacio.id}`, { method: 'PUT', body: datosAEnviar })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.id) {
           setEspacios(
             espacios.map((item) => (item.id === espacio.id ? data : item))
@@ -83,6 +87,10 @@ function AdminEspacios({ idioma }) {
     apiFetch(ruta, { method: metodo })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.mensaje) {
           setEspacios(
             espacios.map((item) =>
@@ -105,7 +113,11 @@ function AdminEspacios({ idioma }) {
 
   return (
     <>
-      <AdminEspacioForm idioma={idioma} onEspacioCreado={handleEspacioCreado} />
+      <AdminEspacioForm
+        idioma={idioma}
+        onEspacioCreado={handleEspacioCreado}
+        onCuentaDesactivada={onCuentaDesactivada}
+      />
 
       {error && <p className="ad-error">{error}</p>}
       {mensajeExito && <p className="ad-success">{mensajeExito}</p>}

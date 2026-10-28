@@ -7,7 +7,7 @@ import textos from '../../i18n/textos'
 import { apiFetch } from '../../utils/api'
 import './CarritoDrawer.css'
 
-function CarritoDrawer({ idioma, carritoData, setCarritoData, isOpen, onClose }) {
+function CarritoDrawer({ idioma, carritoData, setCarritoData, isOpen, onClose, onCuentaDesactivada }) {
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const t = textos[idioma].carrito
@@ -25,6 +25,10 @@ function CarritoDrawer({ idioma, carritoData, setCarritoData, isOpen, onClose })
     apiFetch(`/api/carrito/items/${itemId}`, { method: 'DELETE' })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         // El backend devuelve el carrito actualizado; si no llega, la eliminación falló
         if (data && data.items) {
           const nuevosItems = [...items]

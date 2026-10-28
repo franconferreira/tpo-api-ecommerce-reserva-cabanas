@@ -5,7 +5,7 @@ import { apiFetch } from '../../../utils/api'
 import { IMAGEN_POR_DEFECTO } from '../../../utils/constantes'
 import './AdminEspacioForm.css'
 
-function AdminEspacioForm({ idioma, onEspacioCreado }) {
+function AdminEspacioForm({ idioma, onEspacioCreado, onCuentaDesactivada }) {
   const [nombre, setNombre] = useState('')
   const [precioBase, setPrecioBase] = useState('')
   const [tipo, setTipo] = useState('CABANA')
@@ -37,6 +37,10 @@ function AdminEspacioForm({ idioma, onEspacioCreado }) {
     apiFetch('/api/admin/espacios', { method: 'POST', body: datosAEnviar })
       .then((res) => res.json())
       .then((data) => {
+        if (data && data.error === 'CUENTA_DESACTIVADA') {
+          onCuentaDesactivada()
+          return
+        }
         if (data && data.id) {
           onEspacioCreado(data)
           setNombre('')
@@ -86,7 +90,7 @@ function AdminEspacioForm({ idioma, onEspacioCreado }) {
           label={t.tarifa}
           type="number"
           name="precioBase"
-          placeholder="180"
+          placeholder="120"
           value={precioBase}
           onChange={handlePrecioBaseChange}
         />

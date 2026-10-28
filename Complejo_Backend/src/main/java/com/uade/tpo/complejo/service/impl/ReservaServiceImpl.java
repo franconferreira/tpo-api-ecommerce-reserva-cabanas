@@ -35,6 +35,7 @@ public class ReservaServiceImpl implements ReservaService {
                 .descuentoPackPorcentaje(reserva.getDescuentoPackPorcentaje())
                 .estado(reserva.getEstado())
                 .mensajeCancelacion(reserva.getMensajeCancelacion())
+                .notificacionLeida(Boolean.TRUE.equals(reserva.getNotificacionLeida()))
                 .detalles(reserva.getDetalles().stream().map(d -> ReservaResponseDTO.DetalleReservaDTO.builder()
                         .nombreEspacio(d.getEspacio().getNombre())
                         .checkIn(d.getCheckIn())
@@ -63,6 +64,16 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
+    public void marcarNotificacionLeida(Long id, String userEmail) {
+        Reserva reserva = reservaRepository.findById(id).orElseThrow();
+        if (!reserva.getUsuario().getEmail().equals(userEmail)) {
+            throw new RuntimeException("No tiene permisos sobre esta reserva");
+        }
+        reserva.setNotificacionLeida(true);
+        reservaRepository.save(reserva);
+    }
+
+    @Override
     public List<ReservaResponseDTO> obtenerTodasLasReservas() {
         return reservaRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
@@ -75,6 +86,7 @@ public class ReservaServiceImpl implements ReservaService {
                 ? mensajeCancelacion.trim()
                 : "Cancelada por la administracion del complejo.";
         reserva.setMensajeCancelacion(motivo);
+        reserva.setNotificacionLeida(false);
         reservaRepository.save(reserva);
     }
 }

@@ -28,7 +28,7 @@ function AdminEspacioRow({ idioma, espacio, guardado, onCambiarPrecio, onGuardar
       </td>
       <td>
         <form onSubmit={(e) => e.preventDefault()} className="ad-td-rate">
-          <span>$</span>
+          <span>USD $</span>
           <input
             type="number"
             name="precioBase"

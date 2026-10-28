@@ -49,3 +49,9 @@
   line-height: 1.6;
   font-size: 0.95em;
 }
+
+.di-promos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85em;
+}
