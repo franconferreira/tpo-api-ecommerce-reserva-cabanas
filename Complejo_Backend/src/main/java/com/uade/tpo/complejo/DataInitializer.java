@@ -10,6 +10,7 @@ import com.uade.tpo.complejo.entity.enums.Role;
 import com.uade.tpo.complejo.entity.enums.TipoEspacio;
 import com.uade.tpo.complejo.repository.CarritoRepository;
 import com.uade.tpo.complejo.repository.EspacioRepository;
+import com.uade.tpo.complejo.repository.ItemCarritoRepository;
 import com.uade.tpo.complejo.repository.ReservaRepository;
 import com.uade.tpo.complejo.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,96 +31,87 @@ public class DataInitializer implements CommandLineRunner {
     private final CarritoRepository carritoRepository;
     private final EspacioRepository espacioRepository;
     private final ReservaRepository reservaRepository;
+    private final ItemCarritoRepository itemCarritoRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // Galeria E1: exterior, living, dormitorio, baño, parrilla del deck y laguna
-    private static final List<String> GALERIA_E1 = List.of(
+    // Galerías de fotos
+    private static final List<String> GALERIA_CABANA_1 = List.of(
             "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800"
+            "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&q=80&w=800"
     );
 
-    // Galeria E2: exterior, fachada de troncos, living, dormitorio, baño, cocina y bosque
-    private static final List<String> GALERIA_E2 = List.of(
+    private static final List<String> GALERIA_CABANA_2 = List.of(
             "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800"
     );
 
-    // Galeria E3: salón, mesas, celebración, parrilla, catering y ambientación
-    private static final List<String> GALERIA_E3 = List.of(
-            "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
-    );
-
-    // Galeria E4: laguna, kayaks, atardecer, embarcadero, entorno y noche de campamento
-    private static final List<String> GALERIA_E4 = List.of(
-            "https://images.unsplash.com/photo-1439853949127-fa647821eba0?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1478827387698-1527781a4887?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&q=80&w=800"
-    );
-
-    // Galeria E5: exterior, living, dormitorio, baño, deck y bosque de robles
-    private static final List<String> GALERIA_E5 = List.of(
+    private static final List<String> GALERIA_CABANA_3 = List.of(
             "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1604709177225-055f99402ea3?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=800"
     );
 
-    // Galeria E6: exterior, living, dormitorio, baño, mirador, fogonero y arroyo
-    private static final List<String> GALERIA_E6 = List.of(
+    private static final List<String> GALERIA_CABANA_4 = List.of(
             "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1475483768296-6163e08872a1?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&q=80&w=800"
+            "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&q=80&w=800"
     );
 
-    // Galeria E7: galpón, jardín, celebración, mesa, asador y entorno campestre
-    private static final List<String> GALERIA_E7 = List.of(
-            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&q=80&w=800"
+    private static final List<String> GALERIA_GALPON = List.of(
+            "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
     );
 
-    // Galeria E8: domos, refugio, fogón, acampe, bosque y laguna
-    private static final List<String> GALERIA_E8 = List.of(
-            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1487730116645-74489c95b41b?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1496080174650-637e3f22fa03?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&q=80&w=800"
+    private static final List<String> GALERIA_HABITACION_1 = List.of(
+            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
     );
 
-    private static final String URL_SALON_EVENTOS = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800";
+    private static final List<String> GALERIA_HABITACION_2 = List.of(
+            "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"
+    );
+
+    private static final List<String> GALERIA_HABITACION_3 = List.of(
+            "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800"
+    );
+
+    private static final List<String> GALERIA_HABITACION_4 = List.of(
+            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800"
+    );
+
+    private static final List<String> GALERIA_HABITACION_5 = List.of(
+            "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
+    );
+
+    private static final List<String> GALERIA_HABITACION_6 = List.of(
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800"
+    );
+
+    private static final List<String> GALERIA_SALON_COMIDA = List.of(
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800"
+    );
 
     @Override
     public void run(String... args) {
-        if (usuarioRepository.findByEmail("admin@gmail.com").isEmpty()) {
-            Usuario admin = Usuario.builder()
+        // 1. Asegurar Usuarios
+        Usuario admin = usuarioRepository.findByEmail("admin@gmail.com").orElse(null);
+        if (admin == null) {
+            admin = Usuario.builder()
                     .username("admin")
                     .nombre("Sarah")
                     .apellido("Chen")
@@ -128,7 +120,7 @@ public class DataInitializer implements CommandLineRunner {
                     .rol(Role.ROLE_ADMIN)
                     .activo(true)
                     .build();
-            usuarioRepository.save(admin);
+            admin = usuarioRepository.save(admin);
 
             Carrito carritoAdmin = Carrito.builder().usuario(admin).total(0.0).build();
             carritoRepository.save(carritoAdmin);
@@ -168,423 +160,181 @@ public class DataInitializer implements CommandLineRunner {
             carritoRepository.save(carritoJuan);
         }
 
-        String nombreE1 = "Cabaña del Cedro / Cedar Hollow Cabin";
-        String descE1 = "Cabaña independiente de pino y roble rústico frente a la laguna, con deck y parrilla propia. / Standalone rustic pine and oak cabin facing the lagoon, featuring a private deck and grill.";
+        // 2. Limpieza total de datos anteriores de espacios, carritos y reservas
+        itemCarritoRepository.deleteAll();
+        reservaRepository.deleteAll();
+        espacioRepository.deleteAll();
 
-        String nombreE2 = "Refugio de Troncos Los Pinos / Whispering Pines Timber Lodge";
-        String descE2 = "Cabaña de troncos amplia ideal para grupos familiares rodeada de bosque nativo. / Spacious timber lodge ideal for family groups surrounded by native forest.";
+        // 3. Creación de los nuevos 12 espacios:
+        // - 4 Cabañas (4 o 5 personas)
+        // - 1 Galpón de Fiestas
+        // - Casa Principal: 6 Habitaciones (2 o 3 personas) + 1 Salón de Comida Comunal
 
-        String nombreE3 = "Salón Rústico para Eventos / Rustic Event Venue";
-        String descE3 = "Galpón rústico para eventos con parrillas integradas y guirnaldas de iluminación cálida. / Rustic event barn with built-in grills and strings of warm-toned lights.";
+        Espacio cabana1 = Espacio.builder()
+                .nombre("Cabaña del Cedro / Cedar Hollow Cabin")
+                .tipo(TipoEspacio.CABANA)
+                .descripcion("Cabaña independiente de pino y roble frente a la laguna, con deck techado, parrilla privada y capacidad para 4 a 5 huéspedes. / Standalone pine and oak cabin with private deck, grill, and sleeping capacity for 4 to 5 guests.")
+                .precioBase(120.0)
+                .imagenes(new ArrayList<>(GALERIA_CABANA_1))
+                .activo(true)
+                .build();
 
-        String nombreE4 = "Embarcadero Laguna Plateada / Silver Lake Boathouse";
-        String descE4 = "Espejo de agua natural con embarcadero, kayaks y espacio para actividades náuticas. / Natural body of water with a boathouse, kayaks, and space for water activities.";
+        Espacio cabana2 = Espacio.builder()
+                .nombre("Refugio de Troncos Los Pinos / Whispering Pines Timber Lodge")
+                .tipo(TipoEspacio.CABANA)
+                .descripcion("Cabaña de troncos macizos en medio del bosque nativo, amplia cocina integrada y hogar a leña para 4 a 5 personas. / Timber cabin surrounded by native pines featuring open kitchen, stone fireplace, for 4 to 5 guests.")
+                .precioBase(140.0)
+                .imagenes(new ArrayList<>(GALERIA_CABANA_2))
+                .activo(true)
+                .build();
 
-        String nombreE5 = "Cabaña El Roble / The Oak Sanctuary Cabin";
-        String descE5 = "Cabaña acogedora para parejas rodeada de robles antiguos con chimenea a leña y jacuzzi exterior. / Cozy couples cabin surrounded by ancient oaks featuring a wood-burning fireplace and outdoor hot tub.";
+        Espacio cabana3 = Espacio.builder()
+                .nombre("Cabaña El Roble / The Oak Sanctuary Cabin")
+                .tipo(TipoEspacio.CABANA)
+                .descripcion("Cabaña entre robles centenarios con terraza panorámica, living espacioso y capacidad para 4 a 5 huéspedes. / Forest cabin set among heritage oaks with scenic deck and living space for 4 to 5 guests.")
+                .precioBase(110.0)
+                .imagenes(new ArrayList<>(GALERIA_CABANA_3))
+                .activo(true)
+                .build();
 
-        String nombreE6 = "Refugio del Arroyo / Creekside Mountain Chalet";
-        String descE6 = "Chalet de montaña de dos plantas junto al arroyo cristalino, con mirador panorámico y fogonero privado. / Two-story mountain chalet by the crystal creek, with a panoramic deck and private fire pit.";
+        Espacio cabana4 = Espacio.builder()
+                .nombre("Chalet del Arroyo / Mountain Stream Chalet")
+                .tipo(TipoEspacio.CABANA)
+                .descripcion("Chalet de montaña de dos plantas junto al arroyo cristalino, deck mirador y fogonero para 4 a 5 huéspedes. / Mountain chalet along crystal creek with scenic lookout deck and private fire pit for 4 to 5 guests.")
+                .precioBase(160.0)
+                .imagenes(new ArrayList<>(GALERIA_CABANA_4))
+                .activo(true)
+                .build();
 
-        String nombreE7 = "Galpón Campestre Las Acacias / Las Acacias Country Barn";
-        String descE7 = "Quincho y salón campestre con horno de barro, asador criollo y amplio jardín para celebraciones al aire libre. / Country quincho and event hall with clay oven, traditional grill, and spacious garden for outdoor celebrations.";
+        Espacio galpon = Espacio.builder()
+                .nombre("Galpón de Fiestas Las Acacias / Las Acacias Event Barn")
+                .tipo(TipoEspacio.GALPON_FIESTAS)
+                .descripcion("Galpón rústico para eventos y celebraciones, equipado con parrillas integradas, cocina industrial, guirnaldas cálidas y amplio parque. / Rustic celebration barn with integrated grills, warm string lights, and spacious lawn for private events.")
+                .precioBase(280.0)
+                .imagenes(new ArrayList<>(GALERIA_GALPON))
+                .activo(true)
+                .build();
 
-        String nombreE8 = "Sector Domos & Fogón / Geodesic Domes & Fire Pit Lounge";
-        String descE8 = "Sector recreativo junto al agua con domos geodésicos, fogón comunitario y alquiler de tablas de stand-up paddle. / Waterside recreational lounge featuring geodesic domes, a communal fire pit, and stand-up paddleboard rentals.";
+        Espacio hab1 = Espacio.builder()
+                .nombre("Casa Principal - Habitación 1 (Suite El Bosque) / Forest Suite Room 1")
+                .tipo(TipoEspacio.HABITACION_CASA_PRINCIPAL)
+                .descripcion("Habitación privada en la Casa Principal para 2 a 3 personas con cama queen y sommier individual. Incluye acceso libre al Salón de Comida comunal y baños compartidos. / Private room in the Main House for 2-3 guests with queen bed. Includes full access to communal dining hall and shared baths.")
+                .precioBase(65.0)
+                .imagenes(new ArrayList<>(GALERIA_HABITACION_1))
+                .activo(true)
+                .build();
 
-        if (espacioRepository.count() == 0) {
-            Espacio e1 = Espacio.builder()
-                    .nombre(nombreE1)
-                    .tipo(TipoEspacio.CABANA)
-                    .descripcion(descE1)
-                    .precioBase(120.0)
-                    .imagenes(new ArrayList<>(GALERIA_E1))
+        Espacio hab2 = Espacio.builder()
+                .nombre("Casa Principal - Habitación 2 (Balcón de las Aves) / Birdsong Balcony Room 2")
+                .tipo(TipoEspacio.HABITACION_CASA_PRINCIPAL)
+                .descripcion("Habitación privada en planta alta con balcón hacia el dosel del bosque para 2 a 3 personas. Incluye acceso al Salón de Comida comunal y baños compartidos. / Upper level private room with timber balcony for 2-3 guests. Includes access to communal dining hall and shared baths.")
+                .precioBase(60.0)
+                .imagenes(new ArrayList<>(GALERIA_HABITACION_2))
+                .activo(true)
+                .build();
+
+        Espacio hab3 = Espacio.builder()
+                .nombre("Casa Principal - Habitación 3 (Nido de Pinos) / Pine Nest Room 3")
+                .tipo(TipoEspacio.HABITACION_CASA_PRINCIPAL)
+                .descripcion("Acogedora habitación con ventanales al pinar para 2 a 3 personas. Incluye libre acceso al Salón de Comida comunal y baños compartidos de la Casa Principal. / Cozy room with forest view windows for 2-3 guests. Includes full access to communal dining and shared bathrooms.")
+                .precioBase(55.0)
+                .imagenes(new ArrayList<>(GALERIA_HABITACION_3))
+                .activo(true)
+                .build();
+
+        Espacio hab4 = Espacio.builder()
+                .nombre("Casa Principal - Habitación 4 (Valle Verde) / Green Valley Room 4")
+                .tipo(TipoEspacio.HABITACION_CASA_PRINCIPAL)
+                .descripcion("Habitación luminosa en el ala oeste para 2 a 3 personas. Permite disfrutar del Salón de Comida y baños compartidos de la Casa Principal. / Sunlit west-wing room for 2-3 guests. Includes access to the communal dining hall and shared bathrooms.")
+                .precioBase(60.0)
+                .imagenes(new ArrayList<>(GALERIA_HABITACION_4))
+                .activo(true)
+                .build();
+
+        Espacio hab5 = Espacio.builder()
+                .nombre("Casa Principal - Habitación 5 (Rincón de la Colina) / Hillside Corner Room 5")
+                .tipo(TipoEspacio.HABITACION_CASA_PRINCIPAL)
+                .descripcion("Habitación con piso de roble y ambientación rústica para 2 a 3 personas. Incluye acceso al Salón de Comida comunal y baños compartidos. / Rustic oak floor room for 2-3 guests. Includes access to communal dining hall and shared bathrooms.")
+                .precioBase(55.0)
+                .imagenes(new ArrayList<>(GALERIA_HABITACION_5))
+                .activo(true)
+                .build();
+
+        Espacio hab6 = Espacio.builder()
+                .nombre("Casa Principal - Habitación 6 (Mirador Silvestre) / Wild Vista Room 6")
+                .tipo(TipoEspacio.HABITACION_CASA_PRINCIPAL)
+                .descripcion("Habitación espaciosa para 2 a 3 personas, con vista panorámica a la arboleda. Incluye acceso al Salón de Comida comunal y baños compartidos. / Spacious room for 2-3 guests with panoramic woodland vista. Includes access to communal dining and shared bathrooms.")
+                .precioBase(70.0)
+                .imagenes(new ArrayList<>(GALERIA_HABITACION_6))
+                .activo(true)
+                .build();
+
+        Espacio salonComida = Espacio.builder()
+                .nombre("Casa Principal - Salón Comunal & Baños / Communal Dining & Baths")
+                .tipo(TipoEspacio.SALON_COMIDA_CASA_PRINCIPAL)
+                .descripcion("Gran salón de comida general con estufa a leña, mesas largas de roble, vajilla completa y baños comunales, compartido por todos los huéspedes que se alojen en las habitaciones de la Casa Principal. / Large communal dining room with wood stove, long dining tables, and shared bathrooms for all Main House guests.")
+                .precioBase(0.0)
+                .imagenes(new ArrayList<>(GALERIA_SALON_COMIDA))
+                .activo(true)
+                .build();
+
+        List<Espacio> guardados = espacioRepository.saveAll(List.of(
+                cabana1, cabana2, cabana3, cabana4,
+                galpon,
+                hab1, hab2, hab3, hab4, hab5, hab6,
+                salonComida
+        ));
+
+        // 4. Precargar reservas de prueba con los nuevos lugares
+        if (cliente != null && guardados.size() >= 6) {
+            Espacio espCabana = guardados.get(0); // Cabaña del Cedro
+            Espacio espHabitacion = guardados.get(5); // Hab 1 Suite El Bosque
+
+            Reserva rActiva = Reserva.builder()
+                    .usuario(cliente)
+                    .fechaCreacion(LocalDateTime.now().minusDays(1))
+                    .totalSinDescuento(370.0)
+                    .descuentoPackPorcentaje(0.0)
+                    .total(370.0)
+                    .estado(EstadoReserva.CONFIRMADA)
                     .activo(true)
+                    .detalles(new ArrayList<>())
                     .build();
 
-            Espacio e2 = Espacio.builder()
-                    .nombre(nombreE2)
-                    .tipo(TipoEspacio.CABANA)
-                    .descripcion(descE2)
-                    .precioBase(140.0)
-                    .imagenes(new ArrayList<>(GALERIA_E2))
-                    .activo(true)
+            DetalleReserva d1 = DetalleReserva.builder()
+                    .reserva(rActiva)
+                    .espacio(espCabana)
+                    .checkIn(LocalDate.now().plusDays(4))
+                    .checkOut(LocalDate.now().plusDays(7))
+                    .precioUnitarioHistorico(espCabana.getPrecioBase())
                     .build();
 
-            Espacio e3 = Espacio.builder()
-                    .nombre(nombreE3)
-                    .tipo(TipoEspacio.GALPON_FIESTAS)
-                    .descripcion(descE3)
-                    .precioBase(250.0)
-                    .imagenes(new ArrayList<>(GALERIA_E3))
-                    .activo(true)
-                    .build();
+            rActiva.getDetalles().add(d1);
+            reservaRepository.save(rActiva);
 
-            Espacio e4 = Espacio.builder()
-                    .nombre(nombreE4)
-                    .tipo(TipoEspacio.LAGUNA_RECREATIVA)
-                    .descripcion(descE4)
-                    .precioBase(55.0)
-                    .imagenes(new ArrayList<>(GALERIA_E4))
-                    .activo(true)
-                    .build();
-
-            Espacio e5 = Espacio.builder()
-                    .nombre(nombreE5)
-                    .tipo(TipoEspacio.CABANA)
-                    .descripcion(descE5)
-                    .precioBase(95.0)
-                    .imagenes(new ArrayList<>(GALERIA_E5))
-                    .activo(true)
-                    .build();
-
-            Espacio e6 = Espacio.builder()
-                    .nombre(nombreE6)
-                    .tipo(TipoEspacio.CABANA)
-                    .descripcion(descE6)
-                    .precioBase(165.0)
-                    .imagenes(new ArrayList<>(GALERIA_E6))
-                    .activo(true)
-                    .build();
-
-            Espacio e7 = Espacio.builder()
-                    .nombre(nombreE7)
-                    .tipo(TipoEspacio.GALPON_FIESTAS)
-                    .descripcion(descE7)
-                    .precioBase(210.0)
-                    .imagenes(new ArrayList<>(GALERIA_E7))
-                    .activo(true)
-                    .build();
-
-            Espacio e8 = Espacio.builder()
-                    .nombre(nombreE8)
-                    .tipo(TipoEspacio.LAGUNA_RECREATIVA)
-                    .descripcion(descE8)
-                    .precioBase(75.0)
-                    .imagenes(new ArrayList<>(GALERIA_E8))
-                    .activo(true)
-                    .build();
-
-            espacioRepository.saveAll(List.of(e1, e2, e3, e4, e5, e6, e7, e8));
-        } else {
-            List<Espacio> existentes = espacioRepository.findAll();
-            for (Espacio esp : existentes) {
-                boolean modificado = false;
-                String nombreActual = esp.getNombre() != null ? esp.getNombre() : "";
-
-                if ("Cedar Hollow Cabin".equals(nombreActual) || nombreActual.contains("Cedar Hollow Cabin")) {
-                    if (!nombreE1.equals(esp.getNombre()) || !descE1.equals(esp.getDescripcion()) || !Boolean.TRUE.equals(esp.getActivo())) {
-                        esp.setNombre(nombreE1);
-                        esp.setDescripcion(descE1);
-                        esp.setActivo(true);
-                        modificado = true;
-                    }
-                } else if ("Whispering Pines Timber Lodge".equals(nombreActual) || nombreActual.contains("Whispering Pines Timber Lodge")) {
-                    if (!nombreE2.equals(esp.getNombre()) || !descE2.equals(esp.getDescripcion()) || !Boolean.TRUE.equals(esp.getActivo())) {
-                        esp.setNombre(nombreE2);
-                        esp.setDescripcion(descE2);
-                        esp.setActivo(true);
-                        modificado = true;
-                    }
-                } else if ("Salón Rústico para Eventos".equals(nombreActual) || nombreActual.contains("Salón Rústico para Eventos")) {
-                    if (!nombreE3.equals(esp.getNombre()) || !descE3.equals(esp.getDescripcion()) || !Boolean.TRUE.equals(esp.getActivo())) {
-                        esp.setNombre(nombreE3);
-                        esp.setDescripcion(descE3);
-                        esp.setActivo(true);
-                        modificado = true;
-                    }
-                } else if ("Silver Lake Boathouse".equals(nombreActual) || nombreActual.contains("Silver Lake Boathouse")) {
-                    if (!nombreE4.equals(esp.getNombre()) || !descE4.equals(esp.getDescripcion()) || !Boolean.TRUE.equals(esp.getActivo())) {
-                        esp.setNombre(nombreE4);
-                        esp.setDescripcion(descE4);
-                        esp.setActivo(true);
-                        modificado = true;
-                    }
-                }
-
-                Double precioUsdEsperado = precioPorNombre(esp.getNombre());
-                if (precioUsdEsperado != null && !precioUsdEsperado.equals(esp.getPrecioBase())) {
-                    esp.setPrecioBase(precioUsdEsperado);
-                    modificado = true;
-                }
-
-                boolean tieneUrlRota = esp.getImagenes() != null && esp.getImagenes().stream()
-                        .anyMatch(img -> img.contains("1505916349660-8d91a99c31a4"));
-                boolean sinImagenes = esp.getImagenes() == null || esp.getImagenes().isEmpty();
-                if (tieneUrlRota || (esp.getNombre() != null && esp.getNombre().contains("Salón Rústico para Eventos") && sinImagenes)) {
-                    esp.setImagenes(new ArrayList<>(List.of(URL_SALON_EVENTOS)));
-                    modificado = true;
-                }
-
-                List<String> galeria = galeriaPorNombre(esp.getNombre());
-                if (galeria != null && (esp.getImagenes() == null || esp.getImagenes().size() < galeria.size())) {
-                    esp.setImagenes(new ArrayList<>(galeria));
-                    modificado = true;
-                }
-
-                if (modificado) {
-                    espacioRepository.save(esp);
-                }
-            }
-
-            List<Espacio> actualizados = espacioRepository.findAll();
-            boolean existeE5 = actualizados.stream().anyMatch(e -> e.getNombre() != null && e.getNombre().contains("Cabaña El Roble"));
-            if (!existeE5) {
-                espacioRepository.save(Espacio.builder()
-                        .nombre(nombreE5)
-                        .tipo(TipoEspacio.CABANA)
-                        .descripcion(descE5)
-                        .precioBase(95.0)
-                        .imagenes(new ArrayList<>(GALERIA_E5))
-                        .activo(true)
-                        .build());
-            }
-
-            boolean existeE6 = actualizados.stream().anyMatch(e -> e.getNombre() != null && e.getNombre().contains("Refugio del Arroyo"));
-            if (!existeE6) {
-                espacioRepository.save(Espacio.builder()
-                        .nombre(nombreE6)
-                        .tipo(TipoEspacio.CABANA)
-                        .descripcion(descE6)
-                        .precioBase(165.0)
-                        .imagenes(new ArrayList<>(GALERIA_E6))
-                        .activo(true)
-                        .build());
-            }
-
-            boolean existeE7 = actualizados.stream().anyMatch(e -> e.getNombre() != null && e.getNombre().contains("Galpón Campestre Las Acacias"));
-            if (!existeE7) {
-                espacioRepository.save(Espacio.builder()
-                        .nombre(nombreE7)
-                        .tipo(TipoEspacio.GALPON_FIESTAS)
-                        .descripcion(descE7)
-                        .precioBase(210.0)
-                        .imagenes(new ArrayList<>(GALERIA_E7))
-                        .activo(true)
-                        .build());
-            }
-
-            boolean existeE8 = actualizados.stream().anyMatch(e -> e.getNombre() != null && e.getNombre().contains("Sector Domos & Fogón"));
-            if (!existeE8) {
-                espacioRepository.save(Espacio.builder()
-                        .nombre(nombreE8)
-                        .tipo(TipoEspacio.LAGUNA_RECREATIVA)
-                        .descripcion(descE8)
-                        .precioBase(75.0)
-                        .imagenes(new ArrayList<>(GALERIA_E8))
-                        .activo(true)
-                        .build());
-            }
-        }
-
-        // Precargar reservas de prueba (1 confirmada + 1 cancelada con motivo para Eleanor, 1 confirmada para Juan)
-        List<Espacio> todosEspacios = espacioRepository.findAll();
-        if (!todosEspacios.isEmpty() && cliente != null) {
-            Espacio espCabana1 = todosEspacios.get(0);
-            Espacio espCabana2 = todosEspacios.size() > 1 ? todosEspacios.get(1) : todosEspacios.get(0);
-            Espacio espSalon = todosEspacios.size() > 2 ? todosEspacios.get(2) : todosEspacios.get(0);
-            Espacio espLaguna = todosEspacios.size() > 3 ? todosEspacios.get(3) : todosEspacios.get(0);
-
-            List<Reserva> reservasCliente = reservaRepository.findByUsuarioIdAndActivoTrue(cliente.getId());
-            boolean tieneConfirmada = reservasCliente.stream()
-                    .anyMatch(r -> r.getEstado() == EstadoReserva.CONFIRMADA);
-            boolean tieneCanceladaConMotivo = reservasCliente.stream()
-                    .anyMatch(r -> r.getEstado() == EstadoReserva.CANCELADA && r.getMensajeCancelacion() != null);
-
-            if (!tieneConfirmada) {
-                Reserva rActiva = Reserva.builder()
-                        .usuario(cliente)
+            if (juan != null) {
+                Reserva rJuan = Reserva.builder()
+                        .usuario(juan)
                         .fechaCreacion(LocalDateTime.now().minusDays(2))
-                        .totalSinDescuento(470.0)
-                        .descuentoPackPorcentaje(15.0)
-                        .total(399.5)
+                        .totalSinDescuento(130.0)
+                        .descuentoPackPorcentaje(0.0)
+                        .total(130.0)
                         .estado(EstadoReserva.CONFIRMADA)
                         .activo(true)
                         .detalles(new ArrayList<>())
                         .build();
 
-                DetalleReserva d1 = DetalleReserva.builder()
-                        .reserva(rActiva)
-                        .espacio(espCabana1)
-                        .checkIn(LocalDate.now().plusDays(5))
-                        .checkOut(LocalDate.now().plusDays(8))
-                        .precioUnitarioHistorico(espCabana1.getPrecioBase())
+                DetalleReserva dJuan = DetalleReserva.builder()
+                        .reserva(rJuan)
+                        .espacio(espHabitacion)
+                        .checkIn(LocalDate.now().plusDays(8))
+                        .checkOut(LocalDate.now().plusDays(10))
+                        .precioUnitarioHistorico(espHabitacion.getPrecioBase())
                         .build();
 
-                DetalleReserva d2 = DetalleReserva.builder()
-                        .reserva(rActiva)
-                        .espacio(espLaguna)
-                        .checkIn(LocalDate.now().plusDays(5))
-                        .checkOut(LocalDate.now().plusDays(7))
-                        .precioUnitarioHistorico(espLaguna.getPrecioBase())
-                        .build();
-
-                rActiva.getDetalles().add(d1);
-                rActiva.getDetalles().add(d2);
-                reservaRepository.save(rActiva);
-            } else {
-                for (Reserva r : reservasCliente) {
-                    if (r.getEstado() == EstadoReserva.CONFIRMADA && (Double.valueOf(820.0).equals(r.getTotalSinDescuento()) || (r.getTotalSinDescuento() != null && r.getTotalSinDescuento() > 5000.0))) {
-                        r.setTotalSinDescuento(470.0);
-                        r.setDescuentoPackPorcentaje(15.0);
-                        r.setTotal(399.5);
-                        if (r.getDetalles() != null) {
-                            for (DetalleReserva det : r.getDetalles()) {
-                                if (det.getEspacio() != null && det.getEspacio().getPrecioBase() != null) {
-                                    det.setPrecioUnitarioHistorico(det.getEspacio().getPrecioBase());
-                                }
-                            }
-                        }
-                        reservaRepository.save(r);
-                    }
-                }
-            }
-
-            if (!tieneCanceladaConMotivo) {
-                Reserva rCancelada = Reserva.builder()
-                        .usuario(cliente)
-                        .fechaCreacion(LocalDateTime.now().minusDays(4))
-                        .totalSinDescuento(500.0)
-                        .descuentoPackPorcentaje(0.0)
-                        .total(500.0)
-                        .estado(EstadoReserva.CANCELADA)
-                        .mensajeCancelacion("Cancelada por tareas de mantenimiento y poda en el sector norte / Cancelled due to scheduled maintenance and tree pruning in the north sector")
-                        .activo(true)
-                        .detalles(new ArrayList<>())
-                        .build();
-
-                DetalleReserva dCancelada = DetalleReserva.builder()
-                        .reserva(rCancelada)
-                        .espacio(espSalon)
-                        .checkIn(LocalDate.now().plusDays(12))
-                        .checkOut(LocalDate.now().plusDays(14))
-                        .precioUnitarioHistorico(espSalon.getPrecioBase())
-                        .build();
-
-                rCancelada.getDetalles().add(dCancelada);
-                reservaRepository.save(rCancelada);
-            } else {
-                for (Reserva r : reservasCliente) {
-                    if (r.getEstado() == EstadoReserva.CANCELADA && (Double.valueOf(900.0).equals(r.getTotalSinDescuento()) || (r.getTotalSinDescuento() != null && r.getTotalSinDescuento() > 5000.0))) {
-                        r.setTotalSinDescuento(500.0);
-                        r.setDescuentoPackPorcentaje(0.0);
-                        r.setTotal(500.0);
-                        if (r.getDetalles() != null) {
-                            for (DetalleReserva det : r.getDetalles()) {
-                                if (det.getEspacio() != null && det.getEspacio().getPrecioBase() != null) {
-                                    det.setPrecioUnitarioHistorico(det.getEspacio().getPrecioBase());
-                                }
-                            }
-                        }
-                        reservaRepository.save(r);
-                    }
-                }
-            }
-
-            if (juan != null) {
-                List<Reserva> reservasJuan = reservaRepository.findByUsuarioIdAndActivoTrue(juan.getId());
-                if (reservasJuan.isEmpty()) {
-                    Reserva rJuan = Reserva.builder()
-                            .usuario(juan)
-                            .fechaCreacion(LocalDateTime.now().minusDays(1))
-                            .totalSinDescuento(420.0)
-                            .descuentoPackPorcentaje(0.0)
-                            .total(420.0)
-                            .estado(EstadoReserva.CONFIRMADA)
-                            .activo(true)
-                            .detalles(new ArrayList<>())
-                            .build();
-
-                    DetalleReserva dJuan = DetalleReserva.builder()
-                            .reserva(rJuan)
-                            .espacio(espCabana2)
-                            .checkIn(LocalDate.now().plusDays(10))
-                            .checkOut(LocalDate.now().plusDays(13))
-                            .precioUnitarioHistorico(espCabana2.getPrecioBase())
-                            .build();
-
-                    rJuan.getDetalles().add(dJuan);
-                    reservaRepository.save(rJuan);
-                } else {
-                    for (Reserva r : reservasJuan) {
-                        if (Double.valueOf(540.0).equals(r.getTotalSinDescuento()) || (r.getTotalSinDescuento() != null && r.getTotalSinDescuento() > 5000.0)) {
-                            r.setTotalSinDescuento(420.0);
-                            r.setDescuentoPackPorcentaje(0.0);
-                            r.setTotal(420.0);
-                            if (r.getDetalles() != null) {
-                                for (DetalleReserva det : r.getDetalles()) {
-                                    if (det.getEspacio() != null && det.getEspacio().getPrecioBase() != null) {
-                                        det.setPrecioUnitarioHistorico(det.getEspacio().getPrecioBase());
-                                    }
-                                }
-                            }
-                            reservaRepository.save(r);
-                        }
-                    }
-                }
+                rJuan.getDetalles().add(dJuan);
+                reservaRepository.save(rJuan);
             }
         }
-    }
-
-    private Double precioPorNombre(String nombre) {
-        if (nombre == null) {
-            return null;
-        }
-        if (nombre.contains("Cedar Hollow Cabin")) {
-            return 120.0;
-        }
-        if (nombre.contains("Whispering Pines Timber Lodge")) {
-            return 140.0;
-        }
-        if (nombre.contains("Salón Rústico para Eventos")) {
-            return 250.0;
-        }
-        if (nombre.contains("Silver Lake Boathouse")) {
-            return 55.0;
-        }
-        if (nombre.contains("Cabaña El Roble")) {
-            return 95.0;
-        }
-        if (nombre.contains("Refugio del Arroyo")) {
-            return 165.0;
-        }
-        if (nombre.contains("Galpón Campestre Las Acacias")) {
-            return 210.0;
-        }
-        if (nombre.contains("Sector Domos & Fogón")) {
-            return 75.0;
-        }
-        return null;
-    }
-
-    private List<String> galeriaPorNombre(String nombre) {
-        if (nombre == null) {
-            return null;
-        }
-        if (nombre.contains("Cedar Hollow Cabin")) {
-            return GALERIA_E1;
-        }
-        if (nombre.contains("Whispering Pines Timber Lodge")) {
-            return GALERIA_E2;
-        }
-        if (nombre.contains("Salón Rústico para Eventos")) {
-            return GALERIA_E3;
-        }
-        if (nombre.contains("Silver Lake Boathouse")) {
-            return GALERIA_E4;
-        }
-        if (nombre.contains("Cabaña El Roble")) {
-            return GALERIA_E5;
-        }
-        if (nombre.contains("Refugio del Arroyo")) {
-            return GALERIA_E6;
-        }
-        if (nombre.contains("Galpón Campestre Las Acacias")) {
-            return GALERIA_E7;
-        }
-        if (nombre.contains("Sector Domos & Fogón")) {
-            return GALERIA_E8;
-        }
-        return null;
     }
 }

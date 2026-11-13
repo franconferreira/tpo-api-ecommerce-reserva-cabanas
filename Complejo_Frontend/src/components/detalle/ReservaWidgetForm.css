@@ -73,4 +73,28 @@
   font-size: 1em;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.wr-submit-btn:hover {
+  background-color: #0d261b;
+}
+
+.salon-comunal-box {
+  background-color: #f9f8f3;
+  border: 1px solid #dcd7c7;
+  border-top: 4px solid #153c2b;
+}
+
+.salon-comunal-title {
+  margin: 0 0 0.5em 0;
+  color: #153c2b;
+  font-size: 1.2em;
+}
+
+.salon-comunal-text {
+  margin: 0 0 1.2em 0;
+  color: #555555;
+  font-size: 0.9em;
+  line-height: 1.6;
 }

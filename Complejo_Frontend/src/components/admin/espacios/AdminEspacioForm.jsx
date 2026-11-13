@@ -79,9 +79,10 @@ function AdminEspacioForm({ idioma, onEspacioCreado, onCuentaDesactivada }) {
         <div className="ad-field">
           <label>{t.categoria}</label>
           <select name="tipo" value={tipo} onChange={handleTipoChange}>
-            <option value="CABANA">CABANA</option>
-            <option value="GALPON_FIESTAS">GALPON_FIESTAS</option>
-            <option value="LAGUNA_RECREATIVA">LAGUNA_RECREATIVA</option>
+            <option value="CABANA">{t.tipoCabana || 'CABANA'}</option>
+            <option value="GALPON_FIESTAS">{t.tipoGalpon || 'GALPON_FIESTAS'}</option>
+            <option value="HABITACION_CASA_PRINCIPAL">{t.tipoHabitacion || 'HABITACION_CASA_PRINCIPAL'}</option>
+            <option value="SALON_COMIDA_CASA_PRINCIPAL">{t.tipoSalon || 'SALON_COMIDA_CASA_PRINCIPAL'}</option>
           </select>
         </div>
 

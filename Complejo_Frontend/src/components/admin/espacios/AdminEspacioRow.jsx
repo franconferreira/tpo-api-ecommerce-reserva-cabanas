@@ -24,7 +24,13 @@ function AdminEspacioRow({ idioma, espacio, guardado, onCambiarPrecio, onGuardar
         </div>
       </td>
       <td>
-        <span className="ad-type-badge">{espacio.tipo}</span>
+        <span className="ad-type-badge">
+          {espacio.tipo === 'CABANA' && (t.tipoCabana || 'Cabaña')}
+          {espacio.tipo === 'GALPON_FIESTAS' && (t.tipoGalpon || 'Galpón')}
+          {espacio.tipo === 'HABITACION_CASA_PRINCIPAL' && (t.tipoHabitacion || 'Habitación')}
+          {espacio.tipo === 'SALON_COMIDA_CASA_PRINCIPAL' && (t.tipoSalon || 'Salón Comunal')}
+          {!['CABANA', 'GALPON_FIESTAS', 'HABITACION_CASA_PRINCIPAL', 'SALON_COMIDA_CASA_PRINCIPAL'].includes(espacio.tipo) && espacio.tipo}
+        </span>
       </td>
       <td>
         <form onSubmit={(e) => e.preventDefault()} className="ad-td-rate">

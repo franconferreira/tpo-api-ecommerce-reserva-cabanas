@@ -22,12 +22,31 @@ function ReservaWidgetForm({
   const [fechasSeleccionadas, setFechasSeleccionadas] = useState([])
   const [error, setError] = useState('')
   const t = textos[idioma].widget
+  const tDetalle = textos[idioma].detalle
 
   const precioMostrado = calcularPrecioSeleccionado(espacio.precioBase, fechasSeleccionadas)
   const sufijoPrecio =
     fechasSeleccionadas.length === 0
       ? textos[idioma].comun.porNocheSufijo
       : t.nochesSeleccionadas(fechasSeleccionadas.length)
+
+  if (espacio.tipo === 'SALON_COMIDA_CASA_PRINCIPAL') {
+    return (
+      <div className="widget-reserva salon-comunal-box">
+        <h3 className="salon-comunal-title">🍽️ {tDetalle.infoSalonTitulo}</h3>
+        <p className="salon-comunal-text">
+          {tDetalle.infoSalonTexto}
+        </p>
+        <button
+          type="button"
+          className="wr-submit-btn"
+          onClick={() => navigate('/catalogo')}
+        >
+          {tDetalle.botonVerHabitaciones || '← Explorar Habitaciones'}
+        </button>
+      </div>
+    )
+  }
 
   const handleClick = () => {
     if (!isLogged) {
@@ -64,11 +83,10 @@ function ReservaWidgetForm({
           onCuentaDesactivada()
           return
         }
-        if (data && data.items) {
+        if (data && data.id) {
           setCarritoData(data)
           setError('')
           onAbrirCarrito()
-          navigate('/catalogo')
         } else {
           console.error('Error al agregar al carrito: ', data)
           setError(t.errorDisponible)

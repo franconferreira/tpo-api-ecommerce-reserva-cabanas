@@ -10,6 +10,8 @@ import MisReservasView from './views/MisReservasView'
 import AdminEspaciosView from './views/AdminEspaciosView'
 import AdminReservasView from './views/AdminReservasView'
 import AdminUsuariosView from './views/AdminUsuariosView'
+import Mapa3DView from './views/Mapa3DView'
+import AdminMapa3DView from './views/AdminMapa3DView'
 import { apiFetch } from './utils/api'
 import { CARRITO_VACIO } from './utils/constantes'
 
@@ -199,7 +201,10 @@ function App() {
 
   const handleAbrirDetalle = (espacio) => {
     setEspacioSeleccionado(espacio)
-    navigate('/detalle')
+  }
+
+  const handleCerrarDetalle = () => {
+    setEspacioSeleccionado(null)
   }
 
   return (
@@ -236,11 +241,17 @@ function App() {
             onDescartarNotificacion={handleDescartarNotificacion}
             isBuzonOpen={isBuzonOpen}
             setIsBuzonOpen={setIsBuzonOpen}
+            espacioSeleccionado={espacioSeleccionado}
+            onCerrarDetalle={handleCerrarDetalle}
           />
         }
       >
         <Route path="/" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
         <Route path="/catalogo" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
+        <Route
+          path="/mapa-3d"
+          element={<Mapa3DView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />}
+        />
         <Route
           path="/detalle"
           element={
@@ -250,6 +261,7 @@ function App() {
               isLogged={isLogged}
               setCarritoData={setCarritoData}
               onAbrirCarrito={() => setIsCartOpen(true)}
+              onClose={handleCerrarDetalle}
               onCuentaDesactivada={handleCuentaDesactivada}
             />
           }
@@ -287,6 +299,10 @@ function App() {
         <Route
           path="/admin/usuarios"
           element={<AdminUsuariosView idioma={idioma} onCuentaDesactivada={handleCuentaDesactivada} />}
+        />
+        <Route
+          path="/admin/mapa-3d"
+          element={<AdminMapa3DView idioma={idioma} onCuentaDesactivada={handleCuentaDesactivada} />}
         />
       </Route>
     </Routes>

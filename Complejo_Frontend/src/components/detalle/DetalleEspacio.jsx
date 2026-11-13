@@ -15,14 +15,27 @@ function DetalleEspacio({ idioma, espacio }) {
     : []
   const fotos = fotosValidas.length > 0 ? fotosValidas : [IMAGEN_POR_DEFECTO]
 
+  const renderBadgeTipo = () => {
+    if (espacio.tipo === 'CABANA') return t.badgeCabana
+    if (espacio.tipo === 'HABITACION_CASA_PRINCIPAL') return t.badgeHabitacion
+    if (espacio.tipo === 'GALPON_FIESTAS') return t.badgeGalpon
+    if (espacio.tipo === 'SALON_COMIDA_CASA_PRINCIPAL') return t.badgeSalon
+    return null
+  }
+
   return (
     <>
       <div className="detalle-galeria">
-        <img
-          src={fotos[fotoSeleccionada]}
-          alt={espacio.nombre}
-          className="detalle-img-main"
-        />
+        <div className="detalle-img-wrapper">
+          <img
+            src={fotos[fotoSeleccionada]}
+            alt={espacio.nombre}
+            className="detalle-img-main"
+          />
+          <span className="detalle-badge-tipo">
+            {renderBadgeTipo()}
+          </span>
+        </div>
 
         {fotos.length > 1 && (
           <div className="galeria-miniaturas">
@@ -43,6 +56,20 @@ function DetalleEspacio({ idioma, espacio }) {
       <div className="di-textos">
         <h2 className="di-subtitulo">{t.sobre}</h2>
         <p className="di-parrafo">{espacio.descripcion}</p>
+
+        {espacio.tipo === 'HABITACION_CASA_PRINCIPAL' && (
+          <div className="di-casa-principal-card">
+            <h4>{t.infoHabitacionTitulo}</h4>
+            <p style={{ whiteSpace: 'pre-line' }}>{t.infoHabitacionTexto}</p>
+          </div>
+        )}
+
+        {espacio.tipo === 'SALON_COMIDA_CASA_PRINCIPAL' && (
+          <div className="di-casa-principal-card">
+            <h4>{t.infoSalonTitulo}</h4>
+            <p>{t.infoSalonTexto}</p>
+          </div>
+        )}
       </div>
 
       <div className="di-promos">

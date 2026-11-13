@@ -5,6 +5,7 @@ import './EspacioCard.css'
 
 function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagenes, onVerDetalle }) {
   const t = textos[idioma].catalogo
+  const tDetalle = textos[idioma].detalle
 
   const handleClick = () => {
     onVerDetalle({
@@ -17,6 +18,14 @@ function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagen
     })
   }
 
+  const renderBadgeCapacidad = () => {
+    if (tipo === 'CABANA') return t.capacidadCabana
+    if (tipo === 'HABITACION_CASA_PRINCIPAL') return t.capacidadHabitacion
+    if (tipo === 'GALPON_FIESTAS') return t.capacidadGalpon
+    if (tipo === 'SALON_COMIDA_CASA_PRINCIPAL') return t.capacidadSalon
+    return null
+  }
+
   return (
     <div className="espacio-card" onClick={handleClick}>
       <div className="ec-image-wrapper">
@@ -25,6 +34,9 @@ function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagen
           alt={nombre}
           className="ec-image"
         />
+        <span className="ec-tag-top-left">
+          {renderBadgeCapacidad()}
+        </span>
       </div>
 
       <div className="ec-content">
@@ -37,9 +49,17 @@ function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagen
 
       <div className="ec-footer">
         <div className="ec-price-block">
-          <span className="ec-price-from">{t.desde}</span>
-          <span className="ec-price-value">USD ${precioBase}</span>
-          <span className="ec-price-suffix">{textos[idioma].comun.porNocheSufijo}</span>
+          {tipo === 'SALON_COMIDA_CASA_PRINCIPAL' ? (
+            <span className="ec-comunal-incluido">
+              {tDetalle.comunalIncluido || 'Área Comunal'}
+            </span>
+          ) : (
+            <>
+              <span className="ec-price-from">{t.desde}</span>
+              <span className="ec-price-value">USD ${precioBase}</span>
+              <span className="ec-price-suffix">{textos[idioma].comun.porNocheSufijo}</span>
+            </>
+          )}
         </div>
         <span className="ec-action-link">{t.verEspacio}</span>
       </div>

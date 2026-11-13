@@ -70,5 +70,11 @@ export const armarCeldasMes = (anio, mes, fechasOcupadas) => {
     celdas = [...celdas, { key: fecha, vacio: false, numero: dia, fechaIso: fecha, estado: estado }]
   }
 
+  // Completa siempre hasta 42 celdas (6 semanas fijas de 7 días) para que la grilla
+  // mantenga exactamente 6 filas de alto y no cambie de tamaño mes a mes.
+  while (celdas.length < 42) {
+    celdas = [...celdas, { key: `vacio-fin-${celdas.length}`, vacio: true }]
+  }
+
   return celdas
 }

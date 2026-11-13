@@ -41,6 +41,14 @@ function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }
             {t.usuarios}
           </Link>
         </li>
+        <li>
+          <Link
+            to="/admin/mapa-3d"
+            className={pathname === '/admin/mapa-3d' ? 'nav-link active' : 'nav-link'}
+          >
+            🗺️ Editor Mapa 3D
+          </Link>
+        </li>
       </ul>
 
       <ul className="nav-list nav-actions">

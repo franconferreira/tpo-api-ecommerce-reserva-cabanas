@@ -1,0 +1,346 @@
+.admin-mapa-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.admin-mapa-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.admin-mapa-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  height: calc(100vh - 210px);
+  min-height: 560px;
+}
+
+/* Panel 3D */
+.admin-mapa-canvas-wrapper {
+  position: relative;
+  background: #141a20;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.admin-mapa-canvas-container {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.admin-mapa-canvas-container:active {
+  cursor: grabbing;
+}
+
+.admin-mapa-canvas-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.admin-mapa-overlay-hint {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(18, 24, 28, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-mapa-overlay-hint span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Sidebar derecha */
+.admin-mapa-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #182026;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Panel de edición del lugar seleccionado */
+.admin-editor-card {
+  background: #1f2a33;
+  border: 1px solid #4ade80;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 18px rgba(74, 222, 128, 0.15);
+  animation: fadeIn 0.2s ease;
+}
+
+.admin-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.admin-editor-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.admin-editor-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #143828;
+  color: #4ade80;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.admin-editor-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.admin-editor-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Controles de Rotación 360° */
+.admin-rotation-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-rotation-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.admin-rotation-val {
+  color: #4ade80;
+  font-weight: 800;
+  font-family: monospace;
+}
+
+.admin-rotation-slider {
+  width: 100%;
+  accent-color: #4ade80;
+  cursor: pointer;
+}
+
+.admin-rotation-presets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.admin-btn-preset {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.admin-btn-preset:hover {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: #4ade80;
+  color: #fff;
+}
+
+.admin-coords-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.18);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* Lista de lugares a la derecha */
+.admin-lugares-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-lugares-section h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-lugares-count {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+  color: #94a3b8;
+}
+
+.admin-lugar-card {
+  display: flex;
+  gap: 12px;
+  background: #1f272e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.admin-lugar-card:hover {
+  border-color: rgba(74, 222, 128, 0.4);
+  background: #252e36;
+  transform: translateY(-1px);
+}
+
+.admin-lugar-card.selected {
+  border-color: #4ade80;
+  background: #20352b;
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.2);
+}
+
+.admin-lugar-card:active {
+  cursor: grabbing;
+}
+
+.admin-lugar-thumb {
+  width: 58px;
+  height: 58px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #2e3b46;
+  flex-shrink: 0;
+}
+
+.admin-lugar-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.admin-lugar-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-lugar-status {
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-lugar-status.on-map {
+  color: #4ade80;
+}
+
+.admin-lugar-status.off-map {
+  color: #94a3b8;
+}
+
+.admin-lugar-drag-hint {
+  font-size: 0.68rem;
+  color: #64748b;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Toast de guardado */
+.admin-toast-save {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #143828;
+  border: 1px solid #4ade80;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-mapa-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .admin-mapa-canvas-wrapper {
+    height: 480px;
+  }
+}
