@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import CheckoutItem from './CheckoutItem'
 import CheckoutTotales from './CheckoutTotales'
 import MediosDePago from './MediosDePago'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
-import { CARRITO_VACIO } from '../../utils/constantes'
+import { confirmarCheckout, limpiarErroresCarrito, reiniciarCheckout } from '../../Redux/carritoSlice'
 import './CheckoutResumen.css'
 
-function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactivada }) {
+function CheckoutResumen({ idioma }) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { data: carritoData, errorCheckout, checkoutExitoso } = useSelector((state) => state.carrito)
   const [error, setError] = useState('')
   const [medioPago, setMedioPago] = useState('tarjeta')
   const [datosPago, setDatosPago] = useState({
@@ -25,10 +27,23 @@ function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactiv
   })
 
   const t = textos[idioma].checkout
-  const items = carritoData && carritoData.items ? carritoData.items : []
-  const totalSinDescuento = carritoData && carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
-  const descuentoPack = carritoData && carritoData.descuentoPackPorcentaje ? carritoData.descuentoPackPorcentaje : 0
-  const total = carritoData && carritoData.total ? carritoData.total : 0
+  const items = carritoData.items ? carritoData.items : []
+  const totalSinDescuento = carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
+  const descuentoPack = carritoData.descuentoPackPorcentaje ? carritoData.descuentoPackPorcentaje : 0
+  const total = carritoData.total ? carritoData.total : 0
+
+  // Al entrar a la pantalla se borra el error de un checkout anterior
+  useEffect(() => {
+    dispatch(limpiarErroresCarrito())
+  }, [dispatch])
+
+  // Cuando el checkout sale bien (lo marca el slice en fulfilled), vamos a Mis Reservas
+  useEffect(() => {
+    if (checkoutExitoso) {
+      dispatch(reiniciarCheckout())
+      navigate('/mis-reservas')
+    }
+  }, [checkoutExitoso, dispatch, navigate])
 
   const actualizarDato = (campo, valor) => {
     setDatosPago((prev) => ({ ...prev, [campo]: valor }))
@@ -80,34 +95,15 @@ function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactiv
     }
 
     setError('')
-
-    apiFetch('/api/carrito/checkout', { method: 'POST' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.mensaje) {
-          setCarritoData(CARRITO_VACIO)
-          setError('')
-          navigate('/mis-reservas')
-        } else {
-          console.error('Error en checkout: ', data)
-          setCarritoData(CARRITO_VACIO)
-          setError(t.errorExpirado)
-        }
-      })
-      .catch((err) => {
-        console.error('Error en checkout: ', err)
-        setCarritoData(CARRITO_VACIO)
-        setError(t.errorExpirado)
-      })
+    dispatch(confirmarCheckout())
   }
+
+  // Error de validación local o error del back guardado en el slice
+  const mensajeError = error || (errorCheckout ? t.errorExpirado : '')
 
   return (
     <>
-      {error && <p className="checkout-error">{error}</p>}
+      {mensajeError && <p className="checkout-error">{mensajeError}</p>}
 
       {items.length === 0 ? (
         <div className="checkout-empty">

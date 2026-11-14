@@ -4,7 +4,7 @@ import RegisterForm from '../components/auth/RegisterForm'
 import textos from '../i18n/textos'
 import './AuthView.css'
 
-function RegisterView({ idioma, setIdioma, onLogin }) {
+function RegisterView({ idioma, setIdioma }) {
   const t = textos[idioma].registro
 
   return (
@@ -16,7 +16,7 @@ function RegisterView({ idioma, setIdioma, onLogin }) {
         footerText="🌲 Whispering Pines Sanctuary & Retreats"
       />
 
-      <RegisterForm idioma={idioma} setIdioma={setIdioma} onLogin={onLogin} />
+      <RegisterForm idioma={idioma} setIdioma={setIdioma} />
     </div>
   )
 }

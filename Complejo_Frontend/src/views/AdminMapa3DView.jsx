@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { apiFetch } from '../utils/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchEspacios } from '../Redux/espaciosSlice'
 import { imagenPrincipal } from '../utils/constantes'
 import {
   CABANAS_DEFAULT,
@@ -22,6 +23,8 @@ import './AdminMapa3DView.css'
 
 function AdminMapa3DView() {
   const mountRef = useRef(null)
+  const dispatch = useDispatch()
+  const espaciosBackend = useSelector((state) => state.espacios.items)
 
   // Estados
   const [espacios, setEspacios] = useState(CABANAS_DEFAULT)
@@ -52,30 +55,29 @@ function AdminMapa3DView() {
   }, [layout])
 
   // Cargar lista de espacios desde el backend
+  // (los espacios vienen del store; si el back no responde quedan las CABANAS_DEFAULT)
   useEffect(() => {
-    apiFetch('/api/espacios', { auth: false })
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const combinadas = data.map((item, idx) => {
-            const def = CABANAS_DEFAULT[idx % CABANAS_DEFAULT.length]
-            return {
-              ...def,
-              id: item.id,
-              nombre: item.nombre,
-              tipo: item.tipo,
-              precioBase: item.precioBase,
-              descripcion: item.descripcion || def.descripcion,
-              imagenes: item.imagenes && item.imagenes.length ? item.imagenes : def.imagenes
-            }
-          })
-          setEspacios(combinadas)
+    dispatch(fetchEspacios())
+  }, [dispatch])
+
+  // Cuando llegan los espacios del back, se combinan con los datos 3D por defecto
+  useEffect(() => {
+    if (espaciosBackend.length > 0) {
+      const combinadas = espaciosBackend.map((item, idx) => {
+        const def = CABANAS_DEFAULT[idx % CABANAS_DEFAULT.length]
+        return {
+          ...def,
+          id: item.id,
+          nombre: item.nombre,
+          tipo: item.tipo,
+          precioBase: item.precioBase,
+          descripcion: item.descripcion || def.descripcion,
+          imagenes: item.imagenes && item.imagenes.length ? item.imagenes : def.imagenes
         }
       })
-      .catch(() => {
-        // Mantiene CABANAS_DEFAULT si la api no está disponible
-      })
-  }, [])
+      setEspacios(combinadas)
+    }
+  }, [espaciosBackend])
 
   // Inicialización de la escena 3D Top-Down / Isométrica
   useEffect(() => {

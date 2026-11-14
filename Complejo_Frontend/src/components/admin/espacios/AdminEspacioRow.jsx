@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import textos from '../../../i18n/textos'
 import { imagenPrincipal } from '../../../utils/constantes'
 
-function AdminEspacioRow({ idioma, espacio, guardado, onCambiarPrecio, onGuardarPrecio, onToggleEstado }) {
+function AdminEspacioRow({ idioma, espacio, guardado, onGuardarPrecio, onToggleEstado }) {
+  // Estado local que arranca con el precio actual (como el EditPostForm de la clase)
+  const [precio, setPrecio] = useState(espacio.precioBase)
   const t = textos[idioma].adminEspacios
+  // El ✓ se muestra si se guardó y no se volvió a cambiar el valor
+  const mostrarGuardado = guardado && Number(precio) === Number(espacio.precioBase)
 
   return (
     <tr>
@@ -39,12 +43,12 @@ function AdminEspacioRow({ idioma, espacio, guardado, onCambiarPrecio, onGuardar
             type="number"
             name="precioBase"
             className="ad-inline-input"
-            value={espacio.precioBase}
-            onChange={(e) => onCambiarPrecio(espacio.id, e.target.value)}
+            value={precio}
+            onChange={(e) => setPrecio(e.target.value)}
           />
           <small>{textos[idioma].comun.porNoche}</small>
-          <button type="submit" className="ad-btn-save" onClick={() => onGuardarPrecio(espacio)}>
-            {guardado ? '✓' : t.guardar}
+          <button type="submit" className="ad-btn-save" onClick={() => onGuardarPrecio(espacio, precio)}>
+            {mostrarGuardado ? '✓' : t.guardar}
           </button>
         </form>
       </td>

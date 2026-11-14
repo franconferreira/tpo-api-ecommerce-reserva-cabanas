@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import DetalleEspacio from './DetalleEspacio'
 import ReservaWidgetForm from './ReservaWidgetForm'
 import textos from '../../i18n/textos'
 import './DetalleEspacioModal.css'
 
-function DetalleEspacioModal({
-  idioma,
-  espacio,
-  onClose,
-  isLogged,
-  setCarritoData,
-  onAbrirCarrito,
-  onCuentaDesactivada
-}) {
+function DetalleEspacioModal({ idioma, espacio, onClose }) {
+  const carritoAbierto = useSelector((state) => state.carrito.abierto)
   const t = textos[idioma].detalle
+
+  // Cuando se agrega un espacio al carrito, el slice abre el carrito: el modal se cierra para mostrarlo
+  useEffect(() => {
+    if (carritoAbierto) {
+      onClose()
+    }
+  }, [carritoAbierto, onClose])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -27,11 +28,6 @@ function DetalleEspacioModal({
 
   if (!espacio) {
     return null
-  }
-
-  const handleAgregarAlCarrito = () => {
-    onClose()
-    onAbrirCarrito()
   }
 
   return (
@@ -62,14 +58,7 @@ function DetalleEspacioModal({
           </div>
 
           <div className="detalle-modal-panel-der">
-            <ReservaWidgetForm
-              idioma={idioma}
-              espacio={espacio}
-              isLogged={isLogged}
-              setCarritoData={setCarritoData}
-              onAbrirCarrito={handleAgregarAlCarrito}
-              onCuentaDesactivada={onCuentaDesactivada}
-            />
+            <ReservaWidgetForm idioma={idioma} espacio={espacio} />
           </div>
         </div>
       </div>

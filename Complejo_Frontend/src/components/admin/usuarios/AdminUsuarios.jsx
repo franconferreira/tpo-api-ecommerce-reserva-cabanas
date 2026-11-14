@@ -1,85 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import AdminUsuarioRow from './AdminUsuarioRow'
 import PageHeader from '../../layout/PageHeader'
 import textos from '../../../i18n/textos'
-import { apiFetch } from '../../../utils/api'
+import { fetchUsuarios, cambiarEstadoUsuario, cambiarRolUsuario } from '../../../Redux/adminUsuariosSlice'
 import './AdminUsuarios.css'
 
-function AdminUsuarios({ idioma, onCuentaDesactivada }) {
-  const [usuarios, setUsuarios] = useState([])
-  const [error, setError] = useState('')
+function AdminUsuarios({ idioma }) {
+  const dispatch = useDispatch()
+  const { items: usuarios, error: errorSlice } = useSelector((state) => state.adminUsuarios)
   const t = textos[idioma].adminUsuarios
 
   useEffect(() => {
-    apiFetch('/api/admin/usuarios')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && !data.error) {
-          setUsuarios(data)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al cargar usuarios: ', err)
-      })
-  }, [])
+    dispatch(fetchUsuarios())
+  }, [dispatch])
 
   const handleToggleEstado = (usuario) => {
-    const ruta = usuario.activo
-      ? `/api/admin/usuarios/${usuario.id}`
-      : `/api/admin/usuarios/${usuario.id}/restaurar`
-    const metodo = usuario.activo ? 'DELETE' : 'PATCH'
-
-    apiFetch(ruta, { method: metodo })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.mensaje) {
-          setUsuarios(
-            usuarios.map((u) =>
-              u.id === usuario.id ? { ...u, activo: !usuario.activo } : u
-            )
-          )
-          setError('')
-        } else {
-          console.error('Error al actualizar estado de usuario: ', data)
-          setError(t.errorEstado)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al actualizar estado de usuario: ', err)
-        setError(t.errorEstado)
-      })
+    dispatch(cambiarEstadoUsuario(usuario))
   }
 
   const handleToggleRol = (usuario) => {
-    const nuevoRol = usuario.rol === 'ROLE_ADMIN' ? 'ROLE_CLIENTE' : 'ROLE_ADMIN'
-
-    apiFetch(`/api/admin/usuarios/${usuario.id}/rol`, { method: 'PUT', body: { rol: nuevoRol } })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        // El backend devuelve el usuario actualizado; si no llega, el cambio falló
-        if (data && data.id) {
-          setUsuarios(
-            usuarios.map((u) => (u.id === usuario.id ? data : u))
-          )
-          setError('')
-        } else {
-          console.error('Error al cambiar rol: ', data)
-          setError(t.errorRol)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al cambiar rol: ', err)
-        setError(t.errorRol)
-      })
+    dispatch(cambiarRolUsuario(usuario))
   }
+
+  let error = ''
+  if (errorSlice === 'estado') error = t.errorEstado
+  if (errorSlice === 'rol') error = t.errorRol
 
   return (
     <>

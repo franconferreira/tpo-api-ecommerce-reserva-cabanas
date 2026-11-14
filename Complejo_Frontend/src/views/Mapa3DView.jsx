@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { apiFetch } from '../utils/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchEspacios } from '../Redux/espaciosSlice'
 import {
   CABANAS_DEFAULT,
   cargarDistribucionMapa,
@@ -49,6 +50,8 @@ function playRetroSound(tipo) {
 
 function Mapa3DView({ onAbrirDetalle }) {
   const mountRef = useRef(null)
+  const dispatch = useDispatch()
+  const espaciosBackend = useSelector((state) => state.espacios.items)
 
   // Estados UI
   const [cabanas, setCabanas] = useState(CABANAS_DEFAULT)
@@ -119,30 +122,29 @@ function Mapa3DView({ onAbrirDetalle }) {
   }, [isNoche])
 
   // Cargar cabañas desde backend si existen
+  // (los espacios vienen del store; si el back no responde quedan las CABANAS_DEFAULT)
   useEffect(() => {
-    apiFetch('/api/espacios', { auth: false })
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const combinadas = data.map((item, idx) => {
-            const def = CABANAS_DEFAULT[idx % CABANAS_DEFAULT.length]
-            return {
-              ...def,
-              id: item.id,
-              nombre: item.nombre,
-              tipo: item.tipo,
-              precioBase: item.precioBase,
-              descripcion: item.descripcion || def.descripcion,
-              imagenes: item.imagenes && item.imagenes.length ? item.imagenes : def.imagenes
-            }
-          })
-          setCabanas(combinadas)
+    dispatch(fetchEspacios())
+  }, [dispatch])
+
+  // Cuando llegan los espacios del back, se combinan con los datos 3D por defecto
+  useEffect(() => {
+    if (espaciosBackend.length > 0) {
+      const combinadas = espaciosBackend.map((item, idx) => {
+        const def = CABANAS_DEFAULT[idx % CABANAS_DEFAULT.length]
+        return {
+          ...def,
+          id: item.id,
+          nombre: item.nombre,
+          tipo: item.tipo,
+          precioBase: item.precioBase,
+          descripcion: item.descripcion || def.descripcion,
+          imagenes: item.imagenes && item.imagenes.length ? item.imagenes : def.imagenes
         }
       })
-      .catch(() => {
-        // Mantiene CABANAS_DEFAULT
-      })
-  }, [])
+      setCabanas(combinadas)
+    }
+  }, [espaciosBackend])
 
   // Abrir el modal global de detalles de espacio
   const handleAbrirDetalle = (espacio) => {

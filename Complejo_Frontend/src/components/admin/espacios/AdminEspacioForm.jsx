@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import CampoFormulario from '../../ui/CampoFormulario'
 import textos from '../../../i18n/textos'
-import { apiFetch } from '../../../utils/api'
+import { crearEspacio } from '../../../Redux/adminEspaciosSlice'
 import { IMAGEN_POR_DEFECTO } from '../../../utils/constantes'
 import './AdminEspacioForm.css'
 
-function AdminEspacioForm({ idioma, onEspacioCreado, onCuentaDesactivada }) {
+function AdminEspacioForm({ idioma }) {
+  const dispatch = useDispatch()
+  const errorSlice = useSelector((state) => state.adminEspacios.error)
   const [nombre, setNombre] = useState('')
   const [precioBase, setPrecioBase] = useState('')
   const [tipo, setTipo] = useState('CABANA')
@@ -34,36 +37,23 @@ function AdminEspacioForm({ idioma, onEspacioCreado, onCuentaDesactivada }) {
       imagenes: [imagenes.trim() !== '' ? imagenes : IMAGEN_POR_DEFECTO]
     }
 
-    apiFetch('/api/admin/espacios', { method: 'POST', body: datosAEnviar })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.id) {
-          onEspacioCreado(data)
-          setNombre('')
-          setPrecioBase('')
-          setTipo('CABANA')
-          setDescripcion('')
-          setImagenes('')
-          setError('')
-        } else {
-          console.error('Error al crear espacio: ', data)
-          setError(t.errorCrear)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al crear espacio: ', err)
-        setError(t.errorCrear)
-      })
+    // Igual que el PostForm de la clase: se dispara el thunk y se limpian los campos.
+    // Si sale bien, el slice agrega el espacio nuevo a la tabla.
+    dispatch(crearEspacio(datosAEnviar))
+    setNombre('')
+    setPrecioBase('')
+    setTipo('CABANA')
+    setDescripcion('')
+    setImagenes('')
+    setError('')
   }
+
+  const mensajeError = error || (errorSlice === 'crear' ? t.errorCrear : '')
 
   return (
     <div className="ad-form-card">
       <h2 className="ad-form-title">{t.formTitulo}</h2>
-      {error && <p className="ad-error">{error}</p>}
+      {mensajeError && <p className="ad-error">{mensajeError}</p>}
 
       <form onSubmit={(e) => e.preventDefault()} className="ad-inline-form">
         <CampoFormulario

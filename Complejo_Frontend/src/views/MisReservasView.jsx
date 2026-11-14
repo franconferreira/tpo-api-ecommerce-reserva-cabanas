@@ -5,7 +5,7 @@ import MisReservasList from '../components/reservas/MisReservasList'
 import textos from '../i18n/textos'
 import './MisReservasView.css'
 
-function MisReservasView({ idioma, ocultasIds, setOcultasIds, onCuentaDesactivada }) {
+function MisReservasView({ idioma }) {
   const t = textos[idioma].misReservas
 
   return (
@@ -17,12 +17,7 @@ function MisReservasView({ idioma, ocultasIds, setOcultasIds, onCuentaDesactivad
           </Link>
         </PageHeader>
 
-        <MisReservasList
-          idioma={idioma}
-          ocultasIds={ocultasIds}
-          setOcultasIds={setOcultasIds}
-          onCuentaDesactivada={onCuentaDesactivada}
-        />
+        <MisReservasList idioma={idioma} />
       </div>
     </div>
   )

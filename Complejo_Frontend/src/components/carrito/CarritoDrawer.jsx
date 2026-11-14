@@ -1,66 +1,48 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import CarritoItem from './CarritoItem'
 import CarritoHeader from './CarritoHeader'
 import CarritoFooter from './CarritoFooter'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
+import { cerrarCarrito, eliminarDelCarrito } from '../../Redux/carritoSlice'
 import './CarritoDrawer.css'
 
-function CarritoDrawer({ idioma, carritoData, setCarritoData, isOpen, onClose, onCuentaDesactivada }) {
+function CarritoDrawer({ idioma }) {
   const navigate = useNavigate()
-  const [error, setError] = useState('')
+  const dispatch = useDispatch()
+  const { data: carritoData, abierto, errorEliminar } = useSelector((state) => state.carrito)
   const t = textos[idioma].carrito
 
-  if (!isOpen) {
+  if (!abierto) {
     return null
   }
 
-  const items = carritoData && carritoData.items ? carritoData.items : []
-  const totalSinDescuento = carritoData && carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
-  const descuentoPack = carritoData && carritoData.descuentoPackPorcentaje ? carritoData.descuentoPackPorcentaje : 0
-  const total = carritoData && carritoData.total ? carritoData.total : 0
+  const items = carritoData.items ? carritoData.items : []
+  const totalSinDescuento = carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
+  const descuentoPack = carritoData.descuentoPackPorcentaje ? carritoData.descuentoPackPorcentaje : 0
+  const total = carritoData.total ? carritoData.total : 0
 
-  const handleEliminar = (itemId, indice) => {
-    apiFetch(`/api/carrito/items/${itemId}`, { method: 'DELETE' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        // El backend devuelve el carrito actualizado; si no llega, la eliminación falló
-        if (data && data.items) {
-          const nuevosItems = [...items]
-          nuevosItems.splice(indice, 1)
-          setCarritoData({
-            ...data,
-            items: nuevosItems
-          })
-          setError('')
-        } else {
-          console.error('Error al eliminar item del carrito: ', data)
-          setError(t.errorEliminar)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al eliminar item del carrito: ', err)
-        setError(t.errorEliminar)
-      })
+  const handleCerrar = () => {
+    dispatch(cerrarCarrito())
+  }
+
+  const handleEliminar = (itemId) => {
+    dispatch(eliminarDelCarrito(itemId))
   }
 
   const handleIrACheckout = () => {
-    onClose()
+    dispatch(cerrarCarrito())
     navigate('/checkout')
   }
 
   return (
     <div className="carrito-backdrop">
       <div className="carrito-panel">
-        <CarritoHeader idioma={idioma} cantidad={items.length} onClose={onClose} />
+        <CarritoHeader idioma={idioma} cantidad={items.length} onClose={handleCerrar} />
 
         <div className="carrito-body">
-          {error && <p className="carrito-error">{error}</p>}
+          {errorEliminar && <p className="carrito-error">{t.errorEliminar}</p>}
 
           {items.length === 0 ? (
             <div className="carrito-empty">

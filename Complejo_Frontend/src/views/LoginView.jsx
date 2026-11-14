@@ -4,7 +4,7 @@ import LoginForm from '../components/auth/LoginForm'
 import textos from '../i18n/textos'
 import './AuthView.css'
 
-function LoginView({ idioma, setIdioma, onLogin, cuentaDesactivada, onLimpiarAviso }) {
+function LoginView({ idioma, setIdioma }) {
   const t = textos[idioma].login
 
   return (
@@ -16,13 +16,7 @@ function LoginView({ idioma, setIdioma, onLogin, cuentaDesactivada, onLimpiarAvi
         footerText="📍 Blue Ridge Mountains, NC"
       />
 
-      <LoginForm
-        idioma={idioma}
-        setIdioma={setIdioma}
-        onLogin={onLogin}
-        cuentaDesactivada={cuentaDesactivada}
-        onLimpiarAviso={onLimpiarAviso}
-      />
+      <LoginForm idioma={idioma} setIdioma={setIdioma} />
     </div>
   )
 }

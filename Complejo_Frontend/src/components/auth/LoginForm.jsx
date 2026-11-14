@@ -1,38 +1,41 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import AuthFormTitulos from './AuthFormTitulos'
 import CampoFormulario from '../ui/CampoFormulario'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
+import { login, limpiarAvisos } from '../../Redux/authSlice'
 import './AuthForm.css'
 
-function LoginForm({ idioma, setIdioma, onLogin, cuentaDesactivada, onLimpiarAviso }) {
+function LoginForm({ idioma, setIdioma }) {
+  const dispatch = useDispatch()
+  const { cuentaDesactivada, errorLogin } = useSelector((state) => state.auth)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const t = textos[idioma].login
 
-  const handleEmailChange = (e) => {
-    if (cuentaDesactivada && onLimpiarAviso) {
-      onLimpiarAviso()
+  // Al volver a escribir se borran los avisos del intento anterior
+  const limpiarMensajes = () => {
+    setError('')
+    if (cuentaDesactivada || errorLogin) {
+      dispatch(limpiarAvisos())
     }
+  }
+
+  const handleEmailChange = (e) => {
+    limpiarMensajes()
     setEmail(e.target.value)
   }
 
   const handlePasswordChange = (e) => {
-    if (cuentaDesactivada && onLimpiarAviso) {
-      onLimpiarAviso()
-    }
+    limpiarMensajes()
     setPassword(e.target.value)
   }
 
   const handleToggleIdioma = () => setIdioma(idioma === 'es' ? 'en' : 'es')
 
   const handleClick = () => {
-    if (cuentaDesactivada && onLimpiarAviso) {
-      onLimpiarAviso()
-    }
-
     if (email.trim() === '' || password.trim() === '') {
       setError(t.errorVacios)
       return
@@ -43,24 +46,9 @@ function LoginForm({ idioma, setIdioma, onLogin, cuentaDesactivada, onLimpiarAvi
       password: password
     }
 
-    apiFetch('/api/auth/login', { method: 'POST', body: datosAEnviar, auth: false })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.token) {
-          localStorage.setItem('jwtToken', data.token)
-          setError('')
-          onLogin(data)
-        } else if (data && data.error === 'CUENTA_DESACTIVADA') {
-          setError(t.errorCuentaDesactivada)
-        } else {
-          console.error('Error al iniciar sesion: ', data)
-          setError(t.errorCredenciales)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al iniciar sesion: ', err)
-        setError(t.errorCredenciales)
-      })
+    // Si sale bien, el slice marca al usuario como logueado y App lo redirige según su rol
+    setError('')
+    dispatch(login(datosAEnviar))
   }
 
   const handleSubmit = (e) => {
@@ -68,7 +56,12 @@ function LoginForm({ idioma, setIdioma, onLogin, cuentaDesactivada, onLimpiarAvi
     handleClick()
   }
 
-  const mensajeError = error || (cuentaDesactivada ? t.errorCuentaDesactivada : '')
+  let mensajeError = error
+  if (!mensajeError && cuentaDesactivada) {
+    mensajeError = t.errorCuentaDesactivada
+  } else if (!mensajeError && errorLogin) {
+    mensajeError = t.errorCredenciales
+  }
 
   return (
     <div className="auth-panel-form">

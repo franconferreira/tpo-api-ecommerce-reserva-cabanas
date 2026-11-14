@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Navigation from './Navigation'
 import Footer from './Footer'
 import CarritoDrawer from '../carrito/CarritoDrawer'
@@ -11,35 +12,21 @@ import DetalleEspacioModal from '../detalle/DetalleEspacioModal'
 function MainLayout({
   idioma,
   setIdioma,
-  isLogged,
-  rolUsuario,
-  nombreUsuario,
   onLogout,
-  onCuentaDesactivada,
-  carritoData,
-  setCarritoData,
-  isCartOpen,
-  setIsCartOpen,
-  mensajesNoLeidos,
-  onDescartarNotificacion,
   isBuzonOpen,
   setIsBuzonOpen,
   espacioSeleccionado,
   onCerrarDetalle
 }) {
+  const rolUsuario = useSelector((state) => state.auth.rol)
+
   return (
     <>
       <Navigation
         idioma={idioma}
         setIdioma={setIdioma}
-        isLogged={isLogged}
-        rolUsuario={rolUsuario}
-        nombreUsuario={nombreUsuario}
         onLogout={onLogout}
-        onAbrirCarrito={() => setIsCartOpen(true)}
-        cantidadCarrito={carritoData.items ? carritoData.items.length : 0}
         onAbrirBuzon={() => setIsBuzonOpen(true)}
-        cantidadBuzon={mensajesNoLeidos.length}
       />
 
       <Outlet />
@@ -48,18 +35,9 @@ function MainLayout({
 
       {rolUsuario !== 'ROLE_ADMIN' && (
         <>
-          <CarritoDrawer
-            idioma={idioma}
-            carritoData={carritoData}
-            setCarritoData={setCarritoData}
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-            onCuentaDesactivada={onCuentaDesactivada}
-          />
+          <CarritoDrawer idioma={idioma} />
           <BuzonDrawer
             idioma={idioma}
-            mensajes={mensajesNoLeidos}
-            onDescartar={onDescartarNotificacion}
             isOpen={isBuzonOpen}
             onClose={() => setIsBuzonOpen(false)}
           />
@@ -68,10 +46,6 @@ function MainLayout({
               idioma={idioma}
               espacio={espacioSeleccionado}
               onClose={onCerrarDetalle}
-              isLogged={isLogged}
-              setCarritoData={setCarritoData}
-              onAbrirCarrito={() => setIsCartOpen(true)}
-              onCuentaDesactivada={onCuentaDesactivada}
             />
           )}
         </>

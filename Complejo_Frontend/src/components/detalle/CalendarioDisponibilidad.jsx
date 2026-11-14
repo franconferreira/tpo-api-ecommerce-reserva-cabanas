@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import CalendarioDia from './CalendarioDia'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
+import { fetchFechasOcupadas } from '../../Redux/espaciosSlice'
 import { armarCeldasMes } from '../../utils/fechas'
 import './CalendarioDisponibilidad.css'
 
@@ -11,22 +12,14 @@ function CalendarioDisponibilidad({
   fechasSeleccionadas,
   setFechasSeleccionadas
 }) {
+  const dispatch = useDispatch()
+  const fechasOcupadas = useSelector((state) => state.espacios.fechasOcupadas)
   const [offsetMes, setOffsetMes] = useState(0)
-  const [fechasOcupadas, setFechasOcupadas] = useState([])
   const t = textos[idioma].calendario
 
   useEffect(() => {
-    apiFetch(`/api/espacios/${espacioId}/fechas-ocupadas`, { auth: false })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setFechasOcupadas(data)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al cargar fechas ocupadas: ', err)
-      })
-  }, [espacioId])
+    dispatch(fetchFechasOcupadas(espacioId))
+  }, [espacioId, dispatch])
 
   // Mes que se está mostrando: el actual + offsetMes (de 0 a 11 meses hacia adelante)
   const ahora = new Date()

@@ -3,11 +3,11 @@ import AdminUsuarios from '../components/admin/usuarios/AdminUsuarios'
 import './AdminView.css'
 
 // El encabezado de esta pantalla lo arma AdminUsuarios porque muestra el total de usuarios cargados
-function AdminUsuariosView({ idioma, onCuentaDesactivada }) {
+function AdminUsuariosView({ idioma }) {
   return (
     <div className="admin-pagina">
       <div className="admin-contenedor">
-        <AdminUsuarios idioma={idioma} onCuentaDesactivada={onCuentaDesactivada} />
+        <AdminUsuarios idioma={idioma} />
       </div>
     </div>
   )

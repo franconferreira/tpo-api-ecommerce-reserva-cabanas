@@ -1,13 +1,21 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import BuzonItem from './BuzonItem'
 import textos from '../../i18n/textos'
+import { leerNotificacion } from '../../Redux/reservasSlice'
 import './BuzonDrawer.css'
 
-function BuzonDrawer({ idioma, mensajes, onDescartar, isOpen, onClose }) {
+function BuzonDrawer({ idioma, isOpen, onClose }) {
+  const dispatch = useDispatch()
+  const mensajes = useSelector((state) => state.reservas.notificaciones)
   const t = textos[idioma].buzon
 
   if (!isOpen) {
     return null
+  }
+
+  const handleDescartar = (id) => {
+    dispatch(leerNotificacion(id))
   }
 
   return (
@@ -37,7 +45,7 @@ function BuzonDrawer({ idioma, mensajes, onDescartar, isOpen, onClose }) {
               <BuzonItem
                 idioma={idioma}
                 reserva={reserva}
-                onDescartar={onDescartar}
+                onDescartar={handleDescartar}
                 key={reserva.id}
               />
             ))
