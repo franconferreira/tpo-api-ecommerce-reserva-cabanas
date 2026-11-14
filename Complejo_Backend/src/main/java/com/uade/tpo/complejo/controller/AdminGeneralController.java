@@ -1,7 +1,7 @@
 package com.uade.tpo.complejo.controller;
 
 import com.uade.tpo.complejo.entity.Reserva;
-import com.uade.tpo.complejo.entity.Usuario;
+import com.uade.tpo.complejo.dto.response.UsuarioResponseDTO;
 import com.uade.tpo.complejo.entity.enums.Role;
 import com.uade.tpo.complejo.service.ReservaService;
 import com.uade.tpo.complejo.service.UsuarioService;
@@ -23,12 +23,12 @@ public class AdminGeneralController {
     private final ReservaService reservaService;
 
     @GetMapping("/usuarios")
-    public ResponseEntity<List<Usuario>> obtenerUsuarios() {
+    public ResponseEntity<List<UsuarioResponseDTO>> obtenerUsuarios() {
         return ResponseEntity.ok(usuarioService.obtenerTodosLosUsuarios());
     }
 
     @PutMapping("/usuarios/{id}/rol")
-    public ResponseEntity<Usuario> cambiarRol(@PathVariable Long id, @RequestBody RoleUpdateRequest request) {
+    public ResponseEntity<UsuarioResponseDTO> cambiarRol(@PathVariable Long id, @RequestBody RoleUpdateRequest request) {
         return ResponseEntity.ok(usuarioService.cambiarRol(id, Role.valueOf(request.getRol())));
     }
 

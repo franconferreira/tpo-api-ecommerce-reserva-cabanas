@@ -1,5 +1,6 @@
 package com.uade.tpo.complejo.service.impl;
 
+import com.uade.tpo.complejo.entity.enums.Role;
 import com.uade.tpo.complejo.entity.Carrito;
 import com.uade.tpo.complejo.repository.CarritoRepository;
 import com.uade.tpo.complejo.dto.request.AuthRequest;
@@ -33,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
                 .apellido(request.getApellido())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .rol(request.getRol())
+                .rol(Role.ROLE_CLIENTE)
                 .activo(true)
                 .build();
         usuarioRepository.save(user);

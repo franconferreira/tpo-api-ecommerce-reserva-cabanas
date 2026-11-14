@@ -1,5 +1,6 @@
 package com.uade.tpo.complejo.service.impl;
 
+import com.uade.tpo.complejo.dto.response.UsuarioResponseDTO;
 import com.uade.tpo.complejo.entity.Usuario;
 import com.uade.tpo.complejo.entity.enums.Role;
 import com.uade.tpo.complejo.repository.UsuarioRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,15 +18,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public List<Usuario> obtenerTodosLosUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> obtenerTodosLosUsuarios() {
+        return usuarioRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Usuario cambiarRol(Long id, Role nuevoRol) {
+    public UsuarioResponseDTO cambiarRol(Long id, Role nuevoRol) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow();
         usuario.setRol(nuevoRol);
-        return usuarioRepository.save(usuario);
+        return mapToDTO(usuarioRepository.save(usuario));
     }
 
     @Override
@@ -39,5 +41,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow();
         usuario.setActivo(true);
         usuarioRepository.save(usuario);
+    }
+
+    private UsuarioResponseDTO mapToDTO(Usuario usuario) {
+        return UsuarioResponseDTO.builder()
+                .id(usuario.getId())
+                .username(usuario.getNombreDeUsuario())
+                .nombre(usuario.getNombre())
+                .apellido(usuario.getApellido())
+                .email(usuario.getEmail())
+                .rol(usuario.getRol().name())
+                .activo(usuario.getActivo())
+                .build();
     }
 }
