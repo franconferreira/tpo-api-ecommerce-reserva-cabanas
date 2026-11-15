@@ -6,8 +6,9 @@ import CampoFormulario from '../ui/CampoFormulario'
 import textos from '../../i18n/textos'
 import { register, limpiarAvisos } from '../../Redux/authSlice'
 import './AuthForm.css'
+import { EsquinasPanel, BotonTema } from '../ornamentos/Ornamentos'
 
-function RegisterForm({ idioma, setIdioma }) {
+function RegisterForm({ idioma, setIdioma, tema, onToggleTema }) {
   const dispatch = useDispatch()
   const errorRegistro = useSelector((state) => state.auth.errorRegistro)
   const [username, setUsername] = useState('')
@@ -65,7 +66,9 @@ function RegisterForm({ idioma, setIdioma }) {
   return (
     <div className="auth-panel-form">
       <div className="auth-form-box">
+        <EsquinasPanel variante={0} />
         <div className="auth-lang-bar">
+          <BotonTema tema={tema} onToggle={onToggleTema} idioma={idioma} />
           <button type="button" className="nav-btn-lang" onClick={handleToggleIdioma}>
             {textos[idioma].nav.idioma}
           </button>

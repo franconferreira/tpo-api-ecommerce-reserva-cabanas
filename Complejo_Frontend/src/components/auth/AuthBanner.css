@@ -1,7 +1,12 @@
 .auth-banner {
   flex: 1;
-  background-color: #153c2b;
-  color: #ffffff;
+  /* Foto del bosque con un velo del color del tema (claro: marrón cálido, oscuro: verde noche) */
+  background:
+    linear-gradient(180deg, var(--velo-banner), var(--velo-banner)),
+    url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200') center / cover;
+  color: #fff8ea;
+  border-right: 1px solid var(--marco);
+  box-shadow: inset -6px 0 0 var(--marco-hueco), inset -7px 0 0 var(--marco-brillo);
   padding: 3em 4em;
   display: flex;
   flex-direction: column;
@@ -9,10 +14,11 @@
 }
 
 .auth-brand {
-  color: #ffffff;
-  font-family: 'Playfair Display', Georgia, serif;
+  color: #fff8ea;
+  font-family: 'Cinzel Decorative', Georgia, serif;
   font-size: 1.4em;
-  font-weight: 700;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-decoration: none;
 }
 

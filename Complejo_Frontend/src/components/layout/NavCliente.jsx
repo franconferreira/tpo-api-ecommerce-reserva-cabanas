@@ -1,9 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import textos from '../../i18n/textos'
+import { BotonTema, IconoTema } from '../ornamentos/Ornamentos'
 
 function NavCliente({
   idioma,
+  tema,
+  onToggleTema,
   onToggleIdioma,
   pathname,
   isLogged,
@@ -33,6 +36,7 @@ function NavCliente({
             className={pathname === '/catalogo' || pathname === '/' ? 'nav-link active-text' : 'nav-link'}
           >
             {t.explorar}
+            {(pathname === '/catalogo' || pathname === '/') && <IconoTema className="nav-marca" />}
           </Link>
         </li>
         <li>
@@ -41,6 +45,7 @@ function NavCliente({
             className={pathname === '/mapa-3d' ? 'nav-link active-text' : 'nav-link'}
           >
             🗺️ Recorrido 3D
+            {pathname === '/mapa-3d' && <IconoTema className="nav-marca" />}
           </Link>
         </li>
         {isLogged && (
@@ -50,12 +55,16 @@ function NavCliente({
               className={pathname === '/mis-reservas' ? 'nav-link active-text' : 'nav-link'}
             >
               {t.misReservas}
+            {pathname === '/mis-reservas' && <IconoTema className="nav-marca" />}
             </Link>
           </li>
         )}
       </ul>
 
       <ul className="nav-list nav-actions">
+        <li>
+          <BotonTema tema={tema} onToggle={onToggleTema} idioma={idioma} />
+        </li>
         <li>
           <button type="button" className="nav-btn-lang" onClick={onToggleIdioma}>
             {t.idioma}

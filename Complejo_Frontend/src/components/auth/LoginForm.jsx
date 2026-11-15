@@ -6,8 +6,9 @@ import CampoFormulario from '../ui/CampoFormulario'
 import textos from '../../i18n/textos'
 import { login, limpiarAvisos } from '../../Redux/authSlice'
 import './AuthForm.css'
+import { EsquinasPanel, BotonTema } from '../ornamentos/Ornamentos'
 
-function LoginForm({ idioma, setIdioma }) {
+function LoginForm({ idioma, setIdioma, tema, onToggleTema }) {
   const dispatch = useDispatch()
   const { cuentaDesactivada, errorLogin } = useSelector((state) => state.auth)
   const [email, setEmail] = useState('')
@@ -66,7 +67,9 @@ function LoginForm({ idioma, setIdioma }) {
   return (
     <div className="auth-panel-form">
       <div className="auth-form-box">
+        <EsquinasPanel variante={2} />
         <div className="auth-lang-bar">
+          <BotonTema tema={tema} onToggle={onToggleTema} idioma={idioma} />
           <button type="button" className="nav-btn-lang" onClick={handleToggleIdioma}>
             {textos[idioma].nav.idioma}
           </button>

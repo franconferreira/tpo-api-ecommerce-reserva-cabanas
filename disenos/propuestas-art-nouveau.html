@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuestas Art Nouveau élfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Federo&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Marcellus+SC&family=Tangerine:wght@700&family=Cormorant:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1b1a17; color: #eee; font-family: 'Cormorant Garamond', serif; }
+  .etiqueta {
+    max-width: 1200px; margin: 0 auto; padding: 48px 24px 16px;
+    font-family: 'Cormorant Garamond', serif; color: #d8cfb8;
+  }
+  .etiqueta h2 { font-family: 'Cinzel Decorative', serif; font-size: 28px; letter-spacing: 2px; color: #e9dfc4; }
+  .etiqueta p { font-size: 19px; font-style: italic; opacity: .85; margin-top: 6px; }
+  .demo { max-width: 1200px; margin: 0 auto 24px; border-radius: 6px; overflow: hidden; position: relative; }
+  svg.orn { display: block; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ================= VARIANTE 1: LUZ DE LUNA ================= */
+  .v1 {
+    --fondo: #0c1719; --panel: #12242a; --plata: #d6e0dd; --oro: #e2d29c; --jade: #7fb8a8; --texto: #c9d6d2;
+    background:
+      radial-gradient(1px 1px at 10% 20%, #fff8 50%, transparent 51%),
+      radial-gradient(1px 1px at 30% 70%, #fff6 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 70% 15%, #fffa 50%, transparent 51%),
+      radial-gradient(1px 1px at 85% 60%, #fff7 50%, transparent 51%),
+      radial-gradient(1px 1px at 50% 40%, #fff5 50%, transparent 51%),
+      radial-gradient(ellipse at 50% -10%, #2b4c4f 0%, transparent 60%),
+      var(--fondo);
+    background-size: 260px 260px, 340px 340px, 420px 420px, 300px 300px, 200px 200px, 100% 100%, 100% 100%;
+    color: var(--texto); padding-bottom: 56px;
+  }
+  .v1 nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 48px; border-bottom: 1px solid #d6e0dd33; position: relative; }
+  .v1 nav::after { content: ''; position: absolute; left: 48px; right: 48px; bottom: -4px; border-bottom: 1px solid #d6e0dd22; }
+  .v1 .logo { font-family: 'Cinzel Decorative', serif; font-size: 22px; color: var(--plata); letter-spacing: 3px; text-shadow: 0 0 18px #9fd6c855; }
+  .v1 .links { display: flex; gap: 34px; font-family: 'Cinzel Decorative', serif; font-size: 13px; letter-spacing: 2px; }
+  .v1 .links span { color: var(--texto); }
+  .v1 .links span.on { color: var(--oro); border-bottom: 1px solid var(--oro); padding-bottom: 4px; }
+  .v1 .boton {
+    font-family: 'Cinzel Decorative', serif; font-size: 13px; letter-spacing: 2px; color: var(--fondo);
+    background: linear-gradient(180deg, #f3e7bf, #c9b26e); padding: 10px 26px; border-radius: 40px 4px 40px 4px;
+    box-shadow: 0 0 0 1px #f3e7bf, 0 0 0 4px var(--fondo), 0 0 0 5px #c9b26e88, 0 0 24px #e2d29c44;
+  }
+  .v1 .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; padding: 64px 72px 40px; }
+  .v1 .arco {
+    position: relative; height: 470px; border-radius: 260px 260px 6px 6px; padding: 10px;
+    border: 1px solid var(--plata); box-shadow: 0 0 0 6px var(--fondo), 0 0 0 7px #d6e0dd77, 0 0 60px #7fb8a833;
+  }
+  .v1 .arco .img { height: 100%; border-radius: 250px 250px 2px 2px; overflow: hidden; filter: saturate(.75) hue-rotate(-10deg) brightness(.9); }
+  .v1 .arco .esquina { position: absolute; width: 120px; height: 120px; color: var(--plata); }
+  .v1 .arco .esquina.izq { left: -38px; bottom: -34px; }
+  .v1 .arco .esquina.der { right: -38px; bottom: -34px; transform: scaleX(-1); }
+  .v1 .arco .luna { position: absolute; top: -34px; left: 50%; transform: translateX(-50%); width: 64px; height: 64px; z-index: 2; color: var(--oro); filter: drop-shadow(0 0 10px #e2d29c88); }
+  .v1 .sobre { font-family: 'Cinzel Decorative', serif; color: var(--jade); letter-spacing: 5px; font-size: 13px; }
+  .v1 h1 { font-family: 'Cinzel Decorative', serif; font-weight: 400; font-size: 52px; line-height: 1.15; color: var(--plata); margin: 14px 0 6px; text-shadow: 0 0 30px #9fd6c844; }
+  .v1 h1 em { font-style: normal; color: var(--oro); }
+  .v1 .divisor { color: var(--oro); width: 340px; margin: 18px 0; }
+  .v1 .bajada { font-size: 22px; line-height: 1.55; font-style: italic; color: var(--texto); max-width: 470px; }
+  .v1 .acciones { display: flex; gap: 22px; align-items: center; margin-top: 30px; }
+  .v1 .boton-sec { font-family: 'Cinzel Decorative', serif; font-size: 13px; letter-spacing: 2px; color: var(--plata); border-bottom: 1px solid var(--plata); padding-bottom: 4px; }
+  .v1 .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; padding: 30px 72px 0; }
+  .v1 .tarjeta { position: relative; background: #12242acc; border: 1px solid #d6e0dd55; border-radius: 160px 160px 4px 4px; padding: 12px 12px 26px; text-align: center; }
+  .v1 .tarjeta::before { content: ''; position: absolute; inset: 6px; border: 1px solid #d6e0dd22; border-radius: 154px 154px 2px 2px; pointer-events: none; }
+  .v1 .tarjeta .img { height: 210px; border-radius: 150px 150px 2px 2px; overflow: hidden; filter: saturate(.7) brightness(.9); }
+  .v1 .tarjeta h3 { font-family: 'Cinzel Decorative', serif; font-weight: 400; font-size: 19px; color: var(--plata); margin: 20px 0 4px; letter-spacing: 1px; }
+  .v1 .tarjeta .tipo { font-size: 15px; font-style: italic; color: var(--jade); }
+  .v1 .tarjeta .mini { color: var(--oro); width: 130px; margin: 12px auto; }
+  .v1 .tarjeta .precio { font-family: 'Cinzel Decorative', serif; color: var(--oro); font-size: 22px; }
+  .v1 .tarjeta .precio small { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--texto); font-style: italic; }
+
+  /* ================= VARIANTE 2: HOJA DORADA ================= */
+  .v2 {
+    --pergamino: #f2e6cb; --tinta: #3a2c1a; --oro: #b8913f; --oro2: #e8cf86; --oliva: #5a6a33; --vino: #7b2f2a;
+    background:
+      radial-gradient(circle at 20% 10%, #fff8e6 0%, transparent 45%),
+      radial-gradient(circle at 90% 80%, #e6d3a6 0%, transparent 50%),
+      repeating-radial-gradient(circle at 50% 50%, #0000 0 3px, #8a6a2a08 3px 4px),
+      var(--pergamino);
+    color: var(--tinta); padding: 18px 18px 56px;
+  }
+  .v2 .marco-pagina { border: 3px double var(--oro); padding: 4px; }
+  .v2 .marco-pagina > .interior { border: 1px solid var(--oro); padding-bottom: 50px; position: relative; }
+  .v2 nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 44px; background: linear-gradient(90deg, #3a2c1a, #4b3a22 50%, #3a2c1a); color: var(--oro2); border-bottom: 3px solid var(--oro); }
+  .v2 .logo { font-family: 'Federo', serif; font-size: 26px; letter-spacing: 3px; background: linear-gradient(180deg, #f8e7a8, #b8913f 60%, #f1dc94); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .v2 .links { display: flex; gap: 30px; font-family: 'Federo', serif; font-size: 15px; letter-spacing: 1.5px; }
+  .v2 .links .on { color: #fff3c9; text-decoration: underline wavy #b8913f; text-underline-offset: 7px; }
+  .v2 .boton { font-family: 'Federo', serif; letter-spacing: 1.5px; font-size: 15px; color: #3a2c1a; padding: 10px 28px; background: linear-gradient(180deg, #f8e7a8, #c9a24c 55%, #f1dc94); border: 1px solid #fff3c9; border-radius: 3px; box-shadow: 0 0 0 2px #3a2c1a, 0 0 0 3px var(--oro); }
+  .v2 .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 56px 64px 30px; }
+  .v2 .halo { position: relative; width: 470px; height: 470px; margin: 0 auto; }
+  .v2 .halo .rayos { position: absolute; inset: 0; color: var(--oro); }
+  .v2 .halo .circulo { position: absolute; inset: 58px; border-radius: 50%; overflow: hidden; border: 6px solid transparent; background: linear-gradient(#0000,#0000) padding-box, linear-gradient(135deg, #f8e7a8, #a77d2e, #f1dc94, #8a6420) border-box; box-shadow: 0 0 0 3px var(--pergamino), 0 0 0 5px var(--vino); }
+  .v2 .halo .circulo img { filter: sepia(.35) saturate(.9); }
+  .v2 .sobre { font-family: 'Federo', serif; letter-spacing: 6px; color: var(--vino); font-size: 14px; }
+  .v2 h1 { font-family: 'Federo', serif; font-weight: 400; font-size: 58px; line-height: 1.08; margin: 12px 0; color: var(--tinta); }
+  .v2 h1 .dorado { background: linear-gradient(180deg, #d9b45a, #8a6420 70%, #c9a24c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .v2 .capitular { float: left; font-family: 'Federo', serif; font-size: 74px; line-height: .8; padding: 10px 12px 4px; margin: 4px 12px 0 0; color: var(--pergamino); background: var(--oliva); border: 2px solid var(--oro); box-shadow: 0 0 0 3px var(--pergamino), 0 0 0 4px var(--oro); }
+  .v2 .bajada { font-family: 'EB Garamond', serif; font-size: 20px; line-height: 1.6; max-width: 500px; }
+  .v2 .divisor { color: var(--oro); width: 380px; margin: 22px 0; }
+  .v2 .acciones { display: flex; gap: 20px; align-items: center; margin-top: 26px; }
+  .v2 .boton-sec { font-family: 'Federo', serif; color: var(--vino); border: 1px solid var(--vino); padding: 9px 22px; border-radius: 30px; letter-spacing: 1px; }
+  .v2 .cenefa { height: 26px; margin: 24px 0 30px; color: var(--oliva); }
+  .v2 .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 56px; }
+  .v2 .tarjeta { background: #fbf4e2; border: 2px solid var(--oro); outline: 1px solid var(--oro); outline-offset: 5px; position: relative; }
+  .v2 .tarjeta .banda { background: var(--oliva); color: var(--oro2); font-family: 'Federo', serif; text-align: center; letter-spacing: 3px; font-size: 13px; padding: 7px; border-bottom: 2px solid var(--oro); }
+  .v2 .tarjeta .img { height: 200px; margin: 14px; border-radius: 50% 50% 0 0 / 30% 30% 0 0; overflow: hidden; border: 2px solid var(--oro); }
+  .v2 .tarjeta .img img { filter: sepia(.3); }
+  .v2 .tarjeta .cuerpo { padding: 0 18px 22px; text-align: center; }
+  .v2 .tarjeta h3 { font-family: 'Federo', serif; font-weight: 400; font-size: 22px; }
+  .v2 .tarjeta p { font-family: 'EB Garamond', serif; font-style: italic; font-size: 16px; margin: 6px 0 12px; color: #5b4a2e; }
+  .v2 .tarjeta .precio { font-family: 'Federo', serif; font-size: 24px; color: var(--vino); }
+  .v2 .tarjeta .flor { position: absolute; width: 44px; height: 44px; z-index: 2; color: var(--oro); }
+  .v2 .tarjeta .flor.a { top: -16px; left: -16px; }
+  .v2 .tarjeta .flor.b { top: -16px; right: -16px; transform: scaleX(-1); }
+
+  /* ================= VARIANTE 3: VITRAL DEL ALBA (v2, con profundidad) ================= */
+  .v3 {
+    --marfil: #f7f1e3; --plomo: #2a241d; --oro: #b8913f; --oro2: #ecd08a;
+    --esmeralda: #2e7b59; --zafiro: #2f5f8c; --rosa: #b65a70; --ambar: #d79d3b; --lila: #8a6fa8; --texto: #3d342a;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% -8%, #ffe7b0cc 0%, #ffd9a000 70%),
+      repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff3d655 6deg 8deg, #ffffff00 8deg 14deg),
+      radial-gradient(ellipse 30% 22% at 22% 78%, #2e7b5922 0%, transparent 70%),
+      radial-gradient(ellipse 26% 20% at 52% 92%, #b65a7020 0%, transparent 70%),
+      radial-gradient(ellipse 28% 22% at 82% 74%, #2f5f8c22 0%, transparent 70%),
+      linear-gradient(180deg, #fbf6ea, #f1e8d4);
+    color: var(--texto); padding-bottom: 60px;
+  }
+  .v3 nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: #fbf6eacc; border-bottom: 4px solid var(--plomo); position: relative; }
+  .v3 nav::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -16px; height: 12px;
+    background:
+      linear-gradient(180deg, #ffffff88 0%, #ffffff00 45%, #00000022 100%),
+      repeating-linear-gradient(90deg, var(--esmeralda) 0 46px, var(--plomo) 46px 50px, var(--ambar) 50px 96px, var(--plomo) 96px 100px, var(--zafiro) 100px 146px, var(--plomo) 146px 150px, var(--rosa) 150px 196px, var(--plomo) 196px 200px, var(--lila) 200px 246px, var(--plomo) 246px 250px);
+    border-bottom: 4px solid var(--plomo); box-shadow: 0 10px 22px -10px #2a241d66;
+  }
+  .v3 .logo { font-family: 'Marcellus SC', serif; font-size: 24px; letter-spacing: 3px; color: var(--plomo); }
+  .v3 .logo span { font-family: 'Tangerine', cursive; font-size: 44px; letter-spacing: 0; margin-left: 6px; background: linear-gradient(180deg, #3e9b72, #1f5a40); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .v3 .links { display: flex; gap: 32px; font-family: 'Marcellus SC', serif; letter-spacing: 1.5px; font-size: 15px; }
+  .v3 .links .on { color: var(--esmeralda); position: relative; }
+  .v3 .links .on::after { content: ''; position: absolute; left: 50%; bottom: -16px; width: 8px; height: 8px; transform: translateX(-50%) rotate(45deg); background: var(--ambar); border: 2px solid var(--plomo); }
+  .v3 .boton {
+    font-family: 'Marcellus SC', serif; letter-spacing: 1.5px; color: #fffaf0; padding: 11px 28px;
+    background: radial-gradient(ellipse at 50% 20%, #5fc195 0%, #2e7b59 55%, #1d5139 100%);
+    border: 3px solid var(--plomo); border-radius: 30px 30px 6px 6px;
+    box-shadow: inset 0 2px 0 #ffffff77, inset 0 -3px 0 #00000033, 0 0 0 2px var(--oro2), 0 8px 18px -6px #2e7b5999;
+    text-shadow: 0 1px 0 #00000055;
+  }
+  .v3 .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; padding: 70px 72px 40px; }
+  .v3 .marco-vitral { position: relative; height: 520px; }
+  .v3 .marco-vitral::before { content: ''; position: absolute; left: 6%; right: 6%; bottom: -46px; height: 70px; border-radius: 50%; background: radial-gradient(ellipse at 25% 50%, #2e7b5966, transparent 60%), radial-gradient(ellipse at 50% 50%, #d79d3b66, transparent 60%), radial-gradient(ellipse at 75% 50%, #b65a7066, transparent 60%); filter: blur(14px); }
+  .v3 .marco-vitral svg.vitral { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 22px 30px #2a241d55); }
+  .v3 .marco-vitral .esquina { position: absolute; width: 120px; height: 120px; color: var(--oro); }
+  .v3 .marco-vitral .esquina.izq { left: -30px; bottom: -30px; }
+  .v3 .marco-vitral .esquina.der { right: -30px; bottom: -30px; transform: scaleX(-1); }
+  .v3 .marco-vitral .sol { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; color: var(--oro); filter: drop-shadow(0 0 12px #ffcf6aaa); z-index: 2; }
+  .v3 .sobre { font-family: 'Tangerine', cursive; font-size: 44px; color: var(--rosa); line-height: 1; }
+  .v3 h1 { font-family: 'Marcellus SC', serif; font-weight: 400; font-size: 54px; line-height: 1.12; margin: 8px 0 6px; color: var(--plomo); text-shadow: 0 2px 0 #ffffffaa; }
+  .v3 h1 .verde { background: linear-gradient(180deg, #3e9b72 0%, #2e7b59 50%, #1d5139 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+  .v3 .divisor { width: 360px; margin: 18px 0; color: var(--oro); }
+  .v3 .bajada { font-family: 'Cormorant', serif; font-size: 23px; line-height: 1.55; max-width: 500px; font-style: italic; }
+  .v3 .acciones { display: flex; gap: 24px; margin-top: 30px; align-items: center; }
+  .v3 .boton-sec { font-family: 'Marcellus SC', serif; letter-spacing: 1px; color: var(--zafiro); border-bottom: 3px double var(--zafiro); padding-bottom: 3px; }
+  .v3 .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; padding: 40px 72px 0; }
+  .v3 .tarjeta {
+    position: relative; border: 4px solid var(--plomo); border-radius: 160px 160px 8px 8px; background: linear-gradient(180deg, #fffdf6, #f6eedb);
+    box-shadow: inset 0 0 0 2px #ffffffcc, inset 0 0 0 5px var(--oro2), 0 26px 40px -22px var(--c1), 0 10px 18px -10px #2a241d55;
+    padding: 10px 10px 24px; text-align: center;
+  }
+  .v3 .tarjeta .rosa-top { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; z-index: 2; }
+  .v3 .tarjeta .img { height: 210px; position: relative; border: 3px solid var(--plomo); border-radius: 150px 150px 4px 4px; overflow: hidden; }
+  .v3 .tarjeta .img img { filter: saturate(1.05) contrast(1.02); }
+  .v3 .tarjeta .img::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% -10%, #fff3cf99 0%, transparent 50%), linear-gradient(180deg, transparent 60%, var(--c1) 140%); }
+  .v3 .tarjeta h3 { font-family: 'Marcellus SC', serif; font-weight: 400; font-size: 21px; margin-top: 18px; color: var(--plomo); }
+  .v3 .tarjeta .tipo { font-family: 'Tangerine', cursive; font-size: 32px; color: var(--c3); line-height: 1.05; }
+  .v3 .tarjeta .mini { width: 130px; margin: 6px auto 8px; color: var(--oro); }
+  .v3 .tarjeta .precio { font-family: 'Marcellus SC', serif; font-size: 24px; color: var(--plomo); }
+  .v3 .tarjeta .precio small { font-family: 'Cormorant', serif; font-style: italic; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="hoja" viewBox="0 0 24 10"><path d="M0 5 C 6 -1, 18 -1, 24 5 C 18 11, 6 11, 0 5 Z" fill="currentColor"/><path d="M1 5 H 23" stroke="#0004" stroke-width=".6"/></symbol>
+    <symbol id="esquina" viewBox="0 0 120 120">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M6 116 C 6 70, 22 34, 62 18 C 86 9, 108 12, 110 28 C 112 42, 94 46, 88 36 C 84 29, 92 22, 98 27"/>
+        <path d="M14 116 C 18 84, 34 58, 58 46 C 72 39, 84 44, 80 54 C 77 61, 68 58, 70 52"/>
+        <path d="M6 116 C 30 112, 52 100, 64 82 C 72 70, 66 60, 58 66"/>
+      </g>
+      <use href="#hoja" x="24" y="52" width="22" height="9" transform="rotate(-50 35 56)" style="color:currentColor"/>
+      <use href="#hoja" x="44" y="22" width="20" height="8" transform="rotate(-25 54 26)"/>
+      <use href="#hoja" x="40" y="88" width="20" height="8" transform="rotate(-35 50 92)"/>
+      <circle cx="98" cy="27" r="2.4" fill="currentColor"/><circle cx="70" cy="52" r="2" fill="currentColor"/>
+    </symbol>
+    <symbol id="divisor" viewBox="0 0 400 40">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <path d="M200 20 C 170 20, 160 6, 130 10 C 100 14, 90 30, 60 26 C 40 23, 30 14, 6 20"/>
+        <path d="M200 20 C 230 20, 240 6, 270 10 C 300 14, 310 30, 340 26 C 360 23, 370 14, 394 20"/>
+        <path d="M150 12 C 140 2, 124 4, 126 14 C 128 22, 140 18, 136 12"/>
+        <path d="M250 12 C 260 2, 276 4, 274 14 C 272 22, 260 18, 264 12"/>
+      </g>
+      <path d="M200 6 L 206 20 L 200 34 L 194 20 Z" fill="currentColor"/>
+      <circle cx="184" cy="20" r="2.4" fill="currentColor"/><circle cx="216" cy="20" r="2.4" fill="currentColor"/>
+      <use href="#hoja" x="86" y="24" width="18" height="7" transform="rotate(20 95 27)"/>
+      <use href="#hoja" x="296" y="24" width="18" height="7" transform="rotate(-20 305 27)"/>
+    </symbol>
+    <symbol id="luna" viewBox="0 0 64 64">
+      <path d="M40 6 A 26 26 0 1 0 58 44 A 20 20 0 1 1 40 6 Z" fill="currentColor"/>
+      <g fill="currentColor"><path d="M14 12 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5Z"/><path d="M52 14 l1 2.5 2.5 1 -2.5 1 -1 2.5 -1 -2.5 -2.5 -1 2.5 -1Z"/></g>
+    </symbol>
+    <symbol id="flor" viewBox="0 0 44 44">
+      <g fill="currentColor"><circle cx="22" cy="22" r="5"/>
+      <path d="M22 2 C 27 10, 27 14, 22 17 C 17 14, 17 10, 22 2Z"/><path d="M22 42 C 27 34, 27 30, 22 27 C 17 30, 17 34, 22 42Z"/>
+      <path d="M2 22 C 10 17, 14 17, 17 22 C 14 27, 10 27, 2 22Z"/><path d="M42 22 C 34 17, 30 17, 27 22 C 30 27, 34 27, 42 22Z"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ VARIANTE 1 ============ -->
+<div class="etiqueta"><h2>I · Luz de Luna</h2><p>Noche en el bosque: verde profundo, plata y oro pálido, arcos altos y estrellas. Lo más "élfico" y etéreo de las tres.</p></div>
+<div class="demo v1">
+  <nav>
+    <div class="logo">Whispering Pines</div>
+    <div class="links"><span class="on">Explorar</span><span>Recorrido 3D</span><span>Mis Reservas</span></div>
+    <div class="boton">Ingresar</div>
+  </nav>
+  <section class="hero">
+    <div class="arco">
+      <svg class="orn luna" viewBox="0 0 64 64"><use href="#luna"/></svg>
+      <div class="img"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=900" alt=""></div>
+      <svg class="orn esquina izq" viewBox="0 0 120 120"><use href="#esquina"/></svg>
+      <svg class="orn esquina der" viewBox="0 0 120 120"><use href="#esquina"/></svg>
+    </div>
+    <div>
+      <div class="sobre">REFUGIO BAJO LAS ESTRELLAS</div>
+      <h1>Cabañas entre <em>pinos antiguos</em></h1>
+      <svg class="orn divisor" viewBox="0 0 400 40"><use href="#divisor"/></svg>
+      <p class="bajada">Donde la luz de la luna se filtra entre las ramas y el lago guarda silencio. Elegí tu refugio y quedate el tiempo que el bosque te permita.</p>
+      <div class="acciones"><span class="boton">Ver espacios</span><span class="boton-sec">Recorrido 3D</span></div>
+    </div>
+  </section>
+  <section class="tarjetas">
+    <div class="tarjeta"><div class="img"><img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=600" alt=""></div><h3>Cabaña del Cedro</h3><div class="tipo">Cabaña privada · 4 a 5 huéspedes</div><svg class="orn mini" viewBox="0 0 400 40"><use href="#divisor"/></svg><div class="precio">USD 120 <small>por noche</small></div></div>
+    <div class="tarjeta"><div class="img"><img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=600" alt=""></div><h3>Refugio Los Pinos</h3><div class="tipo">Cabaña de troncos · hogar a leña</div><svg class="orn mini" viewBox="0 0 400 40"><use href="#divisor"/></svg><div class="precio">USD 140 <small>por noche</small></div></div>
+    <div class="tarjeta"><div class="img"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=600" alt=""></div><h3>Chalet del Arroyo</h3><div class="tipo">Junto al agua · vista al lago</div><svg class="orn mini" viewBox="0 0 400 40"><use href="#divisor"/></svg><div class="precio">USD 135 <small>por noche</small></div></div>
+  </section>
+</div>
+
+<!-- ============ VARIANTE 2 ============ -->
+<div class="etiqueta"><h2>II · Hoja Dorada</h2><p>Manuscrito iluminado y afiche de Mucha: pergamino, oro, verde oliva y vino, halo de rayos, letra capitular.</p></div>
+<div class="demo v2">
+  <div class="marco-pagina"><div class="interior">
+    <nav>
+      <div class="logo">Whispering Pines</div>
+      <div class="links"><span class="on">Explorar</span><span>Recorrido 3D</span><span>Mis Reservas</span></div>
+      <div class="boton">Ingresar</div>
+    </nav>
+    <section class="hero">
+      <div class="halo">
+        <svg class="orn rayos" viewBox="0 0 470 470">
+          <g stroke="currentColor" fill="none">
+            <circle cx="235" cy="235" r="228" stroke-width="1"/>
+            <circle cx="235" cy="235" r="218" stroke-width="3"/>
+            <circle cx="235" cy="235" r="206" stroke-width="1" stroke-dasharray="2 6"/>
+            <g stroke-width="1.2">
+              <path d="M235 7 V 30 M235 440 V 463 M7 235 H 30 M440 235 H 463"/>
+              <path d="M74 74 L 90 90 M396 74 L 380 90 M74 396 L 90 380 M396 396 L 380 380"/>
+            </g>
+          </g>
+          <g fill="currentColor">
+            <circle cx="235" cy="17" r="5"/><circle cx="235" cy="453" r="5"/><circle cx="17" cy="235" r="5"/><circle cx="453" cy="235" r="5"/>
+          </g>
+          <g color="#5a6a33">
+            <use href="#hoja" x="150" y="14" width="40" height="16" transform="rotate(-20 170 22)"/>
+            <use href="#hoja" x="280" y="14" width="40" height="16" transform="rotate(20 300 22)"/>
+            <use href="#hoja" x="150" y="440" width="40" height="16" transform="rotate(20 170 448)"/>
+            <use href="#hoja" x="280" y="440" width="40" height="16" transform="rotate(-20 300 448)"/>
+          </g>
+        </svg>
+        <div class="circulo"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=900" alt=""></div>
+      </div>
+      <div>
+        <div class="sobre">COMPLEJO DEL BOSQUE</div>
+        <h1>Refugios de <span class="dorado">leyenda</span> junto al lago</h1>
+        <svg class="orn divisor" viewBox="0 0 400 40"><use href="#divisor"/></svg>
+        <p class="bajada"><span class="capitular">E</span>ntre robles centenarios y senderos de musgo, cada cabaña fue pensada como un pequeño santuario. Veinte por ciento menos en noches de temporada baja, y quince más al reservar varios espacios juntos.</p>
+        <div class="acciones"><span class="boton">Ver espacios</span><span class="boton-sec">Recorrido 3D</span></div>
+      </div>
+    </section>
+    <svg class="orn cenefa" viewBox="0 0 1200 26" preserveAspectRatio="none" width="100%">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M0 13 C 25 0, 50 26, 75 13 S 125 0, 150 13 S 200 26, 225 13 S 275 0, 300 13 S 350 26, 375 13 S 425 0, 450 13 S 500 26, 525 13 S 575 0, 600 13 S 650 26, 675 13 S 725 0, 750 13 S 800 26, 825 13 S 875 0, 900 13 S 950 26, 975 13 S 1025 0, 1050 13 S 1100 26, 1125 13 S 1175 0, 1200 13"/>
+      </g>
+    </svg>
+    <section class="tarjetas">
+      <div class="tarjeta"><svg class="orn flor a" viewBox="0 0 44 44"><use href="#flor"/></svg><svg class="orn flor b" viewBox="0 0 44 44"><use href="#flor"/></svg><div class="banda">CABAÑA PRIVADA</div><div class="img"><img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=600" alt=""></div><div class="cuerpo"><h3>Cabaña del Cedro</h3><p>Deck techado frente a la laguna</p><div class="precio">USD 120 · noche</div></div></div>
+      <div class="tarjeta"><svg class="orn flor a" viewBox="0 0 44 44"><use href="#flor"/></svg><svg class="orn flor b" viewBox="0 0 44 44"><use href="#flor"/></svg><div class="banda">CABAÑA DE TRONCOS</div><div class="img"><img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=600" alt=""></div><div class="cuerpo"><h3>Refugio Los Pinos</h3><p>Hogar a leña y cocina integrada</p><div class="precio">USD 140 · noche</div></div></div>
+      <div class="tarjeta"><svg class="orn flor a" viewBox="0 0 44 44"><use href="#flor"/></svg><svg class="orn flor b" viewBox="0 0 44 44"><use href="#flor"/></svg><div class="banda">SALÓN DE FIESTAS</div><div class="img"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=600" alt=""></div><div class="cuerpo"><h3>Galpón del Claro</h3><p>Para celebraciones bajo los pinos</p><div class="precio">USD 400 · noche</div></div></div>
+    </section>
+  </div></div>
+</div>
+
+<!-- ============ VARIANTE 3 ============ -->
+<div class="etiqueta"><h2>III · Vitral del Alba</h2><p>Versión clara, gemela de Luz de Luna: misma estructura, pero con vidrios que dejan pasar luz, plomo con bisel, oro, sol naciente y reflejos de color en el piso.</p></div>
+<div class="demo v3">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <radialGradient id="gEsm" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#8fe0b8"/><stop offset=".55" stop-color="#2e7b59"/><stop offset="1" stop-color="#173f2d"/></radialGradient>
+      <radialGradient id="gZaf" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#9cc6ef"/><stop offset=".55" stop-color="#2f5f8c"/><stop offset="1" stop-color="#17304a"/></radialGradient>
+      <radialGradient id="gRosa" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#f3b3c3"/><stop offset=".55" stop-color="#b65a70"/><stop offset="1" stop-color="#5e2737"/></radialGradient>
+      <radialGradient id="gAmb" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#ffe2a0"/><stop offset=".55" stop-color="#d79d3b"/><stop offset="1" stop-color="#7a5212"/></radialGradient>
+      <radialGradient id="gLila" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#d6c4f0"/><stop offset=".55" stop-color="#8a6fa8"/><stop offset="1" stop-color="#43325a"/></radialGradient>
+      <radialGradient id="gSol" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff7d6"/><stop offset=".6" stop-color="#f2cd6e"/><stop offset="1" stop-color="#b8862a"/></radialGradient>
+      <linearGradient id="gBrillo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <symbol id="sol" viewBox="0 0 80 80">
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M40 4 V 14 M40 66 V 76 M4 40 H 14 M66 40 H 76 M14.5 14.5 L 21.6 21.6 M58.4 58.4 L 65.5 65.5 M65.5 14.5 L 58.4 21.6 M21.6 58.4 L 14.5 65.5"/></g>
+        <circle cx="40" cy="40" r="18" fill="url(#gSol)" stroke="#2a241d" stroke-width="3"/>
+        <path d="M40 26 C 46 32, 46 48, 40 54 C 34 48, 34 32, 40 26 Z" fill="none" stroke="#2a241d" stroke-width="1.5"/>
+      </symbol>
+      <symbol id="rosetaV3" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="17" fill="url(#gAmb)" stroke="#2a241d" stroke-width="3"/>
+        <path d="M20 3 V 37 M3 20 H 37" stroke="#2a241d" stroke-width="2"/>
+        <circle cx="20" cy="20" r="6" fill="url(#gRosa)" stroke="#2a241d" stroke-width="2"/>
+        <circle cx="20" cy="20" r="17" fill="url(#gBrillo)"/>
+      </symbol>
+    </defs>
+  </svg>
+  <nav>
+    <div class="logo">Whispering<span>Pines</span></div>
+    <div class="links"><span class="on">Explorar</span><span>Recorrido 3D</span><span>Mis Reservas</span></div>
+    <div class="boton">Ingresar</div>
+  </nav>
+  <section class="hero">
+    <div class="marco-vitral">
+      <svg class="orn sol" viewBox="0 0 80 80"><use href="#sol"/></svg>
+      <svg class="vitral" viewBox="0 0 400 520" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <clipPath id="arcoV3"><path d="M24 506 V 210 C 24 98, 104 26, 200 26 C 296 26, 376 98, 376 210 V 506 Z"/></clipPath>
+        </defs>
+        <path d="M10 516 V 208 C 10 88, 96 12, 200 12 C 304 12, 390 88, 390 208 V 516 Z" fill="#f3e3b8" stroke="#b8913f" stroke-width="3"/>
+        <path d="M17 516 V 209 C 17 93, 100 19, 200 19 C 300 19, 383 93, 383 209 V 516" fill="none" stroke="#fff6dc" stroke-width="1.5"/>
+        <g clip-path="url(#arcoV3)">
+          <image href="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&q=80&w=900" x="40" y="110" width="320" height="400" preserveAspectRatio="xMidYMid slice" style="filter:brightness(1.08) saturate(1.1)"/>
+          <path d="M24 210 C 24 98, 104 26, 200 26 L 200 130 C 140 130, 94 162, 76 210 Z" fill="url(#gZaf)"/>
+          <path d="M376 210 C 376 98, 296 26, 200 26 L 200 130 C 260 130, 306 162, 324 210 Z" fill="url(#gLila)"/>
+          <path d="M24 210 H 76 L 92 340 L 24 372 Z" fill="url(#gEsm)"/>
+          <path d="M376 210 H 324 L 308 340 L 376 372 Z" fill="url(#gEsm)"/>
+          <path d="M24 372 L 92 340 L 120 506 H 24 Z" fill="url(#gAmb)"/>
+          <path d="M376 372 L 308 340 L 280 506 H 376 Z" fill="url(#gRosa)"/>
+          <path d="M76 210 C 94 162, 140 130, 200 130 C 260 130, 306 162, 324 210 L 308 340 L 280 506 H 120 L 92 340 Z" fill="#fff4cf" opacity=".12"/>
+          <circle cx="200" cy="96" r="38" fill="url(#gSol)"/>
+          <path d="M24 210 C 24 98, 104 26, 200 26 C 296 26, 376 98, 376 210 V 506 H 24 Z" fill="url(#gBrillo)"/>
+        </g>
+        <g fill="none" stroke="#2a241d" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M24 506 V 210 C 24 98, 104 26, 200 26 C 296 26, 376 98, 376 210 V 506 Z" stroke-width="10"/>
+          <path d="M200 26 V 58 M200 134 V 130 M76 210 C 94 162, 140 130, 200 130 C 260 130, 306 162, 324 210" stroke-width="6"/>
+          <path d="M24 210 H 76 L 92 340 L 24 372 M376 210 H 324 L 308 340 L 376 372 M92 340 L 120 506 M308 340 L 280 506" stroke-width="6"/>
+          <circle cx="200" cy="96" r="38" stroke-width="6"/>
+          <path d="M200 58 C 184 72, 184 120, 200 134 C 216 120, 216 72, 200 58" stroke-width="3"/>
+          <path d="M162 96 C 176 80, 224 80, 238 96 C 224 112, 176 112, 162 96" stroke-width="3"/>
+          <path d="M76 210 C 54 240, 50 282, 64 312 C 74 332, 96 328, 94 306" stroke-width="4"/>
+          <path d="M324 210 C 346 240, 350 282, 336 312 C 326 332, 304 328, 306 306" stroke-width="4"/>
+          <path d="M40 470 C 50 440, 70 430, 84 440" stroke-width="3"/>
+          <path d="M360 470 C 350 440, 330 430, 316 440" stroke-width="3"/>
+        </g>
+        <g fill="none" stroke="#fff3d0" stroke-opacity=".55" stroke-width="1.4">
+          <path d="M28 504 V 210 C 28 100, 106 30, 200 30"/>
+          <path d="M80 210 C 98 166, 142 134, 200 134"/>
+          <circle cx="200" cy="96" r="34" stroke-dasharray="40 200"/>
+        </g>
+        <g fill="#2a241d"><circle cx="76" cy="210" r="5"/><circle cx="324" cy="210" r="5"/><circle cx="92" cy="340" r="5"/><circle cx="308" cy="340" r="5"/></g>
+        <g fill="#ecd08a"><circle cx="76" cy="210" r="2"/><circle cx="324" cy="210" r="2"/><circle cx="92" cy="340" r="2"/><circle cx="308" cy="340" r="2"/></g>
+      </svg>
+      <svg class="orn esquina izq" viewBox="0 0 120 120"><use href="#esquina"/></svg>
+      <svg class="orn esquina der" viewBox="0 0 120 120"><use href="#esquina"/></svg>
+    </div>
+    <div>
+      <div class="sobre">bienvenidos al bosque</div>
+      <h1>Un santuario de <span class="verde">madera y luz</span></h1>
+      <svg class="orn divisor" viewBox="0 0 400 40"><use href="#divisor"/></svg>
+      <p class="bajada">Cabañas, habitaciones y un salón para celebrar, rodeados de pinos y agua clara. Cada estadía, un vitral distinto del mismo amanecer.</p>
+      <div class="acciones"><span class="boton">Ver espacios</span><span class="boton-sec">Recorrido 3D</span></div>
+    </div>
+  </section>
+  <section class="tarjetas">
+    <div class="tarjeta" style="--c1:#2e7b59;--c2:#2f5f8c;--c3:#2e7b59"><svg class="rosa-top" viewBox="0 0 40 40"><use href="#rosetaV3"/></svg><div class="img"><img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=600" alt=""></div><h3>Cabaña del Cedro</h3><div class="tipo">frente a la laguna</div><svg class="orn mini" viewBox="0 0 400 40"><use href="#divisor"/></svg><div class="precio">USD 120 <small>por noche</small></div></div>
+    <div class="tarjeta" style="--c1:#b65a70;--c2:#d79d3b;--c3:#b65a70"><svg class="rosa-top" viewBox="0 0 40 40"><use href="#rosetaV3"/></svg><div class="img"><img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=600" alt=""></div><h3>Refugio Los Pinos</h3><div class="tipo">hogar a leña</div><svg class="orn mini" viewBox="0 0 400 40"><use href="#divisor"/></svg><div class="precio">USD 140 <small>por noche</small></div></div>
+    <div class="tarjeta" style="--c1:#2f5f8c;--c2:#8a6fa8;--c3:#2f5f8c"><svg class="rosa-top" viewBox="0 0 40 40"><use href="#rosetaV3"/></svg><div class="img"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=600" alt=""></div><h3>Chalet del Arroyo</h3><div class="tipo">vista al lago</div><svg class="orn mini" viewBox="0 0 400 40"><use href="#divisor"/></svg><div class="precio">USD 135 <small>por noche</small></div></div>
+  </section>
+</div>
+
+</body>
+</html>

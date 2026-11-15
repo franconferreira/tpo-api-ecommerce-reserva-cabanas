@@ -2,6 +2,7 @@ import React from 'react'
 import CheckoutResumen from '../components/carrito/CheckoutResumen'
 import textos from '../i18n/textos'
 import './CheckoutView.css'
+import { EsquinasPanel } from '../components/ornamentos/Ornamentos'
 
 function CheckoutView({ idioma }) {
   const t = textos[idioma].checkout
@@ -9,6 +10,7 @@ function CheckoutView({ idioma }) {
   return (
     <div className="checkout-wrapper">
       <div className="checkout-box">
+        <EsquinasPanel variante={1} />
         <div className="checkout-header">
           <span className="checkout-overline">{t.overline}</span>
           <h1 className="checkout-title">{t.titulo}</h1>

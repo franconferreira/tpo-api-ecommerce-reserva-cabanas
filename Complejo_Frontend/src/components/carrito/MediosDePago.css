@@ -1,5 +1,5 @@
 .medios-pago-container {
-  background-color: #fbfbf9;
+  background-color: var(--superficie-2);
   border: 1px solid #e2e0d8;
   border-radius: 0.9em;
   padding: 1.5em;
@@ -14,13 +14,13 @@
   margin: 0 0 0.25em 0;
   font-size: 1.2em;
   font-weight: 700;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .medios-pago-subtitle {
   margin: 0;
   font-size: 0.88em;
-  color: #666666;
+  color: var(--texto-suave);
 }
 
 .medios-pago-tabs {
@@ -31,14 +31,14 @@
 }
 
 .medios-pago-tab {
-  background-color: #ffffff;
-  border: 1px solid #d5d3cb;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
   border-radius: 0.6em;
   padding: 0.8em 0.6em;
   cursor: pointer;
   font-size: 0.86em;
   font-weight: 600;
-  color: #333333;
+  color: var(--texto);
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -47,14 +47,14 @@
 }
 
 .medios-pago-tab:hover {
-  background-color: #f4f6f4;
-  border-color: #153c2b;
+  background-color: var(--superficie-2);
+  border-color: var(--orn);
 }
 
 .medios-pago-tab.active {
-  border: 2px solid #153c2b;
-  background-color: #eef5f1;
-  color: #153c2b;
+  border: 2px solid var(--orn);
+  background-color: var(--superficie-2);
+  color: var(--titulo);
   font-weight: 700;
 }
 
@@ -84,8 +84,8 @@
   height: 190px;
   border-radius: 14px;
   padding: 1.2em 1.4em;
-  background: linear-gradient(135deg, #184330 0%, #0d261b 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--fondo-fuerte) 0%, var(--fondo-fuerte-2) 100%);
+  color: var(--sobre-fuerte);
   box-shadow: 0 8px 20px rgba(13, 38, 27, 0.25);
   display: flex;
   flex-direction: column;
@@ -183,7 +183,7 @@
 .pago-input-group label {
   font-size: 0.84em;
   font-weight: 700;
-  color: #333333;
+  color: var(--texto);
 }
 
 .pago-input {
@@ -191,8 +191,8 @@
   border: 1px solid #cccccc;
   border-radius: 0.5em;
   font-size: 0.9em;
-  background-color: #ffffff;
-  color: #222222;
+  background-color: var(--superficie);
+  color: var(--titulo);
   transition: border-color 0.2s;
   box-sizing: border-box;
   width: 100%;
@@ -200,8 +200,8 @@
 
 .pago-input:focus {
   outline: none;
-  border-color: #153c2b;
-  box-shadow: 0 0 0 2px rgba(21, 60, 43, 0.15);
+  border-color: var(--orn);
+  box-shadow: 0 0 0 2px var(--orn-suave);
 }
 
 .pago-row-grid {
@@ -212,8 +212,8 @@
 
 /* Billetera Digital */
 .billetera-box {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
   border-radius: 0.7em;
   padding: 1.5em;
   display: flex;
@@ -234,7 +234,7 @@
   align-items: center;
   gap: 0.6em;
   padding: 0.8em 1em;
-  border: 1px solid #d5d3cb;
+  border: 1px solid var(--borde);
   border-radius: 0.5em;
   cursor: pointer;
   font-weight: 600;
@@ -244,13 +244,13 @@
 
 .billetera-opcion.active {
   border-color: #0088cc;
-  background-color: #f0f8ff;
-  color: #006699;
+  background-color: var(--superficie-2);
+  color: var(--acento);
 }
 
 .billetera-status {
-  background-color: #f7f9f7;
-  border: 1px solid #cbe0d3;
+  background-color: var(--superficie-2);
+  border: 1px solid var(--borde);
   border-radius: 0.5em;
   padding: 1em;
   display: flex;
@@ -261,20 +261,20 @@
 }
 
 .billetera-vinculada-badge {
-  color: #153c2b;
+  color: var(--titulo);
   font-weight: 700;
   font-size: 0.9em;
 }
 
 .billetera-email-simulado {
-  color: #555555;
+  color: var(--texto);
   font-size: 0.85em;
   display: block;
 }
 
 .btn-vincular-billetera {
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   border: none;
   border-radius: 0.4em;
   padding: 0.55em 1em;
@@ -282,6 +282,11 @@
   font-size: 0.85em;
   cursor: pointer;
   transition: background-color 0.2s;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }
 
 .btn-vincular-billetera:hover {
@@ -290,8 +295,8 @@
 
 /* Transferencia Bancaria */
 .transf-box {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
   border-radius: 0.7em;
   padding: 1.4em;
   display: flex;
@@ -303,7 +308,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 0.9em;
-  background-color: #f7f6f2;
+  background-color: var(--superficie-2);
   border-radius: 0.6em;
   padding: 1em;
   border: 1px solid #e5e3dc;
@@ -332,26 +337,26 @@
 .transf-item-valor {
   font-size: 0.9em;
   font-weight: 700;
-  color: #153c2b;
+  color: var(--titulo);
   font-family: monospace;
 }
 
 .btn-copiar-dato {
-  background: #ffffff;
+  background: var(--superficie);
   border: 1px solid #c2c0b6;
   border-radius: 0.35em;
   padding: 0.25em 0.6em;
   font-size: 0.75em;
   font-weight: 600;
   cursor: pointer;
-  color: #333333;
+  color: var(--texto);
   transition: all 0.2s;
 }
 
 .btn-copiar-dato:hover {
-  background: #eef5f1;
-  border-color: #153c2b;
-  color: #153c2b;
+  background: var(--superficie-2);
+  border-color: var(--orn);
+  color: var(--titulo);
 }
 
 .btn-copiar-dato.copiado {
@@ -362,8 +367,8 @@
 
 /* Recepción */
 .recepcion-box {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
   border-radius: 0.7em;
   padding: 1.4em;
   display: flex;
@@ -375,7 +380,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.8em;
-  background-color: #fff9ed;
+  background-color: var(--superficie);
   border: 1px solid #ffe1a6;
   border-radius: 0.5em;
   padding: 0.9em 1.1em;
@@ -395,7 +400,7 @@
   gap: 0.7em;
   font-size: 0.88em;
   font-weight: 600;
-  color: #333333;
+  color: var(--texto);
   cursor: pointer;
   user-select: none;
 }
@@ -405,4 +410,32 @@
   height: 1.1em;
   accent-color: #153c2b;
   cursor: pointer;
+}
+
+/* Simulación de la tarjeta: mismo verde oscuro en los dos temas, número y etiquetas en una línea */
+.tarjeta-mockup {
+  background: linear-gradient(135deg, #2f5a43 0%, #10271c 100%);
+  color: #ffffff;
+}
+
+.tarjeta-numero-display {
+  white-space: nowrap;
+  font-size: 0.95em;
+  letter-spacing: 0.05em;
+}
+
+.tarjeta-footer-display > * {
+  min-width: 0;
+}
+
+.tarjeta-campo-label {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.tarjeta-footer-display {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1em;
+  align-items: end;
 }

@@ -4,6 +4,7 @@ import AdminReservaRow from './AdminReservaRow'
 import textos from '../../../i18n/textos'
 import { fetchAdminReservas, cancelarReservaAdmin } from '../../../Redux/adminReservasSlice'
 import './AdminReservas.css'
+import { EsquinasPanel } from '../../ornamentos/Ornamentos'
 
 function AdminReservas({ idioma }) {
   const dispatch = useDispatch()
@@ -26,6 +27,7 @@ function AdminReservas({ idioma }) {
       {errorCancelar && <p className="admin-res-error">{t.errorCancelar}</p>}
 
       <div className="admin-res-table-container">
+        <EsquinasPanel variante={1} />
         <table className="admin-res-table">
           <thead>
             <tr>

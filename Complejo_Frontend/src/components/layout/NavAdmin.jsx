@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import textos from '../../i18n/textos'
+import { BotonTema, IconoTema } from '../ornamentos/Ornamentos'
 
-function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }) {
+function NavAdmin({ idioma, tema, onToggleTema, onToggleIdioma, pathname, nombreUsuario, onSignOut }) {
   const t = textos[idioma].nav
 
   return (
@@ -23,6 +24,7 @@ function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }
             className={pathname === '/admin/espacios' ? 'nav-link active' : 'nav-link'}
           >
             {t.espacios}
+            {pathname === '/admin/espacios' && <IconoTema className="nav-marca" />}
           </Link>
         </li>
         <li>
@@ -31,6 +33,7 @@ function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }
             className={pathname === '/admin/reservas' ? 'nav-link active' : 'nav-link'}
           >
             {t.reservas}
+            {pathname === '/admin/reservas' && <IconoTema className="nav-marca" />}
           </Link>
         </li>
         <li>
@@ -39,6 +42,7 @@ function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }
             className={pathname === '/admin/usuarios' ? 'nav-link active' : 'nav-link'}
           >
             {t.usuarios}
+            {pathname === '/admin/usuarios' && <IconoTema className="nav-marca" />}
           </Link>
         </li>
         <li>
@@ -47,11 +51,15 @@ function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }
             className={pathname === '/admin/mapa-3d' ? 'nav-link active' : 'nav-link'}
           >
             🗺️ Editor Mapa 3D
+            {pathname === '/admin/mapa-3d' && <IconoTema className="nav-marca" />}
           </Link>
         </li>
       </ul>
 
       <ul className="nav-list nav-actions">
+        <li>
+          <BotonTema tema={tema} onToggle={onToggleTema} idioma={idioma} />
+        </li>
         <li>
           <button type="button" className="nav-btn-lang" onClick={onToggleIdioma}>
             {t.idioma}

@@ -14,14 +14,14 @@
   position: absolute;
   top: 1em;
   left: 1em;
-  background-color: rgba(255, 255, 255, 0.95);
-  color: #153c2b;
+  background-color: var(--superficie);
+  color: var(--titulo);
   font-weight: 700;
   font-size: 0.88em;
   padding: 0.5em 1em;
   border-radius: 2em;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(21, 60, 43, 0.15);
+  border: 1px solid var(--orn-suave);
 }
 
 .detalle-galeria {
@@ -54,26 +54,26 @@
 }
 
 .foto-thumb-activa {
-  border-color: #cc7440;
+  border-color: var(--acento);
   opacity: 1;
 }
 
 .di-subtitulo {
   font-size: 1.4em;
   margin-bottom: 0.5em;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .di-parrafo {
-  color: #555555;
+  color: var(--texto);
   line-height: 1.6;
   font-size: 0.95em;
 }
 
 .di-casa-principal-card {
-  background-color: #f7f6f0;
-  border: 1px solid #dcd7c7;
-  border-left: 4px solid #153c2b;
+  background-color: var(--superficie-2);
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--orn);
   border-radius: 0.6em;
   padding: 1.2em;
   margin: 1.2em 0;
@@ -81,13 +81,13 @@
 
 .di-casa-principal-card h4 {
   margin: 0 0 0.5em 0;
-  color: #153c2b;
+  color: var(--titulo);
   font-size: 1.05em;
 }
 
 .di-casa-principal-card p {
   margin: 0;
-  color: #444444;
+  color: var(--texto);
   font-size: 0.9em;
   line-height: 1.6;
 }

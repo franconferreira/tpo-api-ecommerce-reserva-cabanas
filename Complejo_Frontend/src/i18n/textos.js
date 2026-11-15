@@ -4,6 +4,19 @@
 
 const textos = {
   es: {
+    mapa: {
+      titulo: 'Recorrido 3D',
+      ayudaCaminar: 'Caminar',
+      ayudaCorrer: 'Correr',
+      ayudaMirar: 'Arrastrar el mouse para mirar',
+      ayudaElegir: 'Clic en una construcción para ver el detalle',
+      verDetalle: 'Ver detalle',
+      desde: 'desde',
+      porNoche: 'por noche',
+      habitaciones: 'Espacios de la casa principal',
+      cerrar: 'Cerrar',
+      sinDatos: 'Todavía no hay datos de este espacio'
+    },
     comun: {
       al: 'al',
       porNoche: '/ noche',
@@ -71,6 +84,9 @@ const textos = {
       subtitulo: '20% OFF automático en noches de temporada baja (Mayo, Junio y Agosto) + 15% OFF en Pack Multi-Espacio (2 o más espacios).',
       desde: 'Desde ',
       cargando: 'Cargando espacios...',
+      verEspacios: 'Ver espacios',
+      recorrido: 'Recorrido 3D',
+      seccion: 'Nuestros refugios',
       errorCarga: 'Error al cargar los espacios: ',
       verEspacio: 'Ver Espacio ➔',
       capacidadCabana: '👥 4 a 5 huéspedes',
@@ -286,6 +302,19 @@ const textos = {
   },
 
   en: {
+    mapa: {
+      titulo: '3D Tour',
+      ayudaCaminar: 'Walk',
+      ayudaCorrer: 'Run',
+      ayudaMirar: 'Drag the mouse to look around',
+      ayudaElegir: 'Click a building to see its details',
+      verDetalle: 'See details',
+      desde: 'from',
+      porNoche: 'per night',
+      habitaciones: 'Main house spaces',
+      cerrar: 'Close',
+      sinDatos: 'No data for this space yet'
+    },
     comun: {
       al: 'to',
       porNoche: '/ night',
@@ -353,6 +382,9 @@ const textos = {
       subtitulo: '20% OFF automatic discount on low-season nights (May, June & August) + 15% OFF Multi-Space Pack (2+ spaces).',
       desde: 'From ',
       cargando: 'Loading spaces...',
+      verEspacios: 'View spaces',
+      recorrido: '3D tour',
+      seccion: 'Our retreats',
       errorCarga: 'Error loading spaces: ',
       verEspacio: 'Explore Space ➔',
       capacidadCabana: '👥 4 to 5 guests',

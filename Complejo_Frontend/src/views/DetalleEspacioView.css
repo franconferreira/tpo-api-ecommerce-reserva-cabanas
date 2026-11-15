@@ -1,6 +1,6 @@
 .detalle-wrapper {
   padding: 2.5em 4em;
-  background-color: #f4f3ef;
+  background-color: transparent;
   min-height: 85vh;
   display: flex;
   justify-content: center;
@@ -9,10 +9,10 @@
 .detalle-card {
   width: 100%;
   max-width: 75em;
-  background-color: #ffffff;
+  background-color: var(--superficie);
   border-radius: 1.2em;
   padding: 2.5em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
 }
 
 .detalle-header {
@@ -20,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1.5em;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--borde);
   margin-bottom: 2em;
 }
 
@@ -38,9 +38,9 @@
 .dh-close-btn {
   min-width: 13em;
   text-align: center;
-  background-color: #f1f2ec;
-  color: #2a2a2a;
-  border: 1px solid #e0e0e0;
+  background-color: var(--superficie-2);
+  color: var(--texto);
+  border: 1px solid var(--borde);
   padding: 0.6em 1.2em;
   border-radius: 1.5em;
   font-weight: 600;
@@ -72,8 +72,13 @@
 .detalle-back-btn {
   display: inline-block;
   margin-top: 1em;
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   padding: 0.7em 1.4em;
   border-radius: 1.5em;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }

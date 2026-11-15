@@ -25,6 +25,8 @@ function App() {
 
   // Estados de interfaz: quedan locales porque solo los maneja App y los pasa a pocos hijos
   const [idioma, setIdioma] = useState('es')
+  // Modo claro (Vitral del Alba) u oscuro (Luz de Luna): la clase del tema va en el contenedor de toda la app
+  const [tema, setTema] = useState('claro')
   const [espacioSeleccionado, setEspacioSeleccionado] = useState(null)
   const [isBuzonOpen, setIsBuzonOpen] = useState(false)
 
@@ -112,6 +114,10 @@ function App() {
     navigate('/login')
   }
 
+  const handleToggleTema = () => {
+    setTema(tema === 'claro' ? 'oscuro' : 'claro')
+  }
+
   const handleAbrirDetalle = (espacio) => {
     setEspacioSeleccionado(espacio)
   }
@@ -121,15 +127,18 @@ function App() {
   }
 
   return (
+    <div className={`app tema-${tema}`}>
     <Routes>
-      <Route path="/login" element={<LoginView idioma={idioma} setIdioma={setIdioma} />} />
-      <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} />} />
+      <Route path="/login" element={<LoginView idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={handleToggleTema} />} />
+      <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={handleToggleTema} />} />
 
       <Route
         element={
           <MainLayout
             idioma={idioma}
             setIdioma={setIdioma}
+            tema={tema}
+            onToggleTema={handleToggleTema}
             onLogout={handleLogout}
             isBuzonOpen={isBuzonOpen}
             setIsBuzonOpen={setIsBuzonOpen}
@@ -142,7 +151,7 @@ function App() {
         <Route path="/catalogo" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
         <Route
           path="/mapa-3d"
-          element={<Mapa3DView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />}
+          element={<Mapa3DView idioma={idioma} tema={tema} onAbrirDetalle={handleAbrirDetalle} />}
         />
         <Route
           path="/detalle"
@@ -162,6 +171,7 @@ function App() {
         <Route path="/admin/mapa-3d" element={<AdminMapa3DView idioma={idioma} />} />
       </Route>
     </Routes>
+    </div>
   )
 }
 

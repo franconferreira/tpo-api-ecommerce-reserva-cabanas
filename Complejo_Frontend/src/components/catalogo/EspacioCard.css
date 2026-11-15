@@ -1,105 +1,127 @@
+/* Tarjeta en arco: medida fija (307 x 470 por dentro) porque los rinceaux están dibujados para esa forma */
 .espacio-card {
-  background-color: #f4f3ef;
-  border-radius: 1em;
-  overflow: hidden;
-  cursor: pointer;
+  position: relative;
+  width: 309px;
+  height: 472px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #e0e0e0;
+  padding: 12px 12px 14px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid var(--marco);
+  border-radius: 160px 160px 6px 6px;
+  background: linear-gradient(180deg, var(--superficie), var(--superficie-2));
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 26px 40px -22px var(--sombra);
+  transition: transform 0.2s ease;
+}
+
+.espacio-card:hover {
+  transform: translateY(-3px);
 }
 
 .ec-image-wrapper {
   position: relative;
   width: 100%;
-  height: 15em;
+  height: 190px;
+  flex-shrink: 0;
+  border: 1px solid var(--marco);
+  border-radius: 150px 150px 3px 3px;
+  overflow: hidden;
 }
 
 .ec-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.ec-tag-top-left {
-  position: absolute;
-  top: 0.75em;
-  left: 0.75em;
-  background-color: rgba(255, 255, 255, 0.95);
-  color: #153c2b;
-  padding: 0.4em 0.8em;
-  border-radius: 1.2em;
-  font-size: 0.75em;
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(21, 60, 43, 0.15);
+  filter: var(--img-filtro);
 }
 
 .ec-content {
-  padding: 1.5em;
+  position: relative;
+  z-index: 2;
+  padding: 0.9em 0.8em 0.4em;
   flex-grow: 1;
 }
 
-.ec-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.5em;
-  margin-bottom: 0.8em;
+.ec-title {
+  font-family: 'Marcellus SC', Georgia, serif;
+  font-size: 1.05em;
+  color: var(--titulo);
+  margin: 0;
+  line-height: 1.25;
+  min-height: 2.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.ec-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.35em;
-  color: #153c2b;
-  margin: 0;
-  line-height: 1.2;
+.ec-capacidad {
+  display: block;
+  font-family: 'Tangerine', cursive;
+  font-size: 1.4em;
+  line-height: 1.15;
+  color: var(--manuscrita);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ec-desc {
-  color: #737373;
-  font-size: 0.9em;
-  line-height: 1.5;
-  margin-bottom: 1em;
+  color: var(--texto-suave);
+  font-size: 0.95em;
+  line-height: 1.4;
+  margin-top: 0.3em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .ec-footer {
-  padding: 1.2em 1.5em;
-  border-top: 1px solid #e0e0e0;
+  position: relative;
+  z-index: 2;
+  padding: 0.6em 0.4em 0.4em;
+  border-top: 1px solid var(--borde);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 0.8em;
+  row-gap: 0.1em;
+  white-space: nowrap;
 }
 
 .ec-price-from {
-  color: #2a2a2a;
-  font-size: 0.9em;
-  font-weight: 600;
-}
-
-.ec-price-value {
-  color: #153c2b;
-  font-size: 1.35em;
-  font-weight: 800;
-}
-
-.ec-price-suffix {
-  color: #737373;
+  color: var(--texto);
   font-size: 0.8em;
 }
 
+.ec-price-value {
+  font-family: 'Marcellus SC', Georgia, serif;
+  color: var(--titulo);
+  font-size: 1.15em;
+  margin: 0 0.15em;
+}
+
+.ec-price-suffix {
+  color: var(--texto-suave);
+  font-size: 0.75em;
+  font-style: italic;
+}
+
 .ec-action-link {
-  color: #cc7440;
-  font-weight: 700;
-  font-size: 0.9em;
+  font-family: 'Marcellus SC', Georgia, serif;
+  color: var(--acento);
+  font-size: 0.8em;
+  letter-spacing: 0.04em;
 }
 
 .ec-comunal-incluido {
-  color: #153c2b;
-  font-weight: 700;
+  font-family: 'Marcellus SC', Georgia, serif;
+  color: var(--titulo);
   font-size: 0.85em;
-  background-color: #eef5f1;
-  padding: 0.4em 0.7em;
+  border: 1px solid var(--borde);
+  padding: 0.3em 0.7em;
   border-radius: 0.4em;
-  border: 1px solid #cbe0d3;
 }

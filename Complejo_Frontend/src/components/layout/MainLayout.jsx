@@ -12,6 +12,8 @@ import DetalleEspacioModal from '../detalle/DetalleEspacioModal'
 function MainLayout({
   idioma,
   setIdioma,
+  tema,
+  onToggleTema,
   onLogout,
   isBuzonOpen,
   setIsBuzonOpen,
@@ -25,6 +27,8 @@ function MainLayout({
       <Navigation
         idioma={idioma}
         setIdioma={setIdioma}
+        tema={tema}
+        onToggleTema={onToggleTema}
         onLogout={onLogout}
         onAbrirBuzon={() => setIsBuzonOpen(true)}
       />

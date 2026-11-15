@@ -1,9 +1,10 @@
 import React from 'react'
 import textos from '../../i18n/textos'
 import { imagenPrincipal } from '../../utils/constantes'
+import { Medallon, RinceauTarjeta } from '../ornamentos/Ornamentos'
 import './EspacioCard.css'
 
-function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagenes, onVerDetalle }) {
+function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagenes, variante, onVerDetalle }) {
   const t = textos[idioma].catalogo
   const tDetalle = textos[idioma].detalle
 
@@ -28,22 +29,20 @@ function EspacioCard({ idioma, id, nombre, descripcion, precioBase, tipo, imagen
 
   return (
     <div className="espacio-card" onClick={handleClick}>
+      <Medallon />
+      <RinceauTarjeta variante={variante} />
+
       <div className="ec-image-wrapper">
         <img
           src={imagenPrincipal(imagenes)}
           alt={nombre}
           className="ec-image"
         />
-        <span className="ec-tag-top-left">
-          {renderBadgeCapacidad()}
-        </span>
       </div>
 
       <div className="ec-content">
-        <div className="ec-header">
-          <h3 className="ec-title">{nombre}</h3>
-        </div>
-
+        <h3 className="ec-title">{nombre}</h3>
+        <span className="ec-capacidad">{renderBadgeCapacidad()}</span>
         <p className="ec-desc">{descripcion}</p>
       </div>
 

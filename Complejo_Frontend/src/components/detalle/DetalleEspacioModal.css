@@ -29,10 +29,10 @@
   width: 100%;
   max-width: 74em;
   max-height: 92vh;
-  background-color: #ffffff;
+  background-color: var(--superficie);
   border-radius: 1.2em;
   padding: 2.2em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   overflow-y: auto;
   box-sizing: border-box;
@@ -55,7 +55,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1.4em;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--borde);
   margin-bottom: 1.8em;
 }
 
@@ -69,8 +69,8 @@
 .dmh-title {
   font-size: 1.85em;
   margin: 0;
-  color: #153c2b;
-  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--titulo);
+  font-family: 'Marcellus SC', Georgia, serif;
   line-height: 1.25;
 }
 
@@ -83,9 +83,9 @@
 .dmh-close-btn {
   min-width: 11em;
   text-align: center;
-  background-color: #f1f2ec;
-  color: #2a2a2a;
-  border: 1px solid #d5d3cb;
+  background-color: var(--superficie-2);
+  color: var(--texto);
+  border: 1px solid var(--borde);
   padding: 0.55em 1.1em;
   border-radius: 1.5em;
   font-weight: 600;
@@ -95,15 +95,15 @@
 }
 
 .dmh-close-btn:hover {
-  background-color: #e4e6dd;
-  border-color: #153c2b;
-  color: #153c2b;
+  background-color: var(--superficie-2);
+  border-color: var(--orn);
+  color: var(--titulo);
 }
 
 .dmh-btn-x {
-  background-color: #f1f2ec;
-  color: #555555;
-  border: 1px solid #d5d3cb;
+  background-color: var(--superficie-2);
+  color: var(--texto);
+  border: 1px solid var(--borde);
   width: 2.2em;
   height: 2.2em;
   border-radius: 50%;
@@ -117,8 +117,8 @@
 }
 
 .dmh-btn-x:hover {
-  background-color: #e0e0e0;
-  color: #111111;
+  background-color: var(--superficie-2);
+  color: var(--titulo);
   border-color: #999999;
 }
 

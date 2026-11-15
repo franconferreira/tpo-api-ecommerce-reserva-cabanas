@@ -4,7 +4,7 @@ import LoginForm from '../components/auth/LoginForm'
 import textos from '../i18n/textos'
 import './AuthView.css'
 
-function LoginView({ idioma, setIdioma }) {
+function LoginView({ idioma, setIdioma, tema, onToggleTema }) {
   const t = textos[idioma].login
 
   return (
@@ -16,7 +16,7 @@ function LoginView({ idioma, setIdioma }) {
         footerText="📍 Blue Ridge Mountains, NC"
       />
 
-      <LoginForm idioma={idioma} setIdioma={setIdioma} />
+      <LoginForm idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={onToggleTema} />
     </div>
   )
 }

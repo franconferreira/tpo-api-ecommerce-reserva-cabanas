@@ -1,5 +1,6 @@
 import React from 'react'
 import textos from '../../i18n/textos'
+import { Friso } from '../ornamentos/Ornamentos'
 import './Footer.css'
 
 function Footer({ idioma }) {
@@ -7,6 +8,7 @@ function Footer({ idioma }) {
 
   return (
     <footer className="footer-container">
+      <Friso className="footer-friso" />
       <div className="footer-content">
         <div className="footer-brand">
           <strong>🌲 Whispering Pines Sanctuary</strong>

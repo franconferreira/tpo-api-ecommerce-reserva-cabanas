@@ -11,27 +11,193 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #f4f3ef;
-  color: #2a2a2a;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  background-color: #0b1517;
   min-height: 100vh;
 }
 
+/* ===================== TEMAS =====================
+   Las reglas del diseño están en disenos/REGLAS_DISENO.md.
+   Los dos temas usan la misma maqueta: acá solo cambian los colores y algunos estilos puntuales. */
+
+.tema-claro {
+  --fondo: #fcf0db;
+  --superficie: #fffaf0;
+  --superficie-2: #f7ead2;
+  --texto: #45331f;
+  --texto-suave: #7a6448;
+  --titulo: #33261a;
+  --acento: #b86a50;
+  --manuscrita: #b86a50;
+  --orn: #b4853a;
+  --orn-suave: #b4853a55;
+  --borde: #d9bf8f;
+  --marco: #b4853a;
+  --marco-hueco: #fbeed6;
+  --marco-brillo: #b4853a88;
+  --fondo-fuerte: #5f7d43;
+  --fondo-fuerte-2: #3e5429;
+  --sobre-fuerte: #fff8ea;
+  --h1a: #7e9c5c;
+  --h1b: #3e5429;
+  --sombra: #b4853a66;
+  --velo-banner: #3a2a16b8;
+  --foto-filtro: brightness(1.05) saturate(1.02) sepia(.14);
+  --img-filtro: saturate(1.02) sepia(.08);
+  --tallado: drop-shadow(1px 1px 0 #ffffffcc) drop-shadow(-.6px -.6px 0 #6b4a1a44);
+  /* Botón principal: forma de arco, verde salvia con borde marrón y aro dorado */
+  --boton-radio: 30px 30px 6px 6px;
+  --boton-fondo: radial-gradient(ellipse at 50% 20%, #a8c584 0%, #5f7d43 55%, #3e5429 100%);
+  --boton-texto: #fff8ea;
+  --boton-borde: 2px solid #33261a;
+  --boton-sombra: inset 0 2px 0 #ffffff66, inset 0 -3px 0 #00000033, 0 0 0 2px #ecc784, 0 8px 18px -6px #5f7d4399;
+  color: var(--texto);
+  background:
+    radial-gradient(ellipse 60% 45% at 50% -8%, #ffdc9ccc 0%, #ffd09000 70%),
+    repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff0cf55 6deg 8deg, #ffffff00 8deg 14deg),
+    linear-gradient(180deg, #fcf0db, #f3dfbf);
+  background-attachment: fixed;
+}
+
+.tema-oscuro {
+  --fondo: #0e1b1e;
+  --superficie: #13272c;
+  --superficie-2: #0f2125;
+  --texto: #c9d6d2;
+  --texto-suave: #8fa6a0;
+  --titulo: #d6e0dd;
+  --acento: #e2d29c;
+  --manuscrita: #8cc4b4;
+  --orn: #c3d2ce;
+  --orn-suave: #c3d2ce33;
+  --borde: #c3d2ce40;
+  --marco: #c3d2ce;
+  --marco-hueco: #0c1719;
+  --marco-brillo: #c3d2ce66;
+  --fondo-fuerte: #c9b26e;
+  --fondo-fuerte-2: #9c8442;
+  --sobre-fuerte: #0c1719;
+  --h1a: #f3e7bf;
+  --h1b: #c9b26e;
+  --sombra: #000000aa;
+  --velo-banner: #0a1416c4;
+  --foto-filtro: brightness(.85) saturate(.72) hue-rotate(-12deg);
+  --img-filtro: brightness(.88) saturate(.75);
+  --tallado: drop-shadow(1px 1px 0 #00000099) drop-shadow(-.6px -.6px 0 #ffffff26);
+  /* Botón principal: forma de hoja, dorado con aros finos */
+  --boton-radio: 40px 4px 40px 4px;
+  --boton-fondo: linear-gradient(180deg, #f3e7bf, #c9b26e);
+  --boton-texto: #0c1719;
+  --boton-borde: 2px solid #0c1719;
+  --boton-sombra: 0 0 0 1px #f3e7bf, 0 0 0 4px #0c1719, 0 0 0 5px #c9b26e88, 0 0 24px #e2d29c33;
+  color: var(--texto);
+  background:
+    radial-gradient(1px 1px at 10% 20%, #fff8 50%, transparent 51%),
+    radial-gradient(1px 1px at 30% 70%, #fff6 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 70% 15%, #fffa 50%, transparent 51%),
+    radial-gradient(1px 1px at 85% 60%, #fff7 50%, transparent 51%),
+    radial-gradient(1px 1px at 50% 40%, #fff5 50%, transparent 51%),
+    radial-gradient(ellipse 60% 45% at 50% -8%, #2b4c4fcc 0%, transparent 70%),
+    linear-gradient(180deg, #0e1b1e, #0a1416);
+  background-size: 260px 260px, 340px 340px, 420px 420px, 300px 300px, 200px 200px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+}
+
+/* Contenedor de toda la app: lleva la clase del tema */
+.app {
+  min-height: 100vh;
+  /* Las plantas que crecen hacia afuera no generan scroll horizontal */
+  overflow-x: clip;
+  display: flex;
+  flex-direction: column;
+}
+
+/* La luna solo se ve en el modo oscuro y el sol solo en el claro */
+.tema-oscuro .solo-claro,
+.tema-claro .solo-oscuro {
+  display: none;
+}
+
 /* TIPOGRAFÍA */
-h1, h2, h3, .serif-text {
-  font-family: 'Playfair Display', Georgia, serif;
-  color: #153c2b;
+h1, .serif-text {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-weight: 400;
+  color: var(--titulo);
+}
+
+h2, h3 {
+  font-family: 'Marcellus SC', Georgia, serif;
+  font-weight: 400;
+  color: var(--titulo);
 }
 
 a {
   text-decoration: none;
-  color: #cc7440;
+  color: var(--acento);
   font-weight: 500;
   cursor: pointer;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Campos de formulario con los colores del tema */
+.app input,
+.app select,
+.app textarea {
+  background-color: var(--superficie-2);
+  color: var(--texto);
+  border-color: var(--borde);
+}
+
+.app input::placeholder,
+.app textarea::placeholder {
+  color: var(--texto-suave);
+}
+
+/* ORNAMENTOS (luna y sol tallados, mismo color que los rinceaux) */
+.tallado {
+  color: var(--orn);
+  filter: var(--tallado);
+}
+
+/* Botón principal de cada tema (forma distinta en claro y oscuro) */
+.boton-tema {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.08em;
+  font-size: 0.95em;
+  padding: 0.6em 1.3em;
+  color: var(--boton-texto);
+  background: var(--boton-fondo);
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.boton-tema:hover {
+  text-decoration: none;
+  filter: brightness(1.06);
+}
+
+.boton-tema svg {
+  width: 1em;
+  height: 1em;
+}
+
+.boton-tema svg.der {
+  transform: scaleX(-1);
 }
 
 /* UTILIDADES */

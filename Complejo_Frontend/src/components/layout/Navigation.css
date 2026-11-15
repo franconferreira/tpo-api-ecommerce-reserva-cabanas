@@ -3,12 +3,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 1em 3em;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--superficie);
+  border-bottom: 1px solid var(--borde);
 }
 
 .admin-nav {
-  background-color: #fbfaf7;
+  background-color: var(--superficie-2);
 }
 
 .nav-brand {
@@ -18,10 +18,10 @@
 }
 
 .nav-logo {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Marcellus SC', Georgia, serif;
   font-size: 1.3em;
   font-weight: 700;
-  color: #153c2b;
+  color: var(--titulo);
   text-decoration: none;
 }
 
@@ -29,8 +29,8 @@
   display: inline-block;
   min-width: 10em;
   text-align: center;
-  background-color: #e6e4dd;
-  color: #2a2a2a;
+  background-color: var(--superficie-2);
+  color: var(--texto);
   font-size: 0.65em;
   font-weight: 800;
   padding: 0.4em 0.8em;
@@ -47,14 +47,14 @@
 }
 
 .nav-pills {
-  background-color: #ecebe4;
+  background-color: var(--superficie-2);
   padding: 0.3em;
   border-radius: 2em;
   gap: 0.4em;
 }
 
 .nav-link {
-  color: #2a2a2a;
+  color: var(--texto);
   font-size: 0.9em;
   font-weight: 600;
   text-decoration: none;
@@ -68,16 +68,16 @@
 
 .nav-link:hover {
   text-decoration: none;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .nav-pills .nav-link.active {
-  background-color: #153c2b;
-  color: #ffffff;
+  background-color: var(--fondo-fuerte);
+  color: var(--sobre-fuerte);
 }
 
 .nav-link.active-text {
-  color: #153c2b;
+  color: var(--titulo);
   font-weight: 800;
 }
 
@@ -98,7 +98,7 @@
 
 .nav-user-info span {
   font-size: 0.8em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .nav-icon-btn,
@@ -112,9 +112,9 @@
   height: 2.6em;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid #dcded5;
-  background-color: #f1f2ec;
-  color: #153c2b;
+  border: 1px solid var(--borde);
+  background-color: var(--superficie-2);
+  color: var(--titulo);
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
@@ -124,8 +124,8 @@
 .nav-icon-btn:hover,
 .nav-btn-cart:hover,
 .nav-btn-buzon:hover {
-  background-color: #e5e8df;
-  border-color: #153c2b;
+  background-color: var(--superficie-2);
+  border-color: var(--orn);
   transform: translateY(-1px);
 }
 
@@ -149,8 +149,8 @@
   height: 1.4em;
   padding: 0 0.35em;
   border-radius: 1em;
-  background-color: #153c2b;
-  color: #ffffff;
+  background-color: var(--fondo-fuerte);
+  color: var(--sobre-fuerte);
   font-size: 0.72em;
   font-weight: 700;
   display: inline-flex;
@@ -164,8 +164,8 @@
   min-width: 9.2em;
   white-space: nowrap;
   background: transparent;
-  color: #2a2a2a;
-  border: 1px solid #e0e0e0;
+  color: var(--texto);
+  border: 1px solid var(--borde);
   padding: 0.5em 1em;
   border-radius: 1.5em;
   font-size: 0.85em;
@@ -178,13 +178,18 @@
   min-width: 7.8em;
   text-align: center;
   white-space: nowrap;
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   padding: 0.55em 1.2em;
   border-radius: 1.5em;
   font-size: 0.85em;
   font-weight: 600;
   text-decoration: none;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }
 
 .nav-btn-primary:hover {
@@ -194,9 +199,9 @@
 .nav-btn-lang {
   min-width: 8em;
   white-space: nowrap;
-  background-color: #f4f3ef;
-  color: #153c2b;
-  border: 1px solid #153c2b;
+  background-color: var(--superficie-2);
+  color: var(--titulo);
+  border: 1px solid var(--orn);
   padding: 0.45em 0.9em;
   border-radius: 1.5em;
   font-size: 0.8em;
@@ -205,13 +210,13 @@
 }
 
 .nav-btn-buzon.has-unread {
-  background-color: #fde8dd;
-  color: #8d3b00;
-  border: 1px solid #cc7440;
+  background-color: var(--superficie-2);
+  color: var(--acento);
+  border: 1px solid var(--acento);
 }
 
 .nav-btn-buzon.has-unread:hover {
-  background-color: #fbd6c2;
+  background-color: var(--superficie);
   border-color: #b33900;
 }
 
@@ -220,3 +225,110 @@
 }
 
 
+
+/* ---------- Tema Art Nouveau (ver disenos/REGLAS_DISENO.md) ---------- */
+.nav-container {
+  background-color: transparent;
+  border-bottom: none;
+  padding: 1.1em 3em 0.6em;
+}
+
+.admin-nav {
+  background-color: transparent;
+}
+
+.nav-logo {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--titulo);
+}
+
+.nav-link {
+  position: relative;
+  font-family: 'Marcellus SC', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--texto);
+}
+
+.nav-link.active-text {
+  color: var(--manuscrita);
+  font-weight: 400;
+}
+
+.nav-marca {
+  position: absolute;
+  left: 50%;
+  bottom: -0.55em;
+  width: 0.95em;
+  height: 0.95em;
+  transform: translateX(-50%);
+}
+
+.nav-pills {
+  background-color: transparent;
+  border: 1px solid var(--borde);
+}
+
+.nav-pills .nav-link.active {
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
+  border-radius: var(--boton-radio);
+}
+
+.nav-badge {
+  background-color: transparent;
+  border: 1px solid var(--borde);
+  color: var(--texto-suave);
+  font-family: 'Marcellus SC', Georgia, serif;
+}
+
+.nav-icon-btn,
+.nav-btn-cart,
+.nav-btn-buzon,
+.nav-btn-lang {
+  background-color: var(--superficie);
+  border-color: var(--borde);
+  color: var(--titulo);
+}
+
+.friso-nav {
+  border-top: 1px solid var(--orn-suave);
+}
+
+.nav-container {
+  padding: 1em 2em 0.5em;
+  gap: 1em;
+}
+
+.nav-logo {
+  font-size: 1.1em;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.nav-list {
+  gap: 1em;
+}
+
+.nav-link,
+.nav-actions .nav-link {
+  min-width: 0;
+  padding: 0.5em 0.8em;
+}
+
+.nav-badge {
+  min-width: 0;
+}
+
+.nav-pills .nav-link {
+  padding: 0.45em 0.9em;
+}
+
+.nav-user-info,
+.nav-user-info strong,
+.nav-badge,
+.nav-btn-outline {
+  white-space: nowrap;
+}

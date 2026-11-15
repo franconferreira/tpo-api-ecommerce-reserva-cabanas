@@ -1,7 +1,10 @@
+/* Grilla de tarjetas en arco: ancho fijo y separación suficiente para que las plantas de tarjetas vecinas no se pisen */
 .catalogo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(22em, 1fr));
-  gap: 2em;
+  grid-template-columns: repeat(auto-fill, 309px);
+  justify-content: center;
+  gap: 4.5em 3.2em;
+  padding: 3em 0 2em;
 }
 
 .catalogo-estado {

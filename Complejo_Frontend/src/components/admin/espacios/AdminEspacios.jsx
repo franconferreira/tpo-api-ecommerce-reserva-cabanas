@@ -9,6 +9,7 @@ import {
   cambiarEstadoEspacio
 } from '../../../Redux/adminEspaciosSlice'
 import './AdminEspacios.css'
+import { EsquinasPanel } from '../../ornamentos/Ornamentos'
 
 function AdminEspacios({ idioma }) {
   const dispatch = useDispatch()
@@ -58,6 +59,7 @@ function AdminEspacios({ idioma }) {
       {!mensajeError && mensajeExito && <p className="ad-success">{mensajeExito}</p>}
 
       <div className="ad-table-container">
+        <EsquinasPanel variante={0} />
         <table className="ad-table">
           <thead>
             <tr>

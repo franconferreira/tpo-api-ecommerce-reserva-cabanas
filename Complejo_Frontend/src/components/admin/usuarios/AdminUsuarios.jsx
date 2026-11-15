@@ -5,6 +5,7 @@ import PageHeader from '../../layout/PageHeader'
 import textos from '../../../i18n/textos'
 import { fetchUsuarios, cambiarEstadoUsuario, cambiarRolUsuario } from '../../../Redux/adminUsuariosSlice'
 import './AdminUsuarios.css'
+import { EsquinasPanel } from '../../ornamentos/Ornamentos'
 
 function AdminUsuarios({ idioma }) {
   const dispatch = useDispatch()
@@ -38,6 +39,7 @@ function AdminUsuarios({ idioma }) {
       {error && <p className="admin-usr-error">{error}</p>}
 
       <div className="admin-usr-table-container">
+        <EsquinasPanel variante={2} />
         <table className="admin-usr-table">
           <thead>
             <tr>

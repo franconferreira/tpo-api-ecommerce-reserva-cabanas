@@ -19,7 +19,7 @@ function EspacioList({ idioma, onAbrirDetalle }) {
 
   return (
     <div className="catalogo-grid">
-      {espacios.map((espacio) => (
+      {espacios.map((espacio, indice) => (
         <EspacioCard
           idioma={idioma}
           id={espacio.id}
@@ -28,6 +28,7 @@ function EspacioList({ idioma, onAbrirDetalle }) {
           precioBase={espacio.precioBase}
           tipo={espacio.tipo}
           imagenes={espacio.imagenes}
+          variante={indice % 3}
           onVerDetalle={onAbrirDetalle}
           key={espacio.id}
         />

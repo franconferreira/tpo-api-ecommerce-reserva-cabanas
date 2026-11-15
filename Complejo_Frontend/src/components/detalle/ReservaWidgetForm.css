@@ -1,8 +1,8 @@
 .widget-reserva {
-  background-color: #f4f3ef;
+  background-color: var(--superficie-2);
   padding: 2em;
   border-radius: 1em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
   display: flex;
   flex-direction: column;
   gap: 1.25em;
@@ -17,11 +17,11 @@
 .wr-price-big {
   font-size: 1.8em;
   font-weight: 800;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .wr-price-suffix {
-  color: #737373;
+  color: var(--texto-suave);
   font-size: 0.9em;
 }
 
@@ -47,8 +47,8 @@
 }
 
 .wr-summary {
-  background-color: #f9f8f4;
-  border: 1px solid #e0e0e0;
+  background-color: var(--superficie-2);
+  border: 1px solid var(--borde);
   padding: 1.2em;
   border-radius: 0.8em;
   display: flex;
@@ -58,15 +58,15 @@
 
 .wr-info-note {
   font-size: 0.85em;
-  color: #2a2a2a;
+  color: var(--texto);
   line-height: 1.4;
   margin: 0;
 }
 
 .wr-submit-btn {
   width: 100%;
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   border: none;
   padding: 1em;
   border-radius: 0.6em;
@@ -74,27 +74,32 @@
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }
 
 .wr-submit-btn:hover {
-  background-color: #0d261b;
+  background-color: var(--fondo-fuerte-2);
 }
 
 .salon-comunal-box {
-  background-color: #f9f8f3;
-  border: 1px solid #dcd7c7;
-  border-top: 4px solid #153c2b;
+  background-color: var(--superficie-2);
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--orn);
 }
 
 .salon-comunal-title {
   margin: 0 0 0.5em 0;
-  color: #153c2b;
+  color: var(--titulo);
   font-size: 1.2em;
 }
 
 .salon-comunal-text {
   margin: 0 0 1.2em 0;
-  color: #555555;
+  color: var(--texto);
   font-size: 0.9em;
   line-height: 1.6;
 }

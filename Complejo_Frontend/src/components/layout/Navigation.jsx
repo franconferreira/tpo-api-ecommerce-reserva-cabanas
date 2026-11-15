@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import NavAdmin from './NavAdmin'
 import NavCliente from './NavCliente'
 import { abrirCarrito } from '../../Redux/carritoSlice'
+import { Friso } from '../ornamentos/Ornamentos'
 import './Navigation.css'
 
-function Navigation({ idioma, setIdioma, onLogout, onAbrirBuzon }) {
+function Navigation({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirBuzon }) {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
@@ -31,19 +32,27 @@ function Navigation({ idioma, setIdioma, onLogout, onAbrirBuzon }) {
 
   if (rolUsuario === 'ROLE_ADMIN') {
     return (
+      <>
       <NavAdmin
         idioma={idioma}
+        tema={tema}
+        onToggleTema={onToggleTema}
         onToggleIdioma={handleToggleIdioma}
         pathname={location.pathname}
         nombreUsuario={nombreUsuario}
         onSignOut={handleSignOut}
       />
+      <Friso className="friso-nav" />
+      </>
     )
   }
 
   return (
+    <>
     <NavCliente
       idioma={idioma}
+      tema={tema}
+      onToggleTema={onToggleTema}
       onToggleIdioma={handleToggleIdioma}
       pathname={location.pathname}
       isLogged={isLogged}
@@ -54,6 +63,8 @@ function Navigation({ idioma, setIdioma, onLogout, onAbrirBuzon }) {
       onAbrirBuzon={onAbrirBuzon}
       onSignOut={handleSignOut}
     />
+    <Friso className="friso-nav" />
+    </>
   )
 }
 
