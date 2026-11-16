@@ -2,7 +2,28 @@
 // para usarla como textura del póster del cartel. Se lee la posición real de cada elemento en pantalla.
 // Se usa al final de la transición, cuando la página real se desvanece y queda solo el póster.
 
-const ESCALA = 1.5 // más resolución que la pantalla, para que el póster se vea nítido de cerca
+const ESCALA = 1.5
+
+// Copia de la página que se estaba viendo al tocar "Recorrido virtual" (para mostrarla como póster).
+// Es una copia del HTML (sin React): se ve igual porque usa las mismas clases y el mismo CSS.
+let captura = null
+
+// Se copia todo lo que se ve (barra, página y pie), porque el mapa ocupa la ventana entera
+export function capturarPagina() {
+  const app = document.querySelector('.app')
+  if (!app || app.querySelector('.mapa3d-pagina')) return
+  const copia = document.createElement('div')
+  for (const hijo of app.children) copia.appendChild(hijo.cloneNode(true))
+  captura = { copia, arriba: -window.scrollY, ruta: window.location.pathname + window.location.search }
+}
+
+export function leerCaptura() {
+  return captura
+}
+
+export function olvidarCaptura() {
+  captura = null
+} // más resolución que la pantalla, para que el póster se vea nítido de cerca
 
 // Carga una imagen pidiéndola con permiso CORS (si no, el canvas queda "manchado" y no se puede usar como textura)
 function cargarImagen(src, cors = true) {
@@ -21,6 +42,17 @@ function dibujarCubriendo(ctx, img, x, y, w, h) {
   const sw = w / escala
   const sh = h / escala
   ctx.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, x, y, w, h)
+}
+
+// Primer contenedor (desde el elemento hacia arriba) que recorta lo que se le sale: overflow distinto de visible
+function recortador(el, raiz) {
+  let actual = el
+  while (actual && actual !== raiz) {
+    const e = getComputedStyle(actual)
+    if (e.overflowX !== 'visible' || e.overflowY !== 'visible') return actual
+    actual = actual.parentElement
+  }
+  return null
 }
 
 // Contorno del elemento según su border-radius (el arco de la ventana y de los botones)
@@ -103,7 +135,10 @@ function dibujarTexto(ctx, nodo, colorDegrade) {
   if (estilo.textTransform === 'uppercase') texto = texto.toUpperCase()
   const rango = document.createRange()
   rango.selectNodeContents(nodo)
-  const renglones = [...rango.getClientRects()].filter((r) => r.width > 0)
+  // solo los renglones que se ven (los textos cortados a tantas líneas tienen más renglones ocultos)
+  const marco = recortador(el, null)
+  const limite = marco ? marco.getBoundingClientRect() : null
+  const renglones = [...rango.getClientRects()].filter((r) => r.width > 0 && (!limite || (r.top >= limite.top - 1 && r.bottom <= limite.bottom + 1)))
   if (!renglones.length) return
   ctx.font = `${estilo.fontStyle} ${estilo.fontWeight} ${estilo.fontSize} ${estilo.fontFamily}`
   // los títulos con degradé recortado al texto tienen color transparente: se usa el color del degradé
@@ -143,6 +178,33 @@ export async function dibujarPoster(raiz) {
   ctx.fillStyle = degrade
   ctx.fillRect(caja.left, caja.top, caja.width, caja.height)
 
+  // Cajas de los componentes (tarjetas, paneles, etiquetas): su fondo y su borde
+  const conColor = (c) => c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c)
+  for (const el of raiz.querySelectorAll('*')) {
+    if (el.closest('svg') || el.tagName === 'IMG') continue
+    const r = el.getBoundingClientRect()
+    if (!visible(r)) continue
+    const e = getComputedStyle(el)
+    if (e.visibility === 'hidden' || e.opacity === '0') continue
+    const fondo = conColor(e.backgroundColor)
+    const grosor = parseFloat(e.borderTopWidth) || 0
+    const borde = grosor > 0 && e.borderTopStyle !== 'none' && conColor(e.borderTopColor)
+    if (!fondo && !borde) continue
+    ctx.save()
+    ctx.globalAlpha = parseFloat(e.opacity) || 1
+    contorno(ctx, r, e)
+    if (fondo) {
+      ctx.fillStyle = e.backgroundColor
+      ctx.fill()
+    }
+    if (borde) {
+      ctx.lineWidth = grosor
+      ctx.strokeStyle = e.borderTopColor
+      ctx.stroke()
+    }
+    ctx.restore()
+  }
+
   // Fotos (recortadas con el arco de su marco)
   for (const img of raiz.querySelectorAll('img')) {
     const r = img.getBoundingClientRect()
@@ -150,6 +212,12 @@ export async function dibujarPoster(raiz) {
     const copia = await cargarImagen(img.currentSrc || img.src)
     if (!copia) continue
     ctx.save()
+    // la foto se recorta con la forma de la tarjeta que la contiene (arco) y con la suya propia
+    const marco = recortador(img.parentElement, raiz)
+    if (marco) {
+      contorno(ctx, marco.getBoundingClientRect(), getComputedStyle(marco))
+      ctx.clip()
+    }
     contorno(ctx, r, getComputedStyle(img))
     ctx.clip()
     dibujarCubriendo(ctx, copia, r.left, r.top, r.width, r.height)

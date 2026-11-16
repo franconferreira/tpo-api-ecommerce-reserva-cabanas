@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.time.temporal.ChronoUnit;
 import java.time.Month;
 import java.time.LocalDate;
@@ -43,15 +44,35 @@ public class CarritoServiceImpl implements CarritoService {
                 });
     }
 
+    // Saca del carrito los ítems cuya reserva temporal de 10 minutos ya venció (esas fechas ya quedaron libres
+    // para otros). Devuelve true si sacó alguno.
+    private boolean quitarVencidos(Carrito carrito) {
+        List<ItemCarrito> vencidos = carrito.getItems().stream()
+                .filter(item -> item.getFechaExpiracion().isBefore(LocalDateTime.now()))
+                .toList();
+        if (vencidos.isEmpty()) {
+            return false;
+        }
+        carrito.getItems().removeAll(vencidos);
+        itemCarritoRepository.deleteAll(vencidos);
+        recalcularTotales(carrito);
+        carritoRepository.save(carrito);
+        return true;
+    }
+
     @Override
+    @Transactional
     public CarritoResponseDTO obtenerMiCarrito() {
-        return mapToDTO(getMiCarrito());
+        Carrito carrito = getMiCarrito();
+        quitarVencidos(carrito);
+        return mapToDTO(carrito);
     }
 
     @Override
     @Transactional
     public CarritoResponseDTO agregarItem(ItemCarritoRequestDTO request) {
         Carrito carrito = getMiCarrito();
+        quitarVencidos(carrito);
         Espacio espacio = espacioRepository.findById(request.getEspacioId())
                 .orElseThrow(() -> new RuntimeException("Espacio no encontrado"));
 
@@ -130,19 +151,19 @@ public class CarritoServiceImpl implements CarritoService {
     }
 
     @Override
-    @Transactional
+    // el aviso de "venció" no deshace la limpieza del carrito (si no, los ítems vencidos volverían)
+    @Transactional(noRollbackFor = org.springframework.web.server.ResponseStatusException.class)
     public void checkout() {
         Carrito carrito = getMiCarrito();
+        if (quitarVencidos(carrito)) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "Algunos espacios de tu carrito vencieron (se reservan por 10 minutos) y se quitaron. Revisá el carrito y volvé a intentar.");
+        }
         if (carrito.getItems().isEmpty()) {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "El carrito esta vacio");
         }
 
-        // Double check availability and expiration
+        // Double check availability (los vencidos ya se quitaron arriba)
         for (ItemCarrito item : carrito.getItems()) {
-            if (item.getFechaExpiracion().isBefore(LocalDateTime.now())) {
-                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "El item " + item.getEspacio().getNombre() + " en tu carrito ha expirado despues de 10 minutos. Por favor, vacia el carrito y vuelve a intentar.");
-            }
-
             boolean ocupado = reservaRepository.isEspacioOcupado(item.getEspacio().getId(), item.getCheckIn(), item.getCheckOut());
             if (ocupado) {
                 throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "El espacio " + item.getEspacio().getNombre() + " ya no esta disponible. Eliminelo del carrito e intente nuevamente.");

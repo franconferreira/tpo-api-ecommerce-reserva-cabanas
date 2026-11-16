@@ -1,6 +1,6 @@
 import {
   TERRENO, ENTRADA, CARTEL, CONSTRUCCIONES, LAGO, ARBOLEDAS, BOSQUE_CABANAS, CAMINO, SENDEROS, ANCHO_SENDERO,
-  FOGON, HUELLAS, LLEGADA, aTerreno
+  HUELLAS, LLEGADA, aTerreno
 } from './plano'
 
 // Dibuja el plano en SVG (1 m = ESCALA px) y revisa las distancias de la ficha
@@ -47,8 +47,6 @@ for (const s of SENDEROS) {
   svg += `<path d="${linea(pts)}" stroke="#cfb88a" stroke-width="${ANCHO_SENDERO * ESCALA}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
 }
 // fogón, portal y cartel
-svg += `<circle cx="${px(FOGON.x)}" cy="${pz(FOGON.z)}" r="${FOGON.radio * ESCALA}" fill="#8d8a82"/><circle cx="${px(FOGON.x)}" cy="${pz(FOGON.z)}" r="${ESCALA}" fill="#d9822b"/>`
-svg += `<text x="${px(FOGON.x) + 26}" y="${pz(FOGON.z) + 4}" fill="#1b1a17">Fogón</text>`
 svg += `<rect x="${px(ENTRADA.x - ENTRADA.anchoPortal / 2 - 0.5)}" y="${pz(ENTRADA.z - 0.5)}" width="${ESCALA}" height="${ESCALA}" fill="#7a4a2a"/><rect x="${px(ENTRADA.x + ENTRADA.anchoPortal / 2 - 0.5)}" y="${pz(ENTRADA.z - 0.5)}" width="${ESCALA}" height="${ESCALA}" fill="#7a4a2a"/>`
 svg += `<text x="${px(ENTRADA.x) + 24}" y="${pz(ENTRADA.z) + 4}" fill="#1b1a17">Portal de entrada</text>`
 svg += `<rect x="${px(CARTEL.x - CARTEL.ancho / 2)}" y="${pz(CARTEL.z) - 3}" width="${CARTEL.ancho * ESCALA}" height="6" fill="#f2e6cc" stroke="#7a4a2a"/>`

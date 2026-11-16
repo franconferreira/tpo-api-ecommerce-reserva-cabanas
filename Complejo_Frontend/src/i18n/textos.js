@@ -5,11 +5,27 @@
 const textos = {
   es: {
     mapa: {
-      titulo: 'Recorrido 3D',
+      titulo: 'Recorrido virtual',
       ayudaCaminar: 'Caminar',
       ayudaCorrer: 'Correr',
-      ayudaMirar: 'Arrastrar el mouse para mirar',
-      ayudaElegir: 'Clic en una construcción para ver el detalle',
+      ayudaMirar: 'Mover el mouse para mirar',
+      ayudaElegir: 'Clic o E en una construcción para ver el detalle',
+      ayudaEsc: 'Menú y liberar el mouse',
+      ayudaTema: 'Modo claro / oscuro',
+      ayudaAerea: 'Vista aérea',
+      ayudaSonido: 'Silenciar / activar sonido',
+      sonidoSi: 'Sonido: sí',
+      sonidoNo: 'Sonido: no',
+      volverPagina: 'Volver a la página',
+      aereaAyuda: 'Elegí dónde aparecer · F para volver',
+      irGalpon: 'Galpón',
+      irCasa: 'Casa principal',
+      irCabanas: 'Cabañas',
+      pausa: 'Pausa',
+      seguir: 'Seguir explorando',
+      clicExplorar: 'Hacé clic para explorar',
+      modoOscuro: 'Modo oscuro',
+      modoClaro: 'Modo claro',
       verDetalle: 'Ver detalle',
       desde: 'desde',
       porNoche: 'por noche',
@@ -22,10 +38,12 @@ const textos = {
       porNoche: '/ noche',
       porNocheSufijo: ' / noche',
       espacio: 'Espacio',
-      huesped: 'Huésped'
+      huesped: 'Huésped',
+      bienvenida: 'Bienvenido',
+      despedida: 'Hasta pronto'
     },
     nav: {
-      idioma: '🌐 ES | EN',
+      idioma: 'ES | EN',
       consolaStaff: 'CONSOLA STAFF',
       espacios: 'Espacios',
       reservas: 'Reservas',
@@ -37,14 +55,15 @@ const textos = {
       buzon: 'Buzón',
       carrito: 'Carrito',
       iniciarSesion: 'Iniciar Sesión',
-      registrarse: 'Registrarse'
+      registrarse: 'Registrarse',
+      recorrido3d: 'Recorrido virtual'
     },
     footer: {
       lema: ' — Cabañas, Eventos y Naturaleza',
       derechos: '© 2026 Complejo Whispering Pines. Todos los derechos reservados.'
     },
     login: {
-      bannerBadge: '✨ SANTUARIO PRIVADO EN EL BOSQUE',
+      bannerBadge: 'SANTUARIO PRIVADO EN EL BOSQUE',
       bannerTitulo: 'Regresa a la calma de los pinos.',
       bannerDescripcion: 'Gestiona tus reservas de cabañas, explora senderos junto al lago y prepara tu próxima estadía.',
       overline: 'BIENVENIDO DE NUEVO',
@@ -61,7 +80,7 @@ const textos = {
       errorCuentaDesactivada: 'Tu cuenta ha sido desactivada por la administración.'
     },
     registro: {
-      bannerBadge: '🏕️ ÚNETE AL COMPLEJO',
+      bannerBadge: 'ÚNETE AL COMPLEJO',
       bannerTitulo: 'Comienza tu tradición en el bosque.',
       bannerDescripcion: 'Crea tu perfil de huésped para reservar cabañas, salones de eventos y actividades en la laguna.',
       overline: 'REGISTRO DE NUEVO HUÉSPED',
@@ -85,14 +104,14 @@ const textos = {
       desde: 'Desde ',
       cargando: 'Cargando espacios...',
       verEspacios: 'Ver espacios',
-      recorrido: 'Recorrido 3D',
+      recorrido: 'Recorrido virtual',
       seccion: 'Nuestros refugios',
       errorCarga: 'Error al cargar los espacios: ',
       verEspacio: 'Ver Espacio ➔',
-      capacidadCabana: '👥 4 a 5 huéspedes',
-      capacidadHabitacion: '👥 2 a 3 huéspedes • 🍽️ Salón Común',
-      capacidadGalpon: '🎉 Eventos y Celebraciones',
-      capacidadSalon: '🍽️ Área Comunal Casa Principal'
+      capacidadCabana: '4 a 5 huéspedes',
+      capacidadHabitacion: '2 a 3 huéspedes • Salón Común',
+      capacidadGalpon: 'Eventos y Celebraciones',
+      capacidadSalon: 'Área Comunal Casa Principal'
     },
     detalle: {
       vacioTitulo: 'Ningún espacio seleccionado',
@@ -100,10 +119,10 @@ const textos = {
       vacioVolver: '← Volver al Catálogo',
       volver: '← Volver al Catálogo',
       sobre: 'Sobre este Espacio del Complejo',
-      badgeCabana: '🏡 Cabaña Privada (4 a 5 personas)',
-      badgeHabitacion: '🛏️ Habitación Casa Principal (2 a 3 personas)',
-      badgeGalpon: '🎪 Galpón para Eventos y Fiestas',
-      badgeSalon: '🍽️ Salón de Comida Comunal & Baños Compartidos',
+      badgeCabana: 'Cabaña Privada (4 a 5 personas)',
+      badgeHabitacion: 'Habitación Casa Principal (2 a 3 personas)',
+      badgeGalpon: 'Galpón para Eventos y Fiestas',
+      badgeSalon: 'Salón de Comida Comunal & Baños Compartidos',
       infoHabitacionTitulo: 'Beneficios de la Casa Principal:',
       infoHabitacionTexto: '• Incluye libre acceso al Salón de Comida general y a los baños comunales compartidos.\n• ¿Deseas alquilar la Casa Principal completa? Puedes reservar todas las habitaciones disponibles para las mismas fechas.',
       infoSalonTitulo: 'Área Comunal Compartida:',
@@ -112,7 +131,7 @@ const textos = {
       botonVerHabitaciones: '← Explorar Habitaciones'
     },
     calendario: {
-      titulo: '📅 Almanaque de Disponibilidad',
+      titulo: 'Almanaque de Disponibilidad',
       meses: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       dias: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
       disponible: 'Disponible',
@@ -123,7 +142,7 @@ const textos = {
       ayudaPasado: 'Fecha pasada'
     },
     widget: {
-      promo: '🍂 20% OFF en May, Jun y Ago',
+      promo: '20% OFF en May, Jun y Ago',
       nochesSeleccionadas: (cantidad) => (cantidad === 1 ? ' (1 noche)' : ` (${cantidad} noches)`),
       boton: 'Agregar al Carrito ➔',
       errorFechas: 'Debes seleccionar al menos un día disponible en el almanaque',
@@ -165,10 +184,10 @@ const textos = {
       mediosPago: {
         titulo: 'Medio de Pago',
         subtitulo: 'Selecciona cómo deseas abonar tu estadía en Whispering Pines.',
-        tarjeta: '💳 Tarjeta de Crédito / Débito',
-        billetera: '📱 Billetera Digital',
-        transferencia: '🏦 Transferencia Bancaria',
-        recepcion: '📍 Pago en Recepción',
+        tarjeta: 'Tarjeta de Crédito / Débito',
+        billetera: 'Billetera Digital',
+        transferencia: 'Transferencia Bancaria',
+        recepcion: 'Pago en Recepción',
         tarjetaNumero: 'Número de Tarjeta',
         tarjetaTitular: 'Nombre en la Tarjeta (Titular)',
         tarjetaVencimiento: 'Vencimiento (MM/AA)',
@@ -218,7 +237,7 @@ const textos = {
       vacioTexto: 'Explora nuestro catálogo para reservar tu próxima estadía en Whispering Pines.',
       codigo: (id) => ` Reserva #${id}`,
       pack: (porcentaje) => `Pack ${porcentaje}% OFF Aplicado`,
-      avisoCancelacion: '⚠️ Aviso de Cancelación del Administrador:',
+      avisoCancelacion: 'Aviso de Cancelación del Administrador:',
       ocultar: '✕ Ocultar de mi vista',
       cancelar: '⊗ Cancelar Reserva',
       errorCancelar: 'No se pudo cancelar la reserva'
@@ -229,7 +248,7 @@ const textos = {
       vacio: 'No tienes notificaciones pendientes.',
       vacioTexto: 'Aquí aparecerán los avisos si el administrador cancela alguna reserva.',
       cerrar: 'Cerrar Buzón',
-      badge: '⚠️ RESERVA CANCELADA',
+      badge: 'RESERVA CANCELADA',
       mensaje: 'Mensaje del Administrador:',
       marcarLeido: '✓ Marcar como leído'
     },
@@ -247,6 +266,10 @@ const textos = {
       tarifa: 'Tarifa Base (USD / noche)',
       descripcion: 'Descripción',
       imagen: 'URL de Imagen',
+      subirImagenes: 'Elegir imágenes',
+      subiendo: 'Subiendo...',
+      errorSubir: 'No se pudo subir alguna imagen (solo jpg, png, webp o gif de hasta 5 MB).',
+      quitarImagen: 'Quitar imagen',
       botonAgregar: '+ Guardar Espacio',
       colEspacio: 'ESPACIO Y LOTE',
       colCategoria: 'CATEGORÍA',
@@ -282,7 +305,7 @@ const textos = {
       errorCancelar: 'No se pudo cancelar la reserva'
     },
     adminUsuarios: {
-      overline: '🛡️ GESTIÓN DE MIEMBROS',
+      overline: 'GESTIÓN DE MIEMBROS',
       titulo: 'Cuentas de Clientes',
       subtitulo: 'Directorio de huéspedes registrados en el complejo. Administra roles y estado de activación.',
       colPerfil: 'PERFIL DEL CLIENTE',
@@ -295,7 +318,7 @@ const textos = {
       activo: 'Activo',
       desactivado: 'Desactivado',
       restaurar: '↺ Restaurar Cuenta',
-      desactivar: '🔒 Desactivar Cuenta',
+      desactivar: 'Desactivar Cuenta',
       errorEstado: 'No se pudo cambiar el estado del usuario',
       errorRol: 'No se pudo cambiar el rol del usuario'
     }
@@ -303,11 +326,27 @@ const textos = {
 
   en: {
     mapa: {
-      titulo: '3D Tour',
+      titulo: 'Virtual tour',
       ayudaCaminar: 'Walk',
       ayudaCorrer: 'Run',
-      ayudaMirar: 'Drag the mouse to look around',
-      ayudaElegir: 'Click a building to see its details',
+      ayudaMirar: 'Move the mouse to look around',
+      ayudaElegir: 'Click or press E on a building to see its details',
+      ayudaEsc: 'Menu and release the mouse',
+      ayudaTema: 'Light / dark mode',
+      ayudaAerea: 'Aerial view',
+      ayudaSonido: 'Mute / unmute sound',
+      sonidoSi: 'Sound: on',
+      sonidoNo: 'Sound: off',
+      volverPagina: 'Back to the page',
+      aereaAyuda: 'Pick where to appear · F to go back',
+      irGalpon: 'Barn',
+      irCasa: 'Main house',
+      irCabanas: 'Cabins',
+      pausa: 'Paused',
+      seguir: 'Keep exploring',
+      clicExplorar: 'Click to explore',
+      modoOscuro: 'Dark mode',
+      modoClaro: 'Light mode',
       verDetalle: 'See details',
       desde: 'from',
       porNoche: 'per night',
@@ -320,10 +359,12 @@ const textos = {
       porNoche: '/ night',
       porNocheSufijo: ' / night',
       espacio: 'Space',
-      huesped: 'Guest'
+      huesped: 'Guest',
+      bienvenida: 'Welcome',
+      despedida: 'See you soon'
     },
     nav: {
-      idioma: '🌐 EN | ES',
+      idioma: 'EN | ES',
       consolaStaff: 'STAFF CONSOLE',
       espacios: 'Accommodations',
       reservas: 'Guest Reservations',
@@ -335,14 +376,15 @@ const textos = {
       buzon: 'Inbox',
       carrito: 'Cart',
       iniciarSesion: 'Sign In',
-      registrarse: 'Register'
+      registrarse: 'Register',
+      recorrido3d: 'Virtual tour'
     },
     footer: {
       lema: ' — Woodland Retreats & Accommodations',
       derechos: '© 2026 Whispering Pines Sanctuary & Retreats. All rights reserved.'
     },
     login: {
-      bannerBadge: '✨ PRIVATE WOODLAND SANCTUARY',
+      bannerBadge: 'PRIVATE WOODLAND SANCTUARY',
       bannerTitulo: 'Return to the quiet of the pines.',
       bannerDescripcion: 'Manage your cabin reservations, explore lakeside trails, and prepare for your upcoming retreat.',
       overline: 'WELCOME BACK',
@@ -359,7 +401,7 @@ const textos = {
       errorCuentaDesactivada: 'Your account has been deactivated by the administration.'
     },
     registro: {
-      bannerBadge: '🏕️ JOIN THE SANCTUARY',
+      bannerBadge: 'JOIN THE SANCTUARY',
       bannerTitulo: 'Begin your woodland tradition.',
       bannerDescripcion: 'Create your guest profile to reserve cabins, event barns, and lakeside activities with member benefits.',
       overline: 'NEW GUEST REGISTRATION',
@@ -383,14 +425,14 @@ const textos = {
       desde: 'From ',
       cargando: 'Loading spaces...',
       verEspacios: 'View spaces',
-      recorrido: '3D tour',
+      recorrido: 'Virtual tour',
       seccion: 'Our retreats',
       errorCarga: 'Error loading spaces: ',
       verEspacio: 'Explore Space ➔',
-      capacidadCabana: '👥 4 to 5 guests',
-      capacidadHabitacion: '👥 2 to 3 guests • 🍽️ Communal Hall',
-      capacidadGalpon: '🎉 Events & Celebrations',
-      capacidadSalon: '🍽️ Main House Communal Area'
+      capacidadCabana: '4 to 5 guests',
+      capacidadHabitacion: '2 to 3 guests • Communal Hall',
+      capacidadGalpon: 'Events & Celebrations',
+      capacidadSalon: 'Main House Communal Area'
     },
     detalle: {
       vacioTitulo: 'No space selected',
@@ -398,10 +440,10 @@ const textos = {
       vacioVolver: '← Return to Catalog',
       volver: '← Back to Catalog',
       sobre: 'About this Sanctuary Space',
-      badgeCabana: '🏡 Private Cabin (4 to 5 guests)',
-      badgeHabitacion: '🛏️ Main House Room (2 to 3 guests)',
-      badgeGalpon: '🎪 Event & Celebration Barn',
-      badgeSalon: '🍽️ Communal Dining Hall & Shared Baths',
+      badgeCabana: 'Private Cabin (4 to 5 guests)',
+      badgeHabitacion: 'Main House Room (2 to 3 guests)',
+      badgeGalpon: 'Event & Celebration Barn',
+      badgeSalon: 'Communal Dining Hall & Shared Baths',
       infoHabitacionTitulo: 'Main House Guest Privileges:',
       infoHabitacionTexto: '• Free access to the communal dining hall and shared bathroom facilities.\n• Want to book the entire Main House? Simply reserve all available rooms for your dates.',
       infoSalonTitulo: 'Shared Communal Facility:',
@@ -410,7 +452,7 @@ const textos = {
       botonVerHabitaciones: '← Explore Rooms'
     },
     calendario: {
-      titulo: '📅 Availability Calendar',
+      titulo: 'Availability Calendar',
       meses: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       dias: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       disponible: 'Available',
@@ -421,7 +463,7 @@ const textos = {
       ayudaPasado: 'Past date'
     },
     widget: {
-      promo: '🍂 20% OFF in May, Jun & Aug',
+      promo: '20% OFF in May, Jun & Aug',
       nochesSeleccionadas: (cantidad) => (cantidad === 1 ? ' (1 night)' : ` (${cantidad} nights)`),
       boton: 'Add to Sanctuary Cart ➔',
       errorFechas: 'You must select at least one available day on the calendar',
@@ -463,10 +505,10 @@ const textos = {
       mediosPago: {
         titulo: 'Payment Method',
         subtitulo: 'Select how you would like to pay for your Whispering Pines stay.',
-        tarjeta: '💳 Credit / Debit Card',
-        billetera: '📱 Digital Wallet',
-        transferencia: '🏦 Bank Wire Transfer',
-        recepcion: '📍 Pay at Front Desk',
+        tarjeta: 'Credit / Debit Card',
+        billetera: 'Digital Wallet',
+        transferencia: 'Bank Wire Transfer',
+        recepcion: 'Pay at Front Desk',
         tarjetaNumero: 'Card Number',
         tarjetaTitular: 'Cardholder Name',
         tarjetaVencimiento: 'Expiration (MM/YY)',
@@ -516,7 +558,7 @@ const textos = {
       vacioTexto: 'Explore our catalog to book your next stay at Whispering Pines.',
       codigo: (id) => ` Booking #${id}`,
       pack: (porcentaje) => `Pack ${porcentaje}% OFF Applied`,
-      avisoCancelacion: '⚠️ Administrator Cancellation Notice:',
+      avisoCancelacion: 'Administrator Cancellation Notice:',
       ocultar: '✕ Dismiss / Remove',
       cancelar: '⊗ Cancel Reservation',
       errorCancelar: 'Could not cancel reservation'
@@ -527,7 +569,7 @@ const textos = {
       vacio: 'You have no pending notifications.',
       vacioTexto: 'Notices will appear here if an administrator cancels a reservation.',
       cerrar: 'Close Inbox',
-      badge: '⚠️ CANCELLED BOOKING',
+      badge: 'CANCELLED BOOKING',
       mensaje: 'Administrator Message:',
       marcarLeido: '✓ Mark as read'
     },
@@ -545,6 +587,10 @@ const textos = {
       tarifa: 'Base Rate (USD / night)',
       descripcion: 'Description',
       imagen: 'Image URL',
+      subirImagenes: 'Choose images',
+      subiendo: 'Uploading...',
+      errorSubir: 'Some image could not be uploaded (only jpg, png, webp or gif up to 5 MB).',
+      quitarImagen: 'Remove image',
       botonAgregar: '+ Save Place',
       colEspacio: 'ACCOMMODATION & PLOT',
       colCategoria: 'CATEGORY',
@@ -580,7 +626,7 @@ const textos = {
       errorCancelar: 'Could not cancel reservation'
     },
     adminUsuarios: {
-      overline: '🛡️ MEMBER STEWARDSHIP',
+      overline: 'MEMBER STEWARDSHIP',
       titulo: 'Client Accounts',
       subtitulo: 'Directory of registered sanctuary guests. Manage roles and toggle account activation status.',
       colPerfil: 'CLIENT PROFILE',
@@ -593,7 +639,7 @@ const textos = {
       activo: 'Active',
       desactivado: 'Deactivated',
       restaurar: '↺ Restore Account',
-      desactivar: '🔒 Deactivate Account',
+      desactivar: 'Deactivate Account',
       errorEstado: 'Could not change user account status',
       errorRol: 'Could not change user role'
     }

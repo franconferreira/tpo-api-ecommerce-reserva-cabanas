@@ -13,7 +13,7 @@ function LoginView({ idioma, setIdioma, tema, onToggleTema }) {
         badge={t.bannerBadge}
         title={t.bannerTitulo}
         description={t.bannerDescripcion}
-        footerText="📍 Blue Ridge Mountains, NC"
+        footerText="Blue Ridge Mountains, NC"
       />
 
       <LoginForm idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={onToggleTema} />

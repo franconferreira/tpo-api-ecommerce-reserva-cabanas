@@ -1,9 +1,9 @@
 /* Recorrido 3D: el lienzo ocupa toda la página y los avisos flotan encima con los colores del tema */
 .mapa3d-pagina {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 70px);
-  min-height: 520px;
+  /* ocupa toda la ventana del navegador (en esta ruta no hay barra ni pie) */
+  position: fixed;
+  inset: 0;
+  z-index: 50;
   overflow: hidden;
   user-select: none;
   background: var(--fondo);
@@ -17,6 +17,14 @@
 
 .mapa3d-lienzo:active {
   cursor: grabbing;
+}
+
+/* La copia de la página no repite sus animaciones de entrada: se ve como estaba */
+.mapa3d-poster *,
+.mapa3d-poster *::before,
+.mapa3d-poster *::after {
+  animation: none !important;
+  transition: none !important;
 }
 
 /* La página principal encima del mapa durante la transición (sigue al póster del cartel) */
@@ -167,4 +175,140 @@
     justify-content: center;
     width: calc(100% - 32px);
   }
+}
+
+/* Punto de mira en el centro (con el mouse tomado se elige lo que está ahí) */
+.mapa3d-mira {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #fffc;
+  box-shadow: 0 0 0 1px #0006;
+  pointer-events: none;
+}
+
+.mapa3d-clic {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 22px;
+  border: 1px solid var(--marco);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--titulo);
+  box-shadow: 0 0 0 3px var(--marco-hueco), 0 0 0 4px var(--orn-suave), 0 10px 24px -10px var(--sombra);
+  font-family: 'Marcellus SC', serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* Menú de Escape: chico, en el medio de la pantalla */
+.mapa3d-menu {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(300px, calc(100% - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  border: 1px solid var(--marco);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--texto);
+  box-shadow: 0 0 0 3px var(--marco-hueco), 0 0 0 4px var(--orn-suave), 0 10px 24px -10px var(--sombra);
+}
+
+.mapa3d-menu h3 {
+  margin: 0 0 4px;
+  text-align: center;
+  font-family: 'Marcellus SC', serif;
+  font-weight: normal;
+  color: var(--titulo);
+}
+
+.mapa3d-menu > button:not(.mapa3d-boton) {
+  padding: 6px 10px;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  background: var(--superficie-2);
+  color: var(--texto);
+  font-family: 'Marcellus SC', serif;
+  cursor: pointer;
+}
+
+.mapa3d-menu > button:not(.mapa3d-boton):hover {
+  color: var(--acento);
+}
+
+.mapa3d-menu-fila {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* Recorriendo: sin cursor (se mira moviendo el mouse) */
+.mapa3d-pagina.explorando .mapa3d-lienzo {
+  cursor: none;
+}
+
+/* Vista aérea: aviso arriba y un botón sobre cada lugar donde se puede aparecer */
+.mapa3d-aviso-aerea {
+  top: 20px;
+  bottom: auto;
+}
+
+.mapa3d-destino {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  padding: 6px 14px;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', serif;
+  font-size: 1rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Aviso de algo agregado al carrito (debajo de la guía de botones) */
+.mapa3d-carrito {
+  position: absolute;
+  left: 16px;
+  top: 250px;
+  width: 46px;
+  height: 46px;
+  padding: 10px;
+  border: 1px solid var(--marco);
+  border-radius: 50%;
+  background: var(--superficie);
+  color: var(--titulo);
+  box-shadow: 0 0 0 3px var(--marco-hueco), 0 0 0 4px var(--orn-suave), 0 10px 24px -10px var(--sombra);
+  cursor: pointer;
+}
+
+.mapa3d-carrito svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mapa3d-carrito-punto {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--acento);
+  box-shadow: 0 0 0 2px var(--superficie);
 }

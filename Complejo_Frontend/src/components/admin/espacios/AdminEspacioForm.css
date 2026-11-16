@@ -57,3 +57,56 @@
   font-family: 'Marcellus SC', Georgia, serif;
   letter-spacing: 0.06em;
 }
+
+/* Elegir imágenes desde la computadora (el input de archivo va escondido dentro del botón) */
+.ad-subir {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.ad-btn-subir {
+  position: relative;
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px dashed var(--marco);
+  border-radius: 6px;
+  background: var(--superficie-2);
+  color: var(--texto);
+  font-family: 'Marcellus SC', serif;
+  font-size: 0.85rem;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ad-btn-subir input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ad-subidas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.ad-subida {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+}
+
+.ad-subida img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

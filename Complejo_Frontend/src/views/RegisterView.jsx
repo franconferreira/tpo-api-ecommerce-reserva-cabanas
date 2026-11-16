@@ -13,7 +13,7 @@ function RegisterView({ idioma, setIdioma, tema, onToggleTema }) {
         badge={t.bannerBadge}
         title={t.bannerTitulo}
         description={t.bannerDescripcion}
-        footerText="🌲 Whispering Pines Sanctuary & Retreats"
+        footerText="Whispering Pines Sanctuary & Retreats"
       />
 
       <RegisterForm idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={onToggleTema} />

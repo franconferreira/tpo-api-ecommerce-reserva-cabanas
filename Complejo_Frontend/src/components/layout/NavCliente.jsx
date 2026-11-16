@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import LinkFundido from '../ui/LinkFundido'
 import textos from '../../i18n/textos'
 import { BotonTema, IconoTema } from '../ornamentos/Ornamentos'
+import { capturarPagina } from '../../mapa3d/posterPagina'
 
 function NavCliente({
   idioma,
@@ -23,40 +25,35 @@ function NavCliente({
     <nav className="nav-container">
       <ul className="nav-list nav-brand">
         <li>
-          <Link to="/catalogo" className="nav-logo">
-            🌲 Whispering Pines
+          <LinkFundido to="/catalogo" className="nav-logo">
+            Whispering Pines
+          </LinkFundido>
+          {/* botón flotante debajo del nombre, para entrar al recorrido 3D */}
+          <Link to="/mapa-3d" className="nav-recorrido" onClick={capturarPagina}>
+            {t.recorrido3d}
           </Link>
         </li>
       </ul>
 
       <ul className="nav-list">
         <li>
-          <Link
+          <LinkFundido
             to="/catalogo"
             className={pathname === '/catalogo' || pathname === '/' ? 'nav-link active-text' : 'nav-link'}
           >
             {t.explorar}
             {(pathname === '/catalogo' || pathname === '/') && <IconoTema className="nav-marca" />}
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/mapa-3d"
-            className={pathname === '/mapa-3d' ? 'nav-link active-text' : 'nav-link'}
-          >
-            🗺️ Recorrido 3D
-            {pathname === '/mapa-3d' && <IconoTema className="nav-marca" />}
-          </Link>
+          </LinkFundido>
         </li>
         {isLogged && (
           <li>
-            <Link
+            <LinkFundido
               to="/mis-reservas"
               className={pathname === '/mis-reservas' ? 'nav-link active-text' : 'nav-link'}
             >
               {t.misReservas}
             {pathname === '/mis-reservas' && <IconoTema className="nav-marca" />}
-            </Link>
+            </LinkFundido>
           </li>
         )}
       </ul>
@@ -141,14 +138,14 @@ function NavCliente({
         ) : (
           <>
             <li>
-              <Link to="/login" className="nav-link">
+              <LinkFundido to="/login" className="nav-link">
                 {t.iniciarSesion}
-              </Link>
+              </LinkFundido>
             </li>
             <li>
-              <Link to="/register" className="nav-btn-primary">
+              <LinkFundido to="/register" className="nav-btn-primary">
                 {t.registrarse}
-              </Link>
+              </LinkFundido>
             </li>
           </>
         )}

@@ -1,22 +1,20 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CarritoItem from './CarritoItem'
 import CarritoHeader from './CarritoHeader'
 import CarritoFooter from './CarritoFooter'
 import textos from '../../i18n/textos'
 import { cerrarCarrito, eliminarDelCarrito } from '../../Redux/carritoSlice'
+import { fundirYNavegar } from '../../utils/fundido'
 import './CarritoDrawer.css'
 
 function CarritoDrawer({ idioma }) {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const dispatch = useDispatch()
   const { data: carritoData, abierto, errorEliminar } = useSelector((state) => state.carrito)
   const t = textos[idioma].carrito
-
-  if (!abierto) {
-    return null
-  }
 
   const items = carritoData.items ? carritoData.items : []
   const totalSinDescuento = carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
@@ -32,12 +30,18 @@ function CarritoDrawer({ idioma }) {
   }
 
   const handleIrACheckout = () => {
+    // desde el recorrido 3D se pasa al checkout con un fundido (el panel se cierra recién al cambiar de pantalla)
+    if (pathname === '/mapa-3d') {
+      fundirYNavegar(navigate, '/checkout', () => dispatch(cerrarCarrito()))
+      return
+    }
     dispatch(cerrarCarrito())
     navigate('/checkout')
   }
 
   return (
-    <div className="carrito-backdrop">
+    // siempre montado: al abrir y cerrar el panel se desliza desde la derecha (ver CarritoDrawer.css)
+    <div className={`carrito-backdrop ${abierto ? 'abierto' : ''}`} aria-hidden={!abierto}>
       <div className="carrito-panel">
         <CarritoHeader idioma={idioma} cantidad={items.length} onClose={handleCerrar} />
 

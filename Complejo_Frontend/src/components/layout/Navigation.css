@@ -332,3 +332,29 @@
 .nav-btn-outline {
   white-space: nowrap;
 }
+
+/* Botón flotante "Recorrido 3D" debajo del nombre del sitio (no empuja el resto de la barra) */
+.nav-brand > li {
+  position: relative;
+}
+
+.nav-recorrido {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 3.4em); /* debajo del friso de la barra */
+  z-index: 20;
+  padding: 0.7em 2.2em;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', serif;
+  font-size: 1.6rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-recorrido:hover {
+  filter: brightness(1.08);
+}

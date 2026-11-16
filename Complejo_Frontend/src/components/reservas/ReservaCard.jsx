@@ -37,9 +37,9 @@ function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
           reserva.detalles.map((detalle) => (
             <div className="mr-detalle-item" key={`${detalle.nombreEspacio}-${detalle.checkIn}`}>
               <div>
-                <strong>🏠 {detalle.nombreEspacio}</strong>
+                <strong>{detalle.nombreEspacio}</strong>
                 <span className="mr-detalle-dates">
-                  📅 {detalle.checkIn} {comun.al} {detalle.checkOut}
+                  {detalle.checkIn} {comun.al} {detalle.checkOut}
                 </span>
               </div>
               <span className="mr-detalle-rate">

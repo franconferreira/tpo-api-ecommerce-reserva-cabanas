@@ -14,6 +14,14 @@ export const crearEspacio = createAsyncThunk('adminEspacios/crearEspacio', async
   return data
 })
 
+// Sube una imagen elegida desde la computadora; el back la guarda y devuelve su URL
+export async function subirImagen(archivo) {
+  const formulario = new FormData()
+  formulario.append('archivo', archivo)
+  const { data } = await axios.post(`${API_URL}/api/admin/imagenes`, formulario, conToken())
+  return data.url
+}
+
 export const actualizarEspacio = createAsyncThunk('adminEspacios/actualizarEspacio', async (espacioEditado) => {
   const { id, nombre, precioBase, tipo, descripcion, imagenes } = espacioEditado
   const { data } = await axios.put(`${URL}/${id}`, { nombre, precioBase, tipo, descripcion, imagenes }, conToken())

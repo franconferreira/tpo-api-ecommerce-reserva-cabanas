@@ -5,7 +5,7 @@ import CheckoutItem from './CheckoutItem'
 import CheckoutTotales from './CheckoutTotales'
 import MediosDePago from './MediosDePago'
 import textos from '../../i18n/textos'
-import { confirmarCheckout, limpiarErroresCarrito, reiniciarCheckout } from '../../Redux/carritoSlice'
+import { confirmarCheckout, fetchCarrito, limpiarErroresCarrito, reiniciarCheckout } from '../../Redux/carritoSlice'
 import './CheckoutResumen.css'
 
 function CheckoutResumen({ idioma }) {
@@ -36,6 +36,12 @@ function CheckoutResumen({ idioma }) {
   useEffect(() => {
     dispatch(limpiarErroresCarrito())
   }, [dispatch])
+
+  // Si el checkout falla (por ejemplo, porque venció la reserva temporal de algún espacio), se vuelve a pedir el
+  // carrito al back para mostrar lo que quedó de verdad
+  useEffect(() => {
+    if (errorCheckout) dispatch(fetchCarrito())
+  }, [errorCheckout, dispatch])
 
   // Cuando el checkout sale bien (lo marca el slice en fulfilled), vamos a Mis Reservas
   useEffect(() => {

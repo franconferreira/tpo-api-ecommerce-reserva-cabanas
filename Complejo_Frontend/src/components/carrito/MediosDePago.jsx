@@ -219,7 +219,6 @@ function MediosDePago({
                 className={`billetera-opcion ${datosPago.billeteraTipo === 'mp' ? 'active' : ''}`}
                 onClick={() => actualizarDato('billeteraTipo', 'mp')}
               >
-                <span>🔵</span>
                 <span>{t.mp}</span>
               </button>
               <button
@@ -227,7 +226,6 @@ function MediosDePago({
                 className={`billetera-opcion ${datosPago.billeteraTipo === 'paypal' ? 'active' : ''}`}
                 onClick={() => actualizarDato('billeteraTipo', 'paypal')}
               >
-                <span>🅿️</span>
                 <span>{t.paypal}</span>
               </button>
             </div>
@@ -338,7 +336,6 @@ function MediosDePago({
             </div>
 
             <div className="recepcion-alerta">
-              <span className="recepcion-icono">🛎️</span>
               <div>{t.recepcionTexto}</div>
             </div>
 

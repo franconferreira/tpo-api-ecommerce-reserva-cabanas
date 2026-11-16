@@ -12,10 +12,11 @@ import AdminEspaciosView from './views/AdminEspaciosView'
 import AdminReservasView from './views/AdminReservasView'
 import AdminUsuariosView from './views/AdminUsuariosView'
 import Mapa3DView from './views/Mapa3DView'
-import AdminMapa3DView from './views/AdminMapa3DView'
 import { fetchPerfil, logout } from './Redux/authSlice'
 import { fetchCarrito, vaciarCarrito } from './Redux/carritoSlice'
 import { fetchMisReservas, limpiarReservas } from './Redux/reservasSlice'
+import { mostrarMensaje } from './utils/pantallaMensaje'
+import textos from './i18n/textos'
 
 function App() {
   const navigate = useNavigate()
@@ -41,11 +42,12 @@ function App() {
   useEffect(() => {
     if (rolUsuario === 'ROLE_ADMIN') {
       // El administrador no debe ver el catálogo ni pantallas de cliente/auth
-      if (
+      if (location.pathname === '/login' || location.pathname === '/register') {
+        // recién inicia sesión: pantalla de "Bienvenido" antes de entrar al panel
+        mostrarMensaje(textos[idioma].comun.bienvenida, () => navigate('/admin/espacios'))
+      } else if (
         location.pathname === '/' ||
         location.pathname === '/catalogo' ||
-        location.pathname === '/login' ||
-        location.pathname === '/register' ||
         location.pathname === '/detalle' ||
         location.pathname === '/checkout' ||
         location.pathname === '/mis-reservas'
@@ -55,7 +57,8 @@ function App() {
     } else if (isLogged) {
       // Usuario normal logueado
       if (location.pathname === '/login' || location.pathname === '/register') {
-        navigate('/catalogo')
+        // recién inicia sesión: pantalla de "Bienvenido" antes de entrar al catálogo
+        mostrarMensaje(textos[idioma].comun.bienvenida, () => navigate('/catalogo'))
       } else if (
         location.pathname === '/admin/espacios' ||
         location.pathname === '/admin/reservas' ||
@@ -76,7 +79,7 @@ function App() {
         navigate('/login')
       }
     }
-  }, [isLogged, rolUsuario, location.pathname, navigate])
+  }, [isLogged, rolUsuario, location.pathname, navigate, idioma])
 
   // Verifica el perfil y estado activo del usuario al iniciar sesión o cambiar de pantalla
   useEffect(() => {
@@ -105,13 +108,16 @@ function App() {
     }
   }, [cuentaDesactivada, dispatch, navigate])
 
+  // Cerrar sesión: pantalla de "Hasta pronto" y, ya tapado todo, se limpia la sesión y se va al login
   const handleLogout = () => {
-    localStorage.removeItem('jwtToken')
-    dispatch(logout())
-    dispatch(vaciarCarrito())
-    dispatch(limpiarReservas())
-    setIsBuzonOpen(false)
-    navigate('/login')
+    mostrarMensaje(textos[idioma].comun.despedida, () => {
+      localStorage.removeItem('jwtToken')
+      dispatch(logout())
+      dispatch(vaciarCarrito())
+      dispatch(limpiarReservas())
+      setIsBuzonOpen(false)
+      navigate('/login')
+    })
   }
 
   const handleToggleTema = () => {
@@ -151,7 +157,17 @@ function App() {
         <Route path="/catalogo" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
         <Route
           path="/mapa-3d"
-          element={<Mapa3DView idioma={idioma} tema={tema} onAbrirDetalle={handleAbrirDetalle} />}
+          element={
+            <Mapa3DView
+              idioma={idioma}
+              setIdioma={setIdioma}
+              tema={tema}
+              onToggleTema={handleToggleTema}
+              onLogout={handleLogout}
+              onAbrirDetalle={handleAbrirDetalle}
+              detalleAbierto={espacioSeleccionado !== null}
+            />
+          }
         />
         <Route
           path="/detalle"
@@ -168,7 +184,6 @@ function App() {
         <Route path="/admin/espacios" element={<AdminEspaciosView idioma={idioma} />} />
         <Route path="/admin/reservas" element={<AdminReservasView idioma={idioma} />} />
         <Route path="/admin/usuarios" element={<AdminUsuariosView idioma={idioma} />} />
-        <Route path="/admin/mapa-3d" element={<AdminMapa3DView idioma={idioma} />} />
       </Route>
     </Routes>
     </div>

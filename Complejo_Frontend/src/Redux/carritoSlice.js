@@ -34,11 +34,19 @@ const carritoSlice = createSlice({
     errorAgregar: false,
     errorEliminar: false,
     errorCheckout: false,
-    checkoutExitoso: false
+    checkoutExitoso: false,
+    // en el recorrido 3D el carrito no se abre al agregar: se avisa con un ícono (avisoMapa)
+    abrirAlAgregar: true,
+    avisoMapa: false
   },
   reducers: {
     abrirCarrito: (state) => {
       state.abierto = true
+      state.avisoMapa = false
+    },
+    setAbrirAlAgregar: (state, action) => {
+      state.abrirAlAgregar = action.payload
+      state.avisoMapa = false
     },
     cerrarCarrito: (state) => {
       state.abierto = false
@@ -73,7 +81,8 @@ const carritoSlice = createSlice({
       })
       .addCase(agregarAlCarrito.fulfilled, (state, action) => {
         state.data = action.payload
-        state.abierto = true
+        if (state.abrirAlAgregar) state.abierto = true
+        else state.avisoMapa = true
       })
       .addCase(agregarAlCarrito.rejected, (state) => {
         state.errorAgregar = true
@@ -99,7 +108,7 @@ const carritoSlice = createSlice({
         state.checkoutExitoso = true
       })
       .addCase(confirmarCheckout.rejected, (state) => {
-        state.data = CARRITO_VACIO
+        // no se vacía a mano: la pantalla vuelve a pedir el carrito (el back ya sacó lo que venció)
         state.errorCheckout = true
       })
   }
@@ -107,6 +116,7 @@ const carritoSlice = createSlice({
 
 export const {
   abrirCarrito,
+  setAbrirAlAgregar,
   cerrarCarrito,
   limpiarErroresCarrito,
   reiniciarCheckout,

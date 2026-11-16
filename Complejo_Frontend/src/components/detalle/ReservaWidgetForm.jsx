@@ -35,7 +35,7 @@ function ReservaWidgetForm({ idioma, espacio }) {
   if (espacio.tipo === 'SALON_COMIDA_CASA_PRINCIPAL') {
     return (
       <div className="widget-reserva salon-comunal-box">
-        <h3 className="salon-comunal-title">🍽️ {tDetalle.infoSalonTitulo}</h3>
+        <h3 className="salon-comunal-title">{tDetalle.infoSalonTitulo}</h3>
         <p className="salon-comunal-text">
           {tDetalle.infoSalonTexto}
         </p>

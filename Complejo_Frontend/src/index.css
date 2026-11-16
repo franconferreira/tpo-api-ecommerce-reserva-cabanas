@@ -53,11 +53,6 @@ body {
   --boton-borde: 2px solid #33261a;
   --boton-sombra: inset 0 2px 0 #ffffff66, inset 0 -3px 0 #00000033, 0 0 0 2px #ecc784, 0 8px 18px -6px #5f7d4399;
   color: var(--texto);
-  background:
-    radial-gradient(ellipse 60% 45% at 50% -8%, #ffdc9ccc 0%, #ffd09000 70%),
-    repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff0cf55 6deg 8deg, #ffffff00 8deg 14deg),
-    linear-gradient(180deg, #fcf0db, #f3dfbf);
-  background-attachment: fixed;
 }
 
 .tema-oscuro {
@@ -92,6 +87,32 @@ body {
   --boton-borde: 2px solid #0c1719;
   --boton-sombra: 0 0 0 1px #f3e7bf, 0 0 0 4px #0c1719, 0 0 0 5px #c9b26e88, 0 0 24px #e2d29c33;
   color: var(--texto);
+}
+
+/* Contenedor de toda la app: lleva la clase del tema.
+   El fondo del modo claro va abajo y el del oscuro en una capa encima (::before) que aparece o se va con un
+   fundido al cambiar de tema (los degradés no se pueden animar directamente). */
+.app {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% -8%, #ffdc9ccc 0%, #ffd09000 70%),
+    repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff0cf55 6deg 8deg, #ffffff00 8deg 14deg),
+    linear-gradient(180deg, #fcf0db, #f3dfbf);
+  background-attachment: fixed;
+  min-height: 100vh;
+  /* Las plantas que crecen hacia afuera no generan scroll horizontal */
+  overflow-x: clip;
+  display: flex;
+  flex-direction: column;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(1px 1px at 10% 20%, #fff8 50%, transparent 51%),
     radial-gradient(1px 1px at 30% 70%, #fff6 50%, transparent 51%),
@@ -101,16 +122,19 @@ body {
     radial-gradient(ellipse 60% 45% at 50% -8%, #2b4c4fcc 0%, transparent 70%),
     linear-gradient(180deg, #0e1b1e, #0a1416);
   background-size: 260px 260px, 340px 340px, 420px 420px, 300px 300px, 200px 200px, 100% 100%, 100% 100%;
-  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-/* Contenedor de toda la app: lleva la clase del tema */
-.app {
-  min-height: 100vh;
-  /* Las plantas que crecen hacia afuera no generan scroll horizontal */
-  overflow-x: clip;
-  display: flex;
-  flex-direction: column;
+.tema-oscuro::before {
+  opacity: 1;
+}
+
+/* Al cambiar de tema, los colores de los componentes también pasan de a poco
+   (los componentes que tienen su propia transición la conservan) */
+.app,
+.app * {
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease, fill 0.6s ease, stroke 0.6s ease, box-shadow 0.6s ease;
 }
 
 /* La luna solo se ve en el modo oscuro y el sol solo en el claro */
@@ -205,4 +229,80 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Capa del fundido al cambiar de pantalla desde el recorrido 3D (utils/fundido.js) */
+.fundido-pagina {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.fundido-pagina.visible {
+  opacity: 1;
+}
+
+/* Pantalla de paso "Bienvenido" / "Hasta pronto" (utils/pantallaMensaje.js): color liso del tema y rinceaux */
+.pantalla-mensaje {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  background: var(--superficie);
+  color: var(--titulo);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+}
+
+.pantalla-mensaje.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pantalla-mensaje h1 {
+  margin: 0;
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  letter-spacing: 0.06em;
+}
+
+.pm-rinceau {
+  width: min(520px, 80vw);
+  height: auto;
+  color: var(--orn);
+}
+
+.pm-rinceau-abajo {
+  transform: scaleY(-1);
+}
+
+/* Copia de la pantalla anterior que se desvanece sobre la nueva (utils/fundido.js, cruzarYNavegar) */
+.fundido-cruzado {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+
+.fundido-cruzado.saliendo {
+  opacity: 0;
+}
+
+.fundido-cruzado *,
+.fundido-cruzado *::before,
+.fundido-cruzado *::after {
+  animation: none !important;
+  transition: none !important;
 }

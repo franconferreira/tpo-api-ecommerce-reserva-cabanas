@@ -114,11 +114,11 @@
 }
 
 .dia-ocupado {
-  background-color: #fdecea;
-  color: #b71c1c;
-  border: 2px solid #f5c6cb;
+  /* bien distinto del verde de los días libres (antes los dos tonos eran casi iguales sobre el crema) */
+  background-color: #f2cfca;
+  color: #8f241c;
+  border: 2px solid #d4867e;
   text-decoration: line-through;
-  opacity: 0.9;
 }
 
 .dia-pasado {
@@ -159,8 +159,8 @@
 }
 
 .dot-ocupado {
-  background-color: #fdecea;
-  border: 1px solid #e57373;
+  background-color: #f2cfca;
+  border: 1px solid #d4867e;
 }
 
 .dot-pasado {

@@ -3,7 +3,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, 309px);
   justify-content: center;
-  gap: 4.5em 3.2em;
+  gap: 4.5em 4.5em;
+  /* como mucho 5 tarjetas por fila, con aire entre ellas para los ornamentos */
+  max-width: calc(5 * 309px + 4 * 4.5em);
+  margin: 0 auto;
   padding: 3em 0 2em;
 }
 

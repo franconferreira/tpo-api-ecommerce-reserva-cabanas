@@ -11,7 +11,7 @@ function CarritoItem({ idioma, item, index, onEliminar }) {
           <div className="ci-texts">
             <h3>{item.espacio ? item.espacio.nombre : t.espacio}</h3>
             <p className="ci-dates">
-              📅 {item.checkIn} {t.al} {item.checkOut}
+              {item.checkIn} {t.al} {item.checkOut}
             </p>
             <span className="ci-type-tag">
               {item.espacio ? item.espacio.tipo : ''}
@@ -23,7 +23,7 @@ function CarritoItem({ idioma, item, index, onEliminar }) {
           className="ci-delete-btn"
           onClick={() => onEliminar(item.id, index)}
         >
-          🗑️
+          ✕
         </button>
       </div>
 

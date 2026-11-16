@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import LinkFundido from '../ui/LinkFundido'
 import textos from '../../i18n/textos'
 import { BotonTema, IconoTema } from '../ornamentos/Ornamentos'
 
@@ -19,40 +19,31 @@ function NavAdmin({ idioma, tema, onToggleTema, onToggleIdioma, pathname, nombre
 
       <ul className="nav-list nav-pills">
         <li>
-          <Link
+          <LinkFundido
             to="/admin/espacios"
             className={pathname === '/admin/espacios' ? 'nav-link active' : 'nav-link'}
           >
             {t.espacios}
             {pathname === '/admin/espacios' && <IconoTema className="nav-marca" />}
-          </Link>
+          </LinkFundido>
         </li>
         <li>
-          <Link
+          <LinkFundido
             to="/admin/reservas"
             className={pathname === '/admin/reservas' ? 'nav-link active' : 'nav-link'}
           >
             {t.reservas}
             {pathname === '/admin/reservas' && <IconoTema className="nav-marca" />}
-          </Link>
+          </LinkFundido>
         </li>
         <li>
-          <Link
+          <LinkFundido
             to="/admin/usuarios"
             className={pathname === '/admin/usuarios' ? 'nav-link active' : 'nav-link'}
           >
             {t.usuarios}
             {pathname === '/admin/usuarios' && <IconoTema className="nav-marca" />}
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/admin/mapa-3d"
-            className={pathname === '/admin/mapa-3d' ? 'nav-link active' : 'nav-link'}
-          >
-            🗺️ Editor Mapa 3D
-            {pathname === '/admin/mapa-3d' && <IconoTema className="nav-marca" />}
-          </Link>
+          </LinkFundido>
         </li>
       </ul>
 

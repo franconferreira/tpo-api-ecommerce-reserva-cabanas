@@ -199,7 +199,7 @@ Toda de **piedra**, con techo de pizarra y **contraventanas** verdes.
 | Elemento | Aprobado |
 |---|---|
 | Terreno | **163 × 156 m** (x −75…88, z −98…58), con una franja de bosque denso de 12 m en el perímetro |
-| Cartel con póster | **4 × 2,5 m** sobre dos postes, **afuera**, en z 53. Es lo primero que se ve (ahí arranca la transición) |
+| Cartel con póster | 2,5 m de alto (el ancho sigue la proporción de la pantalla), **afuera**, al costado derecho del camino en (4,5; 52), **girado 45°** hacia quien llega. Ahí arranca la transición |
 | Portal de entrada | de troncos, 5 m, en z 46, **detrás** del cartel |
 | Camino principal | de tierra, 3 m, de sur a norte hasta el frente de la casa. Senderos de 1,5 m y faroles cada 12 m |
 | Casa principal | **centro**, en (0, −22), con la U abierta hacia el sur |
@@ -218,7 +218,7 @@ Al acercarse a una construcción aparece su nombre y precio. Con un clic se abre
 
 **Hecha.** Al entrar a `/mapa-3d` (desde "Recorrido 3D"):
 
-1. Se sigue viendo la página principal: `Mapa3DView` la muestra encima del lienzo mientras se arma el mapa.
+1. Se sigue viendo la página que se estaba mirando: al tocar "Recorrido 3D" se copia su HTML (`capturarPagina`) y `Mapa3DView` la muestra encima del lienzo mientras se arma el mapa. Si se entra directo por la dirección, se muestra la página principal.
 2. El póster del cartel tiene la proporción de la pantalla y la cámara arranca pegada a él, así que lo cubre justo.
 3. La cámara retrocede (≈ 2,8 s, suave al arrancar y al frenar) hasta la altura de los ojos, 4 m delante del cartel.
 4. La página real se achica siguiendo el rectángulo del póster en pantalla y se desvanece en la segunda mitad.

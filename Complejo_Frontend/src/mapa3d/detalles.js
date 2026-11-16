@@ -166,16 +166,23 @@ export function farol(x, z) {
   const g = new THREE.Group()
   g.add(caja(0.14, 2.2, 0.14, PALETA.viga, 0, 0, 0))
   g.add(caja(0.6, 0.1, 0.1, PALETA.viga, 0.25, 2.05, 0))
-  g.add(caja(0.04, 0.2, 0.04, PALETA.hierro, 0.5, 1.85, 0))
+  // la parte que cuelga (gancho y farol) va en su propio grupo, con el eje en la punta del brazo, para que el viento la mueva
+  const cabeza = new THREE.Group()
+  cabeza.position.set(0.5, 2.05, 0)
+  cabeza.userData.esLampara = true
+  cabeza.add(caja(0.04, 0.2, 0.04, PALETA.hierro, 0, -0.2, 0))
   // farol de hierro: tapa, base y 4 parantes finos, con la luz visible en el medio
-  g.add(caja(0.26, 0.05, 0.26, PALETA.hierro, 0.5, 1.8, 0))
-  g.add(caja(0.22, 0.04, 0.22, PALETA.hierro, 0.5, 1.53, 0))
-  for (const [dx, dz] of [[-0.1, -0.1], [0.1, -0.1], [-0.1, 0.1], [0.1, 0.1]]) g.add(caja(0.025, 0.24, 0.025, PALETA.hierro, 0.5 + dx, 1.56, dz))
-  const luz = caja(0.15, 0.22, 0.15, PALETA.luz, 0.5, 1.57, 0)
+  cabeza.add(caja(0.26, 0.05, 0.26, PALETA.hierro, 0, -0.25, 0))
+  cabeza.add(caja(0.22, 0.04, 0.22, PALETA.hierro, 0, -0.52, 0))
+  for (const [dx, dz] of [[-0.1, -0.1], [0.1, -0.1], [-0.1, 0.1], [0.1, 0.1]]) cabeza.add(caja(0.025, 0.24, 0.025, PALETA.hierro, dx, -0.49, dz))
+  const luz = caja(0.15, 0.22, 0.15, PALETA.luz, 0, -0.48, 0)
   luz.material = new THREE.MeshLambertMaterial({ color: PALETA.luz, emissive: PALETA.luz, emissiveIntensity: 0.6 })
   luz.userData.esLuz = true
-  g.add(luz)
+  cabeza.add(luz)
+  for (const pieza of cabeza.children) pieza.userData.noFusionar = true
+  g.add(cabeza)
   g.position.set(x, 0, z)
+  g.userData.esFarol = true
   return g
 }
 
@@ -241,6 +248,7 @@ export function pasto(x, z) {
     hoja.rotation.z = (i - 1) * 0.3
     g.add(hoja)
   }
+  g.userData.esPasto = true
   return g
 }
 

@@ -11,7 +11,7 @@ function Footer({ idioma }) {
       <Friso className="footer-friso" />
       <div className="footer-content">
         <div className="footer-brand">
-          <strong>🌲 Whispering Pines Sanctuary</strong>
+          <strong>Whispering Pines Sanctuary</strong>
           <span>{t.lema}</span>
         </div>
         <p className="footer-copy">{t.derechos}</p>

@@ -7,7 +7,7 @@ function AuthBanner({ badge, title, description, footerText }) {
     <div className="auth-banner">
       <div>
         <Link to="/catalogo" className="auth-brand">
-          🌲 Whispering Pines
+          Whispering Pines
         </Link>
       </div>
 

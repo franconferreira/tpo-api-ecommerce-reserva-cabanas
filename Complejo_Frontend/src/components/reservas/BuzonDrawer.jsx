@@ -10,20 +10,16 @@ function BuzonDrawer({ idioma, isOpen, onClose }) {
   const mensajes = useSelector((state) => state.reservas.notificaciones)
   const t = textos[idioma].buzon
 
-  if (!isOpen) {
-    return null
-  }
-
   const handleDescartar = (id) => {
     dispatch(leerNotificacion(id))
   }
 
   return (
-    <div className="buzon-backdrop">
+    // siempre montado: al abrir y cerrar el panel se desliza desde la derecha (ver BuzonDrawer.css)
+    <div className={`buzon-backdrop ${isOpen ? 'abierto' : ''}`} aria-hidden={!isOpen}>
       <div className="buzon-panel">
         <div className="buzon-header">
           <div className="bh-title-block">
-            <span className="bh-icon">📬</span>
             <div>
               <h2 className="bh-title">{t.titulo}</h2>
               <span className="bh-subtitle">{t.avisos(mensajes.length)}</span>

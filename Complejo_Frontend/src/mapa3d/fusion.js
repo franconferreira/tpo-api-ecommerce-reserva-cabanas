@@ -3,16 +3,19 @@ import * as THREE from 'three'
 // Juntar mallas: la placa de video dibuja mucho más rápido pocas mallas grandes que miles de mallas chicas.
 // (cada tronco, tabla o farol es una malla; el mapa entero tiene miles)
 
-// Junta piezas { geo, color?, x, y, z, sx, sy, sz, giro } en una sola geometría con color por vértice.
+// Junta piezas { geo, color?, x, y, z, sx, sy, sz, inclina, giro, suelo?, flex? } en una sola geometría con color por vértice.
 // Si la pieza no trae color, usa los colores que ya tenga su geometría.
+// Si trae `suelo` (plantas), cada vértice guarda un "peso" para el viento: cuanto más alto, más se mueve.
 export function juntar(piezas) {
   const pos = []
   const nor = []
   const col = []
+  const peso = []
   const c = new THREE.Color()
   for (const p of piezas) {
     const g = p.geo.index ? p.geo.toNonIndexed() : p.geo.clone()
     g.scale(p.sx ?? 1, p.sy ?? 1, p.sz ?? 1)
+    if (p.inclina) g.rotateZ(p.inclina)
     if (p.giro) g.rotateY(p.giro)
     g.translate(p.x ?? 0, p.y ?? 0, p.z ?? 0)
     if (!g.attributes.normal) g.computeVertexNormals()
@@ -25,12 +28,15 @@ export function juntar(piezas) {
       nor.push(n[i], n[i + 1], n[i + 2])
       if (ca) col.push(ca[i], ca[i + 1], ca[i + 2])
       else col.push(c.r, c.g, c.b)
+      const alto = p.suelo === undefined ? 0 : Math.max(0, a[i + 1] - p.suelo)
+      peso.push(alto * alto * (p.flex ?? 1))
     }
   }
   const geo = new THREE.BufferGeometry()
   geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
   geo.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3))
   geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3))
+  if (piezas.some((p) => p.suelo !== undefined)) geo.userData.peso = new Float32Array(peso)
   return geo
 }
 

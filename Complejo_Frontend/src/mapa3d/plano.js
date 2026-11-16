@@ -5,7 +5,8 @@
 export const TERRENO = { xMin: -75, xMax: 88, zMin: -98, zMax: 58, bosque: 12 } // bosque = franja densa del perímetro
 
 // Primero el cartel (afuera) y detrás el portal de entrada
-export const CARTEL = { x: 0, z: 53, ancho: 4, alto: 2.5 } // mira hacia el sur, a quien llega
+// al costado derecho del camino, girado 45° para mirar en diagonal a quien llega
+export const CARTEL = { x: 4.5, z: 52, ancho: 4, alto: 2.5, giro: -Math.PI / 4 }
 export const ENTRADA = { x: 0, z: 46, anchoPortal: 5 }
 
 export const CONSTRUCCIONES = [
@@ -14,9 +15,9 @@ export const CONSTRUCCIONES = [
   { id: 'galpon', tipo: 'galpon', nombre: 'Galpón de fiestas Las Acacias', x: -45, z: -14, mira: [-45, 40] },
   // Cabañas al este, alrededor de un cruce; el porche mira hacia el sendero que llega
   { id: 'cedro', tipo: 'cabana', variante: 'cedro', nombre: 'Cabaña del Cedro', x: 32, z: -45, mira: [47, -37] },
-  { id: 'pinos', tipo: 'cabana', variante: 'pinos', nombre: 'Refugio Los Pinos', x: 55, z: -50, mira: [47, -37] },
+  { id: 'pinos', tipo: 'cabana', variante: 'pinos', nombre: 'Cabaña Los Pinos', x: 55, z: -50, mira: [47, -37] },
   { id: 'roble', tipo: 'cabana', variante: 'roble', nombre: 'Cabaña El Roble', x: 44, z: -24, mira: [47, -37] },
-  { id: 'arroyo', tipo: 'cabana', variante: 'arroyo', nombre: 'Chalet del Arroyo', x: 70, z: -26, mira: [47, -37] }
+  { id: 'arroyo', tipo: 'cabana', variante: 'arroyo', nombre: 'Cabaña del Ciprés', x: 70, z: -26, mira: [47, -37] }
 ]
 
 // Laguna grande al norte, con forma irregular (lóbulo chico al oeste, grande al este) y sin arroyo.
@@ -43,9 +44,10 @@ export const ARBOLEDAS = [
 export const BOSQUE_CABANAS = { xMin: 24, xMax: 80, zMin: -66, zMax: -14, paso: 3.6, claro: 7, lejosLaguna: 16 } // claro = radio libre alrededor de cada cabaña
 
 // Camino principal (3 m) y senderos (1,5 m): `puntos` es el recorrido hasta el frente de la construcción `hasta`
-export const CAMINO = { ancho: 3, puntos: [[0, 58], [0, 44], [2, 30], [-1, 14], [0, 0], [0, -11]] }
+// arranca afuera del terreno (sigue por detrás de la colina del borde) y llega al frente de la casa
+export const CAMINO = { ancho: 3, puntos: [[0, 95], [0, 58], [0, 44], [2, 30], [-1, 14], [0, 0], [0, -11]] }
 export const SENDEROS = [
-  { puntos: [[0, 4], [20, -2], [28, -18], [47, -37]], hasta: null }, // hacia el cruce de las cabañas, entre las arboledas
+  { puntos: [[0, 4], [20, -2], [28, -18], [36, -33], [47, -37]], hasta: null }, // hacia el cruce de las cabañas, entre las arboledas y lejos de El Roble
   { puntos: [[47, -37]], hasta: 'cedro' },
   { puntos: [[47, -37]], hasta: 'pinos' },
   { puntos: [[47, -37]], hasta: 'roble' },
@@ -53,7 +55,6 @@ export const SENDEROS = [
   { puntos: [[-1, 8], [-30, 6]], hasta: 'galpon' }
 ]
 export const ANCHO_SENDERO = 1.5
-export const FOGON = { x: -12, z: -4, radio: 3 }
 export const SEPARACION_FAROLES = 12
 
 // Huella de cada tipo en coordenadas del modelo (frente hacia +Z), como lista de rectángulos [x0, z0, x1, z1]

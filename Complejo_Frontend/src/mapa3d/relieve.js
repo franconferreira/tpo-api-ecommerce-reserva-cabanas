@@ -1,4 +1,4 @@
-import { TERRENO, CONSTRUCCIONES, FOGON, CARTEL, LAGO, dentroLaguna, distLaguna } from './plano'
+import { TERRENO, CONSTRUCCIONES, CARTEL, LAGO, dentroLaguna, distLaguna } from './plano'
 
 // Relieve del terreno: colinas suaves, el bosque del borde que sube, la laguna hundida
 // y zonas planas donde van las construcciones, el fogón y la entrada.
@@ -32,11 +32,10 @@ export const suave = (t) => {
 const RADIO_PLANO = { cabana: 7.5, galpon: 17, casa: 14 }
 const PLANOS = [
   ...CONSTRUCCIONES.map((c) => ({ x: c.x, z: c.z, r: RADIO_PLANO[c.tipo] })),
-  { x: FOGON.x, z: FOGON.z, r: FOGON.radio + 2 },
   { x: CARTEL.x, z: CARTEL.z - 3, r: 9 } // cartel y portal
 ].map((p) => ({ ...p, h: base(p.x, p.z) }))
 
-const ORILLA = LAGO.nivel + 0.3 // la orilla queda apenas sobre el agua
+const ORILLA = LAGO.nivel + 0.15 // la orilla queda apenas sobre el agua
 
 export function altura(x, z) {
   let h = base(x, z)
@@ -45,7 +44,8 @@ export function altura(x, z) {
     h = p.h + (h - p.h) * t
   }
   const d = distLaguna(x, z)
-  if (dentroLaguna(x, z)) return LAGO.nivel - 0.3 - Math.min(2, d * 0.35)
+  // adentro el fondo baja enseguida, así ningún pedazo del fondo asoma por encima del agua cerca de la orilla
+  if (dentroLaguna(x, z)) return LAGO.nivel - 0.9 - Math.min(2.5, d * 0.6)
   if (d < 9) h = ORILLA + (h - ORILLA) * suave(d / 9)
   return h
 }
