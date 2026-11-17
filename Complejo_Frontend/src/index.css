@@ -22,7 +22,7 @@ body {
    Los dos temas usan la misma maqueta: acá solo cambian los colores y algunos estilos puntuales. */
 
 .tema-claro {
-  --fondo: #fcf0db;
+  --fondo: #f3e2c2; /* un paso más oscuro que las tarjetas, para que se despeguen del fondo */
   --superficie: #fffaf0;
   --superficie-2: #f7ead2;
   --texto: #45331f;
@@ -97,8 +97,8 @@ body {
   isolation: isolate;
   background:
     radial-gradient(ellipse 60% 45% at 50% -8%, #ffdc9ccc 0%, #ffd09000 70%),
-    repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff0cf55 6deg 8deg, #ffffff00 8deg 14deg),
-    linear-gradient(180deg, #fcf0db, #f3dfbf);
+    repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff0cf40 6deg 8deg, #ffffff00 8deg 14deg),
+    linear-gradient(180deg, #f3e2c2, #ead3ad);
   background-attachment: fixed;
   min-height: 100vh;
   /* Las plantas que crecen hacia afuera no generan scroll horizontal */

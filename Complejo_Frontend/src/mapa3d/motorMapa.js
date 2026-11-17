@@ -103,9 +103,12 @@ export function iniciarMapa(contenedor, opciones = {}) {
     if (e.code === 'KeyE' && cerca && opciones.alElegir) opciones.alElegir(cerca)
   }
   const alSubir = (e) => { teclas[e.code] = false }
-  // se mira con el mouse aunque todavía no esté tomado (el primer clic lo toma, para que no se escape de la ventana)
+  // Al entrar se mira con el mouse aunque todavía no esté tomado (el primer clic o tecla lo toma). Después de que
+  // el mouse se soltó una vez (Escape), sin tomarlo no se gira: si no, el cursor se iría de la ventana al girar.
+  let tuvoBloqueo = false
   const alMover = (e) => {
     if (pausado || transicion || vista.objetivo) return
+    if (tuvoBloqueo && !bloqueado()) return
     jugador.giro -= e.movementX * 0.0025
     jugador.inclinacion = Math.max(-1.2, Math.min(1.2, jugador.inclinacion - e.movementY * 0.0025))
   }
@@ -118,6 +121,7 @@ export function iniciarMapa(contenedor, opciones = {}) {
     }
   }
   const alCambiarBloqueo = () => {
+    if (bloqueado()) tuvoBloqueo = true
     if (opciones.alCambiarBloqueo) opciones.alCambiarBloqueo(bloqueado())
   }
 

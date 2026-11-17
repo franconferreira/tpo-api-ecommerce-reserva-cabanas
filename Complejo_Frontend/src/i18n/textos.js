@@ -111,7 +111,13 @@ const textos = {
       capacidadCabana: '4 a 5 huéspedes',
       capacidadHabitacion: '2 a 3 huéspedes • Salón Común',
       capacidadGalpon: 'Eventos y Celebraciones',
-      capacidadSalon: 'Área Comunal Casa Principal'
+      capacidadSalon: 'Área Comunal Casa Principal',
+      // Grupos del catálogo (uno por categoría de espacio)
+      categorias: {
+        cabanas: { titulo: 'Cabañas del bosque', subtitulo: 'Refugios de troncos entre los pinos, para 4 a 5 huéspedes' },
+        casa: { titulo: 'La casa principal', subtitulo: 'Habitaciones de piedra alrededor del patio, con cocina y comedor compartidos' },
+        galpon: { titulo: 'Galpón de fiestas', subtitulo: 'Celebraciones bajo las guirnaldas, para hasta 120 personas' }
+      }
     },
     detalle: {
       vacioTitulo: 'Ningún espacio seleccionado',
@@ -432,7 +438,12 @@ const textos = {
       capacidadCabana: '4 to 5 guests',
       capacidadHabitacion: '2 to 3 guests • Communal Hall',
       capacidadGalpon: 'Events & Celebrations',
-      capacidadSalon: 'Main House Communal Area'
+      capacidadSalon: 'Main House Communal Area',
+      categorias: {
+        cabanas: { titulo: 'Woodland cabins', subtitulo: 'Log retreats among the pines, for 4 to 5 guests' },
+        casa: { titulo: 'The main house', subtitulo: 'Stone rooms around the courtyard, with a shared kitchen and dining hall' },
+        galpon: { titulo: 'Party barn', subtitulo: 'Celebrations under the string lights, for up to 120 guests' }
+      }
     },
     detalle: {
       vacioTitulo: 'No space selected',

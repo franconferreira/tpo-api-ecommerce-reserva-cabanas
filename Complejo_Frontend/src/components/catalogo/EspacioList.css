@@ -1,13 +1,52 @@
-/* Grilla de tarjetas en arco: ancho fijo y separación suficiente para que las plantas de tarjetas vecinas no se pisen */
+/* Grupos del catálogo: cada categoría con su encabezado y sus tarjetas, separada de la siguiente */
+.catalogo-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5em;
+  padding: 1.5em 0 2em;
+}
+
+.categoria-encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1em;
+}
+
+.categoria-encabezado h3 {
+  margin: 0;
+  font-family: 'Marcellus SC', Georgia, serif;
+  font-weight: normal;
+  font-size: 1.7em;
+  letter-spacing: 0.1em;
+  color: var(--titulo);
+}
+
+.categoria-encabezado p {
+  margin: 0.15em 0 0;
+  font-family: 'Tangerine', cursive;
+  font-size: 1.75em;
+  line-height: 1.2;
+  color: var(--manuscrita);
+}
+
+.categoria-divisor {
+  width: 16em;
+  margin: 0.4em 0 0;
+}
+
+/* Tarjetas en arco: ancho fijo y separación suficiente para que las plantas de tarjetas vecinas no se pisen.
+   Con flex (y no grid) la última fila queda centrada aunque tenga menos tarjetas. */
 .catalogo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 309px);
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 4.5em 4.5em;
+  gap: 4.5em;
   /* como mucho 5 tarjetas por fila, con aire entre ellas para los ornamentos */
   max-width: calc(5 * 309px + 4 * 4.5em);
   margin: 0 auto;
-  padding: 3em 0 2em;
+  padding: 3em 0 0;
 }
 
 .catalogo-estado {

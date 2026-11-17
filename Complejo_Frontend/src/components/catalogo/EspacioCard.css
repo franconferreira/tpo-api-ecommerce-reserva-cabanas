@@ -15,6 +15,22 @@
   transition: transform 0.2s ease;
 }
 
+/* Contraste con el fondo: la tarjeta es más clara (o, de noche, apenas más clara) que la página, el aro del marco
+   toma el color de la tarjeta y la sombra la despega del fondo */
+.tema-claro .espacio-card {
+  --superficie: #fffcf6;
+  --superficie-2: #fdf5e6;
+  --marco-hueco: #fffcf6;
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 2px 6px #6b4a1a1f, 0 22px 38px -18px #6b4a1a59;
+}
+
+.tema-oscuro .espacio-card {
+  --superficie: #1c373d;
+  --superficie-2: #172f34;
+  --marco-hueco: #172f34;
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 2px 8px #00000080, 0 24px 44px -16px #000000d9, 0 0 36px #c3d2ce14;
+}
+
 .espacio-card:hover {
   transform: translateY(-3px);
 }
@@ -117,7 +133,14 @@
   letter-spacing: 0.04em;
 }
 
+/* el aviso del salón comunal es largo: puede ocupar dos renglones pero no salirse de la tarjeta */
+.ec-price-block {
+  max-width: 100%;
+}
+
 .ec-comunal-incluido {
+  display: inline-block;
+  white-space: normal;
   font-family: 'Marcellus SC', Georgia, serif;
   color: var(--titulo);
   font-size: 0.85em;

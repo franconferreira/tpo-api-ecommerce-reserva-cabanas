@@ -151,6 +151,17 @@
   stroke: var(--marco);
 }
 
+/* Contraste con el fondo (igual que las tarjetas del catálogo): el marco más claro que la página y una sombra que lo despega */
+.tema-claro .mv-marco {
+  fill: #fffcf6;
+  filter: drop-shadow(0 2px 3px #6b4a1a24) drop-shadow(0 16px 18px #6b4a1a40);
+}
+
+.tema-oscuro .mv-marco {
+  fill: #172f34;
+  filter: drop-shadow(0 2px 4px #00000080) drop-shadow(0 18px 20px #000000b3);
+}
+
 .mv-brillo {
   stroke: var(--marco-brillo);
 }

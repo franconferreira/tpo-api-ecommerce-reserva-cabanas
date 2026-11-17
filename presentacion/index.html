@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whispering Pines — TPO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marcellus+SC&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body class="tema-claro">
+
+<!-- Dibujos que se reutilizan -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Enredadera de esquina: tallo en latigazo, voluta, hojas y bayas -->
+    <symbol id="enredadera" viewBox="0 0 200 200">
+      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M6 196 C10 120 30 70 80 40 C110 22 150 18 196 8"/>
+        <path d="M12 150 C40 140 52 118 46 100 C42 88 28 90 30 102 C32 110 42 108 41 101"/>
+        <path d="M60 52 C70 30 96 26 104 40 C110 52 96 60 90 52 C86 46 92 42 96 45"/>
+        <path d="M120 24 C134 34 150 32 160 20" stroke-width="1.6"/>
+        <path d="M28 110 C18 96 22 74 36 66" stroke-width="1.5"/>
+      </g>
+      <g fill="currentColor">
+        <path d="M44 72 C30 66 26 52 30 44 C40 50 48 60 44 72 Z" opacity=".75"/>
+        <path d="M84 38 C86 22 98 12 110 12 C106 24 96 34 84 38 Z" opacity=".75"/>
+        <path d="M18 128 C6 120 4 104 8 96 C18 104 22 116 18 128 Z" opacity=".75"/>
+        <path d="M150 16 C158 6 172 4 180 8 C172 16 162 20 150 16 Z" opacity=".75"/>
+        <circle cx="62" cy="86" r="3.2"/><circle cx="68" cy="94" r="2.6"/><circle cx="58" cy="96" r="2.4"/>
+        <circle cx="132" cy="40" r="2.8"/><circle cx="138" cy="47" r="2.2"/>
+      </g>
+    </symbol>
+    <!-- Divisor para los títulos -->
+    <symbol id="divisor" viewBox="0 0 120 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M2 12 C30 12 40 4 58 10 C70 14 76 6 86 8 C96 10 104 16 118 12"/>
+        <path d="M58 10 C60 2 70 2 70 8"/>
+      </g>
+      <circle cx="40" cy="8" r="2" fill="currentColor"/>
+    </symbol>
+    <!-- Flecha de los diagramas -->
+    <symbol id="flecha" viewBox="0 0 150 26">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 13 C40 4 100 22 140 13"/><path d="M130 6 L142 13 L130 20"/>
+      </g>
+    </symbol>
+    <symbol id="flecha-doble" viewBox="0 0 150 26">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M10 13 C46 4 104 22 140 13"/><path d="M130 6 L142 13 L130 20"/><path d="M20 6 L8 13 L20 20"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="escenario">
+
+<!-- 1. Portada -->
+<section class="slide portada" data-notas="Presentarse. 'Les vamos a mostrar Whispering Pines, un e-commerce para reservar las cabañas y los espacios de eventos de un complejo en el bosque.' Contar que hay back en Spring Boot, front en React con Redux y, como extra, un recorrido virtual en 3D.">
+  <div class="ventana"><img src="img/bosque.jpg" alt="Bosque del complejo, la misma foto de la página principal"></div>
+  <div>
+    <div class="volanta">bienvenidos al bosque</div>
+    <h1>Whispering<br>Pines</h1>
+    <p class="bajada">E-commerce de reservas para un complejo de cabañas y espacios de eventos.</p>
+    <div class="datos">
+      <div><span>❧</span> Trabajo Práctico Obligatorio — Aplicaciones Interactivas (API)</div>
+      <div><span>❧</span> UADE · Segundo cuatrimestre 2026</div>
+      <div><span>❧</span> Integrantes: ____________________</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. La idea -->
+<section class="slide" data-notas="Explicar qué se vende: no son productos, son noches en un espacio. El cliente elige fechas, lo agrega al carrito y confirma. El administrador gestiona espacios, reservas y usuarios.">
+  <div class="titulo-sec"><div><div class="volanta">la idea</div><h2>¿Qué es Whispering Pines?</h2></div></div>
+  <div class="contenido">
+    <p class="bajada" style="margin-bottom:34px">Un complejo turístico ficticio en el bosque que vende <strong>noches de estadía</strong> y <strong>días de evento</strong>. El sitio funciona como una tienda: catálogo, detalle, carrito y checkout.</p>
+    <div class="grid g3">
+      <div class="panel"><h3>4 Cabañas</h3><p>Del Cedro, Los Pinos, El Roble y del Ciprés. De 4 a 5 personas cada una.</p></div>
+      <div class="panel"><h3>Galpón de fiestas</h3><p>Las Acacias: un granero para eventos de hasta 120 personas.</p></div>
+      <div class="panel"><h3>Casa principal</h3><p>6 habitaciones privadas y el salón comunal con cocina, comedor y baños.</p></div>
+    </div>
+    <div class="grid g2" style="margin-top:26px">
+      <div class="panel"><h3>El cliente</h3><p>Navega el catálogo, ve la disponibilidad en un almanaque, arma su carrito, confirma y sigue sus reservas.</p></div>
+      <div class="panel"><h3>El administrador</h3><p>Crea y edita espacios (con fotos), cancela reservas con un motivo y gestiona las cuentas de clientes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Arquitectura -->
+<section class="slide" data-notas="El front y el back son dos proyectos separados que se hablan por HTTP con JSON. El token JWT viaja en el encabezado Authorization. La base es MySQL y el acceso es con JPA.">
+  <div class="titulo-sec"><div><div class="volanta">la arquitectura</div><h2>Dos proyectos que se hablan por HTTP</h2></div></div>
+  <div class="contenido">
+    <div class="cajas">
+      <div class="caja"><h3>Frontend</h3><p>React 19 + Vite<br>Redux Toolkit · React Router<br>axios · Three.js</p><p class="mono" style="margin-top:8px;font-size:17px">localhost:5173</p></div>
+      <div class="flecha"><svg><use href="#flecha-doble"/></svg>JSON<br>+ token JWT</div>
+      <div class="caja"><h3>Backend</h3><p>Spring Boot 4 · Java 17<br>Spring Security + JWT<br>Spring Data JPA</p><p class="mono" style="margin-top:8px;font-size:17px">localhost:8080/api</p></div>
+      <div class="flecha"><svg><use href="#flecha-doble"/></svg>JPA</div>
+      <div class="caja" style="min-width:200px"><h3>MySQL</h3><p>usuarios, espacios,<br>carritos, reservas</p></div>
+    </div>
+    <div class="grid g3" style="margin-top:56px">
+      <div class="panel"><h3>Una sola página</h3><p>El front es una SPA: React Router cambia la vista sin recargar el sitio.</p></div>
+      <div class="panel"><h3>Estado global</h3><p>Sesión, carrito, reservas y espacios viven en el store de Redux.</p></div>
+      <div class="panel"><h3>API REST</h3><p>Recursos con GET, POST, PUT, PATCH y DELETE, protegidos por rol.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Backend en capas -->
+<section class="slide" data-notas="Cada pedido entra por un controller, que solo recibe y responde. La lógica está en los services (por ejemplo, que no se superpongan reservas). Los repositories son interfaces de JPA. Los DTO separan lo que viaja por la red de las entidades: por ejemplo, el usuario nunca sale con el hash de la contraseña.">
+  <div class="titulo-sec"><div><div class="volanta">el backend</div><h2>Spring Boot en capas</h2></div></div>
+  <div class="contenido">
+    <div class="cajas" style="margin-bottom:44px">
+      <div class="caja" style="min-width:230px"><h3>Controller</h3><p>recibe el pedido<br>y responde</p></div>
+      <div class="flecha"><svg><use href="#flecha"/></svg>DTO</div>
+      <div class="caja" style="min-width:230px"><h3>Service</h3><p>reglas del negocio</p></div>
+      <div class="flecha"><svg><use href="#flecha"/></svg>entidad</div>
+      <div class="caja" style="min-width:230px"><h3>Repository</h3><p>JPA: consultas<br>a la base</p></div>
+      <div class="flecha"><svg><use href="#flecha"/></svg></div>
+      <div class="caja" style="min-width:170px"><h3>MySQL</h3></div>
+    </div>
+    <div class="grid g4">
+      <div class="panel"><h3>8 controllers</h3><p>Auth, Espacio, Carrito, Reserva, Usuario y tres de admin (espacios, general e imágenes).</p></div>
+      <div class="panel"><h3>5 services</h3><p>Interfaz + implementación: Auth, Espacio, Carrito, Reserva y Usuario.</p></div>
+      <div class="panel"><h3>6 entidades</h3><p>Usuario, Espacio, Carrito, ItemCarrito, Reserva y DetalleReserva.</p></div>
+      <div class="panel"><h3>DTOs</h3><p>Request y Response separados: la entidad nunca sale directo por la API.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Modelo de datos -->
+<section class="slide" data-notas="Un usuario tiene un carrito y muchas reservas. El carrito tiene ítems que vencen a los 10 minutos. Al confirmar, cada ítem pasa a ser un detalle de la reserva, con el precio por noche guardado (precio histórico), así si el admin cambia el precio después, la reserva no cambia.">
+  <div class="titulo-sec"><div><div class="volanta">los datos</div><h2>Modelo de entidades</h2></div></div>
+  <div class="contenido">
+    <svg viewBox="0 0 1380 470" style="width:100%;height:470px;color:var(--orna)" font-family="Marcellus SC, serif">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M250 110 H520"/><path d="M100 160 V330 H520"/>
+        <path d="M770 110 H1000"/><path d="M770 330 H1000"/><path d="M1120 160 V280"/>
+      </g>
+      <g font-size="20" fill="var(--texto)" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic">
+        <text x="385" y="98">1 — 1</text><text x="385" y="318">1 — N</text>
+        <text x="885" y="98">1 — N</text><text x="885" y="318">1 — N</text>
+        <text x="1185" y="226">N — 1</text>
+      </g>
+      <g font-size="26" fill="var(--titulo)" text-anchor="middle">
+        <rect x="70" y="60" width="180" height="100" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="160" y="118">Usuario</text>
+        <rect x="520" y="60" width="250" height="100" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="645" y="118">Carrito</text>
+        <rect x="1000" y="60" width="240" height="100" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1120" y="118">ItemCarrito</text>
+        <rect x="520" y="280" width="250" height="100" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="645" y="338">Reserva</text>
+        <rect x="1000" y="280" width="240" height="100" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1120" y="338">DetalleReserva</text>
+        <rect x="1270" y="170" width="110" height="100" rx="18" fill="var(--acento)" stroke="currentColor" stroke-width="2"/>
+        <text x="1325" y="228" fill="var(--acento-texto)" font-size="22">Espacio</text>
+      </g>
+      <g fill="none" stroke="currentColor" stroke-width="2"><path d="M1240 110 C1300 110 1325 130 1325 170"/><path d="M1240 330 C1300 330 1325 310 1325 270"/></g>
+      <g font-size="17" fill="var(--texto)" text-anchor="middle" font-family="Cormorant Garamond, serif">
+        <text x="160" y="190">rol · activo</text>
+        <text x="1120" y="190">checkIn · checkOut · vence en 10 min</text>
+        <text x="645" y="410">estado · total · descuento pack · motivo de cancelación</text>
+        <text x="1120" y="410">precio por noche histórico</text>
+      </g>
+    </svg>
+    <div style="margin-top:18px">
+      <span class="etiqueta">Role: CLIENTE · ADMIN</span>
+      <span class="etiqueta">TipoEspacio: CABANA · GALPON_FIESTAS · HABITACION_CASA_PRINCIPAL · SALON_COMIDA_CASA_PRINCIPAL</span>
+      <span class="etiqueta">EstadoReserva: PRE_RESERVA · CONFIRMADA · CANCELADA</span>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Endpoints -->
+<section class="slide" data-notas="Tres grupos según quién puede llamarlos. Los públicos no piden token. Los de cliente piden token. Los de /api/admin piden además el rol ADMIN; eso lo controla SecurityConfig.">
+  <div class="titulo-sec"><div><div class="volanta">la API</div><h2>Endpoints</h2></div></div>
+  <div class="contenido">
+    <div class="grid g3" style="align-items:start">
+      <div class="panel">
+        <h3>Públicos</h3>
+        <table>
+          <tr><td><span class="verbo POST">POST</span></td><td class="mono">/auth/register</td></tr>
+          <tr><td><span class="verbo POST">POST</span></td><td class="mono">/auth/login</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/espacios</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/espacios/{id}</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/espacios/{id}/fechas-ocupadas</td></tr>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>Cliente (con token)</h3>
+        <table>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/usuarios/me</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/carrito</td></tr>
+          <tr><td><span class="verbo POST">POST</span></td><td class="mono">/carrito/items</td></tr>
+          <tr><td><span class="verbo DELETE">DELETE</span></td><td class="mono">/carrito/items/{id}</td></tr>
+          <tr><td><span class="verbo POST">POST</span></td><td class="mono">/carrito/checkout</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/reservas/mis-reservas</td></tr>
+          <tr><td><span class="verbo DELETE">DELETE</span></td><td class="mono">/reservas/{id}</td></tr>
+          <tr><td><span class="verbo PATCH">PATCH</span></td><td class="mono">/reservas/{id}/leer-notificacion</td></tr>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>Administrador</h3>
+        <table>
+          <tr><td><span class="verbo GET">GET</span> <span class="verbo POST">POST</span></td><td class="mono">/admin/espacios</td></tr>
+          <tr><td><span class="verbo PUT">PUT</span> <span class="verbo DELETE">DELETE</span></td><td class="mono">/admin/espacios/{id}</td></tr>
+          <tr><td><span class="verbo PATCH">PATCH</span></td><td class="mono">/admin/espacios/{id}/restaurar</td></tr>
+          <tr><td><span class="verbo POST">POST</span></td><td class="mono">/admin/imagenes</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/admin/reservas</td></tr>
+          <tr><td><span class="verbo DELETE">DELETE</span></td><td class="mono">/admin/reservas/{id}</td></tr>
+          <tr><td><span class="verbo GET">GET</span></td><td class="mono">/admin/usuarios</td></tr>
+          <tr><td><span class="verbo PUT">PUT</span></td><td class="mono">/admin/usuarios/{id}/rol</td></tr>
+          <tr><td><span class="verbo DELETE">DELETE</span> <span class="verbo PATCH">PATCH</span></td><td class="mono">/admin/usuarios/{id}(/restaurar)</td></tr>
+        </table>
+      </div>
+    </div>
+    <p class="pie" style="margin-top:16px">Todas las rutas empiezan con <span class="mono">/api</span>. Las bajas son lógicas (campo <span class="mono">activo</span>) y se pueden restaurar.</p>
+  </div>
+</section>
+
+<!-- 7. Seguridad -->
+<section class="slide" data-notas="Login devuelve un JWT. El front lo guarda en localStorage y lo manda en cada pedido protegido con conToken(). El filtro JwtAuthFilter lo valida en cada request. Contar los arreglos de seguridad: el rol no se puede mandar en el registro, el admin no recibe el hash de las contraseñas y los secretos están en un .env que no se sube.">
+  <div class="titulo-sec"><div><div class="volanta">la seguridad</div><h2>Spring Security + JWT</h2></div></div>
+  <div class="contenido">
+    <div class="cajas" style="margin-bottom:46px">
+      <div class="caja"><h3>Login</h3><p>email + contraseña<br><span class="mono">POST /auth/login</span></p></div>
+      <div class="flecha"><svg><use href="#flecha"/></svg>devuelve token y rol</div>
+      <div class="caja"><h3>localStorage</h3><p>el front guarda<br>el token</p></div>
+      <div class="flecha"><svg><use href="#flecha"/></svg><span class="mono" style="font-size:16px">Authorization:<br>Bearer &lt;token&gt;</span></div>
+      <div class="caja"><h3>JwtAuthFilter</h3><p>valida el token y<br>carga el usuario y su rol</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel">
+        <h3>Reglas</h3>
+        <ul class="lista">
+          <li>Contraseñas guardadas con <strong>BCrypt</strong>.</li>
+          <li><span class="mono">/api/admin/**</span> exige el rol <strong>ROLE_ADMIN</strong>.</li>
+          <li>Una cuenta desactivada no puede seguir usando su token: el front la verifica con <span class="mono">/usuarios/me</span>.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Huecos que cerramos</h3>
+        <ul class="lista">
+          <li>El registro <strong>siempre</strong> crea clientes: el rol ya no viaja en el pedido.</li>
+          <li>El admin recibe <span class="mono">UsuarioResponseDTO</span>: sin el hash de la contraseña.</li>
+          <li>Usuario de la base y secreto del JWT en un <span class="mono">.env</span> fuera del repositorio.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Flujo de reserva -->
+<section class="slide" data-notas="Recorrer el flujo. Lo importante del back: al agregar al carrito se valida que no haya otra reserva ni otro carrito con esas fechas (anti-overbooking). El ítem bloquea las fechas 10 minutos; si vence, el back lo saca solo. Descuentos: 20% las noches de mayo, junio y agosto, y 15% si el carrito tiene 2 espacios o más.">
+  <div class="titulo-sec"><div><div class="volanta">el negocio</div><h2>Cómo se hace una reserva</h2></div></div>
+  <div class="contenido">
+    <div class="pasos" style="margin-bottom:44px">
+      <div class="paso"><div class="num">1</div><h3>Catálogo</h3><p>Lista de espacios con precio desde.</p></div>
+      <div class="paso"><div class="num">2</div><h3>Detalle</h3><p>Fotos y almanaque con las fechas ocupadas.</p></div>
+      <div class="paso"><div class="num">3</div><h3>Carrito</h3><p>Se validan las fechas y quedan bloqueadas 10 min.</p></div>
+      <div class="paso"><div class="num">4</div><h3>Checkout</h3><p>Medio de pago y confirmación: se crea la reserva.</p></div>
+      <div class="paso"><div class="num">5</div><h3>Mis reservas</h3><p>Estado, cancelación y avisos en el buzón.</p></div>
+    </div>
+    <div class="grid g4">
+      <div class="panel"><h3>Sin superposición</h3><p>No se puede agregar un espacio ocupado por una reserva o por otro carrito vigente.</p></div>
+      <div class="panel"><h3>Bloqueo de 10 min</h3><p>Lo vencido se quita solo al leer, agregar o confirmar el carrito.</p></div>
+      <div class="panel"><h3>Descuentos</h3><p><strong>20 %</strong> en noches de temporada baja (mayo, junio, agosto) y <strong>15 %</strong> por pack de 2+ espacios.</p></div>
+      <div class="panel"><h3>Cancelaciones</h3><p>El admin cancela con un motivo y el cliente lo ve en su buzón de notificaciones.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Frontend -->
+<section class="slide" data-notas="Las vistas son las pantallas (una por ruta) y casi no tienen lógica; los componentes son las partes reutilizables. Mostrar la estructura de carpetas. El layout común (barra, pie, carrito, buzón) está en MainLayout con un Outlet.">
+  <div class="titulo-sec"><div><div class="volanta">el frontend</div><h2>React: vistas y componentes</h2></div></div>
+  <div class="contenido">
+    <div class="grid" style="grid-template-columns: 1.05fr 1fr; align-items:start">
+      <div class="panel">
+        <h3>Rutas (React Router)</h3>
+        <table>
+          <tr><td class="mono">/  ·  /catalogo</td><td>CatalogoView</td></tr>
+          <tr><td class="mono">/detalle</td><td>DetalleEspacioView (+ modal)</td></tr>
+          <tr><td class="mono">/login  ·  /register</td><td>LoginView · RegisterView</td></tr>
+          <tr><td class="mono">/checkout</td><td>CheckoutView</td></tr>
+          <tr><td class="mono">/mis-reservas</td><td>MisReservasView</td></tr>
+          <tr><td class="mono">/mapa-3d</td><td>Mapa3DView</td></tr>
+          <tr><td class="mono">/admin/espacios</td><td>AdminEspaciosView</td></tr>
+          <tr><td class="mono">/admin/reservas</td><td>AdminReservasView</td></tr>
+          <tr><td class="mono">/admin/usuarios</td><td>AdminUsuariosView</td></tr>
+        </table>
+        <p style="font-size:19px;margin-top:10px;font-style:italic">App.jsx redirige según la sesión y el rol: el admin no ve pantallas de cliente y un visitante no entra a las privadas.</p>
+      </div>
+      <div>
+        <pre><span class="c">src/</span>
+├── main.jsx        <span class="c">Provider + BrowserRouter</span>
+├── App.jsx         <span class="c">rutas, tema, idioma</span>
+├── <span class="k">views/</span>          <span class="c">una pantalla por ruta</span>
+├── <span class="k">components/</span>
+│   ├── layout/     <span class="c">MainLayout, barras, pie</span>
+│   ├── auth/  catalogo/  detalle/
+│   ├── carrito/  reservas/  admin/
+│   ├── ornamentos/ <span class="c">dibujos del diseño</span>
+│   └── ui/         <span class="c">CampoFormulario, LinkFundido</span>
+├── <span class="k">Redux/</span>          <span class="c">store + 7 slices</span>
+├── <span class="k">i18n/</span>textos.js   <span class="c">español / inglés</span>
+├── utils/api.js    <span class="c">API_URL + conToken()</span>
+└── <span class="k">mapa3d/</span>         <span class="c">recorrido virtual</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Principios de clase -->
+<section class="slide" data-notas="Esto es lo que vimos en las clases 8, 9 y 10 aplicado al proyecto. Si la profe pregunta por un componente, contestar con estos principios.">
+  <div class="titulo-sec"><div><div class="volanta">lo visto en clase</div><h2>Principios que seguimos</h2></div></div>
+  <div class="contenido">
+    <div class="grid g3">
+      <div class="panel"><h3>Componentes chicos</h3><p>Archivos <span class="mono">.jsx</span> en PascalCase. Las vistas casi sin lógica; la funcionalidad en componentes.</p></div>
+      <div class="panel"><h3>Props y eventos</h3><p>Los datos bajan por props y los eventos suben: el hijo llama a una función del padre.</p></div>
+      <div class="panel"><h3>Estado sin mutar</h3><p>Se hace una copia y se pasa al <span class="mono">set</span>. En Redux Toolkit lo resuelve el reducer.</p></div>
+      <div class="panel"><h3>useEffect</h3><p>GET al montar con <span class="mono">[]</span>. POST, PUT y DELETE en la función del evento. Limpieza en el <span class="mono">return</span>.</p></div>
+      <div class="panel"><h3>Sin alert</h3><p>Los errores se guardan en un estado y se muestran en el JSX, no con <span class="mono">alert</span>.</p></div>
+      <div class="panel"><h3>Listas con key</h3><p>Todo <span class="mono">map</span> lleva una <span class="mono">key</span> con el id del elemento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Redux -->
+<section class="slide" data-notas="Antes todo el estado vivía en App y bajaba por props varios niveles. Lo pasamos a Redux Toolkit. Explicar el ciclo: el componente despacha un thunk, el thunk llama al back con axios, y los extraReducers guardan el resultado según la promesa termine bien o mal. El componente lee con useSelector y se vuelve a dibujar solo.">
+  <div class="titulo-sec"><div><div class="volanta">el estado global</div><h2>Redux Toolkit + axios</h2></div></div>
+  <div class="contenido">
+    <div class="grid" style="grid-template-columns: 1fr 1.08fr; align-items:center; gap:40px">
+      <div>
+        <div class="cajas" style="flex-direction:column;gap:0">
+          <div class="caja" style="width:100%;padding:14px 20px"><h3>1 · Componente</h3><p><span class="mono">dispatch(fetchEspacios())</span></p></div>
+          <div class="baja">↓</div>
+          <div class="caja" style="width:100%;padding:14px 20px"><h3>2 · createAsyncThunk</h3><p>llama al back con <span class="mono">axios</span></p></div>
+          <div class="baja">↓</div>
+          <div class="caja" style="width:100%;padding:14px 20px"><h3>3 · extraReducers</h3><p><span class="mono">pending</span> · <span class="mono">fulfilled</span> · <span class="mono">rejected</span></p></div>
+          <div class="baja">↓</div>
+          <div class="caja" style="width:100%;padding:14px 20px"><h3>4 · Store</h3><p><span class="mono">useSelector(state =&gt; state.espacios.items)</span></p></div>
+        </div>
+      </div>
+      <div>
+        <pre class="chico"><span class="c">// Redux/espaciosSlice.js</span>
+<span class="k">export const</span> fetchEspacios = createAsyncThunk(
+  <span class="s">'espacios/fetchEspacios'</span>,
+  <span class="k">async</span> () =&gt; {
+    <span class="k">const</span> { data } = <span class="k">await</span> axios.get(URL)
+    <span class="k">return</span> data
+  })
+
+extraReducers: (builder) =&gt; {
+  builder
+    .addCase(fetchEspacios.pending, (state) =&gt; {
+      state.loading = <span class="k">true</span>
+    })
+    .addCase(fetchEspacios.fulfilled, (state, action) =&gt; {
+      state.loading = <span class="k">false</span>
+      state.items = action.payload
+    })
+    .addCase(fetchEspacios.rejected, (state, action) =&gt; {
+      state.error = action.error.message
+    })
+}</pre>
+        <div style="margin-top:14px">
+          <span class="etiqueta llena">auth</span><span class="etiqueta llena">carrito</span><span class="etiqueta llena">reservas</span><span class="etiqueta llena">espacios</span><span class="etiqueta">adminEspacios</span><span class="etiqueta">adminReservas</span><span class="etiqueta">adminUsuarios</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Antes y después -->
+<section class="slide" data-notas="El ejemplo más claro es el contador del carrito: antes bajaba por cuatro niveles de props hasta la barra; ahora Navigation lo lee directo del store. Lo que es de un solo componente (un campo de formulario, un error) sigue con useState.">
+  <div class="titulo-sec"><div><div class="volanta">la migración</div><h2>Antes y después de Redux</h2></div></div>
+  <div class="contenido">
+    <div class="grid g2" style="gap:40px">
+      <div class="panel">
+        <h3>Antes: todo en App.jsx</h3>
+        <ul class="lista">
+          <li>Sesión, carrito y reservas en <span class="mono">useState</span> de App.</li>
+          <li>Pasaban por props de padre en hijo: el carrito llegaba a la barra atravesando 4 niveles.</li>
+          <li>Llamadas con <span class="mono">fetch</span>, <span class="mono">.then</span> y <span class="mono">.catch</span>, armando headers y JSON a mano.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Después: store global</h3>
+        <ul class="lista">
+          <li><span class="mono">&lt;Provider store={store}&gt;</span> en <span class="mono">main.jsx</span>.</li>
+          <li>Cada componente lee lo que necesita con <span class="mono">useSelector</span> y despacha con <span class="mono">useDispatch</span>.</li>
+          <li><span class="mono">axios</span> convierte el JSON solo; el token va con <span class="mono">conToken()</span>.</li>
+          <li>Reducers puros: el <span class="mono">localStorage</span> se toca en el thunk.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="bajada" style="margin-top:34px;text-align:center;max-width:none">Lo que es de un solo componente — un campo, un mensaje de error — sigue siendo <strong>estado local</strong>.</p>
+  </div>
+</section>
+
+<!-- 13. Diseño -->
+<section class="slide" data-notas="El diseño es Art Nouveau con inspiración de bosque. Hay dos temas con la misma maqueta: solo cambian los colores (variables CSS) y algunos detalles, como sol o luna. El tema es un useState en App, igual que el idioma, que pone una clase en el contenedor. Los ornamentos son un sprite SVG generado con un script.">
+  <div class="titulo-sec"><div><div class="volanta">el diseño</div><h2>Art Nouveau en dos temas</h2></div></div>
+  <div class="contenido">
+    <div class="grid g2" style="gap:34px">
+      <div><img class="captura" src="img/tarjetas-claro.png" alt="Catálogo en modo claro" style="height:400px;object-position:50% 20%"><p class="pie">Vitral del Alba (claro): oro, crema y verde salvia, con soles</p></div>
+      <div><img class="captura" src="img/tarjetas-oscuro.png" alt="Catálogo en modo oscuro" style="height:400px;object-position:50% 20%"><p class="pie">Luz de Luna (oscuro): plata y verde noche, con lunas</p></div>
+    </div>
+    <div class="grid g4" style="margin-top:24px">
+      <div class="panel"><h3>Variables CSS</h3><p>Cada tema es una clase con sus colores.</p></div>
+      <div class="panel"><h3>Misma maqueta</h3><p>Nada existe en un solo tema; mismos tamaños.</p></div>
+      <div class="panel"><h3>Sprite SVG</h3><p>Enredaderas y marcos en <span class="mono">ornamentos.svg</span>.</p></div>
+      <div class="panel"><h3>4 tipografías</h3><p>Cinzel, Marcellus, Tangerine y Cormorant.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14. Pantallas del cliente -->
+<section class="slide" data-notas="Mostrar el detalle: el almanaque pinta los días ocupados (vienen de /fechas-ocupadas) y el widget calcula el precio. Mis reservas muestra el estado de cada una y deja cancelar.">
+  <div class="titulo-sec"><div><div class="volanta">el cliente</div><h2>Pantallas del cliente</h2></div></div>
+  <div class="contenido">
+    <div class="grid" style="grid-template-columns: 1.25fr 1fr; gap:30px">
+      <div><img class="captura" src="img/detalle.png" alt="Detalle de un espacio con su almanaque" style="height:560px;object-position:50% 40%"><p class="pie">Detalle: fotos, almanaque de disponibilidad y botón para agregar al carrito</p></div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div><img class="captura" src="img/login.png" alt="Inicio de sesión" style="height:250px;object-position:50% 40%"><p class="pie">Inicio de sesión</p></div>
+        <div><img class="captura" src="img/mis-reservas.png" alt="Mis reservas" style="height:250px;object-position:50% 25%"><p class="pie">Mis reservas</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15. Admin -->
+<section class="slide" data-notas="El admin tiene su propia barra. En espacios puede crear, editar el precio, dar de baja y restaurar, y subir la foto desde la computadora (se guarda en uploads del back). En reservas cancela con un motivo. En usuarios cambia el rol y desactiva o restaura cuentas.">
+  <div class="titulo-sec"><div><div class="volanta">la administración</div><h2>Panel del administrador</h2></div></div>
+  <div class="contenido">
+    <div class="grid g3" style="gap:24px">
+      <div><img class="captura" src="img/admin-espacios.png" alt="Administración de espacios" style="height:330px;object-position:50% 10%"><h3 style="margin-top:14px">Espacios</h3><p style="font-size:22px">Alta, edición de precio, baja y restauración. Las fotos se suben desde la computadora.</p></div>
+      <div><img class="captura" src="img/admin-reservas.png" alt="Administración de reservas" style="height:330px;object-position:50% 10%"><h3 style="margin-top:14px">Reservas</h3><p style="font-size:22px">Todas las reservas del complejo. Se cancelan con un motivo que le llega al cliente.</p></div>
+      <div><img class="captura" src="img/admin-usuarios.png" alt="Administración de usuarios" style="height:330px;object-position:50% 10%"><h3 style="margin-top:14px">Usuarios</h3><p style="font-size:22px">Cambio de rol y desactivación o restauración de cuentas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16. Recorrido virtual -->
+<section class="slide" data-notas="El extra del TPO. Al tocar Recorrido virtual, la página se achica hasta quedar como el póster de un cartel en la entrada del complejo, y de ahí se camina en primera persona. El modo oscuro es de noche. Al llegar a una cabaña aparece su precio y con E se abre el mismo detalle del catálogo, así que se puede reservar desde el mapa.">
+  <div class="titulo-sec"><div><div class="volanta">el extra</div><h2>Recorrido virtual en 3D</h2></div></div>
+  <div class="contenido">
+    <div class="grid" style="grid-template-columns: 1.15fr 1fr; gap:28px">
+      <div><img class="captura" src="img/mapa-dia.png" alt="Cartel de la entrada con el póster de la página" style="height:570px;object-position:50% 50%"><p class="pie">La entrada: la página que se estaba viendo queda como póster del cartel</p></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div><img class="captura" src="img/mapa-aerea-dia.png" alt="Vista aérea de día" style="height:262px"><p class="pie">Vista aérea (F) con lugares para aparecer</p></div>
+        <div><img class="captura" src="img/mapa-aerea.png" alt="Vista aérea de noche" style="height:262px"><p class="pie">El tema oscuro es la noche: se prenden los faroles</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17. Cómo está hecho el recorrido -->
+<section class="slide" data-notas="La clave para explicarlo: React no dibuja el 3D. La vista Mapa3DView es React normal (estado, Redux, menú, avisos) y llama a iniciarMapa, que arma Three.js en un div y devuelve un objeto con métodos. Así el bucle de 60 cuadros por segundo no pasa por el estado de React. Detalles en documentacion_redux/4_GUION_RECORRIDO_VIRTUAL.md.">
+  <div class="titulo-sec"><div><div class="volanta">por dentro</div><h2>Cómo está hecho el recorrido</h2></div></div>
+  <div class="contenido">
+    <div class="grid g2" style="gap:40px;align-items:start">
+      <div>
+        <div class="panel" style="margin-bottom:22px">
+          <h3>React: Mapa3DView.jsx</h3>
+          <p>Estado, menú de pausa (Esc), avisos, carrito y datos de los espacios desde Redux. Monta el motor en un <span class="mono">useEffect</span> y lo destruye en la limpieza.</p>
+        </div>
+        <div class="panel">
+          <h3>Three.js: carpeta mapa3d/</h3>
+          <ul class="lista">
+            <li><span class="mono">plano.js</span> dónde va cada cosa · <span class="mono">relieve.js</span> a qué altura</li>
+            <li><span class="mono">escenaMapa.js</span> construye: suelo, caminos, bosque, modelos</li>
+            <li><span class="mono">motorMapa.js</span> lo hace andar: cámara, teclas, choques, día y noche</li>
+            <li><span class="mono">cielo.js</span> y <span class="mono">sonido.js</span> (Web Audio, sin archivos)</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <h3>Lo que tiene</h3>
+          <ul class="lista">
+            <li>Primera persona con W A S D y mouse (Pointer Lock).</li>
+            <li>Choques con árboles, construcciones, la laguna y la cerca.</li>
+            <li>Clic o E en una cabaña abre su detalle para reservar.</li>
+            <li>Viento en árboles, plantas, faroles y humo.</li>
+            <li>Ciclo de día y noche con atardecer, sol, luna y estrellas.</li>
+            <li>Mallas quietas juntadas por material: anda a 60 cuadros por segundo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 18. Detalles de experiencia -->
+<section class="slide" data-notas="Detalles que hacen que el sitio se sienta terminado. Todos con CSS y JavaScript común.">
+  <div class="titulo-sec"><div><div class="volanta">los detalles</div><h2>Experiencia de uso</h2></div></div>
+  <div class="contenido">
+    <div class="grid g3">
+      <div class="panel"><h3>Español e inglés</h3><p>Todos los textos en <span class="mono">i18n/textos.js</span>; el idioma es un estado de App.</p></div>
+      <div class="panel"><h3>Transiciones</h3><p>Fundido cruzado entre pantallas, temas que se funden y paneles que se deslizan.</p></div>
+      <div class="panel"><h3>Bienvenida y despedida</h3><p>Pantallas de "Bienvenido" y "Hasta pronto" al entrar y salir.</p></div>
+      <div class="panel"><h3>Carrito al día</h3><p>Se refresca cada 20 segundos: lo vencido desaparece solo.</p></div>
+      <div class="panel"><h3>Almanaque claro</h3><p>Días libres, ocupados y pasados bien distintos en los dos temas.</p></div>
+      <div class="panel"><h3>Catálogo cómodo</h3><p>Hasta 5 tarjetas por fila y desplazamiento suave a la sección de espacios.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 19. Cierre -->
+<section class="slide centro" data-notas="Pasar a la demo en vivo: 1) catálogo y cambio de tema, 2) detalle y almanaque, 3) login y agregar al carrito (ver el descuento), 4) checkout y Mis reservas, 5) recorrido virtual: caminar hasta una cabaña y abrir su detalle, 6) entrar como admin y cancelar una reserva con motivo, 7) volver como cliente y ver el aviso en el buzón.">
+  <div class="volanta" style="font-size:60px">gracias por recorrer el bosque</div>
+  <h1 style="margin:10px 0 26px">¿Preguntas?</h1>
+  <svg style="width:300px;height:60px;color:var(--orna)"><use href="#divisor"/></svg>
+  <p class="bajada" style="margin-top:22px">Ahora, la demo en vivo.</p>
+</section>
+
+</div>
+
+<div id="barra"><div></div></div>
+<div id="controles">
+  <span id="contador">1 / 1</span>
+  <button type="button" id="b-ant" title="Anterior (←)">‹</button>
+  <button type="button" id="b-sig" title="Siguiente (→)">›</button>
+  <button type="button" id="b-tema" title="Cambiar tema (T)">Tema</button>
+  <button type="button" id="b-notas" title="Notas del orador (N)">Notas</button>
+  <button type="button" id="b-pantalla" title="Pantalla completa (F)">⛶</button>
+</div>
+<div id="notas"></div>
+
+<script src="diapositivas.js"></script>
+</body>
+</html>

@@ -50,6 +50,8 @@ function Mapa3DView({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirDe
   const [, setTamano] = useState(0) // para reubicar los botones si cambia el tamaño de la ventana
   // el mapa soltó el mouse a propósito (inspección o vista aérea): en ese caso no se abre el menú
   const liberandoRef = useRef(false)
+  // la lista de la casa se cerró con Escape: no se vuelve a pedir el mouse (ver el efecto de "inspeccionando")
+  const cerradaConEscape = useRef(false)
   const menuAbiertoEn = useRef(0)
   const dispatch = useDispatch()
   const espacios = useSelector((state) => state.espacios.items)
@@ -266,14 +268,16 @@ function Mapa3DView({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirDe
   }, [pausa])
 
   // Al cerrar el detalle de un lugar se vuelve directo a mirar (el mapa soltó el mouse a propósito, así que el
-  // navegador deja volver a tomarlo sin otro clic)
+  // navegador deja volver a tomarlo sin otro clic). Si se cerró con Escape no: el navegador lo soltaría enseguida
+  // (Escape es la tecla que suelta el mouse) y se abriría el menú de pausa. En ese caso el próximo clic lo toma.
   const inspeccionAnterior = useRef(false)
   useEffect(() => {
-    if (inspeccionAnterior.current && !inspeccionando && !aerea && motorRef.current) motorRef.current.bloquear()
+    if (inspeccionAnterior.current && !inspeccionando && !aerea && motorRef.current && !cerradaConEscape.current) motorRef.current.bloquear()
+    if (!inspeccionando) cerradaConEscape.current = false
     inspeccionAnterior.current = inspeccionando
   }, [inspeccionando, aerea])
 
-  // Teclas de la vista: Escape abre y cierra el menú, C cambia entre modo claro y oscuro, F la vista aérea y M el sonido
+  // Teclas de la vista: Escape abre y cierra el menú (o cierra la lista de la casa principal), C cambia entre modo claro y oscuro, F la vista aérea y M el sonido
   useEffect(() => {
     const alTecla = (e) => {
       if (fase !== 'libre') return
@@ -282,9 +286,15 @@ function Mapa3DView({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirDe
         // (el mismo Escape que soltó el mouse puede llegar justo después de abrirlo)
         if (e.repeat || performance.now() - menuAbiertoEn.current < 250) return
         menuAbiertoEn.current = performance.now()
+        // con la lista de la casa principal abierta (y sin un detalle encima), Escape la cierra
+        if (verCasa && !detalleAbierto && !carritoAbierto) {
+          cerradaConEscape.current = true
+          setVerCasa(false)
+          return
+        }
         if (menu) {
           // no se vuelve a pedir el mouse con este Escape: el navegador lo soltaría en seguida y volvería a abrir el
-          // menú. Se sigue mirando con el mouse igual y el próximo clic lo toma.
+          // menú. El próximo clic (o tecla) lo toma y ahí se vuelve a girar con el mouse.
           setMenu(false)
         } else if (!document.pointerLockElement && !inspeccionando) {
           setMenu(true)

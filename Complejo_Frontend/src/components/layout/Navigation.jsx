@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import NavAdmin from './NavAdmin'
 import NavCliente from './NavCliente'
@@ -8,7 +8,6 @@ import { Friso } from '../ornamentos/Ornamentos'
 import './Navigation.css'
 
 function Navigation({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirBuzon }) {
-  const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
 
@@ -21,10 +20,7 @@ function Navigation({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirBu
     dispatch(abrirCarrito())
   }
 
-  const handleSignOut = () => {
-    onLogout()
-    navigate('/login')
-  }
+  // Cerrar sesión: el cambio al login lo hace onLogout (App) recién cuando la pantalla de "Hasta pronto" tapa todo
 
   const handleToggleIdioma = () => {
     setIdioma(idioma === 'es' ? 'en' : 'es')
@@ -40,7 +36,7 @@ function Navigation({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirBu
         onToggleIdioma={handleToggleIdioma}
         pathname={location.pathname}
         nombreUsuario={nombreUsuario}
-        onSignOut={handleSignOut}
+        onSignOut={onLogout}
       />
       <Friso className="friso-nav" />
       </>
@@ -61,7 +57,7 @@ function Navigation({ idioma, setIdioma, tema, onToggleTema, onLogout, onAbrirBu
       onAbrirCarrito={onAbrirCarrito}
       cantidadBuzon={cantidadBuzon}
       onAbrirBuzon={onAbrirBuzon}
-      onSignOut={handleSignOut}
+      onSignOut={onLogout}
     />
     <Friso className="friso-nav" />
     </>
