@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import AuthFormTitulos from './AuthFormTitulos'
 import CampoFormulario from '../ui/CampoFormulario'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
+import { register, limpiarAvisos } from '../../Redux/authSlice'
 import './AuthForm.css'
+import { EsquinasPanel, BotonTema } from '../ornamentos/Ornamentos'
 
-function RegisterForm({ idioma, setIdioma, onLogin }) {
+function RegisterForm({ idioma, setIdioma, tema, onToggleTema }) {
+  const dispatch = useDispatch()
+  const errorRegistro = useSelector((state) => state.auth.errorRegistro)
   const [username, setUsername] = useState('')
   const [nombre, setNombre] = useState('')
   const [apellido, setApellido] = useState('')
@@ -14,6 +18,11 @@ function RegisterForm({ idioma, setIdioma, onLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const t = textos[idioma].registro
+
+  // Al entrar a la pantalla no se tiene que ver el error de un registro anterior
+  useEffect(() => {
+    dispatch(limpiarAvisos())
+  }, [dispatch])
 
   const handleUsernameChange = (e) => setUsername(e.target.value)
   const handleNombreChange = (e) => setNombre(e.target.value)
@@ -39,27 +48,15 @@ function RegisterForm({ idioma, setIdioma, onLogin }) {
       nombre: nombre,
       apellido: apellido,
       email: email,
-      password: password,
-      rol: 'ROLE_CLIENTE'
+      password: password
     }
 
-    apiFetch('/api/auth/register', { method: 'POST', body: datosAEnviar, auth: false })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.token) {
-          localStorage.setItem('jwtToken', data.token)
-          setError('')
-          onLogin(data)
-        } else {
-          console.error('Error al registrar: ', data)
-          setError(t.errorRegistro)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al registrar: ', err)
-        setError(t.errorRegistro)
-      })
+    // Si sale bien, el slice marca al usuario como logueado y App lo manda al catálogo
+    setError('')
+    dispatch(register(datosAEnviar))
   }
+
+  const mensajeError = error || (errorRegistro ? t.errorRegistro : '')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -69,7 +66,9 @@ function RegisterForm({ idioma, setIdioma, onLogin }) {
   return (
     <div className="auth-panel-form">
       <div className="auth-form-box">
+        <EsquinasPanel variante={0} />
         <div className="auth-lang-bar">
+          <BotonTema tema={tema} onToggle={onToggleTema} idioma={idioma} />
           <button type="button" className="nav-btn-lang" onClick={handleToggleIdioma}>
             {textos[idioma].nav.idioma}
           </button>
@@ -77,7 +76,7 @@ function RegisterForm({ idioma, setIdioma, onLogin }) {
 
         <AuthFormTitulos overline={t.overline} title={t.titulo} description={t.descripcion} />
 
-        {error && <p className="auth-error">{error}</p>}
+        {mensajeError && <p className="auth-error">{mensajeError}</p>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <CampoFormulario

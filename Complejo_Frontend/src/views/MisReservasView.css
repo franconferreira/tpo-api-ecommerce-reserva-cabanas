@@ -1,6 +1,6 @@
 .mr-wrapper {
   padding: 2.5em 4em;
-  background-color: #f4f3ef;
+  background-color: transparent;
   min-height: 85vh;
   display: flex;
   justify-content: center;
@@ -14,13 +14,18 @@
 .mr-btn-new {
   min-width: 12.8em;
   text-align: center;
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   padding: 0.75em 1.4em;
   border-radius: 1.5em;
   font-size: 0.9em;
   font-weight: 700;
   text-decoration: none;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }
 
 .mr-container .page-header {

@@ -1,5 +1,6 @@
 import React from 'react'
 import textos from '../../i18n/textos'
+import { EsquinasPanel } from '../ornamentos/Ornamentos'
 
 function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
   const t = textos[idioma].misReservas
@@ -8,6 +9,7 @@ function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
 
   return (
     <div className="mr-card">
+      <EsquinasPanel variante={index} />
       <div className="mr-card-top">
         <div>
           <span className={isCancelada ? 'mr-status-pill cancelled' : 'mr-status-pill'}>
@@ -35,9 +37,9 @@ function ReservaCard({ idioma, reserva, index, onCancelar, onOcultarReserva }) {
           reserva.detalles.map((detalle) => (
             <div className="mr-detalle-item" key={`${detalle.nombreEspacio}-${detalle.checkIn}`}>
               <div>
-                <strong>🏠 {detalle.nombreEspacio}</strong>
+                <strong>{detalle.nombreEspacio}</strong>
                 <span className="mr-detalle-dates">
-                  📅 {detalle.checkIn} {comun.al} {detalle.checkOut}
+                  {detalle.checkIn} {comun.al} {detalle.checkOut}
                 </span>
               </div>
               <span className="mr-detalle-rate">

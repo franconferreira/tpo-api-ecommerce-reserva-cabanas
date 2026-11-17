@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temas claro y oscuro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Marcellus+SC&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1b1a17; font-family: 'Cormorant Garamond', serif; }
+  .etiqueta { max-width: 1200px; margin: 0 auto; padding: 48px 24px 16px; color: #d8cfb8; }
+  .etiqueta h2 { font-family: 'Cinzel Decorative', serif; font-size: 28px; letter-spacing: 2px; color: #e9dfc4; }
+  .etiqueta p { font-size: 19px; font-style: italic; opacity: .85; margin-top: 6px; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  svg { display: block; }
+
+  /* ---------- Variables de cada tema ---------- */
+  .tema-oscuro {
+    --texto: #c9d6d2; --titulo: #d6e0dd; --sobre: #8cc4b4; --orn: #c3d2ce; --orn-suave: #c3d2ce33;
+    --h1a: #f3e7bf; --h1b: #c9b26e; --sec: #d6e0dd; --nav-fondo: #0c1719cc;
+    --tarjeta-a: #13272c; --tarjeta-b: #0e1e22; --tarjeta-borde: #c3d2ce77; --tarjeta-sombra: #000000aa;
+    --marco: #c3d2ce; --marco-hueco: #0c1719; --marco-brillo: #c3d2ce66;
+    --foto-filtro: brightness(.85) saturate(.72) hue-rotate(-12deg); --img-filtro: brightness(.88) saturate(.75);
+    --tallado: drop-shadow(1px 1px 0 #00000099) drop-shadow(-.6px -.6px 0 #ffffff26);
+    background:
+      radial-gradient(1px 1px at 10% 20%, #fff8 50%, transparent 51%),
+      radial-gradient(1px 1px at 30% 70%, #fff6 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 70% 15%, #fffa 50%, transparent 51%),
+      radial-gradient(1px 1px at 85% 60%, #fff7 50%, transparent 51%),
+      radial-gradient(1px 1px at 50% 40%, #fff5 50%, transparent 51%),
+      radial-gradient(ellipse 60% 45% at 50% -8%, #2b4c4fcc 0%, transparent 70%),
+      linear-gradient(180deg, #0e1b1e, #0a1416);
+    background-size: 260px 260px, 340px 340px, 420px 420px, 300px 300px, 200px 200px, 100% 100%, 100% 100%;
+  }
+  .tema-claro {
+    --texto: #45331f; --titulo: #33261a; --sobre: #b86a50; --orn: #b4853a; --orn-suave: #b4853a55;
+    --h1a: #7e9c5c; --h1b: #3e5429; --sec: #b86a50; --nav-fondo: #fcf0dbcc;
+    --tarjeta-a: #fffaf0; --tarjeta-b: #f7e8cd; --tarjeta-borde: #b4853a; --tarjeta-sombra: #b4853a77;
+    --marco: #b4853a; --marco-hueco: #fbeed6; --marco-brillo: #b4853a88;
+    --foto-filtro: brightness(1.05) saturate(1.02) sepia(.14); --img-filtro: saturate(1.02) sepia(.08);
+    --tallado: drop-shadow(1px 1px 0 #ffffffcc) drop-shadow(-.6px -.6px 0 #6b4a1a44);
+    background:
+      radial-gradient(ellipse 60% 45% at 50% -8%, #ffdc9ccc 0%, #ffd09000 70%),
+      repeating-conic-gradient(from 180deg at 50% -20%, #ffffff00 0deg 6deg, #fff0cf55 6deg 8deg, #ffffff00 8deg 14deg),
+      linear-gradient(180deg, #fcf0db, #f3dfbf);
+  }
+  .tema-oscuro .solo-claro, .tema-claro .solo-oscuro { display: none; }
+
+  /* Botones: misma ubicación y tamaño, forma propia de cada tema */
+  .boton { display: inline-flex; align-items: center; gap: 8px; font-family: 'Marcellus SC', serif; letter-spacing: 1.5px; font-size: 15px; padding: 10px 20px; }
+  .boton svg { width: 16px; height: 16px; }
+  .boton svg.der { transform: scaleX(-1); }
+  .tema-oscuro .boton { color: #0c1719; background: linear-gradient(180deg, #f3e7bf, #c9b26e); border-radius: 40px 4px 40px 4px; box-shadow: 0 0 0 1px #f3e7bf, 0 0 0 4px #0c1719, 0 0 0 5px #c9b26e88, 0 0 24px #e2d29c33; }
+  .tema-claro .boton { color: #fff8ea; background: radial-gradient(ellipse at 50% 20%, #a8c584 0%, #5f7d43 55%, #3e5429 100%); border: 3px solid #33261a; border-radius: 30px 30px 6px 6px; box-shadow: inset 0 2px 0 #ffffff77, inset 0 -3px 0 #00000033, 0 0 0 2px #ecc784, 0 8px 18px -6px #5f7d4399; text-shadow: 0 1px 0 #00000055; }
+
+  /* ---------- Maqueta común ---------- */
+  .demo { max-width: 1200px; margin: 0 auto 24px; border-radius: 6px; overflow: hidden; position: relative; color: var(--texto); padding-bottom: 40px; }
+  .tallado { color: var(--orn); filter: var(--tallado); }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 48px 12px; background: var(--nav-fondo); }
+  .logo { font-family: 'Cinzel Decorative', serif; font-size: 22px; letter-spacing: 3px; color: var(--titulo); }
+  .links { display: flex; gap: 34px; font-family: 'Marcellus SC', serif; font-size: 15px; letter-spacing: 1.5px; }
+  .links .on { color: var(--sobre); position: relative; }
+  .links .on svg { position: absolute; left: 50%; top: 22px; width: 14px; height: 14px; transform: translateX(-50%); }
+  .friso { width: 100%; height: 34px; color: var(--orn); }
+  .friso-nav { border-top: 1px solid var(--orn-suave); }
+  .hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; padding: 80px 96px 40px; }
+  .hero > * { position: relative; z-index: 1; }
+  .latigo-fondo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; color: var(--orn); opacity: .22; pointer-events: none; }
+  .marco-ventana { position: relative; height: 540px; }
+  .marco-ventana svg.ventana { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
+  .icono-top { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 64px; height: 64px; z-index: 0; }
+  .sobre { font-family: 'Tangerine', cursive; font-size: 46px; color: var(--sobre); line-height: 1; }
+  h1 { font-family: 'Cinzel Decorative', serif; font-weight: 400; font-size: 48px; line-height: 1.15; margin: 10px 0 4px; color: var(--titulo); }
+  h1 span { background: linear-gradient(180deg, var(--h1a), var(--h1b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .divisor { position: relative; width: 360px; height: 40px; margin: 16px 0; color: var(--orn); }
+  .divisor svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .divisor svg.centro { left: 50%; top: 50%; width: 24px; height: 24px; transform: translate(-50%, -50%); }
+  .bajada { font-size: 22px; line-height: 1.55; font-style: italic; max-width: 470px; }
+  .acciones { display: flex; gap: 24px; align-items: center; margin-top: 28px; }
+  .boton-sec { font-family: 'Marcellus SC', serif; letter-spacing: 1px; color: var(--sec); border-bottom: 3px double var(--sec); padding-bottom: 3px; }
+  .titulo-seccion { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 50px 0 8px; color: var(--orn); }
+  .titulo-seccion svg.latigo { width: 230px; height: 48px; }
+  .titulo-seccion svg.latigo.der { transform: scaleX(-1); }
+  .titulo-seccion svg.ic { width: 24px; height: 24px; }
+  .titulo-seccion h2 { font-family: 'Cinzel Decorative', serif; font-weight: 400; font-size: 26px; letter-spacing: 3px; color: var(--titulo); }
+  .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 44px 96px 30px; }
+  .tarjeta { position: relative; border: 1px solid var(--tarjeta-borde); border-radius: 160px 160px 6px 6px; background: linear-gradient(180deg, var(--tarjeta-a), var(--tarjeta-b)); box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 26px 40px -22px var(--tarjeta-sombra); padding: 12px 12px 26px; text-align: center; }
+  .tarjeta { height: 392px; }
+  .tarjeta .rin-card { position: absolute; left: 0; top: 0; width: 100%; height: 100%; color: var(--orn); pointer-events: none; z-index: 1; overflow: visible; }
+  .tarjeta .medalla { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); width: 44px; height: 44px; z-index: 2; }
+  .tarjeta .img { height: 206px; position: relative; border: 1px solid var(--marco); border-radius: 150px 150px 3px 3px; overflow: hidden; }
+  .tarjeta .img img { filter: var(--img-filtro); }
+  .tarjeta h3 { font-family: 'Marcellus SC', serif; font-weight: 400; font-size: 21px; margin-top: 18px; color: var(--titulo); }
+  .tarjeta .tipo { font-family: 'Tangerine', cursive; font-size: 32px; color: var(--sobre); line-height: 1.05; }
+  .tarjeta .precio { font-family: 'Marcellus SC', serif; font-size: 23px; color: var(--titulo); margin-top: 6px; }
+  .tarjeta .precio small { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; }
+  .friso-pie { margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="hoja" viewBox="0 0 24 10"><path d="M0 5 C 6 -1, 18 -1, 24 5 C 18 11, 6 11, 0 5 Z" fill="currentColor"/></symbol>
+    <symbol id="latigo" viewBox="0 0 240 50">
+      <g fill="none" stroke="currentColor" stroke-linecap="round">
+        <path d="M238 25 C 200 25, 186 5, 150 9 C 112 13, 104 43, 66 41 C 34 39, 20 18, 33 9 C 44 2, 57 14, 48 22 C 42 28, 34 22, 38 17" stroke-width="2"/>
+        <path d="M238 25 C 208 31, 192 47, 162 43 C 141 40, 139 29, 150 29" stroke-width="1.3"/>
+        <path d="M120 16 C 112 4, 98 6, 100 15" stroke-width="1.2"/>
+      </g>
+      <use href="#hoja" x="170" y="5" width="20" height="8" transform="rotate(-12 180 9)"/>
+      <use href="#hoja" x="80" y="38" width="20" height="8" transform="rotate(12 90 42)"/>
+      <circle cx="38" cy="17" r="2.6" fill="currentColor"/><circle cx="150" cy="29" r="2" fill="currentColor"/>
+    </symbol>
+    <symbol id="divisor" viewBox="0 0 400 40">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <path d="M182 20 C 165 20, 160 6, 130 10 C 100 14, 90 30, 60 26 C 40 23, 30 14, 6 20"/>
+        <path d="M218 20 C 235 20, 240 6, 270 10 C 300 14, 310 30, 340 26 C 360 23, 370 14, 394 20"/>
+        <path d="M150 12 C 140 2, 124 4, 126 14 C 128 22, 140 18, 136 12"/>
+        <path d="M250 12 C 260 2, 276 4, 274 14 C 272 22, 260 18, 264 12"/>
+      </g>
+      <use href="#hoja" x="86" y="24" width="18" height="7" transform="rotate(20 95 27)"/>
+      <use href="#hoja" x="296" y="24" width="18" height="7" transform="rotate(-20 305 27)"/>
+    </symbol>
+    <symbol id="voluta" viewBox="0 0 20 20">
+      <path d="M1 18 C 6 18, 12 16, 15 11 C 18 6, 14 2, 10 4 C 7 6, 9 10, 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <!-- Luna y sol "tallados": solo líneas del mismo color que los ornamentos -->
+    <symbol id="luna-talla" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 8 A 25 25 0 1 0 57 45 A 19 19 0 1 1 40 8 Z" stroke-width="2.2"/>
+        <path d="M36 14 A 20 20 0 1 0 50 46" stroke-width="1" opacity=".7"/>
+        <path d="M14 13 l1.3 3.6 3.6 1.3 -3.6 1.3 -1.3 3.6 -1.3 -3.6 -3.6 -1.3 3.6 -1.3Z" stroke-width="1.2"/>
+        <path d="M54 14 l.9 2.3 2.3 .9 -2.3 .9 -.9 2.3 -.9 -2.3 -2.3 -.9 2.3 -.9Z" stroke-width="1"/>
+      </g>
+    </symbol>
+    <symbol id="sol-talla" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="13" stroke-width="2.2"/>
+        <circle cx="32" cy="32" r="9" stroke-width="1" opacity=".7"/>
+        <path d="M32 4 V 13 M32 51 V 60 M4 32 H 13 M51 32 H 60 M12.2 12.2 L 18.6 18.6 M45.4 45.4 L 51.8 51.8 M51.8 12.2 L 45.4 18.6 M18.6 45.4 L 12.2 51.8" stroke-width="2"/>
+        <path d="M23 6.5 L 25.5 15 M41 6.5 L 38.5 15 M23 57.5 L 25.5 49 M41 57.5 L 38.5 49 M6.5 23 L 15 25.5 M6.5 41 L 15 38.5 M57.5 23 L 49 25.5 M57.5 41 L 49 38.5" stroke-width="1"/>
+      </g>
+    </symbol>
+    <symbol id="latigosFondo" viewBox="0 0 1200 640" preserveAspectRatio="none">
+      <g fill="none" stroke="currentColor" stroke-linecap="round">
+        <path d="M560 620 C 640 540, 600 340, 760 260 C 900 190, 1040 260, 1010 350 C 990 410, 920 390, 940 350 C 952 326, 980 334, 975 350" stroke-width="1.6"/>
+        <path d="M600 630 C 690 560, 660 370, 800 300 C 920 240, 1030 300, 1000 360" stroke-width="1"/>
+        <path d="M1200 90 C 1090 70, 1010 150, 900 120 C 820 98, 800 40, 850 30 C 885 23, 895 60, 870 64" stroke-width="1.4"/>
+      </g>
+    </symbol>
+    %%DEFS%%
+  </defs>
+</svg>
+
+<template id="maqueta">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <clipPath id="arco__T__"><path d="M26 506 V 210 C 26 99, 105 28, 200 28 C 295 28, 374 99, 374 210 V 506 Z"/></clipPath>
+    </defs>
+  </svg>
+
+  <nav>
+    <div class="logo">Whispering Pines</div>
+    <div class="links"><span class="on">Explorar<svg class="tallado" viewBox="0 0 64 64"><use class="solo-oscuro" href="#luna-talla"/><use class="solo-claro" href="#sol-talla"/></svg></span><span>Recorrido 3D</span><span>Mis Reservas</span></div>
+    <span class="boton"><svg><use href="#voluta"/></svg>Ingresar<svg class="der"><use href="#voluta"/></svg></span>
+  </nav>
+  <svg class="friso friso-nav" viewBox="0 0 1200 34" preserveAspectRatio="xMidYMid slice"><use href="#frisoLargo"/></svg>
+
+  <section class="hero">
+    <svg class="latigo-fondo"><use href="#latigosFondo" width="100%" height="100%"/></svg>
+    <div class="marco-ventana">
+      <svg class="icono-top tallado" viewBox="0 0 64 64"><use class="solo-oscuro" href="#luna-talla"/><use class="solo-claro" href="#sol-talla"/></svg>
+      <svg class="ventana" viewBox="0 0 400 540" preserveAspectRatio="xMidYMid meet">
+        <path d="M10 520 V 208 C 10 88, 96 12, 200 12 C 304 12, 390 88, 390 208 V 520 Z" style="fill:var(--marco-hueco);stroke:var(--marco)" stroke-width="1.6"/>
+        <path d="M18 513 V 209 C 18 94, 101 20, 200 20 C 299 20, 382 94, 382 209 V 513 Z" fill="none" style="stroke:var(--marco-brillo)" stroke-width="1"/>
+        <image href="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=900" x="26" y="28" width="348" height="478" preserveAspectRatio="xMidYMid slice" clip-path="url(#arco__T__)" style="filter:var(--foto-filtro)"/>
+        <path d="M26 506 V 210 C 26 99, 105 28, 200 28 C 295 28, 374 99, 374 210 V 506 Z" fill="none" style="stroke:var(--marco)" stroke-width="1.2"/>
+        <g style="color:var(--orn)">
+          <use href="#vIzq"/>
+          <g transform="translate(400 0) scale(-1 1)"><use href="#vDer"/><use href="#vTope"/></g>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <div class="sobre">bienvenidos al bosque</div>
+      <h1>Cabañas entre <span>pinos antiguos</span></h1>
+      <div class="divisor"><svg viewBox="0 0 400 40"><use href="#divisor"/></svg><svg class="centro tallado" viewBox="0 0 64 64"><use class="solo-oscuro" href="#luna-talla"/><use class="solo-claro" href="#sol-talla"/></svg></div>
+      <p class="bajada">Donde la luz se filtra entre las ramas y el lago guarda silencio. Elegí tu refugio y quedate el tiempo que el bosque te permita.</p>
+      <div class="acciones"><span class="boton"><svg><use href="#voluta"/></svg>Ver espacios<svg class="der"><use href="#voluta"/></svg></span><span class="boton-sec">Recorrido 3D</span></div>
+    </div>
+  </section>
+
+  <div class="titulo-seccion">
+    <svg class="latigo" viewBox="0 0 240 50"><use href="#latigo"/></svg>
+    <svg class="ic tallado" viewBox="0 0 64 64"><use class="solo-oscuro" href="#luna-talla"/><use class="solo-claro" href="#sol-talla"/></svg>
+    <h2>Nuestros refugios</h2>
+    <svg class="ic tallado" viewBox="0 0 64 64"><use class="solo-oscuro" href="#luna-talla"/><use class="solo-claro" href="#sol-talla"/></svg>
+    <svg class="latigo der" viewBox="0 0 240 50"><use href="#latigo"/></svg>
+  </div>
+
+  <section class="tarjetas">
+    %%TARJETA:https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80&w=600|Cabaña del Cedro|frente a la laguna|120%%
+    %%TARJETA:https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=600|Refugio Los Pinos|hogar a leña|140%%
+    %%TARJETA:https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=600|Chalet del Arroyo|vista al lago|135%%
+  </section>
+  <svg class="friso friso-pie" viewBox="0 0 1200 34" preserveAspectRatio="xMidYMid slice"><use href="#frisoLargo"/></svg>
+</template>
+
+<div class="etiqueta"><h2>Modo oscuro · Luz de Luna</h2><p>Las enredaderas se entrelazan con el borde (pasan por delante y por detrás de la línea), echan brotes y zarcillos y las que llegan arriba abrazan la luna y los medallones. Cada lado tiene planta, uno más tupido que el otro.</p></div>
+<div class="demo tema-oscuro" data-t="oscuro"></div>
+
+<div class="etiqueta"><h2>Modo claro · Vitral del Alba</h2><p>La misma maqueta en oro y crema, con soles tallados en los mismos lugares y botones con forma propia.</p></div>
+<div class="demo tema-claro" data-t="claro"></div>
+
+<script>
+  const plantilla = document.getElementById('maqueta').innerHTML
+  document.querySelectorAll('.demo').forEach((el) => {
+    el.innerHTML = plantilla.replaceAll('__T__', el.dataset.t)
+  })
+</script>
+</body>
+</html>

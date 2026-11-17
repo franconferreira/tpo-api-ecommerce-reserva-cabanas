@@ -1,8 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import LinkFundido from '../ui/LinkFundido'
 import textos from '../../i18n/textos'
+import { BotonTema, IconoTema } from '../ornamentos/Ornamentos'
 
-function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }) {
+function NavAdmin({ idioma, tema, onToggleTema, onToggleIdioma, pathname, nombreUsuario, onSignOut }) {
   const t = textos[idioma].nav
 
   return (
@@ -18,32 +19,38 @@ function NavAdmin({ idioma, onToggleIdioma, pathname, nombreUsuario, onSignOut }
 
       <ul className="nav-list nav-pills">
         <li>
-          <Link
+          <LinkFundido
             to="/admin/espacios"
             className={pathname === '/admin/espacios' ? 'nav-link active' : 'nav-link'}
           >
             {t.espacios}
-          </Link>
+            {pathname === '/admin/espacios' && <IconoTema className="nav-marca" />}
+          </LinkFundido>
         </li>
         <li>
-          <Link
+          <LinkFundido
             to="/admin/reservas"
             className={pathname === '/admin/reservas' ? 'nav-link active' : 'nav-link'}
           >
             {t.reservas}
-          </Link>
+            {pathname === '/admin/reservas' && <IconoTema className="nav-marca" />}
+          </LinkFundido>
         </li>
         <li>
-          <Link
+          <LinkFundido
             to="/admin/usuarios"
             className={pathname === '/admin/usuarios' ? 'nav-link active' : 'nav-link'}
           >
             {t.usuarios}
-          </Link>
+            {pathname === '/admin/usuarios' && <IconoTema className="nav-marca" />}
+          </LinkFundido>
         </li>
       </ul>
 
       <ul className="nav-list nav-actions">
+        <li>
+          <BotonTema tema={tema} onToggle={onToggleTema} idioma={idioma} />
+        </li>
         <li>
           <button type="button" className="nav-btn-lang" onClick={onToggleIdioma}>
             {t.idioma}

@@ -20,7 +20,7 @@
 }
 
 .ad-table-container {
-  background-color: #f1f2ec;
+  background-color: var(--superficie-2);
   border-radius: 1em;
   padding: 0.8em;
 }
@@ -37,7 +37,7 @@
   padding: 0 1.2em;
   font-size: 0.7em;
   font-weight: 800;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .ad-table th:nth-child(1) { width: 42%; }
@@ -46,7 +46,7 @@
 .ad-table th:nth-child(4) { width: 20%; }
 
 .ad-table td {
-  background-color: #ffffff;
+  background-color: var(--superficie);
   padding: 1em 1.2em;
   vertical-align: middle;
 }
@@ -67,17 +67,17 @@
 .ad-td-acc strong {
   display: block;
   font-size: 0.95em;
-  color: #2a2a2a;
+  color: var(--texto);
 }
 
 .ad-td-acc span {
   font-size: 0.8em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .ad-type-badge {
-  background-color: #fde8dd;
-  color: #cc7440;
+  background-color: var(--superficie-2);
+  color: var(--acento);
   padding: 0.3em 0.65em;
   border-radius: 0.4em;
   font-size: 0.75em;
@@ -89,7 +89,7 @@
   align-items: center;
   gap: 0.3em;
   font-weight: 800;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .ad-td-rate small {
@@ -99,24 +99,29 @@
 .ad-inline-input {
   width: 4.5em;
   padding: 0.3em 0.4em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
   border-radius: 0.4em;
   font-weight: 800;
   font-size: 0.95em;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .ad-btn-save {
   min-width: 5.5em;
   text-align: center;
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   border: none;
   padding: 0.3em 0.7em;
   border-radius: 0.4em;
   font-weight: 700;
   font-size: 0.8em;
   cursor: pointer;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }
 
 .ad-status-pill {
@@ -153,4 +158,52 @@
 
 .ad-status-pill.maintenance .dot {
   background-color: #b71c1c;
+}
+
+/* Panel con plantas en las esquinas de abajo (EsquinasPanel) */
+.ad-table-container {
+  position: relative;
+  overflow: visible;
+  border-color: var(--marco);
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 20px 34px -20px var(--sombra);
+}
+
+/* El botón chico de cada fila no lleva los aros del botón principal */
+.ad-btn-save {
+  box-shadow: none;
+  border-width: 1px;
+  padding: 0.35em 0.8em;
+}
+
+/* Columna de tarifa: todo en una línea y sin pisar la columna de estado */
+.ad-table th:nth-child(1) { width: 38%; }
+.ad-table th:nth-child(2) { width: 16%; }
+.ad-table th:nth-child(3) { width: 28%; }
+.ad-table th:nth-child(4) { width: 18%; }
+
+.ad-td-rate {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.ad-td-rate > * {
+  flex-shrink: 0;
+}
+
+.ad-td-rate small {
+  min-width: 0;
+}
+
+.ad-btn-save {
+  min-width: 0;
+  letter-spacing: 0.02em;
+}
+
+.ad-status-pill {
+  white-space: nowrap;
+}
+
+.ad-type-badge {
+  display: inline-block;
+  line-height: 1.3;
 }

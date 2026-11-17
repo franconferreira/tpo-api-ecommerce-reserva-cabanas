@@ -1,65 +1,74 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCarrito } from '../../Redux/carritoSlice'
 import Navigation from './Navigation'
 import Footer from './Footer'
 import CarritoDrawer from '../carrito/CarritoDrawer'
 import BuzonDrawer from '../reservas/BuzonDrawer'
+import DetalleEspacioModal from '../detalle/DetalleEspacioModal'
 
 // Estructura común de las pantallas internas: barra, contenido de la ruta (Outlet), footer y paneles laterales.
 // Login y registro no usan este layout, por eso no muestran barra ni footer.
+// En el recorrido 3D tampoco: el mapa ocupa toda la ventana (las opciones van en su menú de Escape).
 function MainLayout({
   idioma,
   setIdioma,
-  isLogged,
-  rolUsuario,
-  nombreUsuario,
+  tema,
+  onToggleTema,
   onLogout,
-  onCuentaDesactivada,
-  carritoData,
-  setCarritoData,
-  isCartOpen,
-  setIsCartOpen,
-  mensajesNoLeidos,
-  onDescartarNotificacion,
   isBuzonOpen,
-  setIsBuzonOpen
+  setIsBuzonOpen,
+  espacioSeleccionado,
+  onCerrarDetalle
 }) {
+  const rolUsuario = useSelector((state) => state.auth.rol)
+  const isLogged = useSelector((state) => state.auth.isLogged)
+  const carritoAbierto = useSelector((state) => state.carrito.abierto)
+  const dispatch = useDispatch()
+
+  // Los espacios del carrito se reservan por 10 minutos: el back saca los vencidos cada vez que se pide el carrito,
+  // así que se lo vuelve a pedir cada 20 segundos (y al abrir el panel) para que desaparezcan solos
+  useEffect(() => {
+    if (!isLogged || rolUsuario === 'ROLE_ADMIN') return
+    if (carritoAbierto) dispatch(fetchCarrito())
+    const intervalo = setInterval(() => dispatch(fetchCarrito()), 20000)
+    return () => clearInterval(intervalo)
+  }, [isLogged, rolUsuario, carritoAbierto, dispatch])
+  const enMapa = useLocation().pathname === '/mapa-3d'
+
   return (
     <>
-      <Navigation
-        idioma={idioma}
-        setIdioma={setIdioma}
-        isLogged={isLogged}
-        rolUsuario={rolUsuario}
-        nombreUsuario={nombreUsuario}
-        onLogout={onLogout}
-        onAbrirCarrito={() => setIsCartOpen(true)}
-        cantidadCarrito={carritoData.items ? carritoData.items.length : 0}
-        onAbrirBuzon={() => setIsBuzonOpen(true)}
-        cantidadBuzon={mensajesNoLeidos.length}
-      />
+      {!enMapa && (
+        <Navigation
+          idioma={idioma}
+          setIdioma={setIdioma}
+          tema={tema}
+          onToggleTema={onToggleTema}
+          onLogout={onLogout}
+          onAbrirBuzon={() => setIsBuzonOpen(true)}
+        />
+      )}
 
       <Outlet />
 
-      <Footer idioma={idioma} />
+      {!enMapa && <Footer idioma={idioma} />}
 
       {rolUsuario !== 'ROLE_ADMIN' && (
         <>
-          <CarritoDrawer
-            idioma={idioma}
-            carritoData={carritoData}
-            setCarritoData={setCarritoData}
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-            onCuentaDesactivada={onCuentaDesactivada}
-          />
+          <CarritoDrawer idioma={idioma} />
           <BuzonDrawer
             idioma={idioma}
-            mensajes={mensajesNoLeidos}
-            onDescartar={onDescartarNotificacion}
             isOpen={isBuzonOpen}
             onClose={() => setIsBuzonOpen(false)}
           />
+          {espacioSeleccionado && (
+            <DetalleEspacioModal
+              idioma={idioma}
+              espacio={espacioSeleccionado}
+              onClose={onCerrarDetalle}
+            />
+          )}
         </>
       )}
     </>

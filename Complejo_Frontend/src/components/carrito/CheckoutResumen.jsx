@@ -1,21 +1,62 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import CheckoutItem from './CheckoutItem'
 import CheckoutTotales from './CheckoutTotales'
+import MediosDePago from './MediosDePago'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
-import { CARRITO_VACIO } from '../../utils/constantes'
+import { confirmarCheckout, fetchCarrito, limpiarErroresCarrito, reiniciarCheckout } from '../../Redux/carritoSlice'
 import './CheckoutResumen.css'
 
-function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactivada }) {
+function CheckoutResumen({ idioma }) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { data: carritoData, errorCheckout, checkoutExitoso } = useSelector((state) => state.carrito)
   const [error, setError] = useState('')
-  const t = textos[idioma].checkout
+  const [medioPago, setMedioPago] = useState('tarjeta')
+  const [datosPago, setDatosPago] = useState({
+    numeroTarjeta: '',
+    nombreTitular: '',
+    vencimiento: '',
+    cvv: '',
+    cuotas: '1',
+    billeteraTipo: 'mp',
+    cuentaVinculada: true,
+    comprobante: '',
+    aceptaRecepcion: false
+  })
 
-  const items = carritoData && carritoData.items ? carritoData.items : []
-  const totalSinDescuento = carritoData && carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
-  const descuentoPack = carritoData && carritoData.descuentoPackPorcentaje ? carritoData.descuentoPackPorcentaje : 0
-  const total = carritoData && carritoData.total ? carritoData.total : 0
+  const t = textos[idioma].checkout
+  const items = carritoData.items ? carritoData.items : []
+  const totalSinDescuento = carritoData.totalSinDescuento ? carritoData.totalSinDescuento : 0
+  const descuentoPack = carritoData.descuentoPackPorcentaje ? carritoData.descuentoPackPorcentaje : 0
+  const total = carritoData.total ? carritoData.total : 0
+
+  // Al entrar a la pantalla se borra el error de un checkout anterior
+  useEffect(() => {
+    dispatch(limpiarErroresCarrito())
+  }, [dispatch])
+
+  // Si el checkout falla (por ejemplo, porque venció la reserva temporal de algún espacio), se vuelve a pedir el
+  // carrito al back para mostrar lo que quedó de verdad
+  useEffect(() => {
+    if (errorCheckout) dispatch(fetchCarrito())
+  }, [errorCheckout, dispatch])
+
+  // Cuando el checkout sale bien (lo marca el slice en fulfilled), vamos a Mis Reservas
+  useEffect(() => {
+    if (checkoutExitoso) {
+      dispatch(reiniciarCheckout())
+      navigate('/mis-reservas')
+    }
+  }, [checkoutExitoso, dispatch, navigate])
+
+  const actualizarDato = (campo, valor) => {
+    setDatosPago((prev) => ({ ...prev, [campo]: valor }))
+    if (error) {
+      setError('')
+    }
+  }
 
   const handleConfirmarCheckout = () => {
     if (items.length === 0) {
@@ -23,33 +64,52 @@ function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactiv
       return
     }
 
-    apiFetch('/api/carrito/checkout', { method: 'POST' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.mensaje) {
-          setCarritoData(CARRITO_VACIO)
-          setError('')
-          navigate('/mis-reservas')
-        } else {
-          console.error('Error en checkout: ', data)
-          setCarritoData(CARRITO_VACIO)
-          setError(t.errorExpirado)
-        }
-      })
-      .catch((err) => {
-        console.error('Error en checkout: ', err)
-        setCarritoData(CARRITO_VACIO)
-        setError(t.errorExpirado)
-      })
+    // Validación simulada interactiva de medios de pago
+    if (medioPago === 'tarjeta') {
+      const digitosLimpios = (datosPago.numeroTarjeta || '').replace(/\D/g, '')
+      if (digitosLimpios.length < 16) {
+        setError(t.mediosPago.errorTarjetaNumero)
+        return
+      }
+      if (!datosPago.nombreTitular || !datosPago.nombreTitular.trim()) {
+        setError(t.mediosPago.errorTarjetaTitular)
+        return
+      }
+      if (!datosPago.vencimiento || datosPago.vencimiento.trim().length < 5) {
+        setError(t.mediosPago.errorTarjetaVencimiento)
+        return
+      }
+      if (!datosPago.cvv || datosPago.cvv.trim().length < 3) {
+        setError(t.mediosPago.errorTarjetaCvv)
+        return
+      }
+    } else if (medioPago === 'billetera') {
+      if (!datosPago.cuentaVinculada) {
+        setError(t.mediosPago.errorBilleteraVincular)
+        return
+      }
+    } else if (medioPago === 'transferencia') {
+      if (!datosPago.comprobante || !datosPago.comprobante.trim()) {
+        setError(t.mediosPago.errorComprobante)
+        return
+      }
+    } else if (medioPago === 'recepcion') {
+      if (!datosPago.aceptaRecepcion) {
+        setError(t.mediosPago.errorRecepcionCheck)
+        return
+      }
+    }
+
+    setError('')
+    dispatch(confirmarCheckout())
   }
+
+  // Error de validación local o error del back guardado en el slice
+  const mensajeError = error || (errorCheckout ? t.errorExpirado : '')
 
   return (
     <>
-      {error && <p className="checkout-error">{error}</p>}
+      {mensajeError && <p className="checkout-error">{mensajeError}</p>}
 
       {items.length === 0 ? (
         <div className="checkout-empty">
@@ -65,6 +125,18 @@ function CheckoutResumen({ idioma, carritoData, setCarritoData, onCuentaDesactiv
               <CheckoutItem item={item} key={item.id} />
             ))}
           </div>
+
+          <MediosDePago
+            idioma={idioma}
+            total={total}
+            medioPago={medioPago}
+            setMedioPago={(nuevoMedio) => {
+              setMedioPago(nuevoMedio)
+              setError('')
+            }}
+            datosPago={datosPago}
+            actualizarDato={actualizarDato}
+          />
 
           <CheckoutTotales
             idioma={idioma}

@@ -1,128 +1,65 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import AdminEspacioForm from './AdminEspacioForm'
 import AdminEspacioRow from './AdminEspacioRow'
 import textos from '../../../i18n/textos'
-import { apiFetch } from '../../../utils/api'
+import {
+  fetchAdminEspacios,
+  actualizarEspacio,
+  cambiarEstadoEspacio
+} from '../../../Redux/adminEspaciosSlice'
 import './AdminEspacios.css'
+import { EsquinasPanel } from '../../ornamentos/Ornamentos'
 
-function AdminEspacios({ idioma, onCuentaDesactivada }) {
-  const [espacios, setEspacios] = useState([])
-  const [error, setError] = useState('')
-  const [mensajeExito, setMensajeExito] = useState('')
-  const [guardadoId, setGuardadoId] = useState(null)
+function AdminEspacios({ idioma }) {
+  const dispatch = useDispatch()
+  const { items: espacios, error, exito, guardadoId } = useSelector((state) => state.adminEspacios)
+  const [errorPrecio, setErrorPrecio] = useState('')
   const t = textos[idioma].adminEspacios
 
   useEffect(() => {
-    apiFetch('/api/admin/espacios')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && !data.error) {
-          setEspacios(data)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al cargar espacios admin: ', err)
-      })
-  }, [])
+    dispatch(fetchAdminEspacios())
+  }, [dispatch])
 
-  const handleEspacioCreado = (nuevoEspacio) => {
-    setEspacios([...espacios, nuevoEspacio])
-  }
-
-  // Solo cambia el valor en memoria mientras el admin escribe (sin llamar a la API)
-  const handleCambiarPrecio = (id, nuevoValor) => {
-    setEspacios(
-      espacios.map((item) => (item.id === id ? { ...item, precioBase: nuevoValor } : item))
-    )
-    setGuardadoId(null)
-  }
-
-  // Un único PUT cuando el admin confirma con el botón Guardar
-  const handleGuardarPrecio = (espacio) => {
-    const nuevoPrecio = Number(espacio.precioBase)
+  // Un único PUT cuando el admin confirma con el botón Guardar.
+  // El precio que se va escribiendo vive en el estado local de cada fila.
+  const handleGuardarPrecio = (espacio, precioEscrito) => {
+    const nuevoPrecio = Number(precioEscrito)
     if (!nuevoPrecio || nuevoPrecio <= 0) {
-      setError(t.errorPrecioInvalido)
+      setErrorPrecio(t.errorPrecioInvalido)
       return
     }
 
-    const datosAEnviar = {
-      nombre: espacio.nombre,
-      precioBase: nuevoPrecio,
-      tipo: espacio.tipo,
-      descripcion: espacio.descripcion,
-      imagenes: espacio.imagenes
-    }
-
-    apiFetch(`/api/admin/espacios/${espacio.id}`, { method: 'PUT', body: datosAEnviar })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.id) {
-          setEspacios(
-            espacios.map((item) => (item.id === espacio.id ? data : item))
-          )
-          setGuardadoId(data.id)
-          setError('')
-          setMensajeExito(t.precioActualizado(data.nombre, data.precioBase))
-        } else {
-          setError(t.errorPrecio)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al actualizar precio: ', err)
-        setError(t.errorPrecio)
-      })
+    setErrorPrecio('')
+    dispatch(actualizarEspacio({ ...espacio, precioBase: nuevoPrecio }))
   }
 
   const handleToggleEstado = (espacio) => {
-    const ruta = espacio.activo
-      ? `/api/admin/espacios/${espacio.id}`
-      : `/api/admin/espacios/${espacio.id}/restaurar`
-    const metodo = espacio.activo ? 'DELETE' : 'PATCH'
-    const nuevoEstado = !espacio.activo
+    setErrorPrecio('')
+    dispatch(cambiarEstadoEspacio(espacio))
+  }
 
-    apiFetch(ruta, { method: metodo })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.mensaje) {
-          setEspacios(
-            espacios.map((item) =>
-              item.id === espacio.id ? { ...item, activo: nuevoEstado } : item
-            )
-          )
-          setError('')
-          setMensajeExito(
-            nuevoEstado ? t.reactivado(espacio.nombre) : t.enMantenimiento(espacio.nombre)
-          )
-        } else {
-          setError(t.errorEstado)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al cambiar estado del espacio: ', err)
-        setError(t.errorEstado)
-      })
+  // Los mensajes se arman acá (y no en el slice) porque dependen del idioma
+  let mensajeError = errorPrecio
+  if (!mensajeError && error === 'precio') mensajeError = t.errorPrecio
+  if (!mensajeError && error === 'estado') mensajeError = t.errorEstado
+
+  let mensajeExito = ''
+  if (exito && exito.tipo === 'precio') {
+    mensajeExito = t.precioActualizado(exito.nombre, exito.precioBase)
+  } else if (exito && exito.tipo === 'estado') {
+    mensajeExito = exito.activo ? t.reactivado(exito.nombre) : t.enMantenimiento(exito.nombre)
   }
 
   return (
     <>
-      <AdminEspacioForm
-        idioma={idioma}
-        onEspacioCreado={handleEspacioCreado}
-        onCuentaDesactivada={onCuentaDesactivada}
-      />
+      <AdminEspacioForm idioma={idioma} />
 
-      {error && <p className="ad-error">{error}</p>}
-      {mensajeExito && <p className="ad-success">{mensajeExito}</p>}
+      {mensajeError && <p className="ad-error">{mensajeError}</p>}
+      {!mensajeError && mensajeExito && <p className="ad-success">{mensajeExito}</p>}
 
       <div className="ad-table-container">
+        <EsquinasPanel variante={0} />
         <table className="ad-table">
           <thead>
             <tr>
@@ -138,7 +75,6 @@ function AdminEspacios({ idioma, onCuentaDesactivada }) {
                 idioma={idioma}
                 espacio={espacio}
                 guardado={guardadoId === espacio.id}
-                onCambiarPrecio={handleCambiarPrecio}
                 onGuardarPrecio={handleGuardarPrecio}
                 onToggleEstado={handleToggleEstado}
                 key={espacio.id}

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import CalendarioDisponibilidad from './CalendarioDisponibilidad'
 import textos from '../../i18n/textos'
-import { apiFetch } from '../../utils/api'
+import { agregarAlCarrito, limpiarErroresCarrito } from '../../Redux/carritoSlice'
 import {
   diaSiguienteIso,
   sonFechasConsecutivas,
@@ -10,24 +11,44 @@ import {
 } from '../../utils/fechas'
 import './ReservaWidgetForm.css'
 
-function ReservaWidgetForm({
-  idioma,
-  espacio,
-  isLogged,
-  setCarritoData,
-  onAbrirCarrito,
-  onCuentaDesactivada
-}) {
+function ReservaWidgetForm({ idioma, espacio }) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const isLogged = useSelector((state) => state.auth.isLogged)
+  const errorAgregar = useSelector((state) => state.carrito.errorAgregar)
   const [fechasSeleccionadas, setFechasSeleccionadas] = useState([])
   const [error, setError] = useState('')
   const t = textos[idioma].widget
+  const tDetalle = textos[idioma].detalle
+
+  // Al abrir el detalle de otro espacio no se tiene que ver el error del anterior
+  useEffect(() => {
+    dispatch(limpiarErroresCarrito())
+  }, [dispatch])
 
   const precioMostrado = calcularPrecioSeleccionado(espacio.precioBase, fechasSeleccionadas)
   const sufijoPrecio =
     fechasSeleccionadas.length === 0
       ? textos[idioma].comun.porNocheSufijo
       : t.nochesSeleccionadas(fechasSeleccionadas.length)
+
+  if (espacio.tipo === 'SALON_COMIDA_CASA_PRINCIPAL') {
+    return (
+      <div className="widget-reserva salon-comunal-box">
+        <h3 className="salon-comunal-title">{tDetalle.infoSalonTitulo}</h3>
+        <p className="salon-comunal-text">
+          {tDetalle.infoSalonTexto}
+        </p>
+        <button
+          type="button"
+          className="wr-submit-btn"
+          onClick={() => navigate('/catalogo')}
+        >
+          {tDetalle.botonVerHabitaciones || '← Explorar Habitaciones'}
+        </button>
+      </div>
+    )
+  }
 
   const handleClick = () => {
     if (!isLogged) {
@@ -57,28 +78,12 @@ function ReservaWidgetForm({
       checkOut: checkOut
     }
 
-    apiFetch('/api/carrito/items', { method: 'POST', body: datosAEnviar })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          onCuentaDesactivada()
-          return
-        }
-        if (data && data.items) {
-          setCarritoData(data)
-          setError('')
-          onAbrirCarrito()
-          navigate('/catalogo')
-        } else {
-          console.error('Error al agregar al carrito: ', data)
-          setError(t.errorDisponible)
-        }
-      })
-      .catch((err) => {
-        console.error('Error al agregar al carrito: ', err)
-        setError(t.errorDisponible)
-      })
+    setError('')
+    // Si sale bien, el slice guarda el carrito nuevo y lo abre
+    dispatch(agregarAlCarrito(datosAEnviar))
   }
+
+  const mensajeError = error || (errorAgregar ? t.errorDisponible : '')
 
   return (
     <div className="widget-reserva">
@@ -96,7 +101,7 @@ function ReservaWidgetForm({
         </div>
       </div>
 
-      {error && <p className="wr-error">{error}</p>}
+      {mensajeError && <p className="wr-error">{mensajeError}</p>}
 
       <form onSubmit={(e) => e.preventDefault()}>
         <button type="submit" className="wr-submit-btn" onClick={handleClick}>

@@ -1,6 +1,6 @@
 /* Estructura común de las tres pantallas de administración */
 .admin-pagina {
-  background-color: #f7f6f2;
+  background-color: transparent;
   min-height: 85vh;
   padding: 2.5em 4em;
   display: flex;

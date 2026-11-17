@@ -9,7 +9,7 @@
 }
 
 .admin-res-table-container {
-  background-color: #f1f2ec;
+  background-color: var(--superficie-2);
   border-radius: 1em;
   padding: 0.8em;
 }
@@ -26,7 +26,7 @@
   padding: 0 1em;
   font-size: 0.7em;
   font-weight: 800;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .admin-res-table th:nth-child(1) { width: 10%; }
@@ -37,7 +37,7 @@
 .admin-res-table th:nth-child(6) { width: 24%; }
 
 .admin-res-table td {
-  background-color: #ffffff;
+  background-color: var(--superficie);
   padding: 1em;
   vertical-align: middle;
   font-size: 0.9em;
@@ -46,7 +46,7 @@
 .admin-res-empty {
   text-align: center;
   padding: 2.5em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .td-guest {
@@ -57,12 +57,12 @@
 
 .td-guest span {
   font-size: 0.85em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .strikethrough {
   text-decoration: line-through;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .td-detalles {
@@ -73,7 +73,7 @@
 
 .td-detalle-line span {
   font-size: 0.85em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .td-payment {
@@ -114,7 +114,7 @@
 
 .admin-cancel-input {
   padding: 0.45em 0.6em;
-  border: 1px solid #d5d4ce;
+  border: 1px solid var(--borde);
   border-radius: 0.4em;
   font-size: 0.8em;
   width: 100%;
@@ -122,7 +122,7 @@
 
 .admin-cancel-reason {
   font-size: 0.8em;
-  color: #8d3b00;
+  color: var(--acento);
   font-style: italic;
 }
 
@@ -135,4 +135,16 @@
   font-size: 0.8em;
   font-weight: 700;
   cursor: pointer;
+}
+
+/* Panel con plantas en las esquinas de abajo (EsquinasPanel) */
+.admin-res-table-container {
+  position: relative;
+  overflow: visible;
+  border-color: var(--marco);
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 20px 34px -20px var(--sombra);
+}
+
+.btn-cancel-admin {
+  white-space: nowrap;
 }

@@ -1,21 +1,25 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import BuzonItem from './BuzonItem'
 import textos from '../../i18n/textos'
+import { leerNotificacion } from '../../Redux/reservasSlice'
 import './BuzonDrawer.css'
 
-function BuzonDrawer({ idioma, mensajes, onDescartar, isOpen, onClose }) {
+function BuzonDrawer({ idioma, isOpen, onClose }) {
+  const dispatch = useDispatch()
+  const mensajes = useSelector((state) => state.reservas.notificaciones)
   const t = textos[idioma].buzon
 
-  if (!isOpen) {
-    return null
+  const handleDescartar = (id) => {
+    dispatch(leerNotificacion(id))
   }
 
   return (
-    <div className="buzon-backdrop">
+    // siempre montado: al abrir y cerrar el panel se desliza desde la derecha (ver BuzonDrawer.css)
+    <div className={`buzon-backdrop ${isOpen ? 'abierto' : ''}`} aria-hidden={!isOpen}>
       <div className="buzon-panel">
         <div className="buzon-header">
           <div className="bh-title-block">
-            <span className="bh-icon">📬</span>
             <div>
               <h2 className="bh-title">{t.titulo}</h2>
               <span className="bh-subtitle">{t.avisos(mensajes.length)}</span>
@@ -37,7 +41,7 @@ function BuzonDrawer({ idioma, mensajes, onDescartar, isOpen, onClose }) {
               <BuzonItem
                 idioma={idioma}
                 reserva={reserva}
-                onDescartar={onDescartar}
+                onDescartar={handleDescartar}
                 key={reserva.id}
               />
             ))

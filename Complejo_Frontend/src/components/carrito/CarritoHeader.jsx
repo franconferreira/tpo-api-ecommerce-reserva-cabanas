@@ -7,7 +7,6 @@ function CarritoHeader({ idioma, cantidad, onClose }) {
   return (
     <div className="carrito-header">
       <div className="ch-title-block">
-        <span className="ch-icon">🛍️</span>
         <div>
           <h2 className="ch-title">{t.titulo}</h2>
           <span className="ch-subtitle">{t.seleccionados(cantidad)}</span>

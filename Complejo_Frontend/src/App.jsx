@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import MainLayout from './components/layout/MainLayout'
 import LoginView from './views/LoginView'
 import RegisterView from './views/RegisterView'
@@ -10,24 +11,25 @@ import MisReservasView from './views/MisReservasView'
 import AdminEspaciosView from './views/AdminEspaciosView'
 import AdminReservasView from './views/AdminReservasView'
 import AdminUsuariosView from './views/AdminUsuariosView'
-import { apiFetch } from './utils/api'
-import { CARRITO_VACIO } from './utils/constantes'
+import Mapa3DView from './views/Mapa3DView'
+import { fetchPerfil, logout } from './Redux/authSlice'
+import { fetchCarrito, vaciarCarrito } from './Redux/carritoSlice'
+import { fetchMisReservas, limpiarReservas } from './Redux/reservasSlice'
+import { mostrarMensaje } from './utils/pantallaMensaje'
+import textos from './i18n/textos'
 
 function App() {
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch()
+  const { token, isLogged, rol: rolUsuario, cuentaDesactivada } = useSelector((state) => state.auth)
+
+  // Estados de interfaz: quedan locales porque solo los maneja App y los pasa a pocos hijos
   const [idioma, setIdioma] = useState('es')
-  const [token, setToken] = useState('')
-  const [isLogged, setIsLogged] = useState(false)
-  const [rolUsuario, setRolUsuario] = useState('')
-  const [nombreUsuario, setNombreUsuario] = useState('')
-  const [cuentaDesactivada, setCuentaDesactivada] = useState(false)
+  // Modo claro (Vitral del Alba) u oscuro (Luz de Luna): la clase del tema va en el contenedor de toda la app
+  const [tema, setTema] = useState('claro')
   const [espacioSeleccionado, setEspacioSeleccionado] = useState(null)
-  const [isCartOpen, setIsCartOpen] = useState(false)
   const [isBuzonOpen, setIsBuzonOpen] = useState(false)
-  const [mensajesBuzon, setMensajesBuzon] = useState([])
-  const [ocultasIds, setOcultasIds] = useState([])
-  const [carritoData, setCarritoData] = useState(CARRITO_VACIO)
 
   // Al levantar la app, aseguramos arrancar sin usuario logueado previo
   useEffect(() => {
@@ -40,11 +42,12 @@ function App() {
   useEffect(() => {
     if (rolUsuario === 'ROLE_ADMIN') {
       // El administrador no debe ver el catálogo ni pantallas de cliente/auth
-      if (
+      if (location.pathname === '/login' || location.pathname === '/register') {
+        // recién inicia sesión: pantalla de "Bienvenido" antes de entrar al panel
+        mostrarMensaje(textos[idioma].comun.bienvenida, () => navigate('/admin/espacios'))
+      } else if (
         location.pathname === '/' ||
         location.pathname === '/catalogo' ||
-        location.pathname === '/login' ||
-        location.pathname === '/register' ||
         location.pathname === '/detalle' ||
         location.pathname === '/checkout' ||
         location.pathname === '/mis-reservas'
@@ -54,7 +57,8 @@ function App() {
     } else if (isLogged) {
       // Usuario normal logueado
       if (location.pathname === '/login' || location.pathname === '/register') {
-        navigate('/catalogo')
+        // recién inicia sesión: pantalla de "Bienvenido" antes de entrar al catálogo
+        mostrarMensaje(textos[idioma].comun.bienvenida, () => navigate('/catalogo'))
       } else if (
         location.pathname === '/admin/espacios' ||
         location.pathname === '/admin/reservas' ||
@@ -75,221 +79,114 @@ function App() {
         navigate('/login')
       }
     }
-  }, [isLogged, rolUsuario, location.pathname, navigate])
+  }, [isLogged, rolUsuario, location.pathname, navigate, idioma])
 
   // Verifica el perfil y estado activo del usuario al iniciar sesión o cambiar de pantalla
   useEffect(() => {
     if (token) {
-      apiFetch('/api/usuarios/me')
-        .then((res) => res.json())
-        .then((user) => {
-          if (user && user.error === 'CUENTA_DESACTIVADA') {
-            localStorage.removeItem('jwtToken')
-            localStorage.removeItem('rolUsuario')
-            setToken('')
-            setIsLogged(false)
-            setRolUsuario('')
-            setNombreUsuario('')
-            setIsCartOpen(false)
-            setIsBuzonOpen(false)
-            setMensajesBuzon([])
-            setCarritoData(CARRITO_VACIO)
-            setCuentaDesactivada(true)
-            navigate('/login')
-          } else if (user && user.email) {
-            setIsLogged(true)
-            setRolUsuario(user.rol)
-            localStorage.setItem('rolUsuario', user.rol)
-            setNombreUsuario(`${user.nombre} ${user.apellido}`)
-          }
-        })
-        .catch((err) => {
-          console.error('Error al verificar sesion: ', err)
-        })
+      dispatch(fetchPerfil())
     }
-  }, [token, location.pathname, navigate])
+  }, [token, location.pathname, dispatch])
 
   // Carga inicial del carrito y buzón cuando inicia sesión un cliente
   useEffect(() => {
     if (token && rolUsuario && rolUsuario !== 'ROLE_ADMIN') {
-      apiFetch('/api/carrito')
-        .then((res) => res.json())
-        .then((cart) => {
-          if (cart && cart.items) {
-            setCarritoData(cart)
-          }
-        })
-        .catch((err) => {
-          console.error('Error al obtener carrito: ', err)
-        })
-
-      apiFetch('/api/reservas/mis-reservas')
-        .then((res) => res.json())
-        .then((reservas) => {
-          if (reservas && !reservas.error) {
-            setMensajesBuzon(
-              reservas.filter(
-                (r) => r.estado === 'CANCELADA' && r.mensajeCancelacion && !r.notificacionLeida
-              )
-            )
-          }
-        })
-        .catch((err) => {
-          console.error('Error al obtener buzón: ', err)
-        })
+      dispatch(fetchCarrito())
+      dispatch(fetchMisReservas())
     }
-  }, [token, rolUsuario])
+  }, [token, rolUsuario, dispatch])
 
-  const handleLoginSuccess = (data) => {
-    setCuentaDesactivada(false)
-    setToken(data.token)
-    setRolUsuario(data.rol || '')
-    setIsLogged(true)
-    localStorage.setItem('jwtToken', data.token)
-    localStorage.setItem('rolUsuario', data.rol || '')
-    navigate(data.rol === 'ROLE_ADMIN' ? '/admin/espacios' : '/catalogo')
-  }
+  // Si el back avisó que la cuenta fue desactivada con la sesión abierta, se limpia la sesión y se vuelve al login.
+  // Se mira si todavía hay token guardado para hacerlo una sola vez (y no cuando falla el login de una cuenta desactivada).
+  useEffect(() => {
+    if (cuentaDesactivada && localStorage.getItem('jwtToken')) {
+      localStorage.removeItem('jwtToken')
+      dispatch(vaciarCarrito())
+      dispatch(limpiarReservas())
+      setIsBuzonOpen(false)
+      navigate('/login')
+    }
+  }, [cuentaDesactivada, dispatch, navigate])
 
+  // Cerrar sesión: pantalla de "Hasta pronto" y, ya tapado todo, se limpia la sesión y se va al login
   const handleLogout = () => {
-    setCuentaDesactivada(false)
-    localStorage.removeItem('jwtToken')
-    localStorage.removeItem('rolUsuario')
-    setToken('')
-    setIsLogged(false)
-    setRolUsuario('')
-    setNombreUsuario('')
-    setIsCartOpen(false)
-    setIsBuzonOpen(false)
-    setMensajesBuzon([])
-    setCarritoData(CARRITO_VACIO)
-    navigate('/login')
+    mostrarMensaje(textos[idioma].comun.despedida, () => {
+      localStorage.removeItem('jwtToken')
+      dispatch(logout())
+      dispatch(vaciarCarrito())
+      dispatch(limpiarReservas())
+      setIsBuzonOpen(false)
+      navigate('/login')
+    })
   }
 
-  const handleCuentaDesactivada = () => {
-    localStorage.removeItem('jwtToken')
-    localStorage.removeItem('rolUsuario')
-    setToken('')
-    setIsLogged(false)
-    setRolUsuario('')
-    setNombreUsuario('')
-    setIsCartOpen(false)
-    setIsBuzonOpen(false)
-    setMensajesBuzon([])
-    setCarritoData(CARRITO_VACIO)
-    setCuentaDesactivada(true)
-    navigate('/login')
-  }
-
-  const handleDescartarNotificacion = (id) => {
-    apiFetch(`/api/reservas/${id}/leer-notificacion`, { method: 'PATCH' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.error === 'CUENTA_DESACTIVADA') {
-          handleCuentaDesactivada()
-          return
-        }
-        if (data && data.mensaje) {
-          setMensajesBuzon(mensajesBuzon.filter((m) => m.id !== id))
-        }
-      })
-      .catch((err) => {
-        console.error('Error al marcar notificación como leída: ', err)
-      })
+  const handleToggleTema = () => {
+    setTema(tema === 'claro' ? 'oscuro' : 'claro')
   }
 
   const handleAbrirDetalle = (espacio) => {
     setEspacioSeleccionado(espacio)
-    navigate('/detalle')
+  }
+
+  const handleCerrarDetalle = () => {
+    setEspacioSeleccionado(null)
   }
 
   return (
+    <div className={`app tema-${tema}`}>
     <Routes>
-      <Route
-        path="/login"
-        element={
-          <LoginView
-            idioma={idioma}
-            setIdioma={setIdioma}
-            onLogin={handleLoginSuccess}
-            cuentaDesactivada={cuentaDesactivada}
-            onLimpiarAviso={() => setCuentaDesactivada(false)}
-          />
-        }
-      />
-      <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} onLogin={handleLoginSuccess} />} />
+      <Route path="/login" element={<LoginView idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={handleToggleTema} />} />
+      <Route path="/register" element={<RegisterView idioma={idioma} setIdioma={setIdioma} tema={tema} onToggleTema={handleToggleTema} />} />
 
       <Route
         element={
           <MainLayout
             idioma={idioma}
             setIdioma={setIdioma}
-            isLogged={isLogged}
-            rolUsuario={rolUsuario}
-            nombreUsuario={nombreUsuario}
+            tema={tema}
+            onToggleTema={handleToggleTema}
             onLogout={handleLogout}
-            onCuentaDesactivada={handleCuentaDesactivada}
-            carritoData={carritoData}
-            setCarritoData={setCarritoData}
-            isCartOpen={isCartOpen}
-            setIsCartOpen={setIsCartOpen}
-            mensajesNoLeidos={mensajesBuzon}
-            onDescartarNotificacion={handleDescartarNotificacion}
             isBuzonOpen={isBuzonOpen}
             setIsBuzonOpen={setIsBuzonOpen}
+            espacioSeleccionado={espacioSeleccionado}
+            onCerrarDetalle={handleCerrarDetalle}
           />
         }
       >
         <Route path="/" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
         <Route path="/catalogo" element={<CatalogoView idioma={idioma} onAbrirDetalle={handleAbrirDetalle} />} />
         <Route
+          path="/mapa-3d"
+          element={
+            <Mapa3DView
+              idioma={idioma}
+              setIdioma={setIdioma}
+              tema={tema}
+              onToggleTema={handleToggleTema}
+              onLogout={handleLogout}
+              onAbrirDetalle={handleAbrirDetalle}
+              detalleAbierto={espacioSeleccionado !== null}
+            />
+          }
+        />
+        <Route
           path="/detalle"
           element={
             <DetalleEspacioView
               idioma={idioma}
               espacio={espacioSeleccionado}
-              isLogged={isLogged}
-              setCarritoData={setCarritoData}
-              onAbrirCarrito={() => setIsCartOpen(true)}
-              onCuentaDesactivada={handleCuentaDesactivada}
+              onClose={handleCerrarDetalle}
             />
           }
         />
-        <Route
-          path="/checkout"
-          element={
-            <CheckoutView
-              idioma={idioma}
-              carritoData={carritoData}
-              setCarritoData={setCarritoData}
-              onCuentaDesactivada={handleCuentaDesactivada}
-            />
-          }
-        />
-        <Route
-          path="/mis-reservas"
-          element={
-            <MisReservasView
-              idioma={idioma}
-              ocultasIds={ocultasIds}
-              setOcultasIds={setOcultasIds}
-              onCuentaDesactivada={handleCuentaDesactivada}
-            />
-          }
-        />
-        <Route
-          path="/admin/espacios"
-          element={<AdminEspaciosView idioma={idioma} onCuentaDesactivada={handleCuentaDesactivada} />}
-        />
-        <Route
-          path="/admin/reservas"
-          element={<AdminReservasView idioma={idioma} onCuentaDesactivada={handleCuentaDesactivada} />}
-        />
-        <Route
-          path="/admin/usuarios"
-          element={<AdminUsuariosView idioma={idioma} onCuentaDesactivada={handleCuentaDesactivada} />}
-        />
+        <Route path="/checkout" element={<CheckoutView idioma={idioma} />} />
+        <Route path="/mis-reservas" element={<MisReservasView idioma={idioma} />} />
+        <Route path="/admin/espacios" element={<AdminEspaciosView idioma={idioma} />} />
+        <Route path="/admin/reservas" element={<AdminReservasView idioma={idioma} />} />
+        <Route path="/admin/usuarios" element={<AdminUsuariosView idioma={idioma} />} />
       </Route>
     </Routes>
+    </div>
   )
 }
 

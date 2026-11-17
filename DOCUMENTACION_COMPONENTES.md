@@ -87,8 +87,8 @@ Las vistas representan las páginas de la aplicación y se encuentran en `src/vi
   * `EspacioList`: Listado y filtrado de cabañas y salones.
 * **Props que recibe**: `idioma`, `onAbrirDetalle`.
 
-### `DetalleEspacioView.jsx`
-* **Ruta asociada**: `/detalle`
+### `DetalleEspacioModal.jsx` (y vista `DetalleEspacioView.jsx`)
+* **Modal interactivo**: Fondo oscurecido y difuminado (`backdrop-filter: blur(8px)`) sin salir de la pantalla
 * **Propósito**: Muestra la información exhaustiva de un espacio seleccionado (fotos, precio, comodidades, calendario de ocupación y widget de reserva).
 * **Componentes que renderiza**:
   * `DetalleEspacio`: Ensambla la ficha técnica, la galería y el widget.
@@ -275,8 +275,18 @@ Ubicados en `src/components/carrito/`. Gestionan las estadías seleccionadas ant
 ### `CheckoutResumen.jsx`
 * **Función**: Formulario de checkout y procesamiento final de reserva.
 * **Lógica**:
-  * Solicita datos de contacto y motivo del viaje.
-  * Al confirmar con "Confirmar y Abonar", llama a `POST /api/reservas/confirmar`, vacía el carrito en el estado global y redirige al usuario a `/mis-reservas`.
+  * Presenta el resumen de espacios reservados e integra el componente interactivo `MediosDePago`.
+  * Valida interactivamente que el medio de pago seleccionado contenga sus datos requeridos antes de procesar el pago.
+  * Al confirmar con "Confirmar Reserva ➔", llama a `POST /api/carrito/checkout`, vacía el carrito en el estado global y redirige al usuario a `/mis-reservas`.
+
+### `MediosDePago.jsx`
+* **Función**: Maquetado y selector interactivo de medios de pago para la reserva.
+* **Lógica**:
+  * Pestañas para 4 opciones: Tarjeta de Crédito/Débito, Billetera Digital, Transferencia Bancaria y Pago en Recepción.
+  * Mockup visual de tarjeta en tiempo real con detección de marca (Visa, Mastercard, Amex), formateo de 16 dígitos, fecha `MM/AA`, código CVV y cálculo de cuotas en USD.
+  * Simulación de billetera (Mercado Pago / PayPal) con botón de vinculación.
+  * Datos bancarios con botones de copiado rápido al portapapeles ("Copiar CBU/Alias") y campo de comprobante.
+  * Pago presencial en recepción con confirmación de términos.
 
 ### `CheckoutItem.jsx`
 * **Función**: Tarjeta compacta de resumen de cada espacio en la pantalla de checkout.

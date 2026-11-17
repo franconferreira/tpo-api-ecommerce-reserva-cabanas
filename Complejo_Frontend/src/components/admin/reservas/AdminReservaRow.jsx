@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import textos from '../../../i18n/textos'
 
-function AdminReservaRow({ idioma, reserva, onCambiarMotivo, onCancelar }) {
+function AdminReservaRow({ idioma, reserva, onCancelar }) {
+  const [motivo, setMotivo] = useState('')
   const t = textos[idioma].adminReservas
   const comun = textos[idioma].comun
   const isCancelled = reserva.estado === 'CANCELADA'
@@ -53,10 +54,10 @@ function AdminReservaRow({ idioma, reserva, onCambiarMotivo, onCancelar }) {
               name="mensajeCancelacion"
               className="admin-cancel-input"
               placeholder={t.motivoPlaceholder}
-              value={reserva.mensajeCancelacion || ''}
-              onChange={(e) => onCambiarMotivo(reserva.id, e.target.value)}
+              value={motivo}
+              onChange={(e) => setMotivo(e.target.value)}
             />
-            <button type="submit" className="btn-cancel-admin" onClick={() => onCancelar(reserva)}>
+            <button type="submit" className="btn-cancel-admin" onClick={() => onCancelar(reserva, motivo)}>
               {t.cancelar}
             </button>
           </form>

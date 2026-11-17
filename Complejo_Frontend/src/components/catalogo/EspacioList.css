@@ -1,5 +1,16 @@
+/* Grilla de tarjetas en arco: ancho fijo y separación suficiente para que las plantas de tarjetas vecinas no se pisen */
 .catalogo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(22em, 1fr));
-  gap: 2em;
+  grid-template-columns: repeat(auto-fill, 309px);
+  justify-content: center;
+  gap: 4.5em 4.5em;
+  /* como mucho 5 tarjetas por fila, con aire entre ellas para los ornamentos */
+  max-width: calc(5 * 309px + 4 * 4.5em);
+  margin: 0 auto;
+  padding: 3em 0 2em;
+}
+
+.catalogo-estado {
+  text-align: center;
+  padding: 2em;
 }

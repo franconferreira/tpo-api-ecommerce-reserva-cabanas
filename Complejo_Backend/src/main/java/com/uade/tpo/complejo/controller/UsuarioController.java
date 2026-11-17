@@ -24,10 +24,12 @@ public class UsuarioController {
         Usuario user = usuarioRepository.findByEmail(email).orElseThrow();
         return ResponseEntity.ok(UsuarioResponseDTO.builder()
                 .id(user.getId())
+                .username(user.getNombreDeUsuario())
                 .nombre(user.getNombre())
                 .apellido(user.getApellido())
                 .email(user.getEmail())
                 .rol(user.getRol().name())
+                .activo(user.getActivo())
                 .build());
     }
 }

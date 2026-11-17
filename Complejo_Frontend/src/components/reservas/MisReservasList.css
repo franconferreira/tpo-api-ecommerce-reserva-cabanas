@@ -16,18 +16,18 @@
 }
 
 .mr-empty-state {
-  background-color: #ffffff;
+  background-color: var(--superficie);
   padding: 3em;
   text-align: center;
   border-radius: 1em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
 }
 
 .mr-card {
-  background-color: #ffffff;
+  background-color: var(--superficie);
   border-radius: 1em;
   padding: 1.8em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
   display: flex;
   flex-direction: column;
   gap: 1.2em;
@@ -38,7 +38,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1em;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--borde);
 }
 
 .mr-status-pill {
@@ -53,7 +53,7 @@
 
 .mr-conf-code {
   font-size: 1em;
-  color: #2a2a2a;
+  color: var(--texto);
 }
 
 .mr-totals {
@@ -63,8 +63,8 @@
 }
 
 .mr-pack-badge {
-  background-color: #fde8dd;
-  color: #cc7440;
+  background-color: var(--superficie-2);
+  color: var(--acento);
   padding: 0.3em 0.7em;
   border-radius: 0.5em;
   font-size: 0.75em;
@@ -73,7 +73,7 @@
 
 .mr-total-price {
   font-size: 1.3em;
-  color: #153c2b;
+  color: var(--titulo);
 }
 
 .mr-detalles-list {
@@ -86,7 +86,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f8f4;
+  background-color: var(--superficie-2);
   padding: 0.9em 1.2em;
   border-radius: 0.6em;
 }
@@ -94,14 +94,14 @@
 .mr-detalle-dates {
   display: block;
   font-size: 0.85em;
-  color: #737373;
+  color: var(--texto-suave);
   margin-top: 0.2em;
 }
 
 .mr-detalle-rate {
   font-size: 0.9em;
   font-weight: 700;
-  color: #2a2a2a;
+  color: var(--texto);
 }
 
 .mr-card-footer {
@@ -128,8 +128,8 @@
 }
 
 .mr-cancel-notice {
-  background-color: #fff3e0;
-  color: #8d3b00;
+  background-color: var(--superficie);
+  color: var(--acento);
   border: 1px solid #ffe0b2;
   padding: 0.9em 1.2em;
   border-radius: 0.6em;
@@ -142,12 +142,21 @@
 .mr-dismiss-btn {
   min-width: 13.4em;
   text-align: center;
-  background-color: #f1f2ec;
-  color: #555555;
-  border: 1px solid #d5d4ce;
+  background-color: var(--superficie-2);
+  color: var(--texto);
+  border: 1px solid var(--borde);
   padding: 0.55em 1.15em;
   border-radius: 0.6em;
   font-size: 0.85em;
   font-weight: 700;
   cursor: pointer;
+}
+
+/* Cada reserva es un panel con plantas que crecen desde las esquinas de abajo */
+.mr-card {
+  position: relative;
+  overflow: visible;
+  border-color: var(--marco);
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 20px 34px -20px var(--sombra);
+  margin-bottom: 2.5em;
 }

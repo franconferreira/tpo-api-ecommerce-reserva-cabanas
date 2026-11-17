@@ -1,6 +1,6 @@
 .footer-container {
-  background-color: #ffffff;
-  border-top: 1px solid #e0e0e0;
+  background-color: var(--superficie);
+  border-top: 1px solid var(--borde);
   padding: 1.5em 3em;
   margin-top: auto;
 }
@@ -14,17 +14,32 @@
 }
 
 .footer-brand strong {
-  font-family: 'Playfair Display', Georgia, serif;
-  color: #153c2b;
+  font-family: 'Marcellus SC', Georgia, serif;
+  color: var(--titulo);
   font-size: 1em;
 }
 
 .footer-brand span {
   font-size: 0.85em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .footer-copy {
   font-size: 0.8em;
-  color: #737373;
+  color: var(--texto-suave);
+}
+
+/* Tema Art Nouveau */
+.footer-container {
+  background-color: transparent;
+  border-top: none;
+  padding: 0 0 1.5em;
+}
+
+.footer-friso {
+  margin-bottom: 1.2em;
+}
+
+.footer-content {
+  padding: 0 3em;
 }

@@ -1,35 +1,69 @@
 .catalogo-wrapper {
-  padding: 2em 4em;
-  background-color: #f4f3ef;
+  padding: 1em 4em 4em;
+  background-color: transparent;
   min-height: 85vh;
 }
 
-.catalogo-hero-mapa {
-  width: 100%;
-  background-color: #153c2b;
-  color: #ffffff;
-  border-radius: 1.2em;
-  padding: 3em;
-  margin-bottom: 2.5em;
+/* Inicio: ventana en arco a la izquierda y texto a la derecha */
+.catalogo-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 4.5em;
+  align-items: center;
+  max-width: 72em;
+  margin: 0 auto;
+  padding: 4.5em 2em 2.5em;
+}
+
+.catalogo-hero > .marco-ventana,
+.catalogo-hero > .catalogo-hero-texto {
+  position: relative;
+  z-index: 1;
 }
 
 .catalogo-overline {
-  color: #cc7440;
-  font-size: 0.8em;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-family: 'Marcellus SC', Georgia, serif;
+  color: var(--manuscrita);
+  font-size: 0.85em;
+  letter-spacing: 0.25em;
   display: block;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.6em;
 }
 
 .catalogo-title {
-  color: #ffffff;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2.4em;
-  margin-bottom: 0.4em;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 2.6em;
+  line-height: 1.15;
+  background: linear-gradient(180deg, var(--h1a), var(--h1b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .catalogo-subtitle {
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 0.95em;
+  color: var(--texto);
+  font-size: 1.2em;
+  font-style: italic;
+  line-height: 1.55;
+  max-width: 30em;
+}
+
+.catalogo-acciones {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  margin-top: 1.8em;
+}
+
+.catalogo-link-sec {
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
+  color: var(--acento);
+  border-bottom: 3px double var(--acento);
+  padding-bottom: 0.15em;
+}
+
+.catalogo-link-sec:hover {
+  text-decoration: none;
 }

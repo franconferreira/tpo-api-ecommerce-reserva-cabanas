@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import EspacioCard from './EspacioCard'
-import { apiFetch } from '../../utils/api'
+import textos from '../../i18n/textos'
+import { fetchEspacios } from '../../Redux/espaciosSlice'
 import './EspacioList.css'
 
 function EspacioList({ idioma, onAbrirDetalle }) {
-  const [espacios, setEspacios] = useState([])
+  const dispatch = useDispatch()
+  const { items: espacios, loading, error } = useSelector((state) => state.espacios)
+  const t = textos[idioma].catalogo
 
   useEffect(() => {
-    apiFetch('/api/espacios', { auth: false })
-      .then((response) => response.json())
-      .then((data) => {
-        setEspacios(data)
-      })
-      .catch((error) => {
-        console.error('Error al mostrar los espacios: ', error)
-      })
-  }, [])
+    dispatch(fetchEspacios())
+  }, [dispatch])
+
+  if (loading) return <p className="catalogo-estado">{t.cargando}</p>
+  if (error) return <p className="catalogo-estado">{t.errorCarga}{error}</p>
 
   return (
     <div className="catalogo-grid">
-      {espacios.map((espacio) => (
+      {espacios.map((espacio, indice) => (
         <EspacioCard
           idioma={idioma}
           id={espacio.id}
@@ -28,6 +28,7 @@ function EspacioList({ idioma, onAbrirDetalle }) {
           precioBase={espacio.precioBase}
           tipo={espacio.tipo}
           imagenes={espacio.imagenes}
+          variante={indice % 3}
           onVerDetalle={onAbrirDetalle}
           key={espacio.id}
         />

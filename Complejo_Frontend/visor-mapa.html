@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa 3D (prueba)</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #1b1a17; font-family: system-ui, sans-serif; color: #e9dfc4; overflow: hidden; }
+      #mapa { width: 100vw; height: 100vh; cursor: grab; }
+      #nombre { position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%); padding: 6px 14px; background: #000a; border-radius: 4px; display: none; }
+      #ayuda { position: absolute; left: 10px; top: 10px; font-size: 12px; padding: 4px 8px; background: #0008; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <!-- Herramienta de trabajo (no forma parte del sitio): el mapa completo en primera persona.
+         Uso: /visor-mapa.html  ?noche=1  ?vista=aerea  ?cam=x,z,giro,inclinacion (grados) -->
+    <div id="mapa"></div>
+    <div id="nombre"></div>
+    <div id="ayuda">Clic para tomar el mouse · W A S D o flechas para caminar · Shift para correr · mover el mouse para mirar · Esc para soltarlo</div>
+    <script type="module" src="/src/mapa3d/visorMapa.js"></script>
+  </body>
+</html>

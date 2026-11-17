@@ -14,7 +14,7 @@
   width: 100%;
   max-width: 28em;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: var(--superficie);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -25,8 +25,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.4em 1.6em;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #f9f8f4;
+  border-bottom: 1px solid var(--borde);
+  background-color: var(--superficie-2);
 }
 
 .bh-title-block {
@@ -46,12 +46,12 @@
 
 .bh-subtitle {
   font-size: 0.8em;
-  color: #737373;
+  color: var(--texto-suave);
 }
 
 .bh-close-btn {
   background: transparent;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
   width: 2.2em;
   height: 2.2em;
   border-radius: 50%;
@@ -71,7 +71,7 @@
 .buzon-empty {
   text-align: center;
   padding: 3em 1em;
-  color: #737373;
+  color: var(--texto-suave);
   display: flex;
   flex-direction: column;
   gap: 0.4em;
@@ -79,7 +79,7 @@
 
 .buzon-empty p {
   font-weight: 700;
-  color: #2a2a2a;
+  color: var(--texto);
 }
 
 .buzon-empty span {
@@ -87,7 +87,7 @@
 }
 
 .buzon-item {
-  background-color: #fff9f2;
+  background-color: var(--superficie);
   border: 1px solid #ffe0b2;
   border-radius: 0.8em;
   padding: 1.1em;
@@ -113,7 +113,7 @@
 
 .bi-code {
   font-size: 0.9em;
-  color: #2a2a2a;
+  color: var(--texto);
 }
 
 .bi-spaces {
@@ -121,11 +121,11 @@
   flex-direction: column;
   gap: 0.3em;
   font-size: 0.85em;
-  color: #2a2a2a;
+  color: var(--texto);
 }
 
 .bi-message-box {
-  background-color: #ffffff;
+  background-color: var(--superficie);
   border: 1px solid #f0e6d6;
   border-radius: 0.5em;
   padding: 0.75em 0.9em;
@@ -142,30 +142,64 @@
 }
 
 .bi-dismiss-btn {
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   border: none;
   padding: 0.45em 0.95em;
   border-radius: 0.5em;
   font-size: 0.78em;
   font-weight: 700;
   cursor: pointer;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
 }
 
 .buzon-footer {
   padding: 1.2em 1.6em;
-  border-top: 1px solid #e0e0e0;
-  background-color: #f9f8f4;
+  border-top: 1px solid var(--borde);
+  background-color: var(--superficie-2);
 }
 
 .bf-close-btn {
   width: 100%;
-  background-color: #153c2b;
-  color: #ffffff;
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
   border: none;
   padding: 0.8em;
   border-radius: 0.6em;
   font-size: 0.9em;
   font-weight: 700;
   cursor: pointer;
+  border: var(--boton-borde);
+  border-radius: var(--boton-radio);
+  box-shadow: var(--boton-sombra);
+  font-family: 'Marcellus SC', Georgia, serif;
+  letter-spacing: 0.06em;
+}
+
+/* Abrir y cerrar con un deslizamiento: el fondo oscuro se funde y el panel entra desde la derecha */
+.buzon-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.32s ease, visibility 0s linear 0.32s;
+}
+
+.buzon-backdrop.abierto {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.32s ease, visibility 0s;
+}
+
+.buzon-panel {
+  transform: translateX(100%);
+  transition: transform 0.32s ease;
+}
+
+.buzon-backdrop.abierto .buzon-panel {
+  transform: none;
 }

@@ -51,6 +51,12 @@ public class Usuario implements UserDetails {
         return List.of(new SimpleGrantedAuthority(rol.name()));
     }
 
+    // getUsername() devuelve el email porque Spring Security lo usa para autenticar.
+    // Este método devuelve el nombre de usuario real que eligió la persona al registrarse.
+    public String getNombreDeUsuario() {
+        return username;
+    }
+
     @Override
     public String getUsername() {
         return email;

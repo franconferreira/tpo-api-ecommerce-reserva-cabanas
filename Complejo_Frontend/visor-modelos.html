@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visor de modelos 3D</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #1b1a17; font-family: system-ui, sans-serif; color: #e9dfc4; overflow: hidden; }
+      #visor { position: relative; width: 100vw; height: 100vh; }
+      .etiqueta { position: absolute; padding: 4px 8px; font-size: 13px; background: #0008; border-radius: 4px; pointer-events: none; }
+      #titulo { position: absolute; left: 50%; top: 6px; transform: translateX(-50%); font-size: 14px; background: #000a; padding: 4px 12px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <!-- Herramienta de trabajo (no forma parte del sitio): muestra un modelo con 4 cámaras fijas,
+         grilla de 1 m y el personaje de 1,75 m. Uso: /visor-modelos.html?modelo=cabana&etapa=volumen -->
+    <div id="visor"></div>
+    <script type="module" src="/src/mapa3d/visor.js"></script>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+/* Ornamentos Art Nouveau: mismas medidas en los dos temas, solo cambian los colores */
+
+.friso {
+  display: block;
+  width: 100%;
+  height: 34px;
+  color: var(--orn);
+}
+
+.divisor {
+  position: relative;
+  width: 22em;
+  max-width: 100%;
+  height: 2.4em;
+  margin: 0.9em 0;
+  color: var(--orn);
+}
+
+.divisor svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.divisor .divisor-centro {
+  left: 50%;
+  top: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  transform: translate(-50%, -50%);
+}
+
+.titulo-seccion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  padding: 2.5em 0 0.5em;
+  color: var(--orn);
+}
+
+.titulo-seccion h2 {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 1.6em;
+  letter-spacing: 0.12em;
+  color: var(--titulo);
+  text-align: center;
+}
+
+.ts-latigo {
+  width: 14em;
+  height: 3em;
+  flex-shrink: 1;
+}
+
+.ts-latigo.der {
+  transform: scaleX(-1);
+}
+
+.ts-icono {
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+}
+
+.latigos-fondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--orn);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.esquina-panel {
+  position: absolute;
+  bottom: -40px;
+  width: 280px;
+  height: 270px;
+  color: var(--orn);
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.esquina-panel.izq {
+  left: -40px;
+}
+
+.esquina-panel.der {
+  right: -40px;
+  transform: scaleX(-1);
+}
+
+.rinceau-tarjeta {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--orn);
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.medallon {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  z-index: 2;
+}
+
+.medallon-fondo {
+  fill: var(--superficie);
+}
+
+/* Ventana principal */
+.marco-ventana {
+  position: relative;
+  height: 540px;
+}
+
+.mv-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 1;
+}
+
+.mv-icono {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 64px;
+  z-index: 0;
+}
+
+.mv-marco {
+  fill: var(--marco-hueco);
+  stroke: var(--marco);
+}
+
+.mv-brillo {
+  stroke: var(--marco-brillo);
+}
+
+.mv-foto {
+  filter: var(--foto-filtro);
+}
+
+.mv-borde-foto {
+  stroke: var(--marco);
+}
+
+.mv-rinceaux {
+  color: var(--orn);
+}
+
+/* Botón luna / sol */
+.boton-cambio-tema {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6em;
+  height: 2.6em;
+  padding: 0.35em;
+  border-radius: 50%;
+  border: 1px solid var(--borde);
+  background-color: var(--superficie);
+  cursor: pointer;
+}
+
+.boton-cambio-tema svg {
+  width: 100%;
+  height: 100%;
+}

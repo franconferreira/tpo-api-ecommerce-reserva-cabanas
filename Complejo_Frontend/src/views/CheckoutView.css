@@ -1,6 +1,6 @@
 .checkout-wrapper {
   padding: 3em 4em;
-  background-color: #f4f3ef;
+  background-color: transparent;
   min-height: 85vh;
   display: flex;
   justify-content: center;
@@ -10,14 +10,14 @@
 .checkout-box {
   width: 100%;
   max-width: 50em;
-  background-color: #ffffff;
+  background-color: var(--superficie);
   border-radius: 1.2em;
   padding: 2.5em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--borde);
 }
 
 .checkout-overline {
-  color: #cc7440;
+  color: var(--acento);
   font-size: 0.75em;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -29,7 +29,15 @@
 }
 
 .checkout-subtitle {
-  color: #737373;
+  color: var(--texto-suave);
   font-size: 0.95em;
   margin-bottom: 1.8em;
+}
+
+/* Panel con plantas en las esquinas de abajo (EsquinasPanel) */
+.checkout-box {
+  position: relative;
+  overflow: visible;
+  border-color: var(--marco);
+  box-shadow: 0 0 0 5px var(--marco-hueco), 0 0 0 6px var(--marco-brillo), 0 20px 34px -20px var(--sombra);
 }
